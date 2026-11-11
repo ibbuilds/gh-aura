@@ -1,30 +1,34 @@
-# GH Aura 1.1.0
+# GH Aura 1.2.0
 
-A small, user-directed GitHub profile CLI. The core workflow is free: no subscription, paid API, hosted server, runtime dependencies or mandatory AI provider.
+Measured resource use and evidence-grounded writing, without a server or mandatory AI provider.
 
 ## Install
 
-Requires Node.js 22+. Download `gh-aura-1.1.0.tgz` and install it:
-
-```bash
-npm install --global ./gh-aura-1.1.0.tgz
-gh-aura init YOUR_USERNAME
-gh-aura audit
-gh-aura profile --output draft.md
-gh-aura preview --file draft.md --save review.json
-```
-
-After reviewing the diff, publish with `gh-aura apply --review review.json`. Add `--pr` to open an unmerged PR instead. A token restricted to the profile repository is required for publication; it is authentication, not a paid plan.
+Requires Node.js 22+. Install the attached tarball with `npm install --global ./gh-aura-1.2.0.tgz`. This is a GitHub Release, not an npm registry publication. The checksum is in `SHA256SUMS.txt`.
 
 ## Changes
 
-- Five-minute local caching and ETag revalidation reduce public API calls. Use `--fresh` to reload. Preview/apply always use live state.
-- Commands skip unused profile README requests. Expensive timeline details are opt-in and bounded.
-- `profile --keep` preserves existing text outside one managed region.
-- `apply --pr` creates a reviewed branch and PR, never merges or overwrites conflicting branches.
-- Achievement sources include review dates, prerequisites and manual verification steps; paid opportunities remain disabled by default.
-- CI uses standard runners only in public repositories, without Actions artifact/cache uploads.
+- Separate lazy command handlers for local work, public reads and reviewed publication.
+- Add read request/stream-byte budgets, `--budget` and token-free `--stats`.
+- Skip unused existing-profile reads during plain README generation. A deterministic fixture falls from 4 HTTP calls to 2; warm reads remain at 0.
+- Add visual intensity 0–100, editorial preferences, compact evidence briefs, ready-to-use writing prompts and offline draft checks.
+- Ground structural guidance in a reproducible 100-account public-contributor study across 12 projects. Source hashes and limitations are recorded; no biography text is copied or shipped.
+- Add budget, editorial, cohort-integrity and actual CLI live-read regression gates.
 
-The original planning issues have implementation/disposition records in `docs/PRODUCT_PLAN.md`. Tests cover Node 22/24 on Linux, macOS and Windows, installed packages, isolated publication and live read-only GitHub integration. No personal profile is changed by tests.
+## Workflow
 
-GitHub still controls achievements and limits. Pins and account settings are manual. Annual history requires authenticated reads. No npm registry publication is configured. `SHA256SUMS.txt` contains the package checksum.
+```bash
+gh-aura init YOUR_USERNAME
+gh-aura audit --inspect 6 --stats
+gh-aura profile --visual 20 --output draft.md
+# Or export grounded instructions for your own writer:
+gh-aura brief --prompt --output writer.txt
+gh-aura check --file draft.md
+gh-aura preview --file draft.md --save review.json
+# Only after reviewing the diff:
+gh-aura apply --review review.json --pr
+```
+
+The writer remains optional and external. No badge guarantees, fabricated historical activity or professional-identity claims are generated. Visual percentages are presentation controls, not credibility scores. Pins and account settings stay manual; publication requires a separately approved draft and scoped token.
+
+CI checks all supported OS/Node combinations, packed installation and live public reads. Publication behavior is tested with isolated fixtures, never by modifying a personal profile.

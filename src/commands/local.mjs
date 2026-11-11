@@ -24,7 +24,8 @@ export async function run(command, options) {
     brief = JSON.parse(readFileSync(options.brief, 'utf8'));
   }
   const { checkDraft, renderDraftCheck } = await import('../editorial.mjs');
-  const report = checkDraft(draft, brief, { maxWords: loadConfig(options.config).editorial.maxWords });
+  const maxWords = options.config ? loadConfig(options.config).editorial.maxWords : brief?.editorial?.maxWords ?? loadConfig().editorial.maxWords;
+  const report = checkDraft(draft, brief, { maxWords });
   emit(options.format === 'json' ? report : renderDraftCheck(report), options);
   if (options.strict && report.findings.length) process.exitCode = 1;
 }

@@ -11,8 +11,9 @@ export function editorialBrief(snapshot, config) {
     if (text.length > limit) omissions.push(label + ' truncated; do not base factual claims on the missing portion.');
     return text.slice(0, limit);
   };
-  const projects = selectFeatured(snapshot, config);
   const p = config.profile;
+  const presentation = presentationPlan(p);
+  const projects = presentation.sections.projects ? selectFeatured(snapshot, config) : [];
   const current = snapshot.profileReadme?.content || '';
   const brief = {
     format: 'gh-aura-editorial-brief-v1', revision: 2,
@@ -21,10 +22,10 @@ export function editorialBrief(snapshot, config) {
     publicProfile: { name: clip(snapshot.user.name, 100, 'name') || null,
       bio: clip(snapshot.user.bio, 300, 'bio') || null, blog: clip(snapshot.user.blog, 300, 'website') || null,
       profileUrl: 'https://github.com/' + snapshot.username },
-    preferences: { style: presentationPlan(p).style, visual: presentationPlan(p).visual,
+    preferences: { style: presentation.style, visual: presentation.visual,
       headline: clip(p.headline, 200, 'headline'), about: clip(p.about, 700, 'about'),
       technologies: p.technologies.slice(0, 12).map((x) => clip(x, 50, 'technology')),
-      featured: projects.map((x) => x.full_name), sections: presentationPlan(p).sections,
+      featured: projects.map((x) => x.full_name), sections: presentation.sections,
       links: p.links.slice(0, 5), extras: p.extras.slice(0, 3).map((x) => ({ title: clip(x.title, 70, 'section title'), body: clip(x.body, 300, 'extra section') })) },
     preferencesProvenance: 'User-supplied choices, not verified credentials. A target role is not a claimed current position.',
     editorial: { language: config.editorial?.language || 'en', targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
@@ -46,6 +47,6 @@ export function editorialBrief(snapshot, config) {
     omissions,
   };
   if (p.technologies.length > 12 || p.links.length > 5 || p.extras.length > 3) omissions.push('Additional technology/link/extra entries omitted to keep context compact; consult local config.');
-  if (Buffer.byteLength(JSON.stringify(brief)) > 12000) throw new Error('Editorial context exceeds 12 KiB. Shorten explicit links/preferences before exporting.');
+  if (Buffer.byteLength(JSON.stringify(brief)) > 12000) throw new Error('Editorial context exceeds 12,000 bytes. Shorten explicit links/preferences before exporting.');
   return brief;
 }

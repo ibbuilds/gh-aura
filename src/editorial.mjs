@@ -34,6 +34,7 @@ export function checkDraft(content, brief = null, options = {}) {
   const visible = content.replace(/<!--[\s\S]*?-->/g, '').replace(/```[\s\S]*?```/g, '').replace(/<[^>]+>/g, ' ');
   const words = visible.trim().split(/\s+/u).filter(Boolean).length;
   const target = options.maxWords ?? brief?.editorial?.maxWords ?? 220;
+  if (!Number.isInteger(target) || target < 30 || target > 1000) throw new Error('Editorial word target must be an integer from 30 to 1000.');
   const findings = [];
   const add = (id, message, severity = 'review') => findings.push({ id, severity, message });
   if (/\b(?:YOUR_USERNAME|YOUR_NAME|TODO|TBD)\b|\{\{[^}]+\}\}/.test(content)) add('placeholders', 'Replace unresolved placeholders before publication.', 'error');

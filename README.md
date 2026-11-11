@@ -1,8 +1,8 @@
 # GH Aura
 
-A small CLI for a professional GitHub profile. Inspect your work, draft your README, review the changes, and publish only what you approve.
+A small CLI for presenting real GitHub work professionally. Inspect, draft, review, then publish only what you approve.
 
-**Node.js 22+ · Free core workflow · No runtime dependencies · No mandatory AI**
+**Node.js 22+ · No runtime dependencies · No required AI or subscription**
 
 ## Start
 
@@ -12,82 +12,80 @@ cd gh-aura
 npm link
 
 gh-aura init YOUR_USERNAME
-gh-aura audit
+gh-aura audit --inspect 6
 gh-aura profile --output draft.md
 gh-aura preview --file draft.md --save review.json
 ```
 
-Read the diff and edit the draft as needed. Publishing is a separate command:
+Read the diff before publishing:
 
 ```bash
-gh-aura apply --review review.json
+gh-aura apply --review review.json --pr
 ```
 
-`apply` requires `GH_TOKEN` or `GITHUB_TOKEN` with **Contents: read and write** (and **Pull requests: write** for `--pr`), restricted to your public `USERNAME/USERNAME` profile repository. It updates only that repository's root `README.md`. A changed draft, branch or remote README invalidates the review. Nothing runs in the background.
+`--pr` opens an unmerged review PR. Without it, `apply` updates the root profile README directly. Both require the exact reviewed draft and live revision, plus a token restricted to the profile repository. Only `apply` writes to GitHub. Nothing runs in the background.
 
-An optional `--pr` on `apply` opens a review PR instead of updating the default branch. It never merges it.
-
-The source can also run without installation: `node src/cli.mjs --help`. The npm registry package is **not published**; use this repository or a packaged GitHub release.
+Use the repository or a GitHub Release tarball; the npm registry package is not published.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `init USER` | Save your account and local preferences once |
-| `audit --inspect 6` | Inspect profile metadata and six project READMEs |
-| `profile --style minimal` | Generate a draft; `--keep` preserves your custom text |
-| `preview --file draft.md --save review.json` | Compare the exact draft and save its review |
-| `apply --review review.json` | Publish the reviewed README |
-| `showcase --goal "backend engineer"` | Recommend projects to pin, with reasons |
-| `achievements` | List opportunities, preferences and relevant public evidence |
-| `contributions --all` | Inspect annual activity; `--details` adds bounded public milestones |
-| `brief --output brief.json` | Export context for your preferred editor or AI |
-| `config show` | View effective settings |
+| `init USER` | Save your account once |
+| `audit --inspect 6 --stats` | Inspect profile/project evidence and measure API use |
+| `profile --visual 20` | Generate a restrained draft; `--keep` preserves custom text |
+| `preview --file draft.md --save review.json` | Review the exact proposed change |
+| `apply --review review.json --pr` | Open a reviewed profile PR |
+| `showcase --goal "backend engineer"` | Recommend relevant projects to pin |
+| `achievements` | Show opportunities, prerequisites and public evidence |
+| `contributions --all` | Inspect authentic activity across available years |
+| `brief --prompt -o writer.txt` | Prepare grounded instructions for your chosen writer |
+| `check --file draft.md` | Check a draft locally; no API or AI calls |
+| `config show` | Inspect or change local preferences |
 
-Run `gh-aura COMMAND --help` for options. Pass a username to any account command to override the saved one. Reports support `--json`; drafts are Markdown.
+Run `gh-aura COMMAND --help` for options. Existing `minimal`, `regular` and `flashy` styles remain available.
 
-## Your style
-
-| Preset | Default presentation |
-| --- | --- |
-| `minimal` | Short introduction, selected work, contact links |
-| `regular` | More structure, project table, repository languages |
-| `flashy` | Centered introduction, technology labels and optional metrics |
+## Presentation, not invented experience
 
 ```bash
-gh-aura config set profile.style minimal
+gh-aura config set profile.visual 20
 gh-aura config set profile.sections.stats false
-gh-aura config set profile.maxProjects 2
 gh-aura config set profile.featured '["YOUR_USERNAME/project-one"]'
-gh-aura config set achievements.excluded '["yolo","quickdraw"]'
+gh-aura config set editorial.targetRole "Backend engineer"
+gh-aura config set editorial.language en
 ```
 
-Every section is optional. Explicit project selections are exact, not padded with other repositories. `flashy` uses Shields.io images; those are technology labels, **not earned GitHub achievements**.
+Visual intensity is 0–100: compact below 35, structured at 35–69, visual at 70–100. It changes layout and decorative density, not skills, seniority, history or credibility. Explicit section switches and project selections win. Reset `profile.visual` to inherit a style preset.
 
-## Free by design
+## Writing grounded in real profiles
 
-No subscription, paid API, hosted server or AI key is required. A free GitHub account and optional personal access token are enough; a token is authentication, not a paid plan.
+A reproducible study records **100 public contributor accounts from 12 mature projects**. Only structural observations and source hashes are retained, not copied biographies. The cohort is not a representative hiring study, and its members' experience is not attributed to you.
 
-Public reads are cached locally for five minutes. Use `--fresh` to reload; preview and publication **always** read current remote state. Expired cache entries use ETags where available. Requests are serial and rate-limit errors stop rather than trigger aggressive retries.
+`brief` combines your own project evidence, preferences and those documented structural lessons. `brief --prompt` prepares instructions for any editor or AI; GH Aura never invokes a model or sends it your token. `check` catches some repetition, placeholders and claims needing review, but does not certify truth or originality.
 
-CI uses standard runners only in public repositories, with no Actions artifact or cache uploads. Private forks do not run CI unless you deliberately change that guard. See [free operation and limits](docs/FREE.md).
+[Study and limitations](research/README.md) · [Writing workflow](docs/AI_WORKFLOW.md)
+
+## Resource use
+
+Public reads reuse a short local cache and ETags. Plain draft generation skips the existing README; preservation and review do not. Read commands default to at most 60 requests, 2 MiB per JSON response and 32 MiB of response data per invocation. Use `--stats`, `--fresh` and an explicit `--budget N` when needed. These are application budgets, not extra GitHub quota.
+
+The reference study is not repeated during use. No server, paid model, hosted database or runtime dependency is required. [Free operation](docs/FREE.md) · [Measured performance](docs/PERFORMANCE.md)
 
 ## Boundaries
 
-Public audits work without a token, subject to API limits. Annual contribution data requires authenticated read access. Achievements remain GitHub-controlled: the CLI shows sourced opportunities and evidence, not guaranteed awards. User-recorded achievements are labeled self-reported. Historical awards are not newly earnable.
-
-Showcase rankings use metadata and optional README checks, not a claim of code quality. Pin selection remains manual in GitHub. Contribution history is analyzed, never invented or backdated. The tool does not edit your bio, photograph, pins or unrelated repositories.
+GitHub controls achievements; the tool cannot grant every badge, fabricate historical contributions or certify professional experience. Pins and account settings remain manual. Private-repository activity is not a route to guaranteed awards. Annual history requires authenticated reads. Showcase scores describe presentation evidence, not code quality or hiring probability.
 
 ## Development
 
 ```bash
 npm run check
 npm test
+npm run benchmark
 npm run test:package
 ```
 
-CI tests Node 22 and 24 on Linux, macOS and Windows. Live integration checks are read-only; publishing tests use isolated fixtures. `npm run test:live` requires a token and reads `ibbuilds` by default.
+CI covers Node 22/24 on Linux, macOS and Windows. Live integration is read-only; publication tests use isolated fixtures. The full research dataset stays out of the installed runtime package.
 
-[Command reference](docs/CLI.md) · [AI workflow](docs/AI_WORKFLOW.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
+[Command reference](docs/CLI.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
 
 MIT license.
