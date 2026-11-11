@@ -22,5 +22,21 @@
     "portfolio",
     "achievements"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibbuilds/gh-aura.git"
+  },
+  "homepage": "https://github.com/ibbuilds/gh-aura#readme",
+  "bugs": {
+    "url": "https://github.com/ibbuilds/gh-aura/issues"
+  },
+  "files": [
+    "src/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ]
 }

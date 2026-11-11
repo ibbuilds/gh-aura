@@ -153,8 +153,9 @@ gh-aura profile ibbuilds --style minimal --output draft.md
 gh-aura preview ibbuilds --file draft.md
 
 # 3. Only if you approve: copy the code printed by preview.
-# A GitHub token with contents:write to ibbuilds/ibbuilds is required.
-GH_TOKEN=... gh-aura apply ibbuilds --file draft.md --approve SHA256_FROM_PREVIEW
+# First provide GH_TOKEN securely through your shell/session or secret manager.
+# The token needs contents:write to ibbuilds/ibbuilds.
+gh-aura apply ibbuilds --file draft.md --approve SHA256_FROM_PREVIEW
 ```
 
 The approval code is bound to the username, target path, current README content and revision, and exact draft bytes. If the draft or remote README changes, the code becomes invalid. The GitHub Contents API also checks the current file SHA to reject concurrent updates. `apply` updates **only** the profile README, not other repository files, pins, commits or account settings. Existing README content is not merged automatically; you must review the full diff.
@@ -175,6 +176,10 @@ For contributions, the planned diagnostics will focus on *real work* that may be
 
 - [Roadmap and acceptance criteria](docs/PRODUCT_PLAN.md)
 - [Architecture, CLI, and permissions](docs/ARCHITECTURE.md)
+- [Optional AI editorial workflow](docs/AI_WORKFLOW.md)
+- [Security policy](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
 - [Official GitHub contribution reference](https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference)
 - [How to pin repositories](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/pinning-items-to-your-profile)
 
