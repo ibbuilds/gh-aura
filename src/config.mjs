@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 export const DEFAULT_CONFIG = {
-  scan: { maxRepos: 200 },
+  scan: { maxRepos: 200, inspectRepos: 0 },
   profile: {
     style: 'minimal',
     name: '',
@@ -89,6 +89,9 @@ export function validateConfig(config) {
   }
   for (const key of ['topics', 'preferred', 'excluded']) {
     checkStringArray(config.showcase[key], 'showcase.' + key);
+  }
+  if (!Number.isInteger(config.scan.inspectRepos) || config.scan.inspectRepos < 0 || config.scan.inspectRepos > 20) {
+    throw new Error('scan.inspectRepos must be between 0 and 20.');
   }
   if (!Number.isInteger(config.scan.maxRepos) || config.scan.maxRepos < 1 || config.scan.maxRepos > 500) {
     throw new Error('scan.maxRepos must be between 1 and 500.');

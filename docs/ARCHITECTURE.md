@@ -8,12 +8,14 @@ The original TypeScript + web-app suggestion has been replaced by a smaller, dep
 
 ```text
 src/
-  cli.mjs           command parser / local output
+  cli.mjs           command parser / local output / diff
   config.mjs        defaults, validation, style and section options
   github.mjs        public GitHub API snapshots
   engine.mjs        audit rules / explainable repository ranking
   render.mjs        minimalist, regular and flashy README renderers
   achievements.mjs  community-reported badge catalog and caveats
+  inspection.mjs    opt-in project README structure checks
+  diff.mjs          bounded local text diff
 tests/
   config.test.mjs
   engine.test.mjs
@@ -41,14 +43,15 @@ official GitHub REST API (public, read only)
 normalized profile snapshot + repository metadata + profile README
        |
        +--> audit / plan -> Markdown or JSON report
-       +--> showcase -> explainable recommendations
+       +--> showcase -> explainable recommendations (optional README inspection)
        +--> profile -> one of three editable Markdown drafts
+       +--> diff -> bounded local before/after terminal diff
        |
        v
 stdout or explicit local file (--output)
 ```
 
-No GitHub writes exist in the current CLI.
+No GitHub writes exist in the current CLI. Optional `--inspect N` (0–20, default 0) fetches only top-ranked public project READMEs and checks for common setup and usage headings. Missing and not-inspected are intentionally different states.
 
 ## Presentation presets
 

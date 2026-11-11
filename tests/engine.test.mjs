@@ -44,6 +44,15 @@ test('section toggles can suppress projects and any additional sections', () => 
   assert.match(output, /Maintaining real projects/);
 });
 
+test('inspected README absence produces evidence-backed guidance', () => {
+  const config = configForTest();
+  const snapshot = snapshotForTest();
+  snapshot.repos[0].inspection = { state: 'missing', url: 'https://github.com/example/backend-toolkit', features: {} };
+  const report = auditProfile(snapshot, config);
+  assert.equal(report.repositoryReadmesInspected, 1);
+  assert.ok(report.findings.some((finding) => finding.title.includes('Showcase candidate lacks a README')));
+});
+
 test('audit identifies sparse README and repository metadata without rewriting history', () => {
   const report = auditProfile(snapshotForTest(), configForTest());
   assert.ok(report.findings.some((finding) => finding.title === 'No profile README'));
