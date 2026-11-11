@@ -5,7 +5,7 @@ export const SPECS = {
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
   init: { usage: 'init [USER] [--config FILE]', flags: ['config', 'output', 'force'], max: 1 },
   config: { usage: 'config show|get|set|reset [KEY] [VALUE] [--dry-run]', flags: ['config', 'dry-run'], max: 3 },
-  audit: { usage: 'audit [USER] [--inspect 6] [--json] [--stats]', flags: DATA, max: 1 },
+  audit: { usage: 'audit [USER] [--goal "backend engineer"] [--inspect 3] [--json] [--stats]', flags: [...DATA, 'goal'], max: 1 },
   profile: { usage: 'profile [USER] [--style minimal|regular|flashy | --visual 0..100] [--keep] [-o draft.md]', flags: [...READ, 'style', 'visual', 'inspect', 'output', 'force', 'keep'], max: 1 },
   preview: { usage: 'preview [USER] --file draft.md [--save review.json]', flags: [...COMMON, 'file', 'save', 'force'], max: 1 },
   apply: { usage: 'apply --review review.json [--pr] | apply [USER] --file draft.md --approve CODE [--pr]', flags: [...COMMON, 'file', 'approve', 'review', 'format', 'pr'], max: 1 },

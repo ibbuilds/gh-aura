@@ -1,5 +1,6 @@
 import { presentationPlan } from './editorial.mjs';
 import { selectFeatured } from './engine.mjs';
+import { renderHiringReview } from './readiness.mjs';
 import { md, html, httpsUrl, repoUrl } from './text.mjs';
 
 export function renderProfile(snapshot, config, chosenStyle) {
@@ -81,7 +82,9 @@ export function renderShowcaseMarkdown(username, recommendations) {
 export function renderAuditMarkdown(report) {
   const lines = ['# GH Aura audit: @' + md(report.user), '', 'Observed: ' + md(report.observedAt),
     'Public repositories scanned: ' + report.publicRepositoriesScanned,
-    'Repository READMEs inspected: ' + (report.repositoryReadmesInspected || 0), '', '## Findings', ''];
+    'Repository READMEs inspected: ' + (report.repositoryReadmesInspected || 0), '',
+    ...(report.hiringReview ? [renderHiringReview(report.hiringReview), ''] : []),
+    '## Findings', ''];
   if (!report.findings.length) lines.push('No findings from the implemented checks.', '');
   for (const finding of report.findings) lines.push('### ' + finding.severity.toUpperCase() + ': ' + md(finding.title), '',
     md(finding.observed), '', '**Next:** ' + md(finding.action), '', 'Source: ' + (httpsUrl(finding.source) || 'unavailable'), '');

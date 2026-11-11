@@ -9,7 +9,10 @@ export async function run(command, options) {
   const config = loadConfig(options.config);
   if (options.style) { config.profile.style = options.style; config.profile.visual = -1; }
   if (options.visual !== undefined) config.profile.visual = Number(options.visual);
-  if (options.goal !== undefined) config.showcase.goal = options.goal;
+  if (options.goal !== undefined) {
+    config.showcase.goal = options.goal;
+    if (command === 'audit') config.editorial.targetRole = options.goal;
+  }
   if (options.limit !== undefined) config.showcase.limit = Number(options.limit);
   if (options.inspect !== undefined) config.scan.inspectRepos = Number(options.inspect);
   validateConfig(config);
@@ -63,6 +66,10 @@ export async function run(command, options) {
     }
     snapshot.dataAccess = { ...(cache?.summary() || {}), ...session.summary() };
     const report = auditProfile(snapshot, config);
+    if (command === 'audit') {
+      const { hiringReview } = await import('../readiness.mjs');
+      report.hiringReview = hiringReview(snapshot, config);
+    }
     emit(options.format === 'json' ? report : renderAuditMarkdown(report), options);
   } catch (error) {
     // The existing HTTP adapter sanitizes transport errors; retain our own explicit budget diagnosis.

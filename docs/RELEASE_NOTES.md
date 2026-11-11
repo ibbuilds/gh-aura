@@ -1,43 +1,47 @@
-# GH Aura 1.3.0
+# GH Aura 1.4.0
 
-Professional engineering profile references with an evidence-first editorial workflow, no hosted service, paid API or mandatory AI.
+**Focus: make a GitHub portfolio easier to assess for a specific engineering role.**
+
+The existing \`gh-aura audit\` command now includes an evidence-based *first-minute hiring-manager review*. It does **not** assign a person's value, predict interviews or call the profile “hireable” with a fabricated percentage.
 
 ## Install
 
-Requires Node.js 22+. Download `gh-aura-1.3.0.tgz` from this release and install it locally:
+Requires Node.js 22+. Download \`gh-aura-1.4.0.tgz\` from this GitHub Release, verify its \`SHA256SUMS.txt\`, then install:
 
-```bash
-npm install --global ./gh-aura-1.3.0.tgz
+\`\`\`bash
+npm install --global ./gh-aura-1.4.0.tgz
 gh-aura init YOUR_USERNAME
-```
+\`\`\`
 
-This release is hosted on GitHub, not the npm registry. Verify the package with `SHA256SUMS.txt`.
+This is a GitHub Release, not an npm registry publication.
 
-## What's new
+## New: role-oriented audit
 
-- **Individual engineer references:** A reproducible 100-account study selected from company GitHub organizations, with matching self-described company and engineering role. These public signals do **not** confirm employment.
-- **Employer-sourced profiles:** Sixteen accounts cross-referenced with company-owned engineering author pages; roles may have changed since publication.
-- **`references` command:** Inspect source-linked example profiles entirely offline, with `--company` and `--json`.
-- **Company-aware writing:** `editorial.targetCompany` can personalize prompts toward an application target, never imply you already work there.
-- **No borrowed résumés:** The writer distinguishes another engineer's presentation structure from your actual work and refuses instructions to invent employer, seniority, awards or impact.
+\`\`\`bash
+gh-aura config set editorial.targetRole "Backend Engineer"
+gh-aura audit --inspect 3
 
-No biographies, emails or raw profile README prose were copied into the research data. The larger datasets and collectors are excluded from the installable runtime package. The study is descriptive, not an analysis of interviews or hiring outcomes.
+# Or target a different role for one read-only command
+gh-aura audit --goal "Platform Engineer" --inspect 3 --json
+\`\`\`
 
-## Suggested workflow
+The review examines:
+- Explicit target role **as an aspiration**, never a current title claim.
+- Public bio, a readable profile README, short selected projects and contact links.
+- Conservative keyword alignment of public repository metadata to the target role.
+- Optional README presence/setup/usage heading clues for a few projects.
+- Missing and **unknown** project signals, including unverified code correctness, testing, CI and individual ownership.
 
-```bash
-gh-aura config set editorial.targetRole "Backend engineer"
-gh-aura config set editorial.targetCompany "Microsoft"
-gh-aura references --company Microsoft
-gh-aura audit --inspect 6 --stats
-gh-aura brief --prompt --output writer.txt
-gh-aura profile --visual 20 --output draft.md
-gh-aura check --file draft.md
-gh-aura preview --file draft.md --save review.json
-# Only after reviewing the exact diff:
-gh-aura apply --review review.json --pr
-```
+Every check explains its evidence, state and next action. **No code quality, experience level or hiring result is inferred from stars, repo size, contribution density or other vanity metrics.** Unavailable private work is not penalized as inactivity.
 
-You may draft manually or with any editor/AI. GH Aura does not invoke a provider, publish without explicit approval, create fake historical contributions, grant achievements or modify pins automatically.
+## Editorial/research context
 
-The release is gated on CI across Node 22/24 on Linux, macOS and Windows, offline tests, package installation and live **read-only** GitHub integration. Publication tests never modify the user's real account.
+The separate industry-profile research remains a **presentation reference**, not a copywriting database or hiring success model. Its employer-affiliated cohort does not establish verified current employment. GH Aura continues to support \`minimal\`, \`regular\`, \`flashy\` and \`--visual 0..100\`.
+
+## Boundaries
+
+The audit is read-only, retains existing API request/response budgets and cache behavior and needs no paid service or AI model. Personal profile publication still requires separate preview and explicit approval. GH Aura cannot grant achievements, fabricate a contribution timeline, change GitHub profile pins through an unsupported API or guarantee employment.
+
+Read [the hiring-readiness methodology](https://github.com/ibbuilds/gh-aura/blob/main/docs/HIRING_READINESS.md).
+
+Release gate: cross-platform Node 22/24 tests, packed CLI smoke test, real **read-only** GitHub integration and a guarded GitHub Release with checksums.
