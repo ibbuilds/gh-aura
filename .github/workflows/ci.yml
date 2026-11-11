@@ -8,21 +8,51 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: Node ${{ matrix.node }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['22', '24']
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm run check
+      - run: npm test
+      - run: npm run test:package
+
+  live:
+    name: Public GitHub integration (read-only)
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Syntax checks
-        run: npm run check
-      - name: Unit and CLI tests
-        run: npm test
-      - name: npm package preview
-        run: npm pack --dry-run
-      - name: CLI smoke test
-        run: |
-          node src/cli.mjs --help
-          node src/cli.mjs achievements --format json > /tmp/gh-aura-achievements.json
+      - run: npm run test:live
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - run: npm pack --pack-destination dist --ignore-scripts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gh-aura-verification
+          path: dist/
+          retention-days: 7
+          if-no-files-found: ignore
