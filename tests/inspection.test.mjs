@@ -37,3 +37,22 @@ test('missing README and uninspected repos are distinct states', async () => {
 test('rejects excessive inspection budgets', async () => {
   await assert.rejects(inspectRepositories(snapshotForTest(), configForTest(), 100), /between 0 and 20/);
 });
+
+test('explicitly featured repositories consume the inspection budget before automatic rankings', async () => {
+  const snapshot = snapshotForTest();
+  const config = configForTest();
+  config.profile.featured = ['quiet-scripting'];
+  const previous = globalThis.fetch;
+  const requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(url);
+    return { ok: false, status: 404, headers: new Headers() };
+  };
+  try {
+    await inspectRepositories(snapshot, config, 1);
+    assert.equal(snapshot.repos[2].inspection.state, 'missing');
+    assert.equal(snapshot.repos[0].inspection, undefined);
+    assert.equal(requested.length, 1);
+    assert.match(requested[0], /quiet-scripting\/readme/);
+  } finally { globalThis.fetch = previous; }
+});

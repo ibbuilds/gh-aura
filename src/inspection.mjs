@@ -1,5 +1,5 @@
 import { getJSON, decodeReadme } from './github.mjs';
-import { rankRepositories } from './engine.mjs';
+import { rankRepositories, selectFeatured } from './engine.mjs';
 
 const API = '/repos/';
 
@@ -38,7 +38,8 @@ export function describeReadme(response, repo) {
 }
 
 /**
- * Optional GitHub README inspection. Only top-ranked public repositories are inspected.
+ * Optional GitHub README inspection. User-selected projects are inspected first,
+ * then remaining requests go to recommended public projects.
  * Uninspected projects are unknown, never assumed to lack a README.
  */
 export async function inspectRepositories(snapshot, config, count, options = {}) {
@@ -46,7 +47,14 @@ export async function inspectRepositories(snapshot, config, count, options = {})
     throw new Error('--inspect must be between 0 and 20.');
   }
   if (count === 0) return snapshot;
-  const picks = rankRepositories(snapshot, config, { limit: count });
+  const chosen = config.profile.featured.length
+    ? selectFeatured(snapshot, config).map((repo) => ({ repo })) : [];
+  const ranked = rankRepositories(snapshot, config, { limit: count });
+  const seen = new Set();
+  const picks = [...chosen, ...ranked].filter(({ repo }) => {
+    if (seen.has(repo.full_name)) return false;
+    seen.add(repo.full_name); return true;
+  }).slice(0, count);
   const byName = new Map(snapshot.repos.map((repo) => [repo.full_name, repo]));
   for (const { repo } of picks) {
     const [owner, name] = repo.full_name.split('/');

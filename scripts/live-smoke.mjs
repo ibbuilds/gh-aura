@@ -9,6 +9,7 @@ import { ReadCache } from '../src/cache.mjs';
 import { DEFAULT_CONFIG } from '../src/config.mjs';
 import { inspectRepositories } from '../src/inspection.mjs';
 import { auditProfile } from '../src/engine.mjs';
+import { hiringReview } from '../src/readiness.mjs';
 import { renderProfile, preserveProfile } from '../src/render.mjs';
 import { profileTarget, previewProfile } from '../src/workflow.mjs';
 import { contributionsReport } from '../src/contributions.mjs';
@@ -31,6 +32,10 @@ try {
   await inspectRepositories(snapshot, config, 3, read);
   const report = auditProfile(snapshot, config);
   assert.ok(report.findings.every((item) => item.source && item.action && item.confidence));
+  const recruiter = hiringReview(snapshot, { ...config, editorial: { ...config.editorial, targetRole: 'Backend engineer' } });
+  assert.equal(recruiter.targetRole, 'Backend engineer');
+  assert.ok(recruiter.checks.every((item) => item.source && item.action && item.state));
+  assert.equal(recruiter.purpose.includes('NOT a hiring probability'), true);
   for (const style of ['minimal', 'regular', 'flashy']) assert.ok(renderProfile(snapshot, config, style).trim().length > 0);
   const target = await profileTarget(username);
   const draft = preserveProfile(target.content, renderProfile(snapshot, config));
