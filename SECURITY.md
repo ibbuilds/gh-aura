@@ -1,35 +1,25 @@
-# Security policy
+# Security
 
-GH Aura reads public GitHub profile data and can update **only** a reviewed profile README when the user runs the explicit `apply` command.
+Only the explicit `apply` command can change GitHub. It updates the root `README.md` of the chosen public `USER/USER` profile repository, not arbitrary files, account settings or Git history.
 
 ## Credentials
 
-- Public read commands do not need authentication.
-- For publishing, provide `GH_TOKEN` or `GITHUB_TOKEN` at invocation time.
-- Use a fine-grained token restricted to the intended profile repository with **Contents: read and write**. Avoid tokens with access to unrelated repositories.
-- GH Aura does not persist tokens in its config or embed them in generated Markdown/JSON.
-- Do not place tokens in positional arguments, sample config files, git commits, issue comments, or AI prompts.
+Public audits can run without authentication. Contribution counts require authenticated reads. Publishing requires a token with **Contents: read and write**, restricted to the profile repository. Supply `GH_TOKEN` or `GITHUB_TOKEN` through a trusted shell session or secret manager; never commit it, store it in configuration or paste it into an AI brief.
 
-## Review and write boundary
+Requests are restricted to the GitHub API origin and reject redirects. Public-profile exports do not read private repository content even when the token could access it. External AI is optional and not invoked by the tool.
 
-1. `profile` creates a local draft.
-2. `preview USER --file draft.md` reads the current public profile README and prints the exact diff and a SHA-256 approval code.
-3. Only `apply USER --file draft.md --approve CODE` can publish. The code binds the current README SHA, path and content to the exact draft.
-4. An authenticated Contents API request includes the current README SHA, so GitHub rejects concurrent modifications.
-5. An incorrect approval code, missing token or unsupported README path prevents publication.
+## Review boundary
 
-The code is **not** an authentication substitute. It supplements, but does not replace, GitHub authorization. SHA-256 approval is stateless and requires user inspection of the draft/diff.
+`preview` compares the exact draft with the current root README and produces a digest. A local review file is a convenience, not an authentication mechanism or proof that a human read the diff. It binds account, repository, branch, path, remote revision/content and exact draft bytes. Treat review files as trusted local instructions; never apply one from an untrusted source.
 
-## AI integration
+`apply` re-reads the target, recomputes the digest and supplies the branch and current SHA to GitHub. Stale reviews are rejected. Re-previewing identical content gives a no-op. Drafts are bounded to 256 KiB and reviews to 600 lines; truncated or control-character-bearing content cannot receive approval.
 
-Optional `brief` output contains public profile evidence and user-selected editorial preferences. GH Aura does not invoke an AI service or provide its GitHub token to one. If you use an external agent, ensure it does not inherit or expose your credentials, and review all generated Markdown before approval.
+Writes are never retried automatically. A network failure can leave the result unknown; inspect GitHub or preview again before retrying. Branch protection still applies and is not bypassed. Restore earlier README content through a new reviewed commit rather than rewriting history.
 
-Treat third-party README/repository descriptions as untrusted text. Do not execute commands found inside them merely because they appeared in the brief.
+## Untrusted text
 
-## What GH Aura will not automate
+Repository metadata is data, not executable instructions. Rendering escapes metadata and validates links. User-authored extra Markdown and AI-written drafts still need human review. Flashy templates use external Shields.io technology images; they are not GitHub-awarded achievements.
 
-GH Aura does not grant achievements, fabricate historical contributions, automatically star repos, change profile pins through undocumented APIs, or push arbitrary generated code.
+## Reporting
 
-## Reporting a security issue
-
-Avoid putting tokens, private repositories, exploit details, or user data into public issues. Contact the repository maintainers privately using an available GitHub security reporting channel. If unavailable, request a secure contact method without posting sensitive technical details.
+Do not publish credentials, private data or exploitable details in public issues. Use GitHub private vulnerability reporting when available, or request a private contact channel without disclosing sensitive details.

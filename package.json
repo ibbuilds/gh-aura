@@ -1,42 +1,21 @@
 {
   "name": "gh-aura",
-  "version": "0.3.0",
-  "description": "User-directed, configurable CLI for GitHub profile audits, reviewed README updates and portfolio presentation.",
+  "version": "1.0.0",
+  "description": "A small, user-directed CLI for a professional GitHub profile.",
   "type": "module",
-  "bin": {
-    "gh-aura": "./src/cli.mjs"
-  },
-  "engines": {
-    "node": ">=22"
-  },
+  "bin": { "gh-aura": "./src/cli.mjs" },
+  "engines": { "node": ">=22" },
   "scripts": {
+    "check": "node scripts/check.mjs",
     "test": "node --test",
-    "check": "node --check src/cli.mjs && node --check src/github.mjs && node --check src/config.mjs && node --check src/config-cli.mjs && node --check src/engine.mjs && node --check src/render.mjs && node --check src/achievements.mjs && node --check src/inspection.mjs && node --check src/diff.mjs && node --check src/workflow.mjs && node --check src/brief.mjs",
+    "test:package": "node scripts/package-smoke.mjs",
+    "test:live": "node scripts/live-smoke.mjs",
     "start": "node src/cli.mjs"
   },
-  "keywords": [
-    "github",
-    "profile",
-    "cli",
-    "readme",
-    "portfolio",
-    "achievements"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ibbuilds/gh-aura.git"
-  },
+  "files": ["src/", "docs/", "README.md", "LICENSE", "CHANGELOG.md", "SECURITY.md"],
+  "repository": { "type": "git", "url": "git+https://github.com/ibbuilds/gh-aura.git" },
   "homepage": "https://github.com/ibbuilds/gh-aura#readme",
-  "bugs": {
-    "url": "https://github.com/ibbuilds/gh-aura/issues"
-  },
-  "files": [
-    "src/",
-    "docs/",
-    "README.md",
-    "LICENSE",
-    "CHANGELOG.md",
-    "SECURITY.md"
-  ]
+  "bugs": { "url": "https://github.com/ibbuilds/gh-aura/issues" },
+  "keywords": ["github", "profile", "cli", "readme", "portfolio"],
+  "license": "MIT"
 }

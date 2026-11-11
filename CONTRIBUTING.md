@@ -1,37 +1,17 @@
-# Contributing to GH Aura
+# Contributing
 
-GH Aura is a **CLI-only, user-directed** profile tool. Contributions preserve three invariants:
-
-1. Reading, auditing and drafting never change GitHub remotely.
-2. Remote changes require an explicit user command, review artifact, adequate permissions and validated current revision.
-3. The tool never fabricates experience, achievements, contributions or Git history.
-
-## Development
-
-Requirements: Node.js 22+.
+Keep GH Aura a small, user-directed CLI. Add dependencies only when they materially improve correctness or maintainability.
 
 ```bash
-git clone https://github.com/ibbuilds/gh-aura.git
-cd gh-aura
 npm run check
 npm test
-node src/cli.mjs --help
+npm run test:package
 ```
 
-There are no runtime dependencies. Prefer built-in Node APIs over new dependencies unless there is a clear maintenance or security justification.
+Node.js 22+ is required. Unit and subprocess tests run offline; `test:package` packs, installs and executes the actual distribution without registry access. CI covers Node 22/24 on Linux/macOS/Windows. `npm run test:live` requires a token and performs read-only public GitHub integration checks; never publish to a personal profile in tests.
 
-## Pull requests
+Submit focused branches and PRs. Update command help and docs when behavior changes. Add regression tests for bugs, including invalid input, unavailable data and publication conflicts. Missing evidence must not become an invented claim or a negative score.
 
-- Open a focused PR with a description of the behavioral change and risk.
-- Include offline tests for audit, configuration and publishing.
-- For GitHub API behavior, mock errors, missing data, rate limits and version conflicts.
-- Never use real credentials or publish to a real profile in automated tests.
-- Update README/help output whenever a command or flag changes.
-- Keep reports evidence-backed. Unknown data must remain unknown.
-- Favor readable, accessible Markdown without excessive decoration.
+All reads and drafts must remain free of remote writes. A new mutation requires a narrow target, explicit user command, review artifact and current-revision validation. Keep credentials out of fixtures and AI context.
 
-## Reviewing user-facing changes
-
-A change affecting publishing must document exactly which resource it modifies, which token permission it needs, and how the user can review or avoid the write. A change affecting achievements must include credible sources and mark unofficial information accordingly.
-
-Do not add empty commits, contribution painting, automated reactions or badge farming behavior.
+Releases are produced only from `main` after CI succeeds. A new package version creates a GitHub release with a tarball and checksum; existing releases are never overwritten. npm registry publication is separate and is not configured.

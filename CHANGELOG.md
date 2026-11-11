@@ -1,22 +1,23 @@
 # Changelog
 
-Entries describe code delivered in the repository; a version number does not imply publication to npm.
+## 1.0.0 — 2026-11-11
 
-## 0.3.0 — 2026-11-11 (prototype)
+- Simplified the primary flow: save a username once, audit, draft, preview and explicitly apply a local review file.
+- Added annual contribution reports, visibility diagnostics and bounded repository milestones.
+- Added configurable achievement opportunities with public PR/star evidence, self-reported status and paid/historical distinctions.
+- Fixed pagination, exact featured selections, private-data boundaries, safe Markdown links and executable symlink handling.
+- Bound publishing to the exact draft, target branch and current README revision; rejected stale or incomplete reviews and removed automatic write retries.
+- Added strict command-specific flags, cross-platform unit/E2E tests, installed-package checks and live read-only integration.
+- Kept external AI optional through JSON briefs; no runtime dependencies, UI or autonomous profile changes.
 
-- Added command-driven local configuration with `show`, `get`, `set`, `reset` and `--dry-run`.
-- Added provider-neutral `brief` export for user-selected editors and AI clients.
-- Added explicit `preview` and hash-approved `apply` flow for the profile README.
-- Added safeguards against stale remote content, unapproved writes and `--dry-run` misuse.
-- Added offline tests and documentation for publishing permissions.
+## 0.3.0 — 2026-11-11
 
-## 0.2.0 — 2026-11-11 (prototype)
+Added local config commands, editorial briefs and digest-approved README publishing.
 
-- Added optional inspection of top-ranked project READMEs (`--inspect`).
-- Added local textual diff preview against the profile README.
-- Expanded audit and test coverage.
+## 0.2.0 — 2026-11-11
 
-## 0.1.0 — 2026-11-11 (prototype)
+Added candidate README inspection and terminal diffs.
 
-- Introduced CLI-only public profile audit, action plan, showcase ranking, achievements guide and three configurable README presets.
-- Added zero-runtime-dependency Node.js package, automated tests and CI.
+## 0.1.0 — 2026-11-11
+
+Initial audit, showcase, achievement guide and three README styles.
