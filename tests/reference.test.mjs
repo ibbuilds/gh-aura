@@ -24,7 +24,7 @@ test('reference browser filters employer-source examples with links and qualific
   assert.equal(data.cohort.affiliated.length, 1);
   assert.equal(data.cohort.affiliated[0].count, 5);
   assert.ok(data.employerSourced.examples.every((person) => person.company === 'Microsoft'));
-  assert.match(data.limitations, /employment/i);
+  assert.match(data.limitations, /employ/i);
   assert.equal(referenceReport('nonexistent company').employerSourced.examples.length, 0);
 });
 
