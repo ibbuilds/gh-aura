@@ -1,13 +1,15 @@
+import { presentationPlan } from './editorial.mjs';
 import { selectFeatured } from './engine.mjs';
 import { md, html, httpsUrl, repoUrl } from './text.mjs';
 
 export function renderProfile(snapshot, config, chosenStyle) {
-  const style = chosenStyle || config.profile.style;
+  const plan = presentationPlan({ ...config.profile, ...(chosenStyle ? { style: chosenStyle, visual: -1 } : {}) });
+  const style = plan.style;
   if (!['minimal', 'regular', 'flashy'].includes(style)) throw new Error('Choose minimal, regular, or flashy.');
   const p = config.profile;
-  const sections = { about: true, projects: true, technologies: style !== 'minimal', links: true, stats: style === 'flashy', extras: true, ...p.sections };
+  const sections = plan.sections;
   const projects = sections.projects ? selectFeatured(snapshot, config) : [];
-  const technologies = [...new Set(p.technologies.length ? p.technologies : snapshot.repos.map((repo) => repo.language).filter(Boolean))].slice(0, 12);
+  const technologies = [...new Set(p.technologies.length ? p.technologies : snapshot.repos.map((repo) => repo.language).filter(Boolean))].slice(0, p.technologies.length ? 12 : plan.maxTechnologyLabels);
   const techLabel = p.technologies.length ? 'Technologies' : 'Languages in public repositories';
   const name = p.name || snapshot.user.name || snapshot.username;
   const about = p.about || snapshot.user.bio || '';
@@ -19,13 +21,13 @@ export function renderProfile(snapshot, config, chosenStyle) {
   if (style === 'flashy') {
     lines.push('<div align="center">', '', '<h1>' + html(name) + '</h1>');
     if (p.headline) lines.push('<p><strong>' + html(p.headline) + '</strong></p>');
-    if (sections.about && about) lines.push('<p>' + html(about) + '</p>');
+    if (sections.about && about && about.trim().toLowerCase() !== p.headline.trim().toLowerCase()) lines.push('<p>' + html(about) + '</p>');
     if (p.location) lines.push('<p>' + html(p.location) + '</p>');
     lines.push('', '</div>', '');
   } else {
     lines.push('# ' + md(name), '');
     if (p.headline) lines.push((style === 'regular' ? '> ' : '') + md(p.headline), '');
-    if (sections.about && about) lines.push(md(about), '');
+    if (sections.about && about && about.trim().toLowerCase() !== p.headline.trim().toLowerCase()) lines.push(md(about), '');
     if (p.location) lines.push(md(p.location), '');
   }
   if (sections.projects && projects.length) {
