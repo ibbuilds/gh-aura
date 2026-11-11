@@ -40,6 +40,7 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `achievements` | Show opportunities, prerequisites and public evidence |
 | `contributions --all` | Inspect authentic activity across available years |
 | `brief --prompt -o writer.txt` | Prepare grounded instructions for your chosen writer |
+| `references` | Browse source-linked engineer profile examples offline |
 | `check --file draft.md` | Check a draft locally; no API or AI calls |
 | `config show` | Inspect or change local preferences |
 
@@ -52,18 +53,21 @@ gh-aura config set profile.visual 20
 gh-aura config set profile.sections.stats false
 gh-aura config set profile.featured '["YOUR_USERNAME/project-one"]'
 gh-aura config set editorial.targetRole "Backend engineer"
+gh-aura config set editorial.targetCompany "Microsoft"
 gh-aura config set editorial.language en
 ```
 
 Visual intensity is 0–100: compact below 35, structured at 35–69, visual at 70–100. It changes layout and decorative density, not skills, seniority, history or credibility. Explicit section switches and project selections win. Reset `profile.visual` to inherit a style preset.
 
-## Writing grounded in real profiles
+## Writing grounded in professional engineer profiles
 
-A reproducible study records **100 public contributor accounts from 12 mature projects**. Only structural observations and source hashes are retained, not copied biographies. The cohort is not a representative hiring study, and its members' experience is not attributed to you.
+Our research now separates **100 public company-associated engineering accounts** from **16 engineer profiles connected to employer-owned author or engineering pages**. The first group has public organization membership and matching self-reported employer/role; these signals **do not prove current employment**. The smaller employer-sourced group records official publication links, but those assertions can become outdated. Both datasets record structural features and provenance, **not copied biographies**.
 
-`brief` combines your own project evidence, preferences and those documented structural lessons. `brief --prompt` prepares instructions for any editor or AI; GH Aura never invokes a model or sends it your token. `check` catches some repetition, placeholders and claims needing review, but does not certify truth or originality.
+Use `gh-aura references` or `gh-aura references --company Microsoft` to browse source-linked examples without making API requests. The writer uses documented presentation patterns — clear specialization, verifiable contribution and readable featured work — rather than imitating someone's credentials. Setting `editorial.targetCompany` means a company you want to apply to, **not an employer you claim to work for**.
 
-[Study and limitations](research/README.md) · [Writing workflow](docs/AI_WORKFLOW.md)
+`brief` combines evidence of your own work with these references and writing preferences. `brief --prompt` prepares original instructions for any editor or AI; GH Aura never invokes a model or sends it your token. `check` catches some repetition, placeholders and claims needing review, but does not certify truth or originality. Neither research cohort measured interviews or hiring success.
+
+[Industry research and limitations](research/INDUSTRY_STUDY.md) · [Writing workflow](docs/AI_WORKFLOW.md)
 
 ## Resource use
 

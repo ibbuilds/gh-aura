@@ -83,7 +83,9 @@ test('CLI options reject ambiguous settings before loading any command', () => {
 });
 
 test('reference describes a purposive sample rather than a professional quality score', () => {
-  assert.equal(PROFILE_REFERENCE.observations.withPins, 72);
-  assert.equal(PROFILE_REFERENCE.observations.rootReadmesObserved, 17);
+  assert.equal(PROFILE_REFERENCE.observations.withPins, 75);
+  assert.equal(PROFILE_REFERENCE.observations.rootReadmesObserved, 38);
   assert.match(PROFILE_REFERENCE.limitations, /Not a hiring-outcome study/);
+  assert.equal(PROFILE_REFERENCE.employerSourced.sampleSize, 16);
+  assert.match(PROFILE_REFERENCE.criteria, /not certified employment/);
 });

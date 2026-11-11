@@ -40,3 +40,7 @@ Public cache entries retain short-lived observations, isolated by credential-der
 ## Tests and maintenance
 
 Core logic is unit-tested offline; the subprocess flow uses isolated transport fixtures. Installed-package checks and Node 22/24 matrices cover Linux, macOS and Windows. Live integration is read-only. Deterministic resource assertions run alongside correctness tests. New abstractions require a concrete correctness, resource-use or maintenance benefit, not merely another layer.
+
+## Professional reference data (v1.3)
+
+The CLI has a compact read-only local `reference.mjs` aggregate and source-linked professional examples. Two research sources remain **distinct**: 100 public company-organization members with self-reported company and engineering role (employment **unverified**), and 16 profiles associated with engineering author pages published by employers (sources may be stale). Neither offers proof of hiring outcomes. Research datasets and one-time collectors live under `research/` and `scripts/` but are excluded from the runtime npm tarball; ordinary commands never fetch the 116 reference accounts. `references` executes offline. `brief` selects at most four short source links and structural counts rather than copying profiles, retaining the existing 12 KiB context budget. See [study methodology](../research/INDUSTRY_STUDY.md).

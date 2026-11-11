@@ -15,6 +15,12 @@ export async function run(command, options) {
     if (options['dry-run'] && !['set', 'reset'].includes(action)) throw new Error('--dry-run is only valid for config set/reset.');
     emit(configCommand(action, key, value, { file: options.config, dryRun: options['dry-run'] })); return;
   }
+  if (command === 'references') {
+    const { referenceReport, renderReferenceReport } = await import('../reference.mjs');
+    const data = referenceReport(options.company || '');
+    emit(options.format === 'json' ? data : renderReferenceReport(data), options);
+    return;
+  }
   if (!options.file) throw new Error('Specify a Markdown draft with --file.');
   if (statSync(options.file).size > 256 * 1024) throw new Error('Draft exceeds 256 KiB.');
   const draft = readFileSync(options.file, 'utf8');

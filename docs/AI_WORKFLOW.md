@@ -6,12 +6,13 @@ GH Aura separates facts, presentation, writing and publication. It does not call
 
 ```bash
 gh-aura config set editorial.targetRole "Backend engineer"
+gh-aura config set editorial.targetCompany "Microsoft"
 gh-aura config set editorial.language en
 gh-aura config set editorial.maxWords 180
 gh-aura config set profile.visual 20
 ```
 
-The target role is the job you want to address, **not** a claim that you hold that title. Language and word target guide an external writer. Existing text is not automatically translated; local template labels remain English.
+The target role and target company describe where you want to apply, **not** existing credentials or proof that you work there. Language and word target guide an external writer. Existing text is not automatically translated; local template labels remain English.
 
 ## Export evidence and instructions
 
@@ -24,7 +25,7 @@ gh-aura brief --prompt --output writer.txt
 
 The compact JSON context is limited to **12,000 bytes**. Existing README excerpts are capped at 1,200 characters rather than the previous 24,000. Truncation and omitted lists are declared; missing facts are not filled in. Pretty-printed JSON files and the surrounding writing instructions are larger than the compact data alone. No fixed model-token savings are claimed because tokenization differs by provider.
 
-The reference is a study of 100 public contributor accounts, not a biography library. The writer may learn structure, never borrow another person's identity, seniority, employment or achievements. See [study methodology](../research/README.md).
+The reference contains 100 public company-associated engineering profiles and 16 company-author-source examples. The 100 rely on self-reported company/role plus public organization membership; they are not 100 employer-verified employees. The smaller employer-sourced set has dated company-owned pages, not HR certification. Neither study measured hiring results. The writer may learn structure, never borrow another person's identity, seniority, employment or achievements. See [industry research and evidence tiers](../research/INDUSTRY_STUDY.md).
 
 ## Check, edit and review
 

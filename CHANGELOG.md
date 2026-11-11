@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0 — 2026-11-11
+
+- Replaced the primary open-source *project contributor* reference with an explicitly sourced study of **individual engineer profiles**.
+- Recorded 100 company-associated engineering accounts from 21 organizations using public membership and self-described company/role signals, labeled **employment unverified**.
+- Added a distinct set of 16 GitHub profiles associated with employer-controlled engineering author pages; links and review dates are retained, and employment claims may be historical.
+- Added a zero-network `references` CLI command with employer filtering and JSON output.
+- Added `editorial.targetCompany` as an aspirational target, never a claimed existing employer.
+- Updated editorial brief and writing instructions to use only structural lessons, real project ownership and verifiable work; no biography copying or hiring-outcome claims.
+- Kept full source data and research collectors outside the installable runtime package; source hashes and cross-platform regression checks preserve provenance.
+- Preserved user-directed review/publish and zero-runtime-dependency design.
+
+
 ## 1.2.0 — 2026-11-11
 
 - Split parsing, local work, public reads and publishing into lazily loaded command handlers.

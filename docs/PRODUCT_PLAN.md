@@ -28,3 +28,7 @@ The only remote write surface is the chosen public profile repository's README, 
 ## Release gates
 
 Syntax, unit/regression, subprocess end-to-end and installed-package tests must pass on Node 22/24 across Linux/macOS/Windows. Real GitHub integration is strictly read-only and verifies public API behavior and cache reuse. Publishing tests use isolated fixtures, not a personal profile. Only after these checks can a separate release job publish a new versioned tarball and checksum.
+
+## Evidence-backed professional reference update (v1.3)
+
+Reference data now separates 100 public company-organization member accounts with two self-reported signals (employer and engineering role) from 16 employer-owned engineering author-page examples. Only the latter have company-controlled published role evidence, which can become stale. Neither cohort predicts interview or hiring outcomes. Both are used for structural presentation guidance, never for imitating somebody else's job history or for filling contribution calendars. The collection is a manually invoked research task; ordinary GH Aura commands do not scrape or refresh others' accounts. See [method and data](../research/INDUSTRY_STUDY.md).

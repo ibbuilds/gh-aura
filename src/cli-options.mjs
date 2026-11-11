@@ -2,6 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'format', 'output', 'force'];
 export const SPECS = {
+  references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
   init: { usage: 'init [USER] [--config FILE]', flags: ['config', 'output', 'force'], max: 1 },
   config: { usage: 'config show|get|set|reset [KEY] [VALUE] [--dry-run]', flags: ['config', 'dry-run'], max: 3 },
   audit: { usage: 'audit [USER] [--inspect 6] [--json] [--stats]', flags: DATA, max: 1 },
@@ -15,7 +16,7 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'budget', 'brief']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'budget', 'brief', 'company']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict']);
 export const HELP = [
   'GH Aura — a GitHub profile toolkit. You choose every change.', '',
@@ -28,6 +29,7 @@ export const HELP = [
   '  contributions  Inspect annual activity and visibility checks',
   '  brief --prompt Export grounded instructions for any writer',
   '  check          Check a draft locally before reviewing it',
+  '  references     Browse sourced working-engineer profile examples (offline)',
   '  config         Read or change local preferences', '',
   'Use gh-aura COMMAND --help for options. No command runs in the background.',
   'Only apply writes to GitHub. Add --stats to a read command to measure its cost.',
