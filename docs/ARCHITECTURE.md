@@ -1,144 +1,105 @@
-# GH Aura — Architecture proposal
+# GH Aura — technical architecture
 
-**Status:** Proposed, not implemented. Keep the first release small and local-first.
+**Architecture decision:** CLI-only, local-first, **Node.js 22+ and zero runtime dependencies**. No website, dashboard, browser extension, hosted database, or mandatory AI vendor.
 
-## Architecture at a glance
+The original TypeScript + web-app suggestion has been replaced by a smaller, dependency-free ES module implementation. Add dependencies only when they materially improve correctness or maintainability.
 
-```text
-GitHub public REST / optional authenticated GraphQL
-                   |
-                   v
-        GitHub adapter (read-only)
-                   |
-                   v
-     Normalization + provenance + cache
-                   |
-          ProfileSnapshot
-                   |
-        +----------+-----------+
-        |          |           |
-        v          v           v
-   Audit rules  README studio  Showcase ranker
-        |          |           |
-        +----------+-----------+
-                   |
-             ActionPlan
-                   |
-             Report / CLI
-                   |
-        [explicit user review]
-                   |
-          Optional write adapter
-```
-
-Additional modules after MVP: achievement catalog + status tracker, contributions visibility analyzer, career timeline, scheduled read-only review.
-
-## Stack
-
-- Node.js **22+**, TypeScript (strict), package manager **pnpm**.
-- CLI: `commander`; GitHub: `@octokit/rest` and GraphQL requests when necessary.
-- Runtime schemas: `zod`. Testing: `vitest`. Formatting and linting: `prettier` and `eslint`.
-- Markdown renderer should emit plain Markdown first; rich preview can be local and opt-in later.
-- Use official supported GitHub APIs; never rely on unauthorized scraping or UI automation.
-- AI assistance is an optional separate adapter, **not** required for deterministic audit or recommendation logic.
-
-Keep the MVP as one TypeScript package. Extract packages or add a web app **only when** real use demonstrates that split is needed.
-
-## Proposed layout (not yet created)
+## Existing source layout (v0.1.0)
 
 ```text
-gh-aura/
-├── src/
-│   ├── cli/                 # commands, args, output
-│   ├── github/              # API adapter, auth and rate limiting
-│   ├── domain/              # typed snapshots, evidence and findings
-│   ├── audit/               # deterministic audit rules
-│   ├── recommendations/     # roadmap, ranking and explanations
-│   ├── render/              # README templates and reports
-│   ├── achievements/        # versioned source-backed catalog (later)
-│   ├── contributions/       # visibility attribution (later)
-│   └── apply/               # separately authorized writes (later)
-├── templates/
-│   └── profile/             # minimal, engineering, open-source
-├── tests/
-│   ├── fixtures/            # sanitized deterministic snapshots
-│   ├── unit/
-│   └── integration/
-├── docs/
-│   ├── PRODUCT_PLAN.md
-│   └── ARCHITECTURE.md
-├── package.json
-├── tsconfig.json
-└── README.md
+src/
+  cli.mjs           command parser / local output
+  config.mjs        defaults, validation, style and section options
+  github.mjs        public GitHub API snapshots
+  engine.mjs        audit rules / explainable repository ranking
+  render.mjs        minimalist, regular and flashy README renderers
+  achievements.mjs  community-reported badge catalog and caveats
+tests/
+  config.test.mjs
+  engine.test.mjs
+  cli.test.mjs
+  fixtures.mjs
+.github/workflows/ci.yml
 ```
 
-## Domain contracts (illustrative)
+No source-code refactoring, source quality grading, remote write adapter, private historical graph importer, or achievement farming is implemented.
 
-```ts
-type Evidence = {
-  sourceUrl?: string;
-  observation: string;
-  observedAt: string;
-  confidence: "verified" | "inferred" | "user_supplied" | "unknown";
-};
+## Execution flow
 
-type Finding = {
-  id: string;
-  category: "profile" | "showcase" | "repository" | "achievements" | "contributions";
-  severity: "high" | "medium" | "low" | "info";
-  evidence: Evidence[];
-  whyItMatters: string;
-  recommendation: string;
-  automatable: boolean;
-  requiresConfirmation: boolean;
-};
-
-type RecommendedRepository = {
-  fullName: string;
-  breakdown: Record<string, number | null>;
-  rationale: string[];
-  limitations: string[];
-};
+```text
+gh-aura [command] [username] [flags]
+       |
+       v
+load validated JSON config (optional)
+       |
+       +--> achievements (offline guide)
+       |
+       v
+official GitHub REST API (public, read only)
+       |
+       v
+normalized profile snapshot + repository metadata + profile README
+       |
+       +--> audit / plan -> Markdown or JSON report
+       +--> showcase -> explainable recommendations
+       +--> profile -> one of three editable Markdown drafts
+       |
+       v
+stdout or explicit local file (--output)
 ```
 
-A `ProfileSnapshot` references normalized GitHub profile metadata, repository snapshots, README existence/content where available, existing featured/pinned items where accessible, and observation timestamps. Do not treat unavailable data as a negative result.
+No GitHub writes exist in the current CLI.
 
-## Modes and permissions
+## Presentation presets
 
-| Mode | Access | Can mutate GitHub? |
+- `minimal`: short headline and proof-focused selected work; no default badges, stats, or animations.
+- `regular`: stronger hierarchy and tabular showcased projects; optional repository-language section.
+- `flashy`: centered introduction, external shield images, more detailed projects and optional snapshot statistics.
+
+The same fields and section toggles apply to **every** preset. No presets imply experience or technologies that the available data cannot establish. A list inferred from repository language is labeled *languages found in public repositories*, not a claim of expertise.
+
+## Data and explainability
+
+All findings contain an observation, action, source link and severity. Repository ranking is deliberately constrained by evidence available in public API metadata; it is **not** a complete source-code analysis.
+
+Configurable initial ranking weights:
+- Declared goal/topic relevance: 30%
+- Ownership, nonempty source and language metadata proxies: 25%
+- Description, topics and demo/website metadata: 20%
+- Recency of actual public changes: 15%
+- Popularity (logarithmically discounted): 10%
+
+Forks and archives receive a penalty unless explicitly chosen. The pin advisor does not change pins remotely. Score explanations and user overrides matter more than precise score numbers.
+
+## Permission model
+
+| Feature | Current API access | Write capability |
 | --- | --- | --- |
-| Public audit (default) | Public GitHub data, no token required (subject to rate limits) | No |
-| Authenticated audit | Opt-in fine-grained read permissions | No |
-| Draft/preview | Local files only | No |
-| Apply | Separate scope + explicit approval + per-file diff | Yes, only approved resources |
+| Public profile audit | GitHub REST public data | None |
+| README generator | Public data + local user config | Local file only |
+| Showcase advisor | Public repository metadata | Recommendation only |
+| Achievement guide | Offline documented/community references | None |
+| Historical contributions diagnostics | Planned, authenticated where needed | None |
+| Profile apply/sync | Planned | Scoped opt-in changes with review |
 
-**Never** log tokens, send raw authentication to AI prompts, commit secrets, persist private repo snapshots without opting in, or give an LLM direct write access.
+Do not log tokens, embed them in the generated README, request access to private data by default, or send them to third-party AI. Env-based token input is optional.
 
-Use environment/GitHub CLI credential lookup securely. Support request retry and API rate limiting without denial-of-service behavior.
+## Historical activity
 
-## Profile vs. repository mutations
+**Never rewrite or redate history to simulate a career arc.** The planned `contributions` command will inspect existing commit attribution, eligible default/`gh-pages` branch contributions, fork limitations, and private contribution visibility as permissions allow. When a user has genuine existing historical work, provide documented ways to display it correctly. New activity must come from real work.
 
-- Profile README: prepared as a local file; optionally propose a PR to `username/username` after permissions and user review.
-- Public profile fields: read for audit; update only if supported by the relevant official API and separately authorized profile write scope.
-- Pins: rank and explain; instruct user to select up to six in GitHub UI. No public supported auto-pin mutation is assumed.
-- Repos: audit metadata/docs to improve their *presentation*; no general bulk code changes.
-- Achievements: GH Aura reports and recommends; GitHub awards. If status can't be verified through supported methods, label it unknown.
-- Contributions: audit and troubleshoot real work; never backdate or rewrite history.
+## Achievements
 
-## Validation & release gates
+The static catalog is **not an achievement verifier**. Community-reported triggers are labeled as such, with sources and caveats. Official GitHub achievement program and award criteria are not fully guaranteed or exhaustively available through the current public API. Never claim a user earned a badge without suitable verification.
 
-1. Offline unit tests for audit rules, schema parsing, and ranking edge cases.
-2. Sanitized fixtures for empty account, no README, private-only account, many repos, fork-heavy account, stale repositories.
-3. Snapshot tests for each README style and non-hallucination rules.
-4. API integration tests with mock rate limits, 404, 403, 429, pagination, incomplete data, and token expiry.
-5. Smoke test on an authorized public profile, with no mutations.
-6. `--dry-run` default for any later write command; idempotency and rollback checks.
-7. Standard CI (lint/typecheck/test/build) required before release.
+## Tests and releases
 
-## First three vertical slices
+`npm run check` uses Node's built-in syntax validation. `npm test` runs deterministic built-in `node:test` tests, without network access. CI has read-only repository permissions.
 
-- **Slice 1:** `audit --user <login>` -> profile snapshot -> three evidence-backed findings -> `report.md` + `report.json`.
-- **Slice 2:** existing report -> `readme --style minimal` -> Markdown draft -> visual review.
-- **Slice 3:** full repository inventory -> ranked, explained pin shortlist -> printable manual steps.
+Next engineering slices:
+1. Improve API failure handling, fixtures, and profile audit fidelity.
+2. Add actual repository README checks and better showcase evidence.
+3. Add trustworthy historical contributions diagnostics.
+4. Add an opt-in, per-change CLI apply workflow, with diffs and rollback guidance.
 
-Do not expand into automated achievements, activity schedulers, or a web dashboard before these three slices are reliable.
+No UI is planned.
