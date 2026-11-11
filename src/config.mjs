@@ -4,9 +4,9 @@ import { httpsUrl, plain } from './text.mjs';
 
 export const DEFAULT_CONFIG = {
   user: '',
-  scan: { maxRepos: 200, inspectRepos: 0 },
+  scan: { maxRepos: 200, inspectRepos: 0, maxRequests: 60 },
   profile: {
-    style: 'minimal', name: '', headline: '', about: '', location: '',
+    style: 'minimal', visual: -1, name: '', headline: '', about: '', location: '',
     technologies: [], featured: [], excluded: [], maxProjects: 3,
     sections: {}, links: [], extras: [], accent: 'blue',
   },
@@ -15,6 +15,7 @@ export const DEFAULT_CONFIG = {
     weights: { relevance: 30, substance: 25, presentation: 20, maintenance: 15, popularity: 10 },
   },
   achievements: { earned: [], excluded: [], allowPaid: false },
+  editorial: { language: 'en', targetRole: '', maxWords: 220 },
 };
 
 export const SECTIONS = new Set(['about', 'projects', 'technologies', 'links', 'stats', 'extras']);
@@ -60,6 +61,11 @@ export function validateConfig(config) {
   for (const key of ['technologies', 'featured', 'excluded']) array(p[key], 'profile.' + key);
   for (const key of ['topics', 'preferred', 'excluded']) array(config.showcase[key], 'showcase.' + key);
   string(config.showcase.goal, 'showcase.goal');
+  integer(config.scan.maxRequests, 1, 500, 'scan.maxRequests');
+  integer(p.visual, -1, 100, 'profile.visual');
+  string(config.editorial.targetRole, 'editorial.targetRole');
+  if (!['en', 'es'].includes(config.editorial.language)) throw new Error('editorial.language must be en or es.');
+  integer(config.editorial.maxWords, 30, 1000, 'editorial.maxWords');
   integer(config.scan.maxRepos, 1, 500, 'scan.maxRepos');
   integer(config.scan.inspectRepos, 0, 20, 'scan.inspectRepos');
   integer(p.maxProjects, 0, 6, 'profile.maxProjects');

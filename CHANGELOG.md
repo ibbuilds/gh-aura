@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0 — 2026-11-11
+
+- Split parsing, local work, public reads and publishing into lazily loaded command handlers.
+- Added request/stream-byte budgets, `--budget` and token-free `--stats` measurements.
+- Removed unused existing-README reads during plain draft generation; added a reproducible 4→2→0 request fixture.
+- Added `--visual 0..100`, editorial preferences, compact briefs, writing prompts and fully local draft checks.
+- Recorded structural observations from 100 public contributor accounts across 12 projects, with provenance and explicit sampling limits.
+- Added cohort-integrity, budget, editorial and actual CLI live-read tests; normalized repository line endings across platforms.
+- Kept badge awarding, professional identity and historical activity outside presentation automation.
+
 ## 1.1.0 — 2026-11-11
 
 - Added bounded local public-read caching, ETag revalidation and `--fresh`; preview/apply always bypass cache.

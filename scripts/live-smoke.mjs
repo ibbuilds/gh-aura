@@ -1,6 +1,7 @@
-// Real GitHub integration: only public reads and a read-only GraphQL query. Never publish here.
+// Real GitHub integration: public reads only. Never publish here.
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { getSnapshot } from '../src/github.mjs';
@@ -30,19 +31,26 @@ try {
   await inspectRepositories(snapshot, config, 3, read);
   const report = auditProfile(snapshot, config);
   assert.ok(report.findings.every((item) => item.source && item.action && item.confidence));
-  for (const style of ['minimal', 'regular', 'flashy']) {
-    const draft = renderProfile(snapshot, config, style);
-    assert.ok(draft.trim().length > 0);
-  }
+  for (const style of ['minimal', 'regular', 'flashy']) assert.ok(renderProfile(snapshot, config, style).trim().length > 0);
   const target = await profileTarget(username);
   const draft = preserveProfile(target.content, renderProfile(snapshot, config));
   assert.match(previewProfile(target, draft), /Nothing has been published/);
-  const achievements = await achievementReport(snapshot, config, read);
-  assert.equal(achievements.user, snapshot.username);
+  assert.equal((await achievementReport(snapshot, config, read)).user, snapshot.username);
   const history = await contributionsReport(snapshot, { ...read, details: true });
   assert.equal(history.status, 'observed');
   assert.equal(history.years.length, 1);
   assert.ok(history.detailCoverage.repositories.length <= 3);
-  console.log(JSON.stringify({ checked: 'public audit, 3 styles, managed draft, preview, opportunities, contribution history',
-    immediateRepeatRequests: 0, cache: cache.summary(), writes: 0 }, null, 2));
+  // Exercise the actual refactored CLI and bounded transport, not only the library functions.
+  const profile = spawnSync(process.execPath, ['src/cli.mjs', 'profile', username, '--visual', '20', '--fresh', '--stats', '--budget', '5'], { encoding: 'utf8', timeout: 60000 });
+  assert.equal(profile.status, 0, profile.stderr);
+  const statsLine = profile.stderr.split('\n').find((line) => line.startsWith('GH Aura usage: '));
+  assert.ok(statsLine);
+  const cliUsage = JSON.parse(statsLine.slice('GH Aura usage: '.length));
+  assert.ok(cliUsage.networkRequests <= 3, 'Plain draft generation should not fetch the existing profile README.');
+  const prompt = spawnSync(process.execPath, ['src/cli.mjs', 'brief', username, '--prompt', '--fresh', '--budget', '10'], { encoding: 'utf8', timeout: 60000 });
+  assert.equal(prompt.status, 0, prompt.stderr);
+  assert.match(prompt.stdout, /BEGIN UNTRUSTED EDITORIAL DATA/);
+  assert.ok(Buffer.byteLength(prompt.stdout) < 16000);
+  console.log(JSON.stringify({ checked: 'public audit, 3 styles, managed draft, preview, opportunities, contribution history, bounded CLI reads and editorial prompt',
+    immediateRepeatRequests: 0, cliUsage, cache: cache.summary(), writes: 0 }, null, 2));
 } finally { rmSync(directory, { recursive: true, force: true }); }

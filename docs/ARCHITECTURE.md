@@ -1,36 +1,42 @@
 # Architecture
 
-GH Aura is a local Node.js CLI with no runtime dependencies, hosted service, background scheduler or mandatory AI provider.
+Local-first Node.js ES modules, no runtime dependencies. The command line is the interface; no daemon, hosted backend or mandatory model provider.
 
 ```text
-command → validated config → public GitHub snapshot → analysis/rendering → stdout or local file
-exact draft → remote README → terminal diff → local review → explicit apply → Contents API update or explicit PR
+cli.mjs / cli-options.mjs     parse and validate; cheap help path
+  commands/local.mjs         settings and offline draft checks
+  commands/read.mjs          one bounded/cache-aware read lifecycle
+  commands/publish.mjs       explicit reviewed publication only
+
+  github.mjs + cache.mjs     official APIs, public visibility, ETags
+  session.mjs                request/stream-byte budgets and measurements
+  engine.mjs + inspection    evidence-based findings and showcase ranking
+  render.mjs                 deterministic layouts and managed regions
+  editorial.mjs + brief     writing contract and local heuristics
+  reference.mjs              small dated aggregate, no biography corpus
+  workflow + pull-request   exact revision/draft approval and guarded writes
 ```
 
-## Modules
+## Ownership boundaries
 
-- `cli`: command routing, help, argument validation, output and executable entry point.
-- `config`, `config-cli`: defaults, schema checks and explicit local changes.
-- `github`: fixed-origin REST/GraphQL requests, token handling, pagination and error classification.
-- `engine`, `inspection`: reproducible showcase rankings and evidence-based findings.
-- `render`, `text`, `diff`: Markdown presets, safe external text and bounded review diffs.
-- `workflow`, `pull-request`: exact README target, review digest, review files and explicit direct/PR publication.
-- `cache`: five-minute, bounded public-read cache with ETag revalidation; never used for publication.
-- `achievements`, `contributions`: opportunity catalog, observed activity and explicit data limits.
-- `brief`: provider-neutral editorial context with untrusted-data labels.
+The bootstrap does not import network or publishing code for help. Local commands cannot use the read-session or publication path accidentally through a global autonomous runner. Read handlers share one explicit session/cache, while publishing performs fresh reads without that cache. Read-session POST is restricted to read-only GraphQL queries, not mutations.
 
-## Invariants
+Recommendations distinguish observed metadata from inferred presentation value. Unknown README content is not a missing file. Stars have low, configurable weight; manual selected projects remain exact. No score certifies engineering quality.
 
-Audit, drafting and preview never write remotely. Only `apply` can update the public `USER/USER` root README (directly or through an unmerged PR); it binds the current default branch and file SHA to the reviewed draft. Credential-bearing redirects are rejected. Reads can retry one temporary 502/503/504; writes never retry. Errors after a write distinguish an unknown result from a confirmed failure.
+## Writing
 
-Authenticated reads still exclude private repository contents from public-profile exports. No token is stored in config or sent to an AI provider. Unknown data remains unknown. Explicit featured projects are exact and exclusions win. Template metrics are dated observations, not dynamic or verified skill scores.
+An editorial brief contains the account's own evidence, declared preferences, an optional target role, bounded source excerpts and aggregate structural guidance. It never contains a cohort biography or an API credential. The user chooses whether an external editor or model uses it. Local `check` is deliberately heuristic; it does not replace human fact checking or the separate review/apply contract.
 
-## Verification
+Presentation intensity changes layout and optional decoration only. It cannot create experience, historical activity, professional rank or earned achievements.
 
-Offline tests cover parsing, config, ranking, render safety, API pagination/errors, contribution windows, approval binding and an isolated subprocess publishing flow. A separate test packs and installs the CLI offline. CI runs Node 22/24 on Linux/macOS/Windows; a read-only integration job exercises official GitHub APIs. Personal profile writes are never part of CI.
+## Data and resource limits
 
-CI jobs use read-only repository permissions. A separate release job on `main`, after all checks pass, can publish the package artifact and checksum to a versioned GitHub release. It does not publish to npm or modify a user's profile.
+Public cache entries retain short-lived observations, isolated by credential-derived keys without persisting tokens. Network/JSON budgets are explicit and tested. Optional inspections and historical detail queries stay bounded. The sample of 100 public contributor accounts is versioned research outside the installed package, not a runtime crawler.
 
-See [CLI reference](CLI.md) and [security policy](../SECURITY.md) for observable behavior and limitations.
+## Publication
 
-Public read caching is enabled by the CLI, not implicitly by the network library. Callers must mark public reads. Token-bearing content cache misses recheck current repository visibility. Keys isolate credentials without storing tokens; cache storage is bounded to 128 entries/16 MiB. GraphQL is not cached. `--fresh` bypasses caching. CI does not upload artifacts or use paid runners and is guarded off for private repositories.
+`preview` reads a live public profile repository and binds the exact draft, repository, branch, path and current content/revision into a review digest. `apply` either updates that reviewed root README or opens an unmerged PR. It rejects stale or conflicting state, unrelated PR changes and mismatched approval. Writes are never automatically retried. Account settings, pins, achievements and Git history are not mutation surfaces.
+
+## Tests and maintenance
+
+Core logic is unit-tested offline; the subprocess flow uses isolated transport fixtures. Installed-package checks and Node 22/24 matrices cover Linux, macOS and Windows. Live integration is read-only. Deterministic resource assertions run alongside correctness tests. New abstractions require a concrete correctness, resource-use or maintenance benefit, not merely another layer.
