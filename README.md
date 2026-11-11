@@ -154,7 +154,7 @@ gh-aura preview ibbuilds --file draft.md
 
 # 3. Only if you approve: copy the code printed by preview.
 # A GitHub token with contents:write to ibbuilds/ibbuilds is required.
-GH_TOKEN=... gh-aura apply ibbuilds --file draft.md --approve <SHA256_FROM_PREVIEW>
+GH_TOKEN=... gh-aura apply ibbuilds --file draft.md --approve SHA256_FROM_PREVIEW
 ```
 
 The approval code is bound to the username, target path, current README content and revision, and exact draft bytes. If the draft or remote README changes, the code becomes invalid. The GitHub Contents API also checks the current file SHA to reject concurrent updates. `apply` updates **only** the profile README, not other repository files, pins, commits or account settings. Existing README content is not merged automatically; you must review the full diff.
