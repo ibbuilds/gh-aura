@@ -77,6 +77,10 @@ Public reads reuse a short local cache and ETags. Plain draft generation skips t
 
 The reference study is not repeated during use. No server, paid model, hosted database or runtime dependency is required. [Free operation](docs/FREE.md) · [Measured performance](docs/PERFORMANCE.md)
 
+## Product direction
+
+GH Aura's [definitive product plan](docs/PRODUCT_PLAN.md) organizes the CLI into four optional, user-directed modules: **Activity**, **Achievements**, **Profile**, and **Showcase**. The current commands remain compatible. Historical attribution recovery and supported, explicitly approved achievement actions are future work in [the issue tracker](https://github.com/ibbuilds/gh-aura/issues), **not released features**. Private contribution visibility depends on GitHub settings and eligibility; neither private repositories nor badges guarantee employment.
+
 ## Boundaries
 
 GitHub controls achievements; the tool cannot grant every badge, fabricate historical contributions or certify professional experience. Pins and account settings remain manual. Private-repository activity is not a route to guaranteed awards. Annual history requires authenticated reads. Showcase scores describe presentation evidence, not code quality or hiring probability.

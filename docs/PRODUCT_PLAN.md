@@ -1,38 +1,201 @@
-# Delivered scope
+# GH Aura — Definitive product plan
 
-GH Aura is a local, user-directed CLI for presenting real GitHub work. The core workflow works with a free GitHub account; no paid service is required.
+**Status:** Product plan, not a promise that the future commands described here are implemented.  
+**Updated:** 2026-11-11  
+**Product:** Free, local-first, user-directed GitHub profile CLI. No web dashboard, daemon, mandatory AI, paid API or autonomous activity.
 
-## Original issue resolution
+## 1. One goal
 
-| Issue | Delivered result |
-| --- | --- |
-| #2 | Public snapshots, pagination, authentication/error handling, provenance, bounded caching and mocked/live tests. Built-in validation replaces the originally proposed Zod dependency. |
-| #3 | Prioritized findings with observations, sources, confidence, recommended actions and Markdown/JSON output. Unknown data remains unknown. |
-| #4 | Three styles, exact overrides, escaped metadata, accessible image alternatives, full preview and `--keep` managed-region preservation. |
-| #5 | Explainable, configurable showcase recommendations with exclusions, exact featured ordering and manual pin instructions. |
-| #7 | Dated/source-versioned achievement opportunities, selected public evidence, explicit unknown/self-reported status and manual verification instructions. |
-| #8 | Annual read-only contribution reports, visibility/attribution checks and meaningful documentation improvements. Account settings remain user-controlled. |
-| #9 | Evidence-linked account/repository milestones; optional bounded release, attributed-commit and merged-PR details with honest date labels. |
-| #10 | Exact reviewed direct/PR publication, safe repeat behavior, conflict handling, recovery instructions and preserved custom README content. |
+**Help a developer make their real GitHub work discoverable, understandable and professionally presentable.** A visitor should identify the person's focus, strongest proof of work, contribution history and relevant external links within about one minute.
 
-The initial foundation and release milestones (#1/#6) were delivered in earlier versions. Tests, source, command reference and changelog provide implementation evidence; issue closures distinguish functionality from platform limits below.
+GH Aura has **four optional modules**. The user invokes the exact command they want, previews the consequences and explicitly approves every remote modification:
 
-## Deliberate boundaries
+1. **Activity:** analyze actual contribution history across selected years, recover eligible missing attribution, expose genuine private activity with the user's settings, and suggest purposeful new work.
+2. **Achievements:** map earnable GitHub achievements/badges, source and classify eligibility, prepare supported steps and verify visible outcomes without pretending GH Aura awards them.
+3. **Profile:** produce a polished README and profile presentation in minimal, regular or flashy styles with granular toggles and an optional external editor.
+4. **Showcase:** inspect repository evidence, recommend a diversified set of up to six role-relevant pins, and provide GitHub's manual pinning instructions.
 
-GitHub awards achievements and controls program eligibility. GH Aura does not guarantee badges, verify every award, manufacture history or infer employment/seniority from activity. Paid program entries are optional information. The historical sample is bounded, not an exhaustive biography.
+The modules remain independent: someone may run only achievements, only profile, only activity or only showcase. There is no mandatory "optimize everything" command or hidden background activity.
 
-Pinning, bio/photo changes, account-email/privacy settings and general code refactoring remain manual/outside this tool. Automatic recurring maintenance and background tasks were rejected to preserve the user's command-by-command control, not left as hidden requirements. Source-quality grading and link crawling are not claimed by metadata checks. No UI, hosted service or mandatory AI integration is planned.
+## 2. Platform reality and boundaries
 
-The only remote write surface is the chosen public profile repository's README, directly or on an explicit PR branch. Nothing is merged automatically and no protections are bypassed.
+| User intent | What GitHub supports | GH Aura behavior |
+| --- | --- | --- |
+| Show private contribution activity | Opt-in anonymized contribution counts, subject to GitHub attribution/eligibility | Diagnose and guide settings; do not reveal private content |
+| Analyze any year or real date span | GraphQL historical contribution collections, subject to account age/access and API constraints | Scope read queries to requested years, report observed/unknown separately |
+| Recover old actual commits not counted | Confirmed author emails, qualifying branches, repository context and visibility settings can matter | Identify genuine omissions and suggest supported corrections |
+| Artificially fill a past heatmap | No supported "paint contributions" API; commit metadata can differ from actual work dates | **Do not fabricate or backdate work, mass-produce dummy commits or rewrite history to simulate experience** |
+| Obtain profile achievements | GitHub awards them based on eligible activity; individual eligibility is subject to change | Guide or perform consented genuine tasks when supported; confirm badge on GitHub |
+| Use private repositories for achievements | GitHub says private activity may count with appropriate visibility settings; award-specific conditions are not universally guaranteed | Treat private compatibility as verified/uncertain per achievement, never assume all badges work in private |
+| Pin repositories | GitHub supports up to six public repo/gist pins in its profile UI | Rank and recommend; do not promise an undocumented public auto-pin mutation |
+| Revise profile README | GitHub Contents API with scoped permissions | Prepare diff and explicit reviewed apply or unmerged PR |
 
-## Release gates
+**Do not conflate distinct kinds of badges:** collectible Achievements, program memberships, paid status and historical one-time awards. Do not promise all achievements, external stars, accepted discussion answers or program admissions. Avoid sockpuppet accounts, self-starring networks, artificial PR chains and meaningless issues to game metrics.
 
-Syntax, unit/regression, subprocess end-to-end and installed-package tests must pass on Node 22/24 across Linux/macOS/Windows. Real GitHub integration is strictly read-only and verifies public API behavior and cache reuse. Publishing tests use isolated fixtures, not a personal profile. Only after these checks can a separate release job publish a new versioned tarball and checksum.
+GitHub's **author date** can differ from the **commit date**. A heatmap is not proof of professional experience. Preserve real provenance and clearly label any historical gaps or unavailable private data.
 
-## Evidence-backed professional reference update (v1.3)
+## 3. Human-friendly CLI contract
 
-Reference data now separates 100 public company-organization member accounts with two self-reported signals (employer and engineering role) from 16 employer-owned engineering author-page examples. Only the latter have company-controlled published role evidence, which can become stale. Neither cohort predicts interview or hiring outcomes. Both are used for structural presentation guidance, never for imitating somebody else's job history or for filling contribution calendars. The collection is a manually invoked research task; ordinary GH Aura commands do not scrape or refresh others' accounts. See [method and data](../research/INDUSTRY_STUDY.md).
+The current commands are kept compatible. Future subcommands are added only where they meaningfully simplify a user-driven task.
 
-## Hiring-readiness focus (v1.4)
+### Already implemented in v1.4
 
-The ordinary `audit` command includes a first-minute, evidence-based role-oriented check. It classifies demonstrated facts, presentation gaps and unknown technical substance rather than producing a fake interview probability. `--goal` overrides the intended role for an audit without updating config. Current evidence is profile metadata plus optional README headings; it does not execute projects or verify personal authorship. Future priorities, explicitly **not yet implemented**, are bounded source/test/CI inspection, confirmed personal contributions, local job-description matching and blinded human usability review. See [Hiring readiness guide](HIRING_READINESS.md).
+```bash
+gh-aura init YOUR_USERNAME
+gh-aura audit --goal "backend engineer" --inspect 3
+gh-aura contributions --all
+gh-aura achievements
+gh-aura profile --visual 20 --output draft.md
+gh-aura showcase --goal "backend engineer"
+gh-aura brief --prompt --output writer.txt
+gh-aura check --file draft.md
+gh-aura preview --file draft.md --save review.json
+gh-aura apply --review review.json --pr
+```
+
+Only `apply` writes remotely. It never merges its review PR. Everything else is read-only or produces a local file.
+
+### Proposed, not yet implemented
+
+```bash
+# Inspect and recover REAL history in a requested range
+gh-aura contributions audit --from 2020 --to 2026 --private
+gh-aura contributions recover --from 2020 --to 2026
+gh-aura contributions plan --from 2026-11-11 --to 2027-02-11
+
+# Browse genuine opportunities, then explicitly prepare supported tasks
+gh-aura achievements plan --scope free --private auto
+gh-aura achievements inspect pull-shark
+gh-aura achievements prepare pull-shark --repo USER/REAL_PROJECT
+
+# Rework only one selected module
+gh-aura profile --style minimal --output draft.md
+gh-aura profile --visual 80 --output draft.md
+gh-aura showcase --goal "platform engineer" --inspect 3
+```
+
+**No command may silently write to a repo, change Git history, modify profile settings or trigger scheduled commits.** Use `--dry-run` or a separate preview before an explicit approved write, with the destination, proposed diff, permissions and rollback path displayed.
+
+## 4. Module A — Activity
+
+**Inputs:** account, one year/all years/custom interval, visibility choices, optional authenticated read permission to selected private repos.
+
+**Read-only analysis:**
+- Year-by-year and day-by-day GitHub-visible contributions, with bounded GraphQL requests.
+- Missing attribution diagnostic: verified author email vs email used on actual commits; qualifying default/`gh-pages` branch; forks/upstream PRs; privacy visibility; organization/enterprise caveats.
+- Compare real existing commits and authored PRs to what GitHub reports, where authorized. Do not equate a zero in a partial/private response with inactivity.
+- Explain what can legitimately be recovered and which steps need the user to change GitHub settings.
+
+**Optional action plan:** For requested *future* dates, suggest work backed by real repository needs: tests, docs, bug fixes, releases, reviews and meaningful project milestones. Work is performed only when the user elects to do it. Private work is never automatically publicized.
+
+**Never:** create empty or filler commits, fabricate past authorship, adjust timestamps to fill specific calendar squares, force-push/rebase historical work to create an invented timeline, or create extra identities to impersonate collaboration.
+
+**Done when:** every data point is dated, sourced and classified as observed, inferred, unknown or user-confirmed. Reruns are stable; changes to repositories or privacy settings require informed user action. No private source/code enters the public output.
+
+## 5. Module B — Achievements
+
+Build and maintain a **versioned achievement capability registry**, not a list of unverified internet recipes:
+
+```text
+id | name | kind | currently_earnable | cost | private_eligibility
+official_source | community_source | last_checked | trigger_confidence
+required_action | who_controls_result | GH_Aura_action | verify_on_GitHub
+```
+
+**Initial catalog groups:**
+- **Potentially attainable, subject to current rules:** Pull Shark (merged PRs), Pair Extraordinaire (real co-authorship), Galaxy Brain (accepted Discussions answers), Starstruck (independent stars), Quickdraw (fast issue/PR closure), YOLO (unreviewed PR merge).
+- **External/paid/program-specific:** Public Sponsor, Pro, Developer Program, Campus Expert, security awards/programs; treat each as a different badge kind.
+- **Historical/unavailable:** Arctic Code Vault Contributor, Mars 2020 Helicopter Contributor.
+- **Experimental/unverified:** never counted as guaranteed attainable until GitHub's behavior supports the claim.
+
+For each entry, classify the GH Aura operation:
+- **Read-only:** source links, user eligibility hints, verified visible badge status where supported, suggested steps.
+- **Prepared action:** a local or remote draft of meaningful code/issue/PR work requiring user review.
+- **User/external action:** review acceptance, answers accepted by maintainers, genuine independent stars, external program eligibility/payment.
+- **Not supported:** retired awards, undocumented awarding, synthetic engagement or unsafe bypass of normal reviews.
+
+Private repos are an **optional work surface for substantive tasks**, not a badge-farming sandbox. GH Aura never guarantees that an achievement will count when activity is private.
+
+**Done when:** all displayed badge requirements have source/verification dates; the report distinguishes earned (GitHub-observed), user-reported, eligible, uncertain, historical and paid statuses. No unsupported claims about award thresholds or private-repo eligibility. All writes are optional and permission-scoped.
+
+## 6. Module C — Profile
+
+Three editorial strategies with per-section switches and explicit customization:
+
+| Style | Intent | Default design |
+| --- | --- | --- |
+| `minimal` (or 0–34) | Reserved engineering profile | Short credible headline, concise context, 2–3 best projects, contact |
+| `regular` (35–69) | Stronger portfolio presentation | About, selected work with explanations, confirmed stack, relevant links |
+| `flashy` (70–100) | Visual showcase | Optional graphics, shields, widgets and additional sections; accessibility and loading checked |
+
+An optional `--visual 0..100` controls *presentation only*, never activity counts, experience level, achievements, seniority or credibility. User preferences and disabled sections always override presets.
+
+**Content policy:** Drafts draw first from the user's observable work and explicitly confirmed claims. External AI is optional and receives a bounded JSON brief, not GitHub write credentials. Industry references provide structural ideas, never copied biographies, unverifiable employers or prestige claims. Local `check` detects obvious repetition/unsupported-looking claims; every final draft is user-reviewed.
+
+**Apply:** Preview exact complete diff, then explicit approval and optionally an unmerged PR. Do not overwrite custom README sections without consent. Re-run safely without commits when nothing changed.
+
+**Done when:** drafts are concise, distinct across styles, useful for an engineering role and readable on GitHub mobile/desktop; rendering tests, link checks, repeatability and safe-apply tests pass.
+
+## 7. Module D — Showcase
+
+**Optional by design.** When requested, select up to six public repositories or gists (within GitHub's pin limits). Do not rank solely by stars, commit volume or recent modification.
+
+**Evidence priority:** declared target role, substantial personal contribution, runnable example/demo, clear README, tests/CI/releases where inspectable, maintenance, variety of skills; popularity is a weak supplemental signal. The current v1.4 ranking is **metadata-based**; deep technical evidence inspection is **planned**, not delivered.
+
+Allow users to exclude/force-include/reorder candidates, identify why a repo is recommended, and only inspect 2–3 selected projects deeply by default to control API cost. Pins are selected in GitHub's documented UI until a supported mutation exists; GH Aura can generate a manual selection guide.
+
+**Done when:** recommendations are role-specific, explainable, respect explicit picks, distinguish missing from uninspected data, and never claim a source-quality or hiring score from metadata.
+
+## 8. Engineering and cost rules
+
+- Node.js ≥22, ES modules, **zero runtime dependencies** unless a specific correctness/security requirement justifies one.
+- Official REST/GraphQL endpoints. Reuse pagination, conditional ETags and bounded five-minute **public-only** cache.
+- Explicit per-command API request and response-byte budgets. Fetch user/profile inventory once, then only selected repo files. Never crawl 100 reference profiles during a normal command.
+- Public profile audit works without paid services; optional free GitHub token for higher API allowances. No token stored in config, no secrets in logs or external AI context.
+- Fine-grained read/write permissions scoped to explicitly chosen repositories; never request global private-org access by default.
+- Every mutation is a separate user action with a complete diff, authorization, conflict check, no automatic retries of uncertain writes, and a rollback path.
+- Tests: offline fixtures for sparse/new/private-heavy accounts; real read-only GitHub integration; Node 22/24 on Linux/macOS/Windows; failure injection for rate limits, conflicts and data leakage; performance budgets; package smoke tests.
+- Research corpus versioned outside runtime package. No telemetry, mandatory account registration, browser UI or background scheduler.
+
+## 9. Delivery order and gates
+
+| Stage | Work | Release gate |
+| --- | --- | --- |
+| **Current v1.4** | CLI foundation, README styles, metadata audit, contribution annual counts, badge guide, showcase suggestions, reviewed publish | Already shipped; keep backward compatibility |
+| **A1 — Activity Recovery** | Per-year/range audit, verified attribution diagnostics, private contribution visibility guide, future authentic work plan | No synthetic events, no history edits, exact period reports and privacy tests |
+| **B1 — Achievement Capability Matrix** | Complete dated catalog, per-badge private support confidence, eligibility/verification and action planner | Every badge sourced; no false earned status or guaranteed awarding |
+| **B2 — Guided Genuine Actions** | Optional repo-specific approved changes/tasks where current GitHub API behavior supports them | Explicit consent, idempotency, proof of meaningful operation, safe rollback |
+| **C1 — Profile Studio** | Improved style outputs and independent toggles, optional editor integration, publish previews | No invented employment/skills, no unreviewed overwrites |
+| **D1 — Showcase Evidence** | 2–3 selected repos inspected more deeply, relevance and personal contribution evidence | Source-backed choices, bounded requests, no metadata-as-quality claims |
+| **R — Hardening** | Documentation, privacy, cross-platform tests, package and GitHub Release | All checks green; source and API quota budgets documented |
+
+**Priority:** A1 → B1 → B2 → C1 → D1 → R. Each stage may release independently after its gates; don't wait for every feature to ship useful improvements. The core must remain minimal.
+
+## Tracked implementation work
+
+- [#22 — A1: real historical contributions and private visibility](https://github.com/ibbuilds/gh-aura/issues/22)
+- [#23 — B1: source-backed achievement/eligibility registry](https://github.com/ibbuilds/gh-aura/issues/23)
+- [#24 — B2: user-approved genuine achievement operations](https://github.com/ibbuilds/gh-aura/issues/24)
+- [#25 — C1: deeper configurable profile strategies](https://github.com/ibbuilds/gh-aura/issues/25)
+- [#19 — D1: meaningful evidence from chosen repos](https://github.com/ibbuilds/gh-aura/issues/19)
+- [#20 — role-specific work evidence and user-confirmed contributions](https://github.com/ibbuilds/gh-aura/issues/20)
+- [#21 — first-minute reviewer validation](https://github.com/ibbuilds/gh-aura/issues/21)
+
+The roadmap is authoritative for future direction. Issues are implementation units, **not** proof that a stage is already delivered.
+
+## 10. Definition of success
+
+- A new user can install GH Aura, choose a module and get a usable output with **one direct command** after `init`.
+- Each suggested improvement is reproducible, sourced and clearly explains what is unknown.
+- The tool maximizes **supported, authentic** profile improvements without paid infrastructure, private data leaks or fabricated history.
+- Users can explicitly opt into meaningful new work and privately generated contributions that are genuinely theirs, while controlling privacy.
+- Every repo/profile write is preceded by review and consent.
+- No badge, ranking or heatmap promises employment; profile value comes from verifiable work.
+
+## Official platform references
+
+- [Profile contribution counting and author/commit timestamps](https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference)
+- [Private contribution and achievement visibility](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements)
+- [How GitHub achievements are awarded](https://docs.github.com/en/account-and-profile/reference/profile-reference)
+- [Troubleshoot real missing contributions](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/troubleshooting-missing-contributions)
+- [Pinned items and six-item limit](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/pinning-items-to-your-profile)
