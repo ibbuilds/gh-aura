@@ -140,6 +140,7 @@ test('PR publishing opens one isolated branch and PR without merging', async () 
     if (url.includes('/git/ref/heads/gh-aura/')) return json({}, 404);
     if (url.endsWith('/git/ref/heads/main')) return json({ object: { sha: 'b'.repeat(40) } });
     if (url.includes('/contents/')) return json(content(draft));
+    if (url.includes('/compare/')) return json({ files: [{ filename: 'README.md', status: 'modified' }] });
     if (url.includes('/pulls?')) return json([]);
     throw new Error('Unexpected read: ' + url);
   } });
@@ -155,6 +156,7 @@ test('existing matching PR is reused without any writes', async () => {
     assert.equal(options.method, undefined);
     if (url.includes('/git/ref/')) return json({ object: { sha: 'b'.repeat(40) } });
     if (url.includes('/contents/')) return json(content(draft));
+    if (url.includes('/compare/')) return json({ files: [{ filename: 'README.md', status: 'modified' }] });
     return json([{ number: 1, html_url: 'https://github.com/example/example/pull/1' }]);
   } });
   assert.equal(result.changed, false);
@@ -195,4 +197,26 @@ test('new authenticated content reads recheck visibility even when a listing was
     },
   }), /not publicly readable/);
   assert.equal(calls, 1);
+});
+
+
+test('PR reuse refuses unrelated changes even when README content still matches', async () => {
+  const remote = target(), draft = '# Proposed\n';
+  await assert.rejects(proposeProfile(remote, draft, approvalCode(remote, draft), { token: 'fake', fetch: async (url, options) => {
+    assert.equal(options.method, undefined, 'No write may occur for an existing conflicting branch');
+    if (url.includes('/git/ref/')) return json({ object: { sha: 'b'.repeat(40) } });
+    if (url.includes('/contents/')) return json(content(draft));
+    if (url.includes('/compare/')) return json({ files: [{ filename: 'README.md', status: 'modified' }, { filename: 'other.txt', status: 'added' }] });
+    throw new Error('Unexpected request');
+  } }), /unexpected changes/);
+});
+
+test('uncertain PR writes report the branch and are never retried', async () => {
+  const remote = target(), draft = '# Proposed\n'; let writes = 0;
+  await assert.rejects(proposeProfile(remote, draft, approvalCode(remote, draft), { token: 'fake', fetch: async (url, options) => {
+    if (options.method) { writes++; throw new Error('Connection lost'); }
+    if (url.includes('/git/ref/heads/gh-aura/')) return json({}, 404);
+    return json({ object: { sha: 'b'.repeat(40) } });
+  } }), /result is unknown.*Inspect review branch gh-aura\/profile-/);
+  assert.equal(writes, 1);
 });

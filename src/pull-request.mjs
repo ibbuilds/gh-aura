@@ -14,22 +14,31 @@ export async function proposeProfile(target, proposed, approval, options = {}) {
   const refPath = base + '/git/ref/heads/' + branch;
   const existing = await getJSON(refPath, read);
   const pause = () => (options.sleep || ((ms) => new Promise((resolve) => setTimeout(resolve, ms))))(1000);
-  const put = (path, body) => requestJSON(path, { ...read, method: 'POST', body });
+  const write = async (path, method, body) => {
+    try { return await requestJSON(path, { ...read, method, body }); }
+    catch (error) { throw new Error(error.message + ' Inspect review branch ' + branch + ' before retrying.'); }
+  };
+  const put = (path, body) => write(path, 'POST', body);
   if (!existing) {
     const source = await getJSON(base + '/git/ref/heads/' + target.branch.split('/').map(encodeURIComponent).join('/'), read);
     if (!/^[a-f\d]{40}$/i.test(source?.object?.sha || '')) throw new Error('Could not verify the base branch revision. Nothing was published.');
     await put(base + '/git/refs', { ref: 'refs/heads/' + branch, sha: source.object.sha });
     await pause();
-    await requestJSON(base + '/contents/README.md', { ...read, method: 'PUT', body: {
+    await write(base + '/contents/README.md', 'PUT', {
       message: 'docs(profile): propose reviewed README', branch,
       content: Buffer.from(proposed, 'utf8').toString('base64'), ...(target.sha ? { sha: target.sha } : {}),
-    } });
+    });
     await pause();
   }
   // This also detects a previously interrupted publication or a modified review branch.
   const current = await getJSON(base + '/contents/README.md?ref=' + encodeURIComponent(branch), read);
   if (!current || current.type !== 'file' || decodeReadme(current) !== proposed) {
     throw new Error('The review branch does not match the draft. Inspect ' + branch + ' manually; it was not overwritten.');
+  }
+  const comparison = await getJSON(base + '/compare/' + encodeURIComponent(target.branch) + '...' + encodeURIComponent(branch), read);
+  if (!Array.isArray(comparison?.files) || comparison.files.length !== 1 ||
+      comparison.files[0].filename !== 'README.md' || !['added', 'modified'].includes(comparison.files[0].status)) {
+    throw new Error('The review branch includes unexpected changes. Inspect ' + branch + '; no PR was opened or merged.');
   }
   const query = new URLSearchParams({ state: 'open', head: target.login + ':' + branch, base: target.branch, per_page: '10' });
   const pulls = await getJSON(base + '/pulls?' + query, read);
