@@ -1,37 +1,30 @@
-# GH Aura 1.0.0
+# GH Aura 1.1.0
 
-A user-directed CLI for presenting real GitHub work professionally. No dashboard, runtime dependencies or mandatory AI provider.
+A small, user-directed GitHub profile CLI. The core workflow is free: no subscription, paid API, hosted server, runtime dependencies or mandatory AI provider.
 
 ## Install
 
-Requires Node.js 22+. Download `gh-aura-1.0.0.tgz` from this release and install it locally:
+Requires Node.js 22+. Download `gh-aura-1.1.0.tgz` and install it:
 
 ```bash
-npm install --global ./gh-aura-1.0.0.tgz
-gh-aura --help
-```
-
-Alternatively, clone the repository and run `npm link`. This release is not an npm registry publication.
-
-## Workflow
-
-```bash
+npm install --global ./gh-aura-1.1.0.tgz
 gh-aura init YOUR_USERNAME
 gh-aura audit
 gh-aura profile --output draft.md
 gh-aura preview --file draft.md --save review.json
-# Read the diff before running the separate publish command.
-gh-aura apply --review review.json
 ```
 
-Publishing requires a token restricted to the public profile repository with Contents write access. Draft changes, branch changes and stale remote revisions invalidate review files.
+After reviewing the diff, publish with `gh-aura apply --review review.json`. Add `--pr` to open an unmerged PR instead. A token restricted to the profile repository is required for publication; it is authentication, not a paid plan.
 
-## Included
+## Changes
 
-Three configurable README styles; evidence-backed showcase recommendations; achievement opportunities and selected public evidence; annual contribution history and repository milestones; optional JSON briefs for external editors; explicit reviewed README publishing.
+- Five-minute local caching and ETag revalidation reduce public API calls. Use `--fresh` to reload. Preview/apply always use live state.
+- Commands skip unused profile README requests. Expensive timeline details are opt-in and bounded.
+- `profile --keep` preserves existing text outside one managed region.
+- `apply --pr` creates a reviewed branch and PR, never merges or overwrites conflicting branches.
+- Achievement sources include review dates, prerequisites and manual verification steps; paid opportunities remain disabled by default.
+- CI uses standard runners only in public repositories, without Actions artifact/cache uploads.
 
-## Verification and limits
+The original planning issues have implementation/disposition records in `docs/PRODUCT_PLAN.md`. Tests cover Node 22/24 on Linux, macOS and Windows, installed packages, isolated publication and live read-only GitHub integration. No personal profile is changed by tests.
 
-CI covers Node 22/24 on Linux, macOS and Windows, packed installation, isolated publishing tests and real read-only GitHub integration. Live tests never modify a personal profile. `SHA256SUMS.txt` records the package checksum.
-
-GitHub controls awards and visibility. Pins remain manual. Achievement ownership is not automatically verified, metadata is not a code-quality certification, and history is never fabricated. The only remote write surface is the profile repository's root README.
+GitHub still controls achievements and limits. Pins and account settings are manual. Annual history requires authenticated reads. No npm registry publication is configured. `SHA256SUMS.txt` contains the package checksum.

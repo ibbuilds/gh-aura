@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.0 — 2026-11-11
+
+- Added bounded local public-read caching, ETag revalidation and `--fresh`; preview/apply always bypass cache.
+- Skipped unused profile reads for showcase, achievements and contribution commands.
+- Added explicit `apply --pr` with no automatic merges and safe matching-PR reuse.
+- Added `profile --keep` to preserve user-owned Markdown outside one managed region.
+- Added opt-in, bounded release/commit/merged-PR timeline evidence and dated achievement-source review.
+- Added cache/privacy, PR-publication and preservation regressions plus live cache verification.
+- Removed CI artifact uploads and guarded workflows to public repositories using standard runners.
+- Documented free operation, token permissions, rate limits and resolution of the original planning issues.
+
 ## 1.0.0 — 2026-11-11
 
 - Simplified the primary flow: save a username once, audit, draft, preview and explicitly apply a local review file.

@@ -16,6 +16,7 @@ export function readDraft(filename) {
 }
 
 export async function profileTarget(username, options = {}) {
+  options = { ...options, cache: undefined, publicRead: false }; // Publication must never use cached state.
   const login = validateLogin(username);
   const part = encodeURIComponent(login);
   const base = '/repos/' + part + '/' + part;

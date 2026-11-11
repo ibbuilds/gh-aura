@@ -2,7 +2,7 @@
 
 A small CLI for a professional GitHub profile. Inspect your work, draft your README, review the changes, and publish only what you approve.
 
-**Node.js 22+ · No runtime dependencies · No dashboard · No mandatory AI**
+**Node.js 22+ · Free core workflow · No runtime dependencies · No mandatory AI**
 
 ## Start
 
@@ -23,7 +23,9 @@ Read the diff and edit the draft as needed. Publishing is a separate command:
 gh-aura apply --review review.json
 ```
 
-`apply` requires `GH_TOKEN` or `GITHUB_TOKEN` with **Contents: read and write**, restricted to your public `USERNAME/USERNAME` profile repository. It updates only that repository's root `README.md`. A changed draft, branch or remote README invalidates the review. Nothing runs in the background.
+`apply` requires `GH_TOKEN` or `GITHUB_TOKEN` with **Contents: read and write** (and **Pull requests: write** for `--pr`), restricted to your public `USERNAME/USERNAME` profile repository. It updates only that repository's root `README.md`. A changed draft, branch or remote README invalidates the review. Nothing runs in the background.
+
+An optional `--pr` on `apply` opens a review PR instead of updating the default branch. It never merges it.
 
 The source can also run without installation: `node src/cli.mjs --help`. The npm registry package is **not published**; use this repository or a packaged GitHub release.
 
@@ -33,12 +35,12 @@ The source can also run without installation: `node src/cli.mjs --help`. The npm
 | --- | --- |
 | `init USER` | Save your account and local preferences once |
 | `audit --inspect 6` | Inspect profile metadata and six project READMEs |
-| `profile --style minimal` | Generate an editable Markdown draft |
+| `profile --style minimal` | Generate a draft; `--keep` preserves your custom text |
 | `preview --file draft.md --save review.json` | Compare the exact draft and save its review |
 | `apply --review review.json` | Publish the reviewed README |
 | `showcase --goal "backend engineer"` | Recommend projects to pin, with reasons |
 | `achievements` | List opportunities, preferences and relevant public evidence |
-| `contributions --all` | Inspect contribution years and repository milestones |
+| `contributions --all` | Inspect annual activity; `--details` adds bounded public milestones |
 | `brief --output brief.json` | Export context for your preferred editor or AI |
 | `config show` | View effective settings |
 
@@ -61,6 +63,14 @@ gh-aura config set achievements.excluded '["yolo","quickdraw"]'
 ```
 
 Every section is optional. Explicit project selections are exact, not padded with other repositories. `flashy` uses Shields.io images; those are technology labels, **not earned GitHub achievements**.
+
+## Free by design
+
+No subscription, paid API, hosted server or AI key is required. A free GitHub account and optional personal access token are enough; a token is authentication, not a paid plan.
+
+Public reads are cached locally for five minutes. Use `--fresh` to reload; preview and publication **always** read current remote state. Expired cache entries use ETags where available. Requests are serial and rate-limit errors stop rather than trigger aggressive retries.
+
+CI uses standard runners only in public repositories, with no Actions artifact or cache uploads. Private forks do not run CI unless you deliberately change that guard. See [free operation and limits](docs/FREE.md).
 
 ## Boundaries
 

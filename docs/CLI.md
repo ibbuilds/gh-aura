@@ -35,6 +35,14 @@ Inspection fetches additional public README files. English setup/usage headings 
 
 `--output` writes a local file and sends the confirmation to stderr, keeping stdout useful in pipelines. Existing files require `--force`. That flag never forces a GitHub update. Commands reject irrelevant options rather than silently ignoring them.
 
+### Preserve existing content
+
+`gh-aura profile --keep --output draft.md` keeps your current README and manages only the region between `<!-- gh-aura:start -->` and `<!-- gh-aura:end -->`. On first use it appends a managed region, preserving all original text. Edit the draft to remove any duplicated introduction, then preview it. Later runs replace only that one region. Ambiguous/multiple markers fail rather than deleting text.
+
+### Avoid unnecessary requests
+
+Analysis commands reuse public reads for five minutes. `--fresh` bypasses disk caching for one invocation. `GH_AURA_NO_CACHE=1` disables it for a shell session. `GH_AURA_CACHE_DIR` selects a cache location; otherwise the operating-system/user cache directory is used. Cache files are bounded, credential-isolated and contain no tokens. Reports announce reused data on stderr. Publication never uses cached state. See [limits and free operation](FREE.md).
+
 ## Review and publish
 
 ```bash
@@ -59,6 +67,16 @@ Supply `GH_TOKEN` or `GITHUB_TOKEN` securely through your shell session or secre
 
 The preview limit is 600 lines and drafts must be UTF-8, at most 256 KiB, with no terminal control characters. The limit prevents publishing from an incomplete review. Diffs are for inspection, not patches intended for `git apply`.
 
+### Open a PR instead
+
+```bash
+gh-aura apply --review review.json --pr
+```
+
+Requires **Contents: read and write** plus **Pull requests: read and write** on the profile repository. GH Aura creates one deterministic review branch, writes only `README.md` there, and opens a PR against the reviewed default branch. It never merges or force-pushes. Re-running an unchanged request reuses an already-open matching PR. A conflicting branch is not overwritten; inspect it manually. Repository protections still apply.
+
+A failure can leave a review branch without a PR. The CLI reports the branch; inspect it before retrying or deleting it. Network writes are never retried automatically.
+
 ### Recover or undo
 
 A failed network response during publishing may mean the commit succeeded. Inspect the remote README or run preview before retrying; writes are never retried automatically. Successful publishing returns a commit URL. To undo, restore the previous README from GitHub history into a local draft, preview it, and apply that reviewed restoration. No force-push or history rewrite is needed.
@@ -81,11 +99,12 @@ Without a configured or explicit account, the guide is offline. With an account,
 gh-aura contributions
 gh-aura contributions --year 2024
 gh-aura contributions --all --json --output history.json
+gh-aura contributions --details
 ```
 
 Requires a GitHub token for annual GraphQL counts. The default is the current UTC year; `--all` makes one query per year from account creation. Results reflect what GitHub exposes to that token, not all professional work ever performed. Without authentication, the report leaves counts unknown and provides a visibility checklist instead.
 
-Email attribution, eligible branches and private-contribution settings are manual checks; the CLI does not inspect local commit email inventories or change account settings. A separate timeline lists account creation and at most 12 earliest repository-creation dates from the scanned public inventory. Those dates are not project start dates or proof of career level.
+Email attribution, eligible branches and private-contribution settings are manual checks; the CLI does not inspect local commit email inventories or change account settings. A separate timeline lists account creation and at most 12 earliest repository-creation dates from the scanned public inventory. Those dates are not project start dates or proof of career level. `--details` adds at most three public repositories' recent releases and latest attributed commit, plus ten recently updated merged PRs. PR dates are explicitly the opening dates, not guessed merge dates. The sample is not a complete work history. Extra API calls and fresh visibility checks are bounded; public responses can be cached.
 
 ## External editors and AI
 

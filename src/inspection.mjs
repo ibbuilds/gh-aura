@@ -1,4 +1,4 @@
-import { getJSON } from './github.mjs';
+import { getJSON, decodeReadme } from './github.mjs';
 import { rankRepositories } from './engine.mjs';
 
 const API = '/repos/';
@@ -25,7 +25,10 @@ export function describeReadme(response, repo) {
     features: {},
     reason: 'GitHub did not provide decodable README content.',
   };
-  const content = Buffer.from(response.content.replace(/\s/g, ''), 'base64').toString('utf8');
+  let content;
+  try { content = decodeReadme(response); }
+  catch { return { state: 'unknown', url: response.html_url || 'https://github.com/' + repo.full_name,
+    features: {}, reason: 'README is oversized or not valid UTF-8/base64.' }; }
   return {
     state: 'available',
     url: response.html_url || 'https://github.com/' + repo.full_name,
@@ -48,8 +51,14 @@ export async function inspectRepositories(snapshot, config, count, options = {})
   for (const { repo } of picks) {
     const [owner, name] = repo.full_name.split('/');
     const path = API + encodeURIComponent(owner) + '/' + encodeURIComponent(name) + '/readme';
-    const response = await getJSON(path, options);
-    byName.get(repo.full_name).inspection = describeReadme(response, repo);
+    try {
+      const response = await getJSON(path, { ...options, publicRead: true });
+      byName.get(repo.full_name).inspection = describeReadme(response, repo);
+    } catch (error) {
+      if ([401, 403, 429].includes(error.status)) throw error;
+      byName.get(repo.full_name).inspection = { state: 'unknown', features: {},
+        url: 'https://github.com/' + repo.full_name, reason: 'README request failed; no missing file was inferred.' };
+    }
   }
   return { ...snapshot, inspectionCount: picks.length };
 }

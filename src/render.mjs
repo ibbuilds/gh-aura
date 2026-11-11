@@ -88,3 +88,17 @@ export function renderAuditMarkdown(report) {
 }
 
 export const renderPlanMarkdown = renderAuditMarkdown;
+
+/** Preserve user-owned text. Only one explicitly marked region may be replaced. */
+export function preserveProfile(existing, generated) {
+  const start = '<!-- gh-aura:start -->';
+  const end = '<!-- gh-aura:end -->';
+  const starts = existing.split(start).length - 1;
+  const ends = existing.split(end).length - 1;
+  const block = start + '\n\n' + generated.trimEnd() + '\n\n' + end;
+  if (!starts && !ends) return existing + (existing.endsWith('\n') ? '\n' : '\n\n') + block + '\n';
+  if (starts !== 1 || ends !== 1 || existing.indexOf(start) >= existing.indexOf(end)) {
+    throw new Error('Expected one ordered gh-aura:start/end pair. No custom text was replaced.');
+  }
+  return existing.slice(0, existing.indexOf(start)) + block + existing.slice(existing.indexOf(end) + end.length);
+}

@@ -69,7 +69,7 @@ export function selectFeatured(snapshot, config) {
 export function auditProfile(snapshot, config) {
   const findings = [];
   const root = 'https://github.com/' + snapshot.username;
-  const add = (severity, title, observed, action, source = root) => findings.push({ severity, title, observed, action, source });
+  const add = (severity, title, observed, action, source = root) => findings.push({ severity, title, observed, action, source, confidence: 'observed', requiresUserAction: true });
   if (!snapshot.user.bio) add('high', 'Missing profile bio', 'The public bio is empty.', 'Add one clear sentence describing what you build.');
   if (!snapshot.profileReadme) add('high', 'No profile README', 'No root README.md was found in the profile repository.',
     'Create a public ' + snapshot.username + '/' + snapshot.username + ' repository with a root README.md.');
@@ -96,7 +96,7 @@ export function auditProfile(snapshot, config) {
   for (const warning of snapshot.warnings || []) add('info', 'Incomplete data', warning, 'Inspect the affected resource manually.');
   const priority = { high: 0, medium: 1, low: 2, info: 3 };
   findings.sort((a, b) => priority[a.severity] - priority[b.severity]);
-  return { user: snapshot.username, observedAt: snapshot.observedAt,
+  return { user: snapshot.username, observedAt: snapshot.observedAt, dataAccess: snapshot.dataAccess || null,
     publicRepositoriesScanned: snapshot.repos.length, repositoryReadmesInspected: inspected.length,
     findings, showcase: rankRepositories(snapshot, config),
     caveat: 'Metadata and optional README checks. Does not inspect repository source code or establish engineering proficiency.' };
