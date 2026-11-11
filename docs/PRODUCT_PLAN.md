@@ -32,3 +32,7 @@ Syntax, unit/regression, subprocess end-to-end and installed-package tests must 
 ## Evidence-backed professional reference update (v1.3)
 
 Reference data now separates 100 public company-organization member accounts with two self-reported signals (employer and engineering role) from 16 employer-owned engineering author-page examples. Only the latter have company-controlled published role evidence, which can become stale. Neither cohort predicts interview or hiring outcomes. Both are used for structural presentation guidance, never for imitating somebody else's job history or for filling contribution calendars. The collection is a manually invoked research task; ordinary GH Aura commands do not scrape or refresh others' accounts. See [method and data](../research/INDUSTRY_STUDY.md).
+
+## Hiring-readiness focus (v1.4)
+
+The ordinary `audit` command includes a first-minute, evidence-based role-oriented check. It classifies demonstrated facts, presentation gaps and unknown technical substance rather than producing a fake interview probability. `--goal` overrides the intended role for an audit without updating config. Current evidence is profile metadata plus optional README headings; it does not execute projects or verify personal authorship. Future priorities, explicitly **not yet implemented**, are bounded source/test/CI inspection, confirmed personal contributions, local job-description matching and blinded human usability review. See [Hiring readiness guide](HIRING_READINESS.md).

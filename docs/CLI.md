@@ -25,12 +25,15 @@ Limits: `scan.maxRepos` 1–500, `scan.inspectRepos` 0–20, `scan.maxRequests` 
 ## Inspect and draft
 
 ```bash
+gh-aura audit --goal "backend engineer" --inspect 3 --stats
 gh-aura audit --inspect 6 --stats
 gh-aura audit OTHER_USER --json --output report.json
 gh-aura showcase --goal "platform engineer" --limit 4 --inspect 6
 gh-aura profile --style minimal --output draft.md
 gh-aura profile --visual 20 --output restrained.md
 ```
+
+The existing `audit` command now includes a **first-minute hiring-manager review** with a target role, public bio, profile README, shortlisted projects, documentation and contact links, and explicit unknowns for code quality and personal authorship. Set `editorial.targetRole` or override it with `audit --goal "backend engineer"`. This is not an interview-probability score. See [Hiring readiness](HIRING_READINESS.md).
 
 Inspection adds sampled public README reads. Conventional headings are heuristic signals, not proof of code quality. Scores concern presentation evidence, not engineer quality or hiring probability. Unknown information is not a negative finding.
 

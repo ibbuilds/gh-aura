@@ -44,3 +44,7 @@ Core logic is unit-tested offline; the subprocess flow uses isolated transport f
 ## Professional reference data (v1.3)
 
 The CLI has a compact read-only local `reference.mjs` aggregate and source-linked professional examples. Two research sources remain **distinct**: 100 public company-organization members with self-reported company and engineering role (employment **unverified**), and 16 profiles associated with engineering author pages published by employers (sources may be stale). Neither offers proof of hiring outcomes. Research datasets and one-time collectors live under `research/` and `scripts/` but are excluded from the runtime npm tarball; ordinary commands never fetch the 116 reference accounts. `references` executes offline. `brief` selects at most four short source links and structural counts rather than copying profiles, retaining the existing 12 KiB context budget. See [study methodology](../research/INDUSTRY_STUDY.md).
+
+## Hiring-oriented review (v1.4)
+
+`src/readiness.mjs` is a pure, read-only analysis of a normalized public profile snapshot. The existing `audit` CLI adds a role-oriented first-minute review to the current report, without another API call. Every check is `clear`, `needs-work` or `unknown`, with an evidence URL and explicit user action. Documentation signals do not certify runnable code, CI, engineering expertise or ownership. No percentage called “hireability” or prediction of employment is generated. Source and tradeoffs: [Hiring readiness](HIRING_READINESS.md).

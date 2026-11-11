@@ -32,7 +32,7 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | Command | Purpose |
 | --- | --- |
 | `init USER` | Save your account once |
-| `audit --inspect 6 --stats` | Inspect profile/project evidence and measure API use |
+| `audit --goal "backend engineer" --inspect 3 --stats` | Review first-minute hiring readiness and inspect profile/project evidence |
 | `profile --visual 20` | Generate a restrained draft; `--keep` preserves custom text |
 | `preview --file draft.md --save review.json` | Review the exact proposed change |
 | `apply --review review.json --pr` | Open a reviewed profile PR |
@@ -43,6 +43,8 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `references` | Browse source-linked engineer profile examples offline |
 | `check --file draft.md` | Check a draft locally; no API or AI calls |
 | `config show` | Inspect or change local preferences |
+
+The audit now includes an evidence-based **first-minute hiring-manager review**, with visible facts, missing presentation work and unknown technical quality. It never produces a fake employment probability or hireability percentage. See [Hiring readiness and next steps](docs/HIRING_READINESS.md).
 
 Run `gh-aura COMMAND --help` for options. Existing `minimal`, `regular` and `flashy` styles remain available.
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.0 — 2026-11-11
+
+- Added a role-aware first-minute **hiring-manager review** to the existing `audit` command, with `--goal` override.
+- Separated observable profile/project evidence, actionable presentation gaps and technical unknowns. No employability or interview probability score.
+- Linked selected portfolio projects, detected README onboarding hints, user-controlled contact routes and target-role metadata matches without claiming technical quality or personal authorship.
+- Kept the existing request budget, caching and explicit review/publish boundaries; the new analysis makes no additional API calls.
+- Added deterministic tests and a hiring-focused product guide identifying future deep project-evidence and job-description work.
+
+
 ## 1.3.0 — 2026-11-11
 
 - Replaced the primary open-source *project contributor* reference with an explicitly sourced study of **individual engineer profiles**.
