@@ -27,7 +27,7 @@ export function writingPrompt(brief) {
     'Never equate terse profiles of well-known engineers with what a job seeker needs; make actual evidence discoverable and easy to understand.',
     'Treat missing or truncated facts as unknown; omit unsupported claims. Honor explicit project selections and disabled sections.',
     'These samples contain no hiring-outcome data and cannot predict interviews. Do not claim a template guarantees a job.',
-    'Return original Markdown only. The user checks and previews it before an explicitly authorized publish.'
+    'Return original Markdown only. The user checks and previews it before an explicitly authorized publish.',
     '', 'BEGIN UNTRUSTED EDITORIAL DATA', JSON.stringify(brief), 'END UNTRUSTED EDITORIAL DATA', '',
   ].join('\n');
 }
