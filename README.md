@@ -4,7 +4,7 @@
 
 A CLI-only tool for shaping a clear, professional GitHub presence. Analyze the public profile, choose projects worth showcasing, generate a tailored profile README, and explore GitHub achievement opportunities — without inventing a contribution history.
 
-**Status:** v0.2.0 prototype. Read-only GitHub API access; generated files stay local. Historical contribution diagnostics and GitHub write/apply commands are *not yet implemented*.
+**Status:** v0.3.0 prototype. Public audit and draft generation are read-only. A separate, explicitly approved `apply` command can publish a reviewed profile README to GitHub. Historical contribution diagnostics are still planned.
 
 ## Why GH Aura?
 
@@ -37,6 +37,7 @@ node src/cli.mjs plan ibbuilds
 node src/cli.mjs showcase ibbuilds --goal "backend engineer" --inspect 6
 node src/cli.mjs profile ibbuilds --style minimal --output profile-preview.md
 node src/cli.mjs diff ibbuilds --style minimal
+node src/cli.mjs brief ibbuilds --output editorial-brief.json
 node src/cli.mjs achievements
 ```
 
@@ -51,7 +52,11 @@ From a local checkout, you can also run `npm link` to use `gh-aura` as a command
 | `gh-aura plan USER` | Prioritized improvements and showcase candidates | No |
 | `gh-aura showcase USER` | Up to six explained public-repository recommendations | No |
 | `gh-aura profile USER --style minimal` | Local draft profile README in one of three styles | No |
-| `gh-aura diff USER` | Terminal diff against existing public profile README | No |
+| `gh-aura diff USER` | Terminal diff against a generated README | No |
+| `gh-aura brief USER` | Vendor-neutral JSON for AI-assisted or manual copywriting | No |
+| `gh-aura preview USER --file draft.md` | Diff + approval code bound to the draft and remote README | No |
+| `gh-aura apply USER --file draft.md --approve SHA256` | Publish only the exact, previously reviewed draft | **Yes, with explicit approval** |
+| `gh-aura config show/get/set/reset` | Inspect or change local settings by command | No |
 | `gh-aura achievements` | Offline catalog of reported possible and historical achievements | No |
 
 Use `--inspect 6` to inspect the top six candidate project READMEs for conventional setup and usage headings (0–20); it consumes extra GitHub API requests and is not a source-code quality review. The default is 0 to conserve rate limits.
@@ -118,7 +123,49 @@ Unauthenticated audits read public data and are subject to GitHub API limits. An
 GH_TOKEN=your_token_here node src/cli.mjs audit yourname --format json
 ```
 
-A token is **not required** to use the public-profile commands. This prototype does not modify any remote GitHub profile or repository.
+A token is **not required** to use the public-profile commands. Only an explicit `apply` command can modify the public `username/username` profile README repository. All other commands are read-only or edit a local configuration file.
+
+## Command-driven customization
+
+No configuration file editor is required:
+
+```bash
+gh-aura config show
+gh-aura config get profile.style
+gh-aura config set profile.style minimal
+gh-aura config set profile.sections.stats false
+gh-aura config set profile.technologies '["TypeScript","Python"]'
+gh-aura config set showcase.weights.popularity 5 --dry-run
+gh-aura config reset profile.sections.stats
+```
+
+All `config set` and `config reset` commands modify **only your local** `.gh-aura.json`, with schema validation. Pass `--dry-run` to review the change without saving it, or `--config path` to target a separate local file.
+
+## Explicit preview and apply
+
+A profile update requires three distinct commands. GH Aura **never publishes a generated draft automatically**.
+
+```bash
+# 1. Generate or edit a Markdown draft.
+gh-aura profile ibbuilds --style minimal --output draft.md
+
+# 2. Inspect the exact draft against the current README.
+gh-aura preview ibbuilds --file draft.md
+
+# 3. Only if you approve: copy the code printed by preview.
+# A GitHub token with contents:write to ibbuilds/ibbuilds is required.
+GH_TOKEN=... gh-aura apply ibbuilds --file draft.md --approve <SHA256_FROM_PREVIEW>
+```
+
+The approval code is bound to the username, target path, current README content and revision, and exact draft bytes. If the draft or remote README changes, the code becomes invalid. The GitHub Contents API also checks the current file SHA to reject concurrent updates. `apply` updates **only** the profile README, not other repository files, pins, commits or account settings. Existing README content is not merged automatically; you must review the full diff.
+
+If the profile repository does not exist, create the public `username/username` repository manually before using preview/apply.
+
+## AI without vendor lock-in
+
+`gh-aura brief USER --output brief.json` exports a structured brief with public evidence, style preferences and editorial constraints. Give that JSON to any AI assistant, or write your draft yourself. Save the proposed README as a Markdown file, then use the same `preview` and `apply` commands.
+
+GH Aura does not send prompts to an AI vendor, require an AI API key, or give an AI service your GitHub credentials. The exported brief is optional, and the user remains the editor and publisher.
 
 ## Achievements and contribution history
 

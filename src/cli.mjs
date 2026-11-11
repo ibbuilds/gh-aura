@@ -2,42 +2,61 @@
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { initConfig, loadConfig, validateConfig } from './config.mjs';
+import { configCommand } from './config-cli.mjs';
 import { getSnapshot, validateLogin } from './github.mjs';
 import { inspectRepositories } from './inspection.mjs';
-import { diffText } from './diff.mjs';
 import { auditProfile, rankRepositories } from './engine.mjs';
 import { renderAuditMarkdown, renderPlanMarkdown, renderProfile, renderShowcaseMarkdown } from './render.mjs';
 import { ACHIEVEMENTS, ACHIEVEMENT_SOURCES, renderAchievementsMarkdown } from './achievements.mjs';
+import { diffText } from './diff.mjs';
+import { editorialBrief } from './brief.mjs';
+import { applyProfile, previewProfile, profileTarget, readDraft } from './workflow.mjs';
 
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 const HELP = [
-  'GH Aura — professional GitHub presence, entirely from your terminal',
+  'GH Aura — a user-directed, terminal-only GitHub profile toolkit',
   '',
   'Usage:',
   '  gh-aura init [--output .gh-aura.json]',
-  '  gh-aura audit <username> [--format markdown|json] [--output file]',
-  '  gh-aura plan <username> [--output file]',
+  '  gh-aura config show [--config path]',
+  '  gh-aura config get profile.style',
+  '  gh-aura config set profile.style regular [--dry-run]',
+  '  gh-aura config set profile.sections.stats true',
+  '  gh-aura config reset profile.sections.stats',
+  '  gh-aura audit <username> [--inspect 6] [--format json]',
+  '  gh-aura plan <username> [--inspect 6]',
   '  gh-aura showcase <username> [--goal "backend engineer"] [--limit 6]',
-  '  gh-aura profile <username> [--style minimal|regular|flashy] [--output README.md]',
+  '  gh-aura profile <username> [--style minimal|regular|flashy] [--output draft.md]',
   '  gh-aura diff <username> [--style minimal|regular|flashy]',
+  '  gh-aura brief <username> [--output brief.json]',
+  '  gh-aura preview <username> --file draft.md',
+  '  gh-aura apply <username> --file draft.md --approve SHA256',
   '  gh-aura achievements [--format markdown|json]',
   '',
-  'Global options:',
-  '  --config path   Path to local JSON config (default: .gh-aura.json when present)',
-  '  --user login    Alternative to the positional username',
+  'Options:',
+  '  --config path   JSON config (default .gh-aura.json, or built-in defaults)',
+  '  --user login    Alternative to positional username',
   '  --format type   markdown (default) or json',
-  '  --inspect N     Inspect top N repository READMEs (0–20; default: 0)',
-  '  --json          Shortcut for --format json',
-  '  --output path   Write output to local file; stdout is default',
-  '  --force         Allow overwriting a local output file',
-  '  --help          Show command usage',
+  '  --json          Alias for --format json',
+  '  --inspect N     Inspect top N public project READMEs (0–20; default 0)',
+  '  --style style   minimal, regular, or flashy',
+  '  --goal text     Target engineering focus for showcase rankings',
+  '  --limit N       Pin recommendations (1–6)',
+  '  --file path     Exact draft file for preview/apply',
+  '  --approve hash  SHA-256 from preview, bound to draft and remote state',
+  '  --dry-run       Preview local config edits without saving them',
+  '  --output path   Write output to a local file (stdout by default)',
+  '  --force         Overwrite an existing local output file',
+  '  --help          Show help',
   '  --version       Show version',
   '',
-  'No GitHub writes, dummy commits, fabricated badges, or retroactive history edits.',
+  'Only apply performs a remote write; it requires a token, exact draft and approval code.',
 ].join('\n');
 
-const VALUE_OPTIONS = new Set(['config', 'user', 'format', 'output', 'goal', 'limit', 'style', 'inspect']);
-const FLAGS = new Set(['help', 'version', 'json', 'force']);
+const VALUE_OPTIONS = new Set([
+  'config', 'user', 'format', 'output', 'goal', 'limit', 'style', 'inspect', 'file', 'approve',
+]);
+const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run']);
 
 export function parseArgs(tokens) {
   const parsed = { positional: [] };
@@ -79,20 +98,20 @@ function asJSON(value) {
 
 async function main() {
   const [command = 'help', ...tokens] = process.argv.slice(2);
-  if (command === '--help' || command === '-h') {
+  if (command === '--help' || command === '-h' || command === 'help') {
     process.stdout.write(HELP + '\n');
     return;
   }
-  if (command === '--version') {
+  if (command === '--version' || command === 'version') {
     process.stdout.write(VERSION + '\n');
     return;
   }
   const opts = parseArgs(tokens);
-  if (command === 'help' || opts.help) {
+  if (opts.help) {
     process.stdout.write(HELP + '\n');
     return;
   }
-  if (command === 'version' || opts.version) {
+  if (opts.version) {
     process.stdout.write(VERSION + '\n');
     return;
   }
@@ -101,12 +120,22 @@ async function main() {
     process.stdout.write('Created ' + name + '\n');
     return;
   }
-  const commands = new Set(['audit', 'plan', 'showcase', 'profile', 'diff', 'achievements']);
-  if (!commands.has(command)) throw new Error('Unknown command: ' + command + '. Run gh-aura --help.');
-  const format = opts.json ? 'json' : opts.format || 'markdown';
-  if (!['json', 'markdown'].includes(format)) {
-    throw new Error('--format must be markdown or json.');
+  if (command === 'config') {
+    const [action, path, ...rest] = opts.positional;
+    const response = configCommand(action, path, rest.join(' '), {
+      file: opts.config, dryRun: opts['dry-run'],
+    });
+    process.stdout.write(response);
+    return;
   }
+  const commands = new Set([
+    'audit', 'plan', 'showcase', 'profile', 'diff', 'brief', 'preview', 'apply', 'achievements',
+  ]);
+  if (!commands.has(command)) {
+    throw new Error('Unknown command: ' + command + '. Run gh-aura --help.');
+  }
+  const format = opts.json ? 'json' : opts.format || 'markdown';
+  if (!['json', 'markdown'].includes(format)) throw new Error('--format must be markdown or json.');
   if (command === 'achievements') {
     const body = format === 'json'
       ? asJSON({ catalog: ACHIEVEMENTS, sources: ACHIEVEMENT_SOURCES, status: 'community-reported; unverified per account' })
@@ -116,6 +145,22 @@ async function main() {
   }
 
   const login = validateLogin(opts.user || opts.positional[0]);
+  if (command === 'preview' || command === 'apply') {
+    // No GitHub write is possible until a file and matching approval code are supplied.
+    const draft = readDraft(opts.file);
+    if (command === 'apply' && !opts.approve) {
+      throw new Error('Publishing requires --approve SHA256 from gh-aura preview.');
+    }
+    const target = await profileTarget(login);
+    if (command === 'preview') {
+      output(previewProfile(target, draft), opts.output, opts.force);
+      return;
+    }
+    const result = await applyProfile(target, draft, opts.approve);
+    process.stdout.write(result.message + (result.commit ? '\n' + result.commit : '') + '\n');
+    return;
+  }
+
   const config = loadConfig(opts.config);
   if (opts.style) config.profile.style = opts.style;
   if (opts.goal) config.showcase.goal = opts.goal;
@@ -133,15 +178,17 @@ async function main() {
   const snapshot = await getSnapshot(login, { maxRepos: config.scan.maxRepos });
   await inspectRepositories(snapshot, config, config.scan.inspectRepos);
 
-  if (command === 'diff') {
-    const proposed = renderProfile(snapshot, config);
-    const existing = snapshot.profileReadme?.content || '';
-    output(diffText(existing, proposed), opts.output, opts.force);
+  if (command === 'brief') {
+    output(asJSON(editorialBrief(snapshot, config)), opts.output, opts.force);
     return;
   }
   if (command === 'profile') {
-    const markdown = renderProfile(snapshot, config);
-    output(markdown, opts.output, opts.force);
+    output(renderProfile(snapshot, config), opts.output, opts.force);
+    return;
+  }
+  if (command === 'diff') {
+    output(diffText(snapshot.profileReadme?.content || '', renderProfile(snapshot, config)),
+      opts.output, opts.force);
     return;
   }
   if (command === 'showcase') {
@@ -155,13 +202,9 @@ async function main() {
     return;
   }
   const report = auditProfile(snapshot, config);
-  if (command === 'audit') {
-    output(format === 'json' ? asJSON(report) : renderAuditMarkdown(report), opts.output, opts.force);
-    return;
-  }
-  if (command === 'plan') {
-    output(format === 'json' ? asJSON(report) : renderPlanMarkdown(report), opts.output, opts.force);
-  }
+  output(format === 'json' ? asJSON(report)
+    : command === 'audit' ? renderAuditMarkdown(report) : renderPlanMarkdown(report),
+  opts.output, opts.force);
 }
 
 main().catch((error) => {

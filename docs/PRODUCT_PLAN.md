@@ -1,7 +1,7 @@
 # GH Aura — product roadmap
 
 **Updated:** 2026-11-11  
-**Format:** CLI-only; no web UI  
+**Format:** CLI-only; no web UI; all commands user-triggered  
 **North star:** Help a hiring manager find a developer's strongest *verifiable* work in under 60 seconds.
 
 ## Product contract
@@ -26,12 +26,12 @@ Any section can be toggled in `.gh-aura.json`; presets only establish defaults. 
 | --- | --- | --- |
 | P0 | CLI foundation | **Prototype delivered**: dependency-free Node 22 CLI, offline tests, CI |
 | P1 | Public profile audit | **Improved first pass delivered**: bio, profile README, repo metadata, opt-in sample README inspections; needs deeper source evidence |
-| P2 | README studio | **Improved first pass delivered**: minimal, regular, flashy, sections, overrides, local output and terminal diff |
+| P2 | README studio | **Improved first pass delivered**: three profile styles, local output, terminal diff, preview/approval and generic editorial brief |
 | P3 | Showcase advisor | **Improved first pass delivered**: explainable metadata ranking, optional sampled README features, manual featured choices; needs richer repo analysis |
 | P4 | Achievement navigator | **Guide delivered**: community-sourced catalog; personalized tracking/verification still planned |
 | P5 | Contribution diagnostics | **Planned**: actual history and attribution, not graph farming |
 | P6 | Engineering timeline | **Planned**: evidence-linked past milestones and genuine evolution |
-| P7 | Apply and maintenance | **Planned**: CLI with explicit diff/approval, no dashboard |
+| P7 | Apply and maintenance | **First pass delivered**: user-reviewed README apply with SHA-256 approval and GitHub SHA conflict checks; additional maintenance planned |
 
 **MVP release gate:** robust P1–P3 on real public profiles, correct formatting for sparse/large accounts, readable errors, complete test coverage for core logic, documentation and repeatable CLI installation.
 
@@ -44,6 +44,10 @@ gh-aura plan <username>
 gh-aura showcase <username> [--goal "platform engineer"] [--limit 6]
 gh-aura profile <username> [--style minimal|regular|flashy] [--output preview.md]
 gh-aura diff <username> [--style minimal|regular|flashy]
+gh-aura config show|get|set|reset ...
+gh-aura brief <username> --output brief.json
+gh-aura preview <username> --file draft.md
+gh-aura apply <username> --file draft.md --approve SHA256
 gh-aura achievements
 ```
 
@@ -87,7 +91,7 @@ Provide opt-in Markdown summaries of actual milestones, useful public work, rele
 
 ### P7: Safe CLI apply and maintenance
 
-All writes are opt-in. Show diff, require explicit approval, limit permissions, support PR-based updates and provide rollback instructions. Scheduled audits, if later offered, produce reports and never generate filler commits.
+README `apply` now requires a prior `preview` code and fine-grained `contents:write` token. The approval code includes the exact proposed bytes and remote revision. Further work: PR-based updates, improved rollback guidance, and managed maintenance. Scheduled audits, if later offered, produce reports and never generate filler commits.
 
 ## Quality criteria
 
@@ -97,7 +101,7 @@ All writes are opt-in. Show diff, require explicit approval, limit permissions, 
 - Style changes must not interfere with profile section/user data overrides.
 - Achievements are recorded as **opportunities** unless independently verified.
 - User's historical contribution dates remain authentic.
-- No visual UI or hosted service.
+- No visual UI or hosted service. No autonomous profile updates: every command is initiated by the user; publication is a separate approved action.
 
 ## Source references
 
