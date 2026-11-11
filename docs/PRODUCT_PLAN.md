@@ -30,6 +30,8 @@ The modules remain independent: someone may run only achievements, only profile,
 | Pin repositories | GitHub supports up to six public repo/gist pins in its profile UI | Rank and recommend; do not promise an undocumented public auto-pin mutation |
 | Revise profile README | GitHub Contents API with scoped permissions | Prepare diff and explicit reviewed apply or unmerged PR |
 
+**Important distinction:** A *private repository* is not a *private personal profile*. A public personal profile may show anonymized eligible private contribution counts when enabled; making the entire personal profile private hides its contribution graph and achievements from other viewers. This product targets a public, recruiter-visible personal profile with user-controlled repository privacy.
+
 **Do not conflate distinct kinds of badges:** collectible Achievements, program memberships, paid status and historical one-time awards. Do not promise all achievements, external stars, accepted discussion answers or program admissions. Avoid sockpuppet accounts, self-starring networks, artificial PR chains and meaningless issues to game metrics.
 
 GitHub's **author date** can differ from the **commit date**. A heatmap is not proof of professional experience. Preserve real provenance and clearly label any historical gaps or unavailable private data.
