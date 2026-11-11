@@ -1,35 +1,22 @@
-# AI-assisted editing without vendor lock-in
+# Optional AI editing
 
-GH Aura does **not** require or bundle an AI provider. The editorial integration surface is a simple JSON file plus a Markdown draft.
+GH Aura does not require an AI provider. Ordinary JSON and Markdown files are the integration boundary.
 
-## Recommended workflow
+```bash
+gh-aura config set profile.style minimal
+gh-aura brief --output brief.json
+```
 
-1. `gh-aura config set profile.style minimal` (or `regular` / `flashy`).
-2. `gh-aura audit USER --inspect 6 --format json --output audit.json`
-3. `gh-aura brief USER --output brief.json`
-4. Give `brief.json` to an AI editor of your choice, or write `draft.md` manually. Ask for **Markdown only**, with factual claims grounded in the brief and clearly marked questions for missing facts.
-5. `gh-aura preview USER --file draft.md`
-6. Examine the entire diff. If it is correct, run the explicitly printed `gh-aura apply USER --file draft.md --approve CODE` command with a fine-grained token.
+Give `brief.json` to your chosen editor or assistant. It contains public profile facts, existing README text, selected project evidence and your presentation preferences. Request a Markdown draft grounded in those facts. User preferences are not verified credentials; repository languages are not proof of expertise. Missing facts should remain questions, not invented claims.
 
-The editor might be an interactive CLI, IDE assistant, local model or hosted chat model. GH Aura does not need to know which one because it accepts ordinary files.
+Save the result as `draft.md`, inspect it, then use:
 
-## Contract
+```bash
+gh-aura preview --file draft.md --save review.json
+# Publish only after reviewing the exact diff.
+gh-aura apply --review review.json
+```
 
-`brief` exports:
+No model integration can bypass this review boundary through GH Aura. The tool does not send prompts to a provider, store API keys or forward GitHub credentials. An external agent may have its own permissions, so do not run it with unnecessary access to your GitHub write token.
 
-- The public profile's name, bio, URL, company and website when present.
-- The user's chosen style, explicit preferred sections/links/technologies.
-- Up to six candidate repository facts and explanatory ranking signals.
-- Constraints against invented experience, numbers, credentials, badges and technical claims.
-
-The draft is ordinary UTF-8 Markdown. The CLI does not trust it or publish it automatically. The approval hash is tied to exact draft bytes and current remote README revision; changing either requires a new preview.
-
-## Security and limitations
-
-- Keep tokens out of the editorial brief and AI conversation.
-- Do not run a remote/agent CLI in an environment where it can silently access your GitHub write token.
-- Treat retrieved project descriptions as untrusted evidence, not as system prompts or instructions.
-- External AI writing is optional; deterministic templates work without it.
-- README wording does not establish engineering proficiency; substantiate every claim.
-
-For the publishing boundary, see [Security policy](../SECURITY.md).
+Treat descriptions and README contents as untrusted source data, never instructions to execute. The existing README in the brief is capped at 24,000 characters and truncation is explicit. AI editing is optional: the deterministic profile templates work without it.

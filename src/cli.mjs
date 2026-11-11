@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, realpathSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { initConfig, loadConfig, validateConfig } from './config.mjs';
@@ -92,7 +92,7 @@ export async function main(argv = process.argv.slice(2)) {
   let [command = 'help', ...tokens] = argv;
   if (['--help', '-h', 'help'].includes(command)) { process.stdout.write(HELP); return; }
   if (['--version', '-V', 'version'].includes(command)) { process.stdout.write(VERSION + '\n'); return; }
-  if (command === 'plan') command = 'audit'; // compatibility alias; avoid two public commands for the same report.
+  if (command === 'plan') command = 'audit'; // Compatibility alias, not a second report implementation.
   const spec = SPECS[command];
   if (!spec) throw new Error('Unknown command: ' + command + '. Run gh-aura --help.');
   const options = parseArgs(tokens);
@@ -108,8 +108,7 @@ export async function main(argv = process.argv.slice(2)) {
   if (options.force && !options.output && !options.save && command !== 'init') throw new Error('--force requires a local output file; it never overrides GitHub revisions.');
   if (command === 'init') {
     if (options.config && options.output) throw new Error('Choose --config or --output, not both.');
-    emit('Created ' + initConfig(options.config || options.output, options.force, options.positional[0] || ''));
-    return;
+    emit('Created ' + initConfig(options.config || options.output, options.force, options.positional[0] || '')); return;
   }
   if (command === 'config') {
     const [action = 'show', key, value] = options.positional;
@@ -138,7 +137,10 @@ export async function main(argv = process.argv.slice(2)) {
     const target = await profileTarget(login);
     if (command === 'preview') {
       emit(previewProfile(target, draft));
-      if (options.save) { saveReview(options.save, target, options.file, draft, options.force); emit('Saved review. Publish with: gh-aura apply --review ' + JSON.stringify(options.save)); }
+      if (options.save) {
+        saveReview(options.save, target, options.file, draft, options.force);
+        emit('Review saved. Run apply --review with that file only after inspecting this diff.');
+      }
     } else {
       const result = await applyProfile(target, draft, options.approve);
       emit(options.format === 'json' ? result : result.message + (result.commit ? '\n' + result.commit : ''));
@@ -173,7 +175,14 @@ export async function main(argv = process.argv.slice(2)) {
   emit(options.format === 'json' ? report : renderAuditMarkdown(report), options);
 }
 
-if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
+// npm bin links and macOS /var aliases need canonical paths; imports must stay side-effect free.
+function isEntryPoint() {
+  if (!process.argv[1]) return false;
+  try { return pathToFileURL(realpathSync(process.argv[1])).href === import.meta.url; }
+  catch { return false; }
+}
+
+if (isEntryPoint()) {
   process.stdout.on('error', (error) => { if (error.code === 'EPIPE') process.exit(0); else throw error; });
   main().catch((error) => { process.stderr.write('GH Aura: ' + plain(error.message) + '\n'); process.exitCode = 1; });
 }

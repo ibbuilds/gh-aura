@@ -1,4 +1,11 @@
 node_modules/
-.DS_Store
 coverage/
+dist/
+*.tgz
 *.log
+.DS_Store
+.env
+.env.*
+.gh-aura.json
+draft.md
+review.json

@@ -23,12 +23,13 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         node: ['22', '24']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ matrix.node }}
+          package-manager-cache: false
       - run: npm run check
       - run: npm test
       - run: npm run test:package
@@ -39,20 +40,57 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
+          package-manager-cache: false
       - run: npm run test:live
         env:
           GH_TOKEN: ${{ github.token }}
       - run: npm pack --pack-destination dist --ignore-scripts
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: gh-aura-verification
           path: dist/
           retention-days: 7
           if-no-files-found: ignore
+
+  release:
+    name: Publish versioned GitHub package
+    needs: [test, live]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Publish only a new version; never overwrite a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version")"
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Expected a stable semantic version'; exit 1; }
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists; leaving it unchanged."
+            exit 0
+          fi
+          mkdir -p dist
+          npm pack --ignore-scripts --pack-destination dist
+          (cd dist && sha256sum "gh-aura-$VERSION.tgz" > SHA256SUMS.txt)
+          gh release create "$TAG" "dist/gh-aura-$VERSION.tgz" dist/SHA256SUMS.txt \
+            --target "$GITHUB_SHA" --title "GH Aura $TAG" --notes-file docs/RELEASE_NOTES.md
