@@ -51,7 +51,7 @@ gh-aura apply <username> --file draft.md --approve SHA256
 gh-aura achievements
 ```
 
-Current commands only read public GitHub information and generate local files. No remote writes.
+All analysis, configuration, drafting, and preview commands are local/read-only. The **sole** remote write path is an explicitly approved `apply` command targeting the profile README.
 
 ## Roadmap details
 
