@@ -45,7 +45,8 @@ test('employer-sourced 16-account reference retains source links without copying
   assert.equal(data.records.filter((x) => x.structure.readme.status === 'observed').length, PROFILE_REFERENCE.employerSourced.observations.rootReadmesObserved);
   assert.ok(data.records.every((x) => x.employerSource?.startsWith('https://')));
   assert.ok(data.records.every((x) => !Object.hasOwn(x, 'bio') && !Object.hasOwn(x.structure.readme, 'text')));
-  assert.match(data.limitations.join(' '), /outdated|stale|changes jobs|older employer/i);
+  assert.match(data.limitations.join(' '), /employment verification|not representative/i);
+  assert.ok(data.records.every((person) => /stale/i.test(person.employerStatusNote)));
 });
 
 test('local editorial check makes zero network calls and strict mode is useful in scripts', () => {
