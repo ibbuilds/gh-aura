@@ -1,6 +1,6 @@
 {
   "name": "gh-aura",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Minimal, configurable GitHub profile optimizer from the command line.",
   "type": "module",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "node --test",
-    "check": "node --check src/cli.mjs && node --check src/github.mjs && node --check src/config.mjs && node --check src/engine.mjs && node --check src/render.mjs && node --check src/achievements.mjs",
+    "check": "node --check src/cli.mjs && node --check src/github.mjs && node --check src/config.mjs && node --check src/engine.mjs && node --check src/render.mjs && node --check src/achievements.mjs && node --check src/inspection.mjs && node --check src/diff.mjs",
     "start": "node src/cli.mjs"
   },
   "keywords": [

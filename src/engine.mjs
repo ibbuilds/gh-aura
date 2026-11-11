@@ -31,8 +31,11 @@ export function rankRepositories(snapshot, config, options = {}) {
     const matches = [...new Set(terms)].filter((term) => text.includes(term));
     const relevance = terms.length ? clamp(matches.length / Math.max(1, Math.min(terms.length, 3))) : 0.65;
     const substance = clamp((repo.fork ? 0.05 : 0.4) + (repo.language ? 0.3 : 0) + (repo.size > 0 ? 0.3 : 0));
-    const presentation = clamp((repo.description ? 0.5 : 0) + ((repo.topics || []).length ? 0.25 : 0) +
-      (repo.homepage ? 0.25 : 0));
+    const inspected = repo.inspection;
+    // Readme structure is evidence of presentation, not proof of engineering quality.
+    const presentation = clamp((repo.description ? 0.25 : 0) + ((repo.topics || []).length ? 0.15 : 0) +
+      (repo.homepage ? 0.15 : 0) + (inspected?.state === 'available' ? 0.25 : 0) +
+      (inspected?.features?.installation ? 0.10 : 0) + (inspected?.features?.usage ? 0.10 : 0));
     const age = daysSince(repo.pushed_at || repo.updated_at, now);
     const maintenance = age === null ? 0.25 : age <= 90 ? 1 : age <= 365 ? 0.8 : age <= 730 ? 0.5 : 0.15;
     const stars = Math.max(0, Number(repo.stargazers_count) || 0);
@@ -45,6 +48,10 @@ export function rankRepositories(snapshot, config, options = {}) {
     const reasons = [];
     if (matches.length) reasons.push('Matches declared focus: ' + matches.join(', '));
     if (repo.description) reasons.push('Has a public project description');
+    if (inspected?.state === 'available') reasons.push('README verified through GitHub API');
+    if (inspected?.features?.installation) reasons.push('README includes a setup section');
+    if (inspected?.features?.usage) reasons.push('README includes a usage/examples section');
+    if (inspected?.state === 'missing') reasons.push('Improve: add a project README');
     if (repo.homepage) reasons.push('Provides a project/demo link');
     if (age !== null && age <= 365) reasons.push('Updated in the past year');
     if (stars > 0) reasons.push(stars + ' public stars');
@@ -118,6 +125,21 @@ export function auditProfile(snapshot, config) {
       untitled.length + ' public owned repositories have no topics.',
       'Add precise topics to the most relevant projects for discoverability.', root + '?tab=repositories');
   }
+  const inspectedRepos = snapshot.repos.filter((repo) => repo.inspection);
+  const missingReadmes = inspectedRepos.filter((repo) => repo.inspection.state === 'missing' && !repo.archived && !repo.fork);
+  for (const repo of missingReadmes.slice(0, 4)) {
+    add('medium', 'Showcase candidate lacks a README: ' + repo.name,
+      'GitHub reports no README for this inspected repository.',
+      'Add purpose, setup, usage and a minimal working example.', 'https://github.com/' + repo.full_name);
+  }
+  const unhelpful = inspectedRepos.filter((repo) => repo.inspection.state === 'available' &&
+    !repo.inspection.features.installation && !repo.inspection.features.usage && !repo.archived && !repo.fork);
+  for (const repo of unhelpful.slice(0, 4)) {
+    add('low', 'README has no recognized setup/usage headings: ' + repo.name,
+      'The inspected README lacks conventional installation or usage headings.',
+      'Review whether the README clearly explains how to try the project; custom headings may be perfectly valid.',
+      repo.inspection.url);
+  }
   if (snapshot.truncated) {
     add('info', 'Repository sample capped', 'More repositories exist than were scanned.',
       'Increase scan.maxRepos if you need complete public coverage.', root + '?tab=repositories');
@@ -132,8 +154,9 @@ export function auditProfile(snapshot, config) {
     user: snapshot.username,
     observedAt: snapshot.observedAt,
     publicRepositoriesScanned: snapshot.repos.length,
+    repositoryReadmesInspected: inspectedRepos.length,
     findings,
     showcase: rankRepositories(snapshot, config),
-    caveat: 'Metadata-based audit. Does not inspect repository source code, confirm achievements, or reconstruct the contribution graph.',
+    caveat: 'Metadata-based audit with optional README-heading checks. Does not inspect repository source code, confirm achievements, or reconstruct the contribution graph.',
   };
 }

@@ -3,11 +3,13 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { initConfig, loadConfig, validateConfig } from './config.mjs';
 import { getSnapshot, validateLogin } from './github.mjs';
+import { inspectRepositories } from './inspection.mjs';
+import { diffText } from './diff.mjs';
 import { auditProfile, rankRepositories } from './engine.mjs';
 import { renderAuditMarkdown, renderPlanMarkdown, renderProfile, renderShowcaseMarkdown } from './render.mjs';
 import { ACHIEVEMENTS, ACHIEVEMENT_SOURCES, renderAchievementsMarkdown } from './achievements.mjs';
 
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 const HELP = [
   'GH Aura — professional GitHub presence, entirely from your terminal',
   '',
@@ -17,12 +19,14 @@ const HELP = [
   '  gh-aura plan <username> [--output file]',
   '  gh-aura showcase <username> [--goal "backend engineer"] [--limit 6]',
   '  gh-aura profile <username> [--style minimal|regular|flashy] [--output README.md]',
+  '  gh-aura diff <username> [--style minimal|regular|flashy]',
   '  gh-aura achievements [--format markdown|json]',
   '',
   'Global options:',
   '  --config path   Path to local JSON config (default: .gh-aura.json when present)',
   '  --user login    Alternative to the positional username',
   '  --format type   markdown (default) or json',
+  '  --inspect N     Inspect top N repository READMEs (0–20; default: 0)',
   '  --json          Shortcut for --format json',
   '  --output path   Write output to local file; stdout is default',
   '  --force         Allow overwriting a local output file',
@@ -32,7 +36,7 @@ const HELP = [
   'No GitHub writes, dummy commits, fabricated badges, or retroactive history edits.',
 ].join('\n');
 
-const VALUE_OPTIONS = new Set(['config', 'user', 'format', 'output', 'goal', 'limit', 'style']);
+const VALUE_OPTIONS = new Set(['config', 'user', 'format', 'output', 'goal', 'limit', 'style', 'inspect']);
 const FLAGS = new Set(['help', 'version', 'json', 'force']);
 
 export function parseArgs(tokens) {
@@ -97,7 +101,7 @@ async function main() {
     process.stdout.write('Created ' + name + '\n');
     return;
   }
-  const commands = new Set(['audit', 'plan', 'showcase', 'profile', 'achievements']);
+  const commands = new Set(['audit', 'plan', 'showcase', 'profile', 'diff', 'achievements']);
   if (!commands.has(command)) throw new Error('Unknown command: ' + command + '. Run gh-aura --help.');
   const format = opts.json ? 'json' : opts.format || 'markdown';
   if (!['json', 'markdown'].includes(format)) {
@@ -120,9 +124,21 @@ async function main() {
     if (!Number.isInteger(limit) || limit < 1 || limit > 6) throw new Error('--limit must be between 1 and 6.');
     config.showcase.limit = limit;
   }
+  if (opts.inspect !== undefined) {
+    const count = Number(opts.inspect);
+    if (!Number.isInteger(count) || count < 0 || count > 20) throw new Error('--inspect must be between 0 and 20.');
+    config.scan.inspectRepos = count;
+  }
   validateConfig(config);
   const snapshot = await getSnapshot(login, { maxRepos: config.scan.maxRepos });
+  await inspectRepositories(snapshot, config, config.scan.inspectRepos);
 
+  if (command === 'diff') {
+    const proposed = renderProfile(snapshot, config);
+    const existing = snapshot.profileReadme?.content || '';
+    output(diffText(existing, proposed), opts.output, opts.force);
+    return;
+  }
   if (command === 'profile') {
     const markdown = renderProfile(snapshot, config);
     output(markdown, opts.output, opts.force);

@@ -25,9 +25,9 @@ Any section can be toggled in `.gh-aura.json`; presets only establish defaults. 
 | Phase | Module | Status / acceptance |
 | --- | --- | --- |
 | P0 | CLI foundation | **Prototype delivered**: dependency-free Node 22 CLI, offline tests, CI |
-| P1 | Public profile audit | **First pass delivered**: bio, profile README and repo metadata; needs deeper evidence |
-| P2 | README studio | **First pass delivered**: minimal, regular, flashy, sections, overrides and local output |
-| P3 | Showcase advisor | **First pass delivered**: explained metadata ranking, manual featured choices; needs richer repo analysis |
+| P1 | Public profile audit | **Improved first pass delivered**: bio, profile README, repo metadata, opt-in sample README inspections; needs deeper source evidence |
+| P2 | README studio | **Improved first pass delivered**: minimal, regular, flashy, sections, overrides, local output and terminal diff |
+| P3 | Showcase advisor | **Improved first pass delivered**: explainable metadata ranking, optional sampled README features, manual featured choices; needs richer repo analysis |
 | P4 | Achievement navigator | **Guide delivered**: community-sourced catalog; personalized tracking/verification still planned |
 | P5 | Contribution diagnostics | **Planned**: actual history and attribution, not graph farming |
 | P6 | Engineering timeline | **Planned**: evidence-linked past milestones and genuine evolution |
@@ -43,6 +43,7 @@ gh-aura audit <username> [--format json]
 gh-aura plan <username>
 gh-aura showcase <username> [--goal "platform engineer"] [--limit 6]
 gh-aura profile <username> [--style minimal|regular|flashy] [--output preview.md]
+gh-aura diff <username> [--style minimal|regular|flashy]
 gh-aura achievements
 ```
 
@@ -52,7 +53,7 @@ Current commands only read public GitHub information and generate local files. N
 
 ### P1: Audit that provides evidence, not an ego score
 
-Read public profile fields, README existence and public repository metadata. Report verifiable observations with a specific suggested action and source. Future work: verify linked demos, inspect key README files and project setup, and support opt-in authenticated reads.
+Read public profile fields, README existence and public repository metadata. Optionally inspect up to 20 candidate project README files, recognizing conventional setup/usage headings without claiming verified code quality. Report verifiable observations with a specific suggested action and source. Future work: verify linked demos, inspect key README files and project setup, and support opt-in authenticated reads.
 
 **Done when:** any public username yields a useful Markdown/JSON report with no invented facts, including edge cases like an empty or very large profile.
 
@@ -60,7 +61,7 @@ Read public profile fields, README existence and public repository metadata. Rep
 
 Minimal (default), regular, and flashy. The user may customize name, headline, summary, technologies, manual featured repositories, exclusions, external links, accent color, additional Markdown sections, and every preset section switch.
 
-**Done when:** the generator can produce professional, readable drafts without asserting fictional credentials or mistaking repository languages for verified expertise.
+**Done when:** the generator can produce professional, readable drafts without asserting fictional credentials or mistaking repository languages for verified expertise. Terminal diff is available for preview.
 
 ### P3: Showcase prioritization
 

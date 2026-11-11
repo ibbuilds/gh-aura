@@ -166,6 +166,7 @@ export function renderAuditMarkdown(report) {
   const lines = ['# GH Aura audit: @' + report.user, '',
     'Observed: ' + report.observedAt, '',
     'Public repositories scanned: ' + report.publicRepositoriesScanned, '',
+    'Repository READMEs inspected: ' + (report.repositoryReadmesInspected || 0), '',
     '## Findings', ''];
   if (!report.findings.length) lines.push('No findings from the currently implemented audit checks.', '');
   for (const finding of report.findings) {
