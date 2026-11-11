@@ -20,6 +20,8 @@ jobs:
         run: npm run check
       - name: Unit and CLI tests
         run: npm test
+      - name: npm package preview
+        run: npm pack --dry-run
       - name: CLI smoke test
         run: |
           node src/cli.mjs --help

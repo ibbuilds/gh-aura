@@ -16,6 +16,9 @@ src/
   achievements.mjs  community-reported badge catalog and caveats
   inspection.mjs    opt-in project README structure checks
   diff.mjs          bounded local text diff
+  config-cli.mjs    command-driven local settings
+  brief.mjs         vendor-neutral editorial context (public data)
+  workflow.mjs      reviewed profile README preview/apply
 tests/
   config.test.mjs
   engine.test.mjs
@@ -24,7 +27,7 @@ tests/
 .github/workflows/ci.yml
 ```
 
-No source-code refactoring, source quality grading, remote write adapter, private historical graph importer, or achievement farming is implemented.
+No source-code refactoring, source quality grading, private historical graph importer, or achievement farming is implemented. A **narrow, explicitly authorized** remote write adapter exists only for profile README updates.
 
 ## Execution flow
 
@@ -51,7 +54,7 @@ normalized profile snapshot + repository metadata + profile README
 stdout or explicit local file (--output)
 ```
 
-No GitHub writes exist in the current CLI. Optional `--inspect N` (0–20, default 0) fetches only top-ranked public project READMEs and checks for common setup and usage headings. Missing and not-inspected are intentionally different states.
+Only `apply` can write to the GitHub profile README, after a matching review code and a scoped token. Optional `--inspect N` (0–20, default 0) fetches only top-ranked public project READMEs and checks for common setup and usage headings. Missing and not-inspected are intentionally different states.
 
 ## Presentation presets
 
@@ -83,7 +86,8 @@ Forks and archives receive a penalty unless explicitly chosen. The pin advisor d
 | Showcase advisor | Public repository metadata | Recommendation only |
 | Achievement guide | Offline documented/community references | None |
 | Historical contributions diagnostics | Planned, authenticated where needed | None |
-| Profile apply/sync | Planned | Scoped opt-in changes with review |
+| Profile README apply | Current | Explicit reviewed draft + SHA-256 approval + contents:write token |
+| Other profile apply/sync | Planned | Unsupported until each operation is separately specified and reviewed |
 
 Do not log tokens, embed them in the generated README, request access to private data by default, or send them to third-party AI. Env-based token input is optional.
 
@@ -103,6 +107,10 @@ Next engineering slices:
 1. Improve API failure handling, fixtures, and profile audit fidelity.
 2. Add actual repository README checks and better showcase evidence.
 3. Add trustworthy historical contributions diagnostics.
-4. Add an opt-in, per-change CLI apply workflow, with diffs and rollback guidance.
+4. Add PR-based publishing and rollback guidance; keep the current hash-confirmed README update path narrow.
 
 No UI is planned.
+
+## Editorial integration contract
+
+The `brief` command exports an opt-in JSON document of public profile information, chosen style, ranked repository evidence and explicit fact-checking constraints. The caller may supply this to any AI assistant. GH Aura does not select a provider, forward credentials, or allow generated content to bypass preview/apply. A remote README update is rejected if the approval SHA-256 does not match the exact draft and the current remote revision.

@@ -29,3 +29,12 @@ test('invalid GitHub usernames produce actionable CLI errors', () => {
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /valid GitHub username/);
 });
+
+test('apply --dry-run fails closed before reading a file or contacting GitHub', () => {
+  const result = command([
+    'apply', 'octocat', '--dry-run', '--file', 'does-not-exist.md',
+    '--approve', '0'.repeat(64),
+  ]);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /apply --dry-run never publishes/);
+});
