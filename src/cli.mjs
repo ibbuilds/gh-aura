@@ -145,6 +145,9 @@ async function main() {
   }
 
   const login = validateLogin(opts.user || opts.positional[0]);
+  if (command === 'apply' && opts['dry-run']) {
+    throw new Error('apply --dry-run never publishes. Use gh-aura preview USER --file draft.md instead.');
+  }
   if (command === 'preview' || command === 'apply') {
     // No GitHub write is possible until a file and matching approval code are supplied.
     const draft = readDraft(opts.file);
