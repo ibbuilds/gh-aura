@@ -1,10 +1,14 @@
 {
   "name": "gh-aura",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A small, user-directed CLI for a professional GitHub profile.",
   "type": "module",
-  "bin": { "gh-aura": "./src/cli.mjs" },
-  "engines": { "node": ">=22" },
+  "bin": {
+    "gh-aura": "./src/cli.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "check": "node scripts/check.mjs",
     "test": "node --test",
@@ -13,10 +17,28 @@
     "benchmark": "node scripts/benchmark.mjs",
     "start": "node src/cli.mjs"
   },
-  "files": ["src/", "docs/", "README.md", "LICENSE", "CHANGELOG.md", "SECURITY.md"],
-  "repository": { "type": "git", "url": "git+https://github.com/ibbuilds/gh-aura.git" },
+  "files": [
+    "src/",
+    "docs/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibbuilds/gh-aura.git"
+  },
   "homepage": "https://github.com/ibbuilds/gh-aura#readme",
-  "bugs": { "url": "https://github.com/ibbuilds/gh-aura/issues" },
-  "keywords": ["github", "profile", "cli", "readme", "portfolio"],
+  "bugs": {
+    "url": "https://github.com/ibbuilds/gh-aura/issues"
+  },
+  "keywords": [
+    "github",
+    "profile",
+    "cli",
+    "readme",
+    "portfolio"
+  ],
   "license": "MIT"
 }

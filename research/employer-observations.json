@@ -1,0 +1,392 @@
+{
+  "schema": "gh-aura-employer-sourced-structure-v1",
+  "observedAt": "2026-11-11T22:35:54.693Z",
+  "rosterSource": "research/employer-sourced.json",
+  "selection": "Curated company-owned author pages naming an engineer and linking or corroborating their public GitHub login.",
+  "limitations": [
+    "Employer-owned pages are source assertions, not HR employment verification or a guarantee of current role.",
+    "Two companies are represented; sample is not representative of all big-tech engineers.",
+    "One Microsoft identity was corroborated with a matching public GitHub profile rather than an official outbound link.",
+    "No performance, technical seniority, personal identity or hiring outcomes are inferred.",
+    "README detector only observes HEAD:README.md in USER/USER. No raw bios or prose saved."
+  ],
+  "requests": 2,
+  "selected": 16,
+  "observed": 16,
+  "errors": [],
+  "summary": {
+    "withBio": 9,
+    "withWebsite": 7,
+    "withPins": 12,
+    "pinMedian": 3,
+    "rootReadmes": 7,
+    "medianReadmeWords": 43,
+    "readmesWithoutImages": 2,
+    "readmesWithLinks": 5,
+    "readmesWithStats": 2
+  },
+  "records": [
+    {
+      "login": "newren",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/newren",
+      "employerSource": "https://github.blog/author/newren/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 28,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "erik-krogh",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/erik-krogh",
+      "employerSource": "https://github.blog/author/erikkrogh/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "francinelucca",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/francinelucca",
+      "employerSource": "https://github.blog/author/francinelucca/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 27,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "status": "observed",
+          "sha256": "fee9343bf2a42afe3b69f6ce0f642b7883821e205b9e8f30416e5dcce0154ce0",
+          "wordsApprox": 4,
+          "headings": 1,
+          "images": 2,
+          "links": 1,
+          "statWidgets": true
+        }
+      }
+    },
+    {
+      "login": "dmabuada",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/dmabuada",
+      "employerSource": "https://github.blog/author/dmabuada/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "vdye",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/vdye",
+      "employerSource": "https://github.blog/author/vdye/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 122,
+        "website": false,
+        "pins": 1,
+        "pinsDescribed": 1,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "alexus37",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/alexus37",
+      "employerSource": "https://github.blog/author/alexus37/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "status": "observed",
+          "sha256": "6cf5f34aecaeffec27a487e145193ba8c31a6d8850d0ef22c3f7cd46df4bd9cb",
+          "wordsApprox": 101,
+          "headings": 5,
+          "images": 0,
+          "links": 0,
+          "statWidgets": false
+        }
+      }
+    },
+    {
+      "login": "joshblack",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/joshblack",
+      "employerSource": "https://github.blog/author/joshblack/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 59,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "aneubeck",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/aneubeck",
+      "employerSource": "https://github.blog/author/aneubeck/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "NellWhite",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/NellWhite",
+      "employerSource": "https://github.blog/author/nellwhite/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "dtaivpp",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/dtaivpp",
+      "employerSource": "https://github.blog/author/dtaivpp/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 28,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "status": "observed",
+          "sha256": "24c85798a59c470fc312ad071a1155ffa3f20415e87824ab6961ecf990e8f548",
+          "wordsApprox": 112,
+          "headings": 5,
+          "images": 31,
+          "links": 8,
+          "statWidgets": true
+        }
+      }
+    },
+    {
+      "login": "gorzell",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/gorzell",
+      "employerSource": "https://github.blog/author/gorzell/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "khxu",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/khxu",
+      "employerSource": "https://github.blog/author/khxu/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 0,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "status": "observed",
+          "sha256": "cc944f6641dc780c649aa703606eacea79bef68b3ea6061c3802d1557955349a",
+          "wordsApprox": 43,
+          "headings": 1,
+          "images": 1,
+          "links": 0,
+          "statWidgets": false
+        }
+      }
+    },
+    {
+      "login": "brittanyellich",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/brittanyellich",
+      "employerSource": "https://github.blog/author/brittanyellich/",
+      "employerSourcePostYear": 2025,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 25,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 2,
+        "readme": {
+          "status": "observed",
+          "sha256": "fe870ec8e920ae902a4411b740daf52d2371ff1b7b93dd6790a7dc38804cec31",
+          "wordsApprox": 72,
+          "headings": 3,
+          "images": 3,
+          "links": 6,
+          "statWidgets": false
+        }
+      }
+    },
+    {
+      "login": "cheshire137",
+      "company": "GitHub",
+      "profileUrl": "https://github.com/cheshire137",
+      "employerSource": "https://github.blog/author/cheshire137/",
+      "employerSourcePostYear": 2024,
+      "linkage": "employer-author-page",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 84,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "status": "observed",
+          "sha256": "9ae75aa819b631de215e81a117ff190c1e9bfa9145ecc581aa65b5989844e541",
+          "wordsApprox": 37,
+          "headings": 0,
+          "images": 0,
+          "links": 2,
+          "statWidgets": false
+        }
+      }
+    },
+    {
+      "login": "IEvangelist",
+      "company": "Microsoft",
+      "profileUrl": "https://github.com/IEvangelist",
+      "employerSource": "https://github.blog/author/levangelist/",
+      "employerSourcePostYear": 2026,
+      "linkage": "employer-reference-linked-github",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 31,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "status": "observed",
+          "sha256": "8a812d7e2b15ff5c396b3b52fcd8d50764698ab8f82e824f5a71ee9c8e7b1744",
+          "wordsApprox": 0,
+          "headings": 0,
+          "images": 1,
+          "links": 1,
+          "statWidgets": false
+        }
+      }
+    },
+    {
+      "login": "Sergio0694",
+      "company": "Microsoft",
+      "profileUrl": "https://github.com/Sergio0694",
+      "employerSource": "https://devblogs.microsoft.com/dotnet/author/sergiopedri/",
+      "employerSourcePostYear": 2024,
+      "linkage": "employer-role-and-matching-github-self-report",
+      "reviewedOn": "2026-11-11",
+      "employerPageDescribesEngineeringRole": true,
+      "employerStatusNote": "Company-owned source describes engineering role; source can become stale after employment changes.",
+      "structure": {
+        "bioChars": 159,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "status": "not-observed-at-root"
+        }
+      }
+    }
+  ]
+}

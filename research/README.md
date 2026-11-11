@@ -1,4 +1,6 @@
-# Public-profile structural study
+# Historical open-source contributor structural study (superseded)
+
+**Not used as the main professional reference since v1.3.** Contributor status is not employment evidence. See [company-affiliated and employer-sourced engineer study](INDUSTRY_STUDY.md).
 
 Observed on **2026-11-11 at 12:31:41 UTC**. The machine-readable observations are in [profiles.json](profiles.json); the collector is [research-profiles.mjs](../scripts/research-profiles.mjs).
 

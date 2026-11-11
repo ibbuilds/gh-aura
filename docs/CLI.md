@@ -91,6 +91,18 @@ Drafts must be UTF-8, at most 256 KiB and without terminal controls. Previews ar
 
 An uncertain write can leave a commit or review branch. Inspect GitHub before retrying; writes are not automatically retried. To undo, restore the previous README into a draft, preview it and publish that exact restoration. No history rewrite is needed.
 
+## Research references (offline)
+
+```bash
+gh-aura references
+gh-aura references --company Microsoft
+gh-aura references --json --output references.json
+```
+
+This lists source-linked GitHub profiles from employer-controlled engineering author pages and the distinct 100-person public-affiliation cohort. **Public organization membership and a self-listed employer are not proof of employment.** Source pages can become stale. The list contains examples of presentation structure, not identities, employers or claims to copy. This command reads only packaged data and makes **zero GitHub API calls**. See [industry study](../research/INDUSTRY_STUDY.md).
+
+Target-company preferences may guide external writing only: `gh-aura config set editorial.targetCompany "Google"`. A desired employer is not a current employer claim.
+
 ## Achievements
 
 `achievements` is an offline guide with no configured account; otherwise it adds bounded public PR/star evidence. No count guarantees eligibility or ownership. `achievements.earned` is explicitly self-reported; `achievements.excluded` controls omissions; `achievements.allowPaid` defaults false. Historical, program, paid and community-reported entries remain distinguished. The tool does not award badges or manufacture private-repository interactions.

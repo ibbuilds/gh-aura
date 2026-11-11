@@ -1,34 +1,43 @@
-# GH Aura 1.2.0
+# GH Aura 1.3.0
 
-Measured resource use and evidence-grounded writing, without a server or mandatory AI provider.
+Professional engineering profile references with an evidence-first editorial workflow, no hosted service, paid API or mandatory AI.
 
 ## Install
 
-Requires Node.js 22+. Install the attached tarball with `npm install --global ./gh-aura-1.2.0.tgz`. This is a GitHub Release, not an npm registry publication. The checksum is in `SHA256SUMS.txt`.
-
-## Changes
-
-- Separate lazy command handlers for local work, public reads and reviewed publication.
-- Add read request/stream-byte budgets, `--budget` and token-free `--stats`.
-- Skip unused existing-profile reads during plain README generation. A deterministic fixture falls from 4 HTTP calls to 2; warm reads remain at 0.
-- Add visual intensity 0–100, editorial preferences, compact evidence briefs, ready-to-use writing prompts and offline draft checks.
-- Ground structural guidance in a reproducible 100-account public-contributor study across 12 projects. Source hashes and limitations are recorded; no biography text is copied or shipped.
-- Add budget, editorial, cohort-integrity and actual CLI live-read regression gates.
-
-## Workflow
+Requires Node.js 22+. Download `gh-aura-1.3.0.tgz` from this release and install it locally:
 
 ```bash
+npm install --global ./gh-aura-1.3.0.tgz
 gh-aura init YOUR_USERNAME
+```
+
+This release is hosted on GitHub, not the npm registry. Verify the package with `SHA256SUMS.txt`.
+
+## What's new
+
+- **Individual engineer references:** A reproducible 100-account study selected from company GitHub organizations, with matching self-described company and engineering role. These public signals do **not** confirm employment.
+- **Employer-sourced profiles:** Sixteen accounts cross-referenced with company-owned engineering author pages; roles may have changed since publication.
+- **`references` command:** Inspect source-linked example profiles entirely offline, with `--company` and `--json`.
+- **Company-aware writing:** `editorial.targetCompany` can personalize prompts toward an application target, never imply you already work there.
+- **No borrowed résumés:** The writer distinguishes another engineer's presentation structure from your actual work and refuses instructions to invent employer, seniority, awards or impact.
+
+No biographies, emails or raw profile README prose were copied into the research data. The larger datasets and collectors are excluded from the installable runtime package. The study is descriptive, not an analysis of interviews or hiring outcomes.
+
+## Suggested workflow
+
+```bash
+gh-aura config set editorial.targetRole "Backend engineer"
+gh-aura config set editorial.targetCompany "Microsoft"
+gh-aura references --company Microsoft
 gh-aura audit --inspect 6 --stats
-gh-aura profile --visual 20 --output draft.md
-# Or export grounded instructions for your own writer:
 gh-aura brief --prompt --output writer.txt
+gh-aura profile --visual 20 --output draft.md
 gh-aura check --file draft.md
 gh-aura preview --file draft.md --save review.json
-# Only after reviewing the diff:
+# Only after reviewing the exact diff:
 gh-aura apply --review review.json --pr
 ```
 
-The writer remains optional and external. No badge guarantees, fabricated historical activity or professional-identity claims are generated. Visual percentages are presentation controls, not credibility scores. Pins and account settings stay manual; publication requires a separately approved draft and scoped token.
+You may draft manually or with any editor/AI. GH Aura does not invoke a provider, publish without explicit approval, create fake historical contributions, grant achievements or modify pins automatically.
 
-CI checks all supported OS/Node combinations, packed installation and live public reads. Publication behavior is tested with isolated fixtures, never by modifying a personal profile.
+The release is gated on CI across Node 22/24 on Linux, macOS and Windows, offline tests, package installation and live **read-only** GitHub integration. Publication tests never modify the user's real account.
