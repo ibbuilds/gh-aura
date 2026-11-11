@@ -25,7 +25,10 @@ export const ACHIEVEMENTS = entries.map(([id, name, category, how, source]) => (
   id, name, category, how, source,
   availability: category === 'historical' ? 'historical — unavailable to new participants' : 'eligibility must be checked with GitHub',
   ruleConfidence: category === 'community-reported' || source === COMMUNITY ? 'unverified-community-report' : 'official-description-not-award-guarantee',
-  sourcesReviewedAt: source === COMMUNITY ? null : '2026-11-11',
+  sourcesReviewedAt: '2026-11-11',
+  sourceRevision: source === COMMUNITY ? 'README blob 7daa20c89165f0a472a9170dd050a93b7cdd33fd' : null,
+  prerequisite: category === 'historical' ? 'Closed historical event' : category === 'paid' ? 'Voluntary payment outside GH Aura' : category === 'program' ? 'External program eligibility and acceptance' : 'Substantive GitHub activity; other people may control acceptance',
+  verification: 'Inspect the achievement on your GitHub profile and its linked events; optionally record its ID in achievements.earned. A recorded ID is self-reported, never API-verified.',
   caveat: 'GitHub controls awards. This guide does not verify ownership, guarantee thresholds or grant achievements.',
 }));
 export const ACHIEVEMENT_SOURCES = [PROFILE, INTRO, COMMUNITY];
@@ -38,9 +41,9 @@ export async function achievementReport(snapshot, config, options = {}) {
   }
   let merged = null;
   let searchComplete = false;
-  if (snapshot) {
+  if (snapshot && !settings.excluded.includes('pull-shark')) {
     const query = encodeURIComponent('is:pr is:merged is:public author:' + snapshot.username);
-    const result = await getJSON('/search/issues?q=' + query + '&per_page=1', options);
+    const result = await getJSON('/search/issues?q=' + query + '&per_page=10&sort=updated&order=desc', { ...options, publicRead: true });
     if (Number.isInteger(result?.total_count)) { merged = result.total_count; searchComplete = result.incomplete_results === false; }
   }
   const best = snapshot?.repos.filter((repo) => !repo.fork).reduce((current, repo) =>
@@ -66,6 +69,7 @@ export function renderAchievementsMarkdown(report) {
   const lines = ['# GitHub achievement guide', '', 'Opportunities and program information, not automatic awards. No account badge is inferred.', ''];
   for (const item of catalog) lines.push('## ' + md(item.name) + ' (`' + item.id + '`)', '',
     '**Status:** ' + (item.status || item.availability), '', md(item.how), '',
+    'Prerequisite: ' + md(item.prerequisite), '', 'Verify: ' + md(item.verification), '',
     ...(item.evidence ? ['Evidence: ' + md(JSON.stringify(item.evidence)), ''] : []),
     'Source: ' + item.source, '', md(item.caveat), '');
   return lines.join('\n');

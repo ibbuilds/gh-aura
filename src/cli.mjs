@@ -5,9 +5,11 @@ import { pathToFileURL } from 'node:url';
 import { initConfig, loadConfig, validateConfig } from './config.mjs';
 import { configCommand } from './config-cli.mjs';
 import { getSnapshot, validateLogin } from './github.mjs';
+import { ReadCache } from './cache.mjs';
+import { proposeProfile } from './pull-request.mjs';
 import { inspectRepositories } from './inspection.mjs';
 import { auditProfile, rankRepositories } from './engine.mjs';
-import { renderAuditMarkdown, renderProfile, renderShowcaseMarkdown } from './render.mjs';
+import { renderAuditMarkdown, renderProfile, renderShowcaseMarkdown, preserveProfile } from './render.mjs';
 import { achievementReport, renderAchievementsMarkdown } from './achievements.mjs';
 import { contributionsReport, renderContributions } from './contributions.mjs';
 import { diffText } from './diff.mjs';
@@ -17,22 +19,22 @@ import { plain } from './text.mjs';
 
 const VERSION = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
 const COMMON = ['config', 'user'];
-const DATA = [...COMMON, 'inspect', 'format', 'output', 'force'];
+const DATA = [...COMMON, 'fresh', 'inspect', 'format', 'output', 'force'];
 const SPECS = {
   init: { usage: 'init [USER] [--config FILE]', flags: ['config', 'output', 'force'], max: 1 },
   config: { usage: 'config show|get|set|reset [KEY] [VALUE] [--dry-run]', flags: ['config', 'dry-run'], max: 3 },
   audit: { usage: 'audit [USER] [--inspect 6] [--json]', flags: DATA, max: 1 },
-  profile: { usage: 'profile [USER] [--style minimal|regular|flashy] [--output draft.md]', flags: [...COMMON, 'style', 'inspect', 'output', 'force'], max: 1 },
+  profile: { usage: 'profile [USER] [--style minimal|regular|flashy] [--keep] [--output draft.md]', flags: [...COMMON, 'style', 'inspect', 'output', 'force', 'keep', 'fresh'], max: 1 },
   preview: { usage: 'preview [USER] --file draft.md [--save review.json]', flags: [...COMMON, 'file', 'save', 'force'], max: 1 },
-  apply: { usage: 'apply --review review.json | apply [USER] --file draft.md --approve CODE', flags: [...COMMON, 'file', 'approve', 'review', 'format'], max: 1 },
+  apply: { usage: 'apply --review review.json [--pr] | apply [USER] --file draft.md --approve CODE [--pr]', flags: [...COMMON, 'file', 'approve', 'review', 'format', 'pr'], max: 1 },
   showcase: { usage: 'showcase [USER] [--goal TEXT] [--limit 6] [--inspect 6]', flags: [...DATA, 'goal', 'limit'], max: 1 },
-  achievements: { usage: 'achievements [USER] [--json]', flags: [...COMMON, 'format', 'output', 'force'], max: 1 },
-  contributions: { usage: 'contributions [USER] [--year YYYY | --all] [--json]', flags: [...COMMON, 'year', 'all', 'format', 'output', 'force'], max: 1 },
+  achievements: { usage: 'achievements [USER] [--json]', flags: [...COMMON, 'format', 'output', 'force', 'fresh'], max: 1 },
+  contributions: { usage: 'contributions [USER] [--year YYYY | --all] [--details] [--json]', flags: [...COMMON, 'year', 'all', 'format', 'output', 'force', 'details', 'fresh'], max: 1 },
   brief: { usage: 'brief [USER] [--style minimal|regular|flashy] [--output brief.json]', flags: [...DATA, 'style'], max: 1 },
-  diff: { usage: 'diff [USER] [--style minimal|regular|flashy]', flags: [...COMMON, 'style', 'output', 'force'], max: 1 },
+  diff: { usage: 'diff [USER] [--style minimal|regular|flashy]', flags: [...COMMON, 'style', 'output', 'force', 'fresh'], max: 1 },
 };
 const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year']);
-const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all']);
+const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details']);
 const HELP = [
   'GH Aura — a GitHub profile toolkit. You choose every change.', '',
   'Start:', '  gh-aura init USER', '  gh-aura audit',
@@ -122,8 +124,8 @@ export async function main(argv = process.argv.slice(2)) {
     const review = readReview(options.review);
     if ((options.user || options.positional[0]) && loginFor(options, { user: review.user }).toLowerCase() !== review.user.toLowerCase()) throw new Error('Review belongs to a different user.');
     const draft = readDraft(review.file);
-    const result = await applyProfile(await profileTarget(review.user), draft, review.approval);
-    emit(options.format === 'json' ? result : result.message + (result.commit ? '\n' + result.commit : '')); return;
+    const result = await (options.pr ? proposeProfile : applyProfile)(await profileTarget(review.user), draft, review.approval);
+    emit(options.format === 'json' ? result : result.message + (result.pullRequest || result.commit ? '\n' + (result.pullRequest || result.commit) : '')); return;
   }
   const config = loadConfig(options.config);
   if (command === 'achievements' && !options.user && !options.positional[0] && !config.user) {
@@ -142,8 +144,8 @@ export async function main(argv = process.argv.slice(2)) {
         emit('Review saved. Run apply --review with that file only after inspecting this diff.');
       }
     } else {
-      const result = await applyProfile(target, draft, options.approve);
-      emit(options.format === 'json' ? result : result.message + (result.commit ? '\n' + result.commit : ''));
+      const result = await (options.pr ? proposeProfile : applyProfile)(target, draft, options.approve);
+      emit(options.format === 'json' ? result : result.message + (result.pullRequest || result.commit ? '\n' + (result.pullRequest || result.commit) : ''));
     }
     return;
   }
@@ -154,17 +156,24 @@ export async function main(argv = process.argv.slice(2)) {
   validateConfig(config);
   if (command === 'contributions' && options.all && options.year !== undefined) throw new Error('Choose --all or --year, not both.');
   if (command === 'brief' && options.format === 'markdown') throw new Error('brief exports JSON only.');
-  const snapshot = await getSnapshot(login, { maxRepos: config.scan.maxRepos });
-  if (!['contributions', 'achievements'].includes(command)) await inspectRepositories(snapshot, config, config.scan.inspectRepos);
-  if (command === 'profile') { emit(renderProfile(snapshot, config), options); return; }
+  const api = options.fresh || process.env.GH_AURA_NO_CACHE === '1' ? {} : { cache: new ReadCache() };
+  const snapshot = await getSnapshot(login, { ...api, maxRepos: config.scan.maxRepos,
+    includeProfile: !['contributions', 'achievements', 'showcase'].includes(command) });
+  if (!['contributions', 'achievements'].includes(command)) await inspectRepositories(snapshot, config, config.scan.inspectRepos, api);
+  if (api.cache?.hits) process.stderr.write('Using recent public data (up to 5 minutes old). Use --fresh to reload.\n');
+  if (command === 'profile') {
+    if (options.keep && snapshot.profileReadme?.unknown) throw new Error('Cannot preserve an unreadable existing README.');
+    const generated = renderProfile(snapshot, config);
+    emit(options.keep ? preserveProfile(snapshot.profileReadme?.content || '', generated) : generated, options); return;
+  }
   if (command === 'diff') { emit(diffText(snapshot.profileReadme?.content || '', renderProfile(snapshot, config)), options); return; }
   if (command === 'brief') { emit(editorialBrief(snapshot, config), options); return; }
   if (command === 'achievements') {
-    const report = await achievementReport(snapshot, config);
+    const report = await achievementReport(snapshot, config, api);
     emit(options.format === 'json' ? report : renderAchievementsMarkdown(report), options); return;
   }
   if (command === 'contributions') {
-    const report = await contributionsReport(snapshot, { all: options.all, year: options.year === undefined ? undefined : Number(options.year) });
+    const report = await contributionsReport(snapshot, { ...api, details: options.details, all: options.all, year: options.year === undefined ? undefined : Number(options.year) });
     emit(options.format === 'json' ? report : renderContributions(report), options); return;
   }
   if (command === 'showcase') {

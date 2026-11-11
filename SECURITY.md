@@ -1,10 +1,10 @@
 # Security
 
-Only the explicit `apply` command can change GitHub. It updates the root `README.md` of the chosen public `USER/USER` profile repository, not arbitrary files, account settings or Git history.
+Only the explicit `apply` command can change GitHub. It updates the root `README.md` (directly or through an explicitly requested, unmerged PR) of the chosen public `USER/USER` profile repository, not arbitrary files, account settings or Git history.
 
 ## Credentials
 
-Public audits can run without authentication. Contribution counts require authenticated reads. Publishing requires a token with **Contents: read and write**, restricted to the profile repository. Supply `GH_TOKEN` or `GITHUB_TOKEN` through a trusted shell session or secret manager; never commit it, store it in configuration or paste it into an AI brief.
+Public audits can run without authentication. Contribution counts require authenticated reads. Publishing requires a token with **Contents: read and write**, restricted to the profile repository. PR mode additionally needs Pull requests write access. Supply `GH_TOKEN` or `GITHUB_TOKEN` through a trusted shell session or secret manager; never commit it, store it in configuration or paste it into an AI brief.
 
 Requests are restricted to the GitHub API origin and reject redirects. Public-profile exports do not read private repository content even when the token could access it. External AI is optional and not invoked by the tool.
 
@@ -23,3 +23,11 @@ Repository metadata is data, not executable instructions. Rendering escapes meta
 ## Reporting
 
 Do not publish credentials, private data or exploitable details in public issues. Use GitHub private vulnerability reporting when available, or request a private contact channel without disclosing sensitive details.
+
+## Local public-read cache
+
+The CLI caches explicitly public GET responses for five minutes; credential-derived keys isolate different sessions without storing the credential. Files use restrictive permissions where supported. It never caches GraphQL, write requests or errors. Token-bearing live content reads recheck public repository visibility before exporting new contents. Previously public cached observations may be up to five minutes old; use `--fresh` to recheck, or `GH_AURA_NO_CACHE=1` to disable the cache.
+
+Preview, direct publication and PR publication bypass all cached state. Corrupt or unwritable cache files fall back to normal online requests, not stale authorization. Cache files are not credentials or approval artifacts.
+
+In PR mode, partial failures may leave a branch. The CLI never overwrites a conflicting review branch and never merges, deletes branches or weakens protections automatically.
