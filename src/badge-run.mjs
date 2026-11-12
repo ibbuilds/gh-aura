@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync, writeFileSync } from 'node:fs';
 import { requestJSON, getJSON, decodeReadme, tokenFor, validateLogin } from './github.mjs';
 import { workspaceRepo, managedWorkspaceReadme, WORKSPACE_README } from './workspace.mjs';
+import { reserveBadgeWrite, BADGE_WRITE_HOURLY_BUDGET } from './badge-write-budget.mjs';
 import { ACHIEVEMENT_MATRIX, PRIVATE_AUTOMATABLE, PULL_SHARK_TIERS,
   MATRIX_VERSION, achievementMatrixSummary } from './achievement-matrix.mjs';
 
@@ -140,18 +141,26 @@ async function applyBadgeRun(doc,opts={}) {
   if(typeof opts.confirm!=='string'||opts.confirm!==doc.fingerprint||
     !/^[a-f0-9]{64}$/.test(opts.confirm))throw Error('Badge plan confirmation mismatch. Review the plan before applying.');
   const maxCalls=20+doc.pulls*12;
-  let requests=0,contentWrites=0,lastWriteAt=0;
+  let requests=0,contentWrites=0,lastWriteAt=0,verifiedOwner=null;
+  const reserve=opts.reserveWrite||((owner)=>reserveBadgeWrite(owner,{
+    directory:opts.budgetDirectory,
+  }));
   const pause=opts.sleep||((ms)=>new Promise(resolve=>setTimeout(resolve,ms)));
-  const gap=opts.writeGapMs??1100;
+  // GitHub recommends >=1 second between mutative requests.
+  // Keep one serial write lane; an atomic local ledger also protects the
+  // approximate *hourly* content-write quota across CLI invocations.
+  const gap=opts.writeGapMs??1000;
   if(!Number.isInteger(gap)||gap<0||gap>10000)
     throw Error('Invalid content write pacing (0..10000ms).');
   const call=async (path,method='GET',body=undefined)=>{
     if(++requests>maxCalls)throw Error('Badge automation API request budget reached; inspect the repository before retrying.');
     if(method!=='GET'){
-      // GitHub has secondary content-write rate limits (~80/minute, ~500/hour).
-      // Even on a private account: limit writes, do not retry 403/429 or unknown outcomes.
+      if(!verifiedOwner)throw Error('Mutations require a verified authenticated GitHub owner.');
       const elapsed=Date.now()-lastWriteAt;
       if(lastWriteAt>0&&elapsed<gap)await pause(gap-elapsed);
+      // Reserve before any uncertain remote mutation. Even failed/unknown
+      // requests consume a conservative slot; no automatic write retry.
+      await reserve(verifiedOwner);
       lastWriteAt=Date.now();
       contentWrites++;
     }
@@ -161,6 +170,7 @@ async function applyBadgeRun(doc,opts={}) {
   };
   const who=await call('/user');
   const owner=validateLogin(who?.login);
+  verifiedOwner=owner;
   const [givenOwner,name]=doc.repo.split('/');
   if(givenOwner.toLowerCase()!==owner.toLowerCase())
     throw Error('Badge runner only operates on an owned private repository of the authenticated user.');
@@ -174,7 +184,6 @@ async function applyBadgeRun(doc,opts={}) {
       description:'Private GH Aura synthetic GitHub workflow exercises (not professional history)',
     });
     created=true;
-    await pause(800);
   }
   if(repo?.private!==true||repo?.fork===true||repo?.archived===true||
       repo?.full_name?.toLowerCase()!==doc.repo.toLowerCase()||
@@ -190,7 +199,6 @@ async function applyBadgeRun(doc,opts={}) {
       message:'docs: identify private GH Aura workflow sandbox',branch,
       content:Buffer.from(sandboxReadme,'utf8').toString('base64'),sha:readme.sha,
     });
-    await pause(600);
   }else{
     if(!managedWorkspaceReadme(decodeReadme(readme)))
       throw Error('Existing repo is not a GH Aura-marked private workspace. It will not be changed.');
@@ -239,6 +247,7 @@ async function applyBadgeRun(doc,opts={}) {
       // A close inside five minutes is an event candidate, not a confirmed badge.
     }
   }
+  let lastMergedBaseSha=null;
   for(let i=0;i<doc.pulls;i++){
     const index=doc.start+i+1;
     const id=String(index).padStart(4,'0');
@@ -246,15 +255,27 @@ async function applyBadgeRun(doc,opts={}) {
     const encoded=filepath.split('/').map(encodeURIComponent).join('/');
     // The default branch document is the idempotent proof of a completed merge.
     const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
-    if(committed){results.skippedAlreadyMerged.push(index);continue;}
+    if(committed){
+      results.skippedAlreadyMerged.push(index);
+      // A previous process may have merged these PRs. Re-read the base before
+      // any subsequent branch creation; never assume a stale head.
+      lastMergedBaseSha=null;
+      continue;
+    }
     const head='gh-aura/badge-'+id;
     const prior=await call(base+'/git/ref/heads/'+head);
     if(prior)throw Error('Review branch '+head+' already exists without a merged document. Inspect GitHub; no overwrite.');
-    const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
-    if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
-      throw Error('Could not verify latest default branch revision.');
-    await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseRef.object.sha});
-    await pause(700);
+    let baseSha=lastMergedBaseSha;
+    if(!baseSha){
+      const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
+      if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
+        throw Error('Could not verify latest default branch revision.');
+      baseSha=baseRef.object.sha;
+    }
+    // The prior successful squash merge returns the exact new base SHA.
+    // Reusing it eliminates one default-branch GET for every later PR in
+    // this batch, without force updates or guessing a commit.
+    await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseSha});
     const written=await call(base+'/contents/'+encoded,'PUT',{
       message:'docs(sandbox): add generated exercise '+id,
       branch:head,content:Buffer.from(exerciseText(doc,index)).toString('base64'),
@@ -282,6 +303,9 @@ async function applyBadgeRun(doc,opts={}) {
     });
     if(merge?.merged!==true)
       throw Error('GitHub did not confirm the merge. Inspect PR '+pr.number+'.');
+    if(!/^[a-f0-9]{40}$/i.test(merge?.sha||''))
+      throw Error('GitHub reported a merge without a verifiable resulting commit SHA. Inspect GitHub before another PR.');
+    lastMergedBaseSha=merge.sha;
     results.mergedPulls.push({number:pr.number,url:pr.html_url,
       reviewedSubmissions:0,exactHeadVerified:true});
     if(!results.yoloReviewFreeCandidate)results.yoloReviewFreeCandidate=pr.html_url;
@@ -289,7 +313,8 @@ async function applyBadgeRun(doc,opts={}) {
   results.requests=requests;
   results.contentWrites=contentWrites;
   results.pacing={minimumWriteGapMs:gap,
-    note:'Individual writes are paced; GitHub also limits content creation across the entire account per hour and can impose stricter secondary limits. Do not run continuous batches without checking rate limits.'};
+    locallyReservedHourlyWrites:BADGE_WRITE_HOURLY_BUDGET,
+    note:'Individual writes are serial and a local per-account hourly ledger is applied. GitHub and other clients can impose stricter real limits. No uncertain mutation is retried automatically.'};
   results.verify='https://github.com/'+owner+'?tab=achievements';
   return results;
 }
