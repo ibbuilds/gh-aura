@@ -141,9 +141,10 @@ async function applyBadgeRun(doc,opts={}) {
   if(typeof opts.confirm!=='string'||opts.confirm!==doc.fingerprint||
     !/^[a-f0-9]{64}$/.test(opts.confirm))throw Error('Badge plan confirmation mismatch. Review the plan before applying.');
   const maxCalls=20+doc.pulls*12;
-  let requests=0,contentWrites=0,lastWriteAt=0,verifiedOwner=null,latestLocalBudget=null;
-  const reserve=opts.reserveWrite||((owner)=>reserveBadgeWrite(owner,{
-    directory:opts.budgetDirectory,
+  let requests=0,contentWrites=0,lastWriteAt=0,verifiedOwner=null,
+    latestLocalBudget=null,prepaidWrites=0;
+  const reserve=opts.reserveWrite||((owner,count=1)=>reserveBadgeWrite(owner,{
+    directory:opts.budgetDirectory,count,
   }));
   const pause=opts.sleep||((ms)=>new Promise(resolve=>setTimeout(resolve,ms)));
   // GitHub recommends >=1 second between mutative requests.
@@ -160,7 +161,8 @@ async function applyBadgeRun(doc,opts={}) {
       if(lastWriteAt>0&&elapsed<gap)await pause(gap-elapsed);
       // Reserve before any uncertain remote mutation. Even failed/unknown
       // requests consume a conservative slot; no automatic write retry.
-      latestLocalBudget=await reserve(verifiedOwner);
+      if(prepaidWrites>0)prepaidWrites--;
+      else latestLocalBudget=await reserve(verifiedOwner,1);
       lastWriteAt=Date.now();
       contentWrites++;
     }
@@ -230,6 +232,10 @@ async function applyBadgeRun(doc,opts={}) {
     if(!exists&&!exhausted)
       throw Error('QA issue history exceeds the bounded scan. Inspect GitHub before retrying.');
     if(!exists){
+      // Reserve the OPEN + CLOSE pair atomically before opening Quickdraw.
+      // A quota cutoff must not strand the issue before its five-minute close.
+      latestLocalBudget=await reserve(verifiedOwner,2);
+      prepaidWrites+=2;
       const issue=await call(base+'/issues','POST',{
         title:issueMarker+' Validate private sandbox setup',
         body:'QA exercise: verify that this repo is private, owned by the requester, and contains the sandbox marker before closing. This is generated test activity, not a production defect.',
