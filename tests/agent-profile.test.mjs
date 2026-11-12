@@ -8,9 +8,9 @@ import { DEFAULT_CONFIG } from '../src/config.mjs';
 
 test('source library is small, unique, attributed, static and privacy-labeled',()=>{
   const data=listProfileSources();
-  assert.equal(data.version,'2026-11-12.v1');
+  assert.equal(data.version,'2026-11-12.v2');
   assert.equal(data.count,PROFILE_SOURCES.length);
-  assert.ok(data.count>=10&&data.count<=25);
+  assert.ok(data.count>=29&&data.count<=70);
   assert.equal(new Set(data.sources.map(s=>s.id)).size,data.count);
   for(const source of data.sources){
     assert.match(source.id,/^[a-z0-9-]+$/);

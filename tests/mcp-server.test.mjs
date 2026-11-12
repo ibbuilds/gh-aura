@@ -24,12 +24,19 @@ test('MCP modern stateless discovery, resources and prompts follow the 2026 prot
   assert.equal(list.result.resultType,'complete');
   assert.ok(list.result.tools.every(x=>x.annotations.readOnlyHint));
   const resourceList=await handleMcpMessage(req(3,'resources/list'));
-  assert.equal(resourceList.result.resources.length,3);
+  assert.equal(resourceList.result.resources.length,5);
   const resource=await handleMcpMessage(req(4,'resources/read',{
     uri:'gh-aura://sources/catalog'}));
   assert.match(resource.result.contents[0].text,/github-profile/);
+  const techniques=await handleMcpMessage(req(17,'resources/read',{
+    uri:'gh-aura://techniques/catalog'}));
+  assert.match(techniques.result.contents[0].text,/code-portrait/);
+  const biography=await handleMcpMessage(req(18,'resources/read',{
+    uri:'gh-aura://guide/biography'}));
+  assert.match(biography.result.contents[0].text,/original/);
+  assert.equal(biography.result.contents[0].mimeType,'text/markdown');
   const promptList=await handleMcpMessage(req(5,'prompts/list'));
-  assert.equal(promptList.result.prompts.length,3);
+  assert.equal(promptList.result.prompts.length,4);
   const prompt=await handleMcpMessage(req(6,'prompts/get',{
     name:'create_professional_profile',arguments:{role:'backend',direction:'technical'}}));
   assert.match(prompt.result.messages[0].content.text,/backend/);

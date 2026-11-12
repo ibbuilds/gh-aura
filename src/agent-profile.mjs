@@ -3,6 +3,7 @@ import { resolveProfileDirection } from './profile-directions.mjs';
 import { findProfileSources, getProfileSource } from './profile-sources.mjs';
 import { checkDraft } from './editorial.mjs';
 import { diffText } from './diff.mjs';
+import { normalizeBiography } from './profile-biography.mjs';
 import { plain, httpsUrl } from './text.mjs';
 
 export const PROFILE_SPEC_FORMAT='gh-aura-profile-spec-v1';
@@ -33,6 +34,29 @@ function validateLinks(links){
     return {label,url};
   });
 }
+function bioControls(raw,direction){
+  if(raw?.format==='gh-aura-biography-v1'){
+    const allowed=['voice','perspective','focus','maxWords','toneNotes','avoid','claims'];
+    return normalizeBiography(Object.fromEntries(
+      Object.entries(raw).filter(([key])=>allowed.includes(key))),direction);
+  }
+  return normalizeBiography(raw||{},direction);
+}
+function validateMedia(media){
+  if(!Array.isArray(media)||media.length>8)
+    throw Error('Profile media references must be at most eight.');
+  return media.map(item=>{
+    if(!item||typeof item!=='object'||Array.isArray(item)||
+       Object.keys(item).some(k=>!['url','alt','rights'].includes(k)))
+      throw Error('Media reference needs only HTTPS URL, alt and rights.');
+    const url=safeText(item.url,600,'Media URL');
+    const alt=safeText(item.alt,200,'Media alt text');
+    const rights=item.rights||'unverified';
+    if(!httpsUrl(url)||!alt||!['user-owned','permitted-license','unverified'].includes(rights))
+      throw Error('Media reference requires safe HTTPS, alt text and declared rights.');
+    return {url,alt,rights};
+  });
+}
 export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
   validateConfig(config);
   const direction=options.direction||config.editorial.direction||'minimal';
@@ -57,6 +81,9 @@ export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
   const featured=names(options.featured??config.profile.featured,'repo',6);
   const links=validateLinks(options.links??config.profile.links);
   const notes=safeText(options.notes??'',700,'Editorial notes');
+  const visualBrief=safeText(options.visualBrief??'',1000,'Visual design brief');
+  const mediaReferences=validateMedia(options.mediaReferences??[]);
+  const biography=bioControls(options.biography,direction);
   const recommended=findProfileSources({query:role,direction,
     includeExternal,limit:6}).sources;
   const fallbacks=recommended.length?recommended:
@@ -65,6 +92,7 @@ export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
     format:PROFILE_SPEC_FORMAT,
     purpose:'Create a custom, evidence-grounded, hiring-oriented GitHub README. This is an editable intent, not a Markdown template.',
     direction:intent.name,language,goal:role,maxWords,sections,maxProjects,featured,links,
+    visualBrief,mediaReferences,biography,
     includeExternal,sourceIds:fallbacks.map(x=>x.id),notes,
     design:intent, provenance:{
       publicGitHub:'observations only; fetch at use time',
@@ -81,6 +109,9 @@ export function validateProfileSpec(input){
   if(!DIRECTION_NAMES.includes(input.direction))throw Error('Invalid spec direction.');
   const goal=safeText(input.goal,160,'Target role');
   const notes=safeText(input.notes,700,'Editorial notes');
+  const visualBrief=safeText(input.visualBrief??'',1000,'Visual design brief');
+  const mediaReferences=validateMedia(input.mediaReferences??[]);
+  const biography=bioControls(input.biography,input.direction);
   if(!['en','es'].includes(input.language)||!Number.isInteger(input.maxWords)||
     input.maxWords<30||input.maxWords>1000)
     throw Error('Invalid spec language or word budget.');
@@ -92,23 +123,26 @@ export function validateProfileSpec(input){
     throw Error('Invalid spec section switches.');
   const featured=names(input.featured,'repo',6);
   const links=validateLinks(input.links);
-  const sourceIds=names(input.sourceIds,'source',20);
+  const sourceIds=names(input.sourceIds,'source',50);
   for(const id of sourceIds) {
     const source=getProfileSource(id);
-    if(!input.includeExternal&&source.trust==='third-party')
+    if(!input.includeExternal&&['third-party','user-supplied'].includes(source.trust))
       throw Error('An external source cannot be enabled without opt-in.');
   }
-  return {...input,goal,notes,sections:{...c},featured,sourceIds,
-    links,design:resolveProfileDirection(input.direction)};
+  return {...input,goal,notes,visualBrief,mediaReferences,biography,
+    sections:{...c},featured,sourceIds,links,
+    design:resolveProfileDirection(input.direction)};
 }
 export function refineProfileSpec(input,changes={}){
   const current=validateProfileSpec(input);
   const allowed=['direction','goal','language','maxWords','sections','maxProjects',
-    'featured','links','includeExternal','sourceIds','notes'];
+    'featured','links','includeExternal','sourceIds','notes',
+    'visualBrief','mediaReferences','biography'];
   if(!changes||typeof changes!=='object'||Array.isArray(changes)||
     Object.keys(changes).some(k=>!allowed.includes(k)))
     throw Error('Profile refinement can change only approved spec fields.');
-  const next={...current,...changes,sections:{...current.sections,...(changes.sections||{})}};
+  const next={...current,...changes,sections:{...current.sections,...(changes.sections||{})},
+    biography:{...current.biography,...(changes.biography||{})}};
   if(Object.hasOwn(changes,'direction'))next.design=resolveProfileDirection(changes.direction);
   if(changes.includeExternal===false && !Object.hasOwn(changes,'sourceIds')){
     next.sourceIds=next.sourceIds.filter(id=>getProfileSource(id).trust!=='third-party');

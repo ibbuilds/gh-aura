@@ -1,7 +1,11 @@
+import { EXTRA_PROFILE_SOURCES } from './profile-source-extra.mjs';
+import { readCustomProfileSources } from './profile-custom-sources.mjs';
+import { intentWords,intentMatchScore } from './profile-query.mjs';
+
 /** Offline, versioned citations and design options, never copied README templates.
  * URLs are reading references, not remote assets automatically injected into output.
  */
-export const SOURCE_CATALOG_VERSION='2026-11-12.v1';
+export const SOURCE_CATALOG_VERSION='2026-11-12.v2';
 export const SOURCE_REVIEWED_AT='2026-11-12';
 const row=(id,title,category,url,tags,opts={})=>({
   id,title,category,url,tags,trust:opts.trust||'github-official',
@@ -99,39 +103,50 @@ row('gh-aura-research','GH Aura ordinary-profile research','professional',
  example:'Prefer a short introduction and links to demonstrable work.',
  limitations:'Company affiliation is not verified employment; no hiring outcome evidence.'}),
 ];
-export const PROFILE_SOURCES=Object.freeze(entries.map(x=>Object.freeze({...x,tags:Object.freeze([...x.tags])})));
+export const PROFILE_SOURCES=Object.freeze([...entries,...EXTRA_PROFILE_SOURCES]
+  .map(x=>Object.freeze({...x,tags:Object.freeze([...x.tags]),
+    sourceType:'curated',
+    renderMode:x.externalRequests?'optional-external-reference':'documented-native-link',
+    accessibility:'Prefer alt text, readable contrast, descriptive links and mobile-friendly composition.',
+  })));
 const DIRECTIONS=['barebones','minimal','technical','expressive'];
-export function findProfileSources({query='',category='',direction='minimal',includeExternal=false,limit=8}={}){
-  if(typeof query!=='string'||query.length>200||typeof category!=='string'||category.length>30)
-    throw Error('Invalid source search terms.');
+const registry=(file)=>[...PROFILE_SOURCES,...readCustomProfileSources(file)];
+export function findProfileSources({query='',category='',direction='minimal',
+  includeExternal=false,limit=8,sourceFile}={}){
+  if(typeof category!=='string'||category.length>40)
+    throw Error('Invalid source category.');
   if(!DIRECTIONS.includes(direction))
     throw Error('Source direction must be barebones, minimal, technical or expressive.');
-  if(!Number.isInteger(limit)||limit<1||limit>25)
-    throw Error('Source limit must be 1..25.');
-  const words=query.toLowerCase().match(/[a-z\dáéíóúñ-]+/gu)||[];
+  if(!Number.isInteger(limit)||limit<1||limit>50)
+    throw Error('Source limit must be 1..50.');
+  const words=intentWords(query);
   const scored=[];
-  for(const item of PROFILE_SOURCES){
+  for(const item of registry(sourceFile)){
     if(category&&item.category!==category)continue;
-    if(!includeExternal&&item.trust==='third-party')continue;
-    const hay=(item.id+' '+item.title+' '+item.category+' '+item.tags.join(' ')+' '+item.use).toLowerCase();
-    const hits=words.filter(word=>hay.includes(word)).length;
-    if(words.length&&hits===0)continue;
-    const score=hits*10+(item.tags.includes(direction)?3:0)+
-      (item.trust==='github-official'?2:0)+(item.trust==='local-research'?1:0);
+    if(!includeExternal&&['third-party','user-supplied'].includes(item.trust))continue;
+    const match=intentMatchScore(item,words);
+    if(words.length&&match===0)continue;
+    const score=match+(item.tags.includes(direction)?4:0)+
+      (item.trust==='github-official'?3:0)+
+      (item.trust==='public-standard'?2:0)+
+      (item.trust==='local-research'?1:0);
     scored.push({item,score});
   }
   scored.sort((a,b)=>b.score-a.score||a.item.id.localeCompare(b.item.id));
   return {version:SOURCE_CATALOG_VERSION,reviewedAt:SOURCE_REVIEWED_AT,
-    query,category,direction,includeExternal,
-    total:scored.length,sources:scored.slice(0,limit).map(x=>x.item),
-    note:'Curated URLs and metadata are reference data, not an authorization to download, copy, execute or embed external content.'};
+    query,category,direction,includeExternal,total:scored.length,
+    sources:scored.slice(0,limit).map(x=>x.item),
+    note:'References only: no external URL is fetched, executed, embedded or copied. Third-party and user-supplied assets require opt-in.'};
 }
-export function getProfileSource(id){
-  const found=PROFILE_SOURCES.find(x=>x.id===id);
-  if(!found)throw Error('Unknown source id. Run gh-aura sources list.');
-  return found;
+export function getProfileSource(id,options={}){
+  if(typeof id!=='string'||id.length>100)
+    throw Error('Invalid source ID.');
+  const item=registry(options.sourceFile).find(x=>x.id===id);
+  if(!item)throw Error('Unknown source id. Run gh-aura sources list.');
+  return item;
 }
-export function listProfileSources(){
+export function listProfileSources(options={}){
+  const sources=registry(options.sourceFile);
   return {version:SOURCE_CATALOG_VERSION,reviewedAt:SOURCE_REVIEWED_AT,
-    count:PROFILE_SOURCES.length,sources:PROFILE_SOURCES};
+    count:sources.length,customCount:sources.length-PROFILE_SOURCES.length,sources};
 }

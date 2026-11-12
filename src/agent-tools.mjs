@@ -1,8 +1,10 @@
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadConfig } from './config.mjs';
-import { PROFILE_SOURCES, findProfileSources, getProfileSource } from './profile-sources.mjs';
-import { makeProfileSpec, refineProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
+import { findProfileSources, getProfileSource } from './profile-sources.mjs';
+import { recommendProfileTechniques } from './profile-techniques.mjs';
+import { makeBiographyGuide } from './profile-biography.mjs';
+import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
 import { profileTarget } from './workflow.mjs';
 import { validateLogin } from './github.mjs';
@@ -16,15 +18,26 @@ const optUser={user:str('Public GitHub username; omit to use local config.',39)}
 const art={direction:{type:'string',enum:['barebones','minimal','technical','expressive']}};
 const tools=[
   ['gh_aura_sources_search','Search curated GitHub README resources; no links are embedded or fetched automatically.',
-    properties({query:str('Goal, keyword or resource to find',200),category:str('Source category',30),...art,
-      includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:25}})],
+    properties({query:str('Goal, keyword or resource to find (Spanish or English)',400),category:str('Source category',40),...art,
+      includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:50}})],
   ['gh_aura_sources_get','Inspect attribution, licensing, trust and usage limitations for one source.',
     properties({id:str('Source ID',80)},['id'])],
+  ['gh_aura_design_recommend','Combine GitHub-compatible layout techniques with source links for a natural-language design request; no template or image is downloaded.',
+    properties({query:str('Requested visual effect, density, biography, or composition (Spanish or English)',400),...art,
+      includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:25}})],
+  ['gh_aura_biography_guide','Develop a unique professional biography from declared voice, perspective and evidence without inventing career claims.',
+    properties({spec:{type:'object'},context:{type:'object'}})],
   ['gh_aura_profile_plan','Create a customizable profile intent specification, not a fixed Markdown template.',
     properties({...art,goal:str('Target engineering role, not claimed employment'),language:{type:'string',enum:['en','es']},
       maxWords:{type:'integer',minimum:30,maximum:1000},
       maxProjects:{type:'integer',minimum:0,maximum:6},includeExternal:{type:'boolean'},
       notes:str('User editing preferences',700),
+      visualBrief:str('Freeform visual and composition requirements; no fixed template',1000),
+      biography:{type:'object',description:'Voice, perspective, focus, word budget, tone notes and user-supplied claims'},
+      mediaReferences:{type:'array',maxItems:8,items:{type:'object',
+        properties:{url:str('HTTPS media URL',600),alt:str('Alternative text',200),
+          rights:{type:'string',enum:['user-owned','permitted-license','unverified']}},
+        required:['url','alt'],additionalProperties:false}},
       sections:{type:'object',additionalProperties:{type:'boolean'}},
       featured:{type:'array',maxItems:6,items:str('Selected repository name',110)},
       links:{type:'array',maxItems:20,items:{type:'object',
@@ -33,9 +46,9 @@ const tools=[
   ['gh_aura_profile_refine','Revise an existing profile intent without losing unrelated preferences.',
     properties({spec:{type:'object'},changes:{type:'object'}},['spec','changes'])],
   ['gh_aura_profile_context','Read verified public GitHub profile/repository context for evidence-aware writing.',
-    properties({...optUser,...art})],
+    properties({...optUser,...art,includeExternal:{type:'boolean'}})],
   ['gh_aura_profile_prompt','Produce an original writing brief usable by any AI model. No AI service is called.',
-    properties({...optUser,...art})],
+    properties({...optUser,...art,includeExternal:{type:'boolean'}})],
   ['gh_aura_profile_validate','Run local heuristic checks on a Markdown draft; not a factuality certificate.',
     properties({markdown:str('Proposed original Markdown',100000),spec:{type:'object'}},['markdown'])],
   ['gh_aura_profile_diff','Compare two Markdown drafts locally; produces no approval token.',
@@ -66,8 +79,11 @@ export const AGENT_TOOL_DEFINITIONS=Object.freeze(tools.map(([name,description,i
 export function agentCapabilities(){
   return {format:AGENT_INTERFACE_VERSION,transport:['CLI','Agent Skills','MCP stdio 2026-07-28 and legacy 2025-11-25'],
     tools:AGENT_TOOL_DEFINITIONS,resources:[
-      'gh-aura://sources/catalog','gh-aura://guide/profile','gh-aura://capabilities'],
-    prompts:['create_professional_profile','refine_existing_profile','compare_profile_directions'],
+      'gh-aura://sources/catalog','gh-aura://techniques/catalog',
+      'gh-aura://guide/profile','gh-aura://guide/biography',
+      'gh-aura://capabilities'],
+    prompts:['create_professional_profile','refine_existing_profile',
+      'compare_profile_directions','write_original_biography'],
     writesExposed:false,aiProviderRequired:false,runtimeDependencies:0,
     publication:'No publishing tool is exposed to the AI. A human must inspect a real draft file, run gh-aura preview --file draft.md --save review.json, and independently execute gh-aura apply --review review.json --pr.',
     caveat:'Agent tools expose public data and explicit private workspace status only. No GitHub achievement awards are guaranteed.'};
@@ -109,6 +125,21 @@ export async function runAgentTool(name,args={}){
     return findProfileSources(args);
   if(name==='gh_aura_sources_get')
     return getProfileSource(args.id);
+  if(name==='gh_aura_design_recommend'){
+    const options=recommendProfileTechniques(args);
+    const sourceIds=[...new Set(options.techniques.flatMap(x=>x.sourceIds))].slice(0,16);
+    const sources=sourceIds.map(id=>getProfileSource(id))
+      .filter(x=>args.includeExternal===true||
+        !['third-party','user-supplied'].includes(x.trust))
+      .map(x=>({id:x.id,title:x.title,url:x.url,license:x.license,
+        trust:x.trust,externalRequests:x.externalRequests,
+        limitations:x.limitations}));
+    return {...options,sources};
+  }
+  if(name==='gh_aura_biography_guide'){
+    const spec=args.spec?validateProfileSpec(args.spec):makeProfileSpec({},loadConfig());
+    return makeBiographyGuide(spec.biography,args.context??null);
+  }
   if(name==='gh_aura_profile_plan')
     return makeProfileSpec(args,loadConfig());
   if(name==='gh_aura_profile_refine')
@@ -136,6 +167,7 @@ export async function runAgentTool(name,args={}){
   if(name==='gh_aura_profile_context'||name==='gh_aura_profile_prompt'){
     const tokens=['brief',actualUser(args.user),
       ...(args.direction?['--direction',args.direction]:[]),
+      ...(args.includeExternal?['--external']:[]),
       ...(name==='gh_aura_profile_prompt'?['--prompt']:['--json'])];
     return runCliJson(tokens,{text:name==='gh_aura_profile_prompt'});
   }

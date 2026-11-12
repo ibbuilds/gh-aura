@@ -1,33 +1,26 @@
 # Product scope and acceptance
 
-**Current release:** v1.17.0
+**Current release:** v1.18.0
 
-The four primary modules are implemented. AI-first use now includes a curated source registry, editable ProfileSpec, portable Agent Skill and local MCP tools. A passed CI test does **not** establish an actual GitHub award or production-write success.
+GH Aura is an **AI-first, model-agnostic GitHub profile toolkit** with a traditional dependency-free CLI. It helps people show genuine work clearly, in their own style.
 
-| Module | Shipped behavior | Evidence | Remaining gate |
-| --- | --- | --- | --- |
-| Activity | Read contribution history; offline date plans; apply synthetic practice to one private workspace | Unit/local Git + live **read-only** checks | Real private write and contribution attribution |
-| Badges | Eligibility catalog; three private event attempts; two-account read-only check; tiers and atomic Git batching | Mock API + local bare Git checks | Verify awards and private GitHub push on disposable account |
-| README | Draft styles, flexible AI art directions, en/es, review diff, direct/PR publication | E2E mocked GitHub publishing | Independent first-use study |
-| Pins | Rank public repos with evidence and role preferences | Unit + read-only integration | User pins manually on GitHub |
+| Area | Delivered | Still unverified |
+| --- | --- | --- |
+| README | Original AI briefs, editable composition, **30 curated sources**, **25 techniques**, optional custom resources, biography voice and evidence, safe local preview | Real-agent and user usability |
+| Pins | Rank real public projects against target roles | Owner manually pins |
+| Activity | Read contribution history; bounded synthetic private plans | Real contribution attribution |
+| Badges | Catalog, three private event candidates, verified-access preflight, atomic PR batching | GitHub awards on real accounts |
 
-Additional commands: `audit`, `work`, `config`, `story`, `brief`, `references`.
+## AI-first capabilities
 
-## Release policy
+The local MCP and Agent Skill expose read-only context, source/license discovery, original biography guidance, project evidence, independent visual controls, Markdown checks and diffs. Models can request arbitrary compositions within GitHub's Markdown limits: from plain text to custom original imagery. External services and user-provided source JSON are **opt-in**. No AI vendor or fixed README template is required.
 
-Only the **latest published GitHub Release** has downloadable assets. On successful release publication, CI removes older published release objects **without deleting their Git tags or Git history**. No npm registry publication is configured.
+No AI tool can mint a publication approval or write to GitHub. The person independently saves the result and authorizes `preview` followed by `apply`.
 
-## AI-first acceptance
+## External acceptance
 
-MCP protocol/packaging is tested offline; independent compatibility checks with three real agent clients and user studies remain **unverified**. Agents can inspect and preview, not publish. The user approves changes separately.
+- Main branch protection and required CI: [#47](https://github.com/ibbuilds/gh-aura/issues/47).
+- Authorized disposable private repository tests: [#48](https://github.com/ibbuilds/gh-aura/issues/48), actual achievements: [#53](https://github.com/ibbuilds/gh-aura/issues/53).
+- Three real agent-client walkthroughs and independent user study: [#61](https://github.com/ibbuilds/gh-aura/issues/61), [#49](https://github.com/ibbuilds/gh-aura/issues/49).
 
-## Open gates
-
-- **P0:** Repository administrator must enable `main` branch protection and required checks — [#47](https://github.com/ibbuilds/gh-aura/issues/47).
-- **P1:** Validate real Activity/Badges private writes — [#48](https://github.com/ibbuilds/gh-aura/issues/48), including actual achievements — [#53](https://github.com/ibbuilds/gh-aura/issues/53).
-- **P2:** Independent usability study — [#49](https://github.com/ibbuilds/gh-aura/issues/49).
-- **Optional:** Safe workspace deletion [#52](https://github.com/ibbuilds/gh-aura/issues/52); npm distribution [#50](https://github.com/ibbuilds/gh-aura/issues/50).
-
-No production private repositories, additional accounts, official achievement API or automatic profile pins are assumed. Generated exercises are explicitly synthetic.
-
-[Validation checklist](RELEASE_READINESS.md)
+CI tests Node 22/24 on Windows/macOS/Linux, local Git/mocked API and read-only public GitHub. This is **not** proof of awarded badges, hiring impact or compatibility with every agent client. Only the latest GitHub Release retains assets; historical Git tags remain.

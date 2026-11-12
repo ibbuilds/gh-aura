@@ -1,6 +1,6 @@
 {
   "name": "gh-aura",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "description": "Local-first CLI for GitHub contribution activity, achievements, and profile workflows.",
   "type": "module",
   "bin": {

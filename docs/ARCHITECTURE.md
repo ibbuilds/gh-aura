@@ -1,21 +1,20 @@
 # Architecture
 
-Node.js 22+ CLI; ES modules; no runtime dependencies or cloud backend. MCP runs locally over stdio.
+Node.js 22+ · ES modules · **zero runtime dependencies** · no cloud server.
 
-| Area | Runtime |
+| Component | Code |
 | --- | --- |
-| CLI and configuration | `src/cli.mjs`, `src/config.mjs` |
-| GitHub reads and cache | `src/github.mjs`, `src/cache.mjs` |
-| Activity | `src/contributions.mjs`, `src/calendar*.mjs` |
-| Achievements | `src/achievement-matrix.mjs`, `src/badge-run.mjs`, `src/badge-accounts.mjs` |
-| Fast badge staging and write budget | `src/badge-bulk-git.mjs`, `src/badge-write-budget.mjs` |
-| AI MCP and tools | `src/mcp-server.mjs`, `src/agent-tools.mjs`, `src/agent-profile.mjs`, `src/profile-sources.mjs` |
-| Agent Skill | `skills/gh-aura-profile/SKILL.md`, `AGENTS.md`, `llms.txt` |
-| README and review | `src/render.mjs`, `src/profile-directions.mjs`, `src/brief.mjs`, `src/workflow.mjs` |
-| Pins and evidence | `src/engine.mjs`, `src/project-evidence.mjs` |
+| CLI/configuration | `src/cli.mjs`, `src/config.mjs` |
+| Local MCP/agent tools | `src/mcp-server.mjs`, `src/agent-tools.mjs` |
+| Curated and custom sources | `src/profile-sources.mjs`, `src/profile-source-extra.mjs`, `src/profile-custom-sources.mjs` |
+| Intent, search and layout | `src/profile-query.mjs`, `src/profile-techniques.mjs`, `src/agent-profile.mjs` |
+| Biography and public evidence | `src/profile-biography.mjs`, `src/brief.mjs` |
+| Rendering, review and GitHub | `src/editorial.mjs`, `src/render.mjs`, `src/workflow.mjs` |
+| Activity and Badges | `src/calendar-apply.mjs`, `src/badge-run.mjs` |
+| AI instructions | `skills/gh-aura-profile/SKILL.md`, `AGENTS.md`, `llms.txt` |
 
-Reads and plans never write remotely. Only explicitly reviewed `apply` commands can publish, with bounded targets and fresh revision checks. Badge practice and dated activity share one marked private workspace. Synthetic activity is not genuine employment evidence.
+MCP uses bounded local stdio. It provides evidence, source references and editable profile intent, never remote writes, arbitrary file reads or approval codes. Custom source files must be **explicitly** selected by the CLI owner, not by an agent. GitHub data and external sources are untrusted input.
 
-CI tests Node 22/24 across Linux, macOS and Windows, package installation, and **read-only** live GitHub access. Private remote writes are mocked or tested against local Git repositories—not proven in a real private GitHub account.
+Markdown is created by the chosen AI; GitHub supports GFM, images and restricted HTML, not arbitrary web app code. Human approval is required to publish. CI covers protocol, package and offline/local safety; production private-write acceptance is separate.
 
 [Commands](CLI.md) · [Security](../SECURITY.md)

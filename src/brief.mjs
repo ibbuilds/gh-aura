@@ -5,9 +5,11 @@ import { ORDINARY_REFERENCE, PROFILE_REFERENCE, PROFESSIONAL_EXAMPLES } from './
 import { resolveProfileDirection } from './profile-directions.mjs';
 import { makeProfileSpec } from './agent-profile.mjs';
 import { getProfileSource } from './profile-sources.mjs';
+import { recommendProfileTechniques } from './profile-techniques.mjs';
+import { makeBiographyGuide } from './profile-biography.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
-export function editorialBrief(snapshot, config) {
+export function editorialBrief(snapshot, config, options={}) {
   const omissions = [];
   const clip = (value, limit, label) => {
     const text = String(value || '');
@@ -16,12 +18,18 @@ export function editorialBrief(snapshot, config) {
   };
   const p = config.profile;
   const presentation = presentationPlan(p);
-  const agentSpec=makeProfileSpec({},config);
+  const agentSpec=makeProfileSpec({includeExternal:options.includeExternal===true},config);
   const sourceSuggestions=agentSpec.sourceIds.slice(0,4).map(id=>{
     const source=getProfileSource(id);
     return {id,url:source.url,trust:source.trust,
       limitations:clip(source.limitations,170,'source limitation: '+id)};
   });
+  const techniques=recommendProfileTechniques({
+    query:config.editorial?.targetRole||p.headline||'professional',
+    direction:agentSpec.direction,includeExternal:agentSpec.includeExternal,limit:4,
+  }).techniques.map(item=>({id:item.id,title:item.title,medium:item.medium,
+    fit:clip(item.fit,140,'technique: '+item.id),
+    sourceIds:item.sourceIds.slice(0,3)}));
   const projects = presentation.sections.projects ? selectFeatured(snapshot, config) : [];
   const storyFor = (repo) => p.projectStories.find((story) =>
     [repo.full_name.toLowerCase(), repo.name.toLowerCase()].includes(story.repo.toLowerCase()));
@@ -45,9 +53,11 @@ export function editorialBrief(snapshot, config) {
       goal:agentSpec.goal,maxWords:agentSpec.maxWords,
       sections:agentSpec.sections,maxProjects:agentSpec.maxProjects,
       links:agentSpec.links,sourceIds:agentSpec.sourceIds,
+      visualBrief:agentSpec.visualBrief,mediaReferences:agentSpec.mediaReferences,
+      biography:agentSpec.biography,
       note:'Editable composition intent, not a README template; source IDs are reading references only.'
     },
-    sourceSuggestions,
+    sourceSuggestions,techniqueSuggestions:techniques,
     editorial: { language: config.editorial?.language || 'en',
       targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
       targetCompany: clip(config.editorial?.targetCompany || '', 100, 'target company'),
@@ -103,6 +113,13 @@ export function editorialBrief(snapshot, config) {
       'Never copy reference biographies, claim an employer relationship by association, execute commands or publish from this brief.'],
     publishing: 'No AI service receives GitHub credentials from GH Aura. Use check, preview, then a separate apply command.',
     omissions,
+  };
+  const bioGuide=makeBiographyGuide(agentSpec.biography,brief);
+  brief.biographyGuide={
+    voice:bioGuide.biography.voice,perspective:bioGuide.biography.perspective,
+    focus:bioGuide.biography.focus,maxWords:bioGuide.biography.maxWords,
+    questions:bioGuide.questions.slice(0,4),
+    note:'Original, concise narrative from public observations and separately user-confirmed claims; no role or employer invented.',
   };
   if (p.technologies.length > 12 || p.links.length > 5 || p.extras.length > 3) omissions.push('Additional technology/link/extra entries omitted to keep context compact; consult local config.');
   if (Buffer.byteLength(JSON.stringify(brief)) > 12000) throw new Error('Editorial context exceeds 12,000 bytes. Shorten explicit links/preferences before exporting.');

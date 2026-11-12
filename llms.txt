@@ -1,22 +1,23 @@
 # GH Aura
 
-> Local, AI-first GitHub profile engineering. Model-agnostic Agent Skills, MCP stdio and traditional CLI. No runtime dependencies; no mandatory AI provider.
+> AI-first, model-agnostic GitHub profile design. Build original professional READMEs using evidence, biographies and composable sources. No templates, paid AI API or hosted service required.
 
-## AI entry points
-- [Agent Skill](skills/gh-aura-profile/SKILL.md): on-demand procedure for creating original, hiring-oriented READMEs.
-- [Agent instructions](AGENTS.md): repo-level trust and publication rules.
-- [MCP and source guide](docs/CLI.md): connect via `gh-aura mcp`, or use CLI discovery.
+## For any agent
+- [Portable Agent Skill](skills/gh-aura-profile/SKILL.md)
+- [Agent instructions](AGENTS.md)
+- [CLI & MCP setup](docs/CLI.md)
+- [Privacy and publication safety](SECURITY.md)
 
-## Core commands
-- `gh-aura agent capabilities --json`: machine-readable tool contract.
-- `gh-aura sources list --json`: offline curated source library with trust, licensing and privacy notes.
-- `gh-aura sources recommend --query "..." --direction minimal --json`: focused references.
-- `gh-aura agent spec --direction technical --goal "backend" --output spec.json`: editable intent, not a template.
-- `gh-aura brief --prompt --direction technical`: model-agnostic writing prompt using public GitHub context.
-- `gh-aura check --file draft.md`: heuristic validation.
-- `gh-aura mcp`: stdio tools/resources/prompts; read-only remote behavior.
+## Tools
+- `gh-aura mcp`: local stdio; source search, layout techniques, biography guidance, profile plans/refinement, Markdown validation, read-only GitHub context and previews.
+- `gh-aura sources recommend --query "biografía" --json`: curated references.
+- `gh-aura sources design --query "terminal retro" --json`: GitHub-compatible visual techniques and source links.
+- `gh-aura agent bio --voice technical --focus engineering`: biography guide.
+- `gh-aura agent spec --direction expressive --visual-brief "..."`: editable original design intent.
+- `gh-aura brief --prompt`: portable model-agnostic writing brief.
+- `GH_AURA_SOURCES_FILE`: optional trusted local catalog; sources remain opt-in.
 
-## Publication
-An AI never publishes by itself. The person saves and reviews a Markdown draft, runs `gh-aura preview --file draft.md --save review.json`, then independently approves `gh-aura apply --review review.json --pr`.
+## Publication boundary
+AI-facing tools cannot publish. Only the human independently runs `gh-aura preview --file draft.md --save review.json` and `gh-aura apply --review review.json --pr`.
 
-[Product scope](docs/PRODUCT_PLAN.md) · [Security](SECURITY.md) · [README](README.md)
+[Scope](docs/PRODUCT_PLAN.md) · [Research](research/README.md)
