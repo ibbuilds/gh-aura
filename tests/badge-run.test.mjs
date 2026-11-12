@@ -82,7 +82,9 @@ function mockAPI(options={}) {
         closed_at:options.patchSlowClose?'2026-11-12T01:08:00Z':'2026-11-12T01:00:05Z'});
     }
     if(path.startsWith(base+'/contents/docs/gh-aura/exercise-')&&method==='GET') {
-      return options.alreadyDone?response({sha:'c'.repeat(40),type:'file'}):response({},404);
+      const number=Number(/exercise-(\d{4})\.md/.exec(path)?.[1]);
+      const done=options.alreadyDone||options.doneIndices?.includes(number);
+      return done?response({sha:'c'.repeat(40),type:'file'}):response({},404);
     }
     if(path.startsWith(base+'/git/ref/heads/gh-aura/badge-')&&method==='GET'){
       if(options.pendingBranch&&path.endsWith('/'+options.pendingBranch))
@@ -146,7 +148,7 @@ test('private automation creates one sandbox repo, closes one issue and merges 2
   const p=plan();
   let result;
   try { result=await applyBadgeRun(p,{confirm:p.fingerprint,
-    token:'test-only',fetch:api.fetch,sleep:async()=>{}}); }
+    token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}}); }
   catch(error) { throw Error(error.message+'; sequence='+api.requests.map(x=>x.method+' '+x.path).join(' | ')); }
   assert.equal(api.created,true);
   assert.equal(result.private,true);
@@ -158,6 +160,13 @@ test('private automation creates one sandbox repo, closes one issue and merges 2
   assert.equal(result.contentWrites,2+2*4+2);
   assert.ok(result.pacing.minimumWriteGapMs>=1000);
   assert.ok(result.mergedPulls.every(pr=>pr.exactHeadVerified&&pr.reviewedSubmissions===0));
+  assert.equal(result.pacing.minimumWriteGapMs,1000);
+  assert.ok(result.pacing.locallyReservedHourlyWrites<=500);
+  const baseReads=api.requests.filter(x=>x.path===('/repos/'+repo+'/git/ref/heads/main')&&x.method==='GET');
+  assert.equal(baseReads.length,1,'second PR reuses the confirmed first merge SHA');
+  const branchCreations=api.requests.filter(x=>x.path===('/repos/'+repo+'/git/refs')&&x.method==='POST');
+  assert.equal(branchCreations.length,2);
+  assert.equal(branchCreations[1].body.sha,'d'.repeat(40),'new branch starts from last confirmed squash merge');
   assert.match(result.note,/GitHub alone/);
   const writes=api.requests.filter(x=>x.method!=='GET');
   assert.equal(writes.filter(x=>x.path.endsWith('/pulls')&&x.method==='POST').length,2);
@@ -170,7 +179,7 @@ test('rerunning the same private sandbox plan is idempotent when tasks already m
   const api=mockAPI({existing:true,alreadyDone:true});
   const p=plan();
   const result=await applyBadgeRun(p,{confirm:p.fingerprint,
-    token:'test-only',fetch:api.fetch,sleep:async()=>{}});
+    token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}});
   assert.deepEqual(result.skippedAlreadyMerged,[1,2]);
   assert.equal(result.mergedPulls.length,0);
   assert.equal(result.quickdrawIssue,null);
@@ -181,7 +190,7 @@ test('public and unmarked existing repositories are rejected before any write',a
   for(const opts of [{existing:true,privateRepo:false},{existing:true,existingMarker:false}]) {
     const api=mockAPI(opts);
     await assert.rejects(applyBadgeRun(p,{confirm:p.fingerprint,token:'test-only',
-      fetch:api.fetch,sleep:async()=>{}}),/Only an active|not a GH Aura-marked/);
+      fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}}),/Only an active|not a GH Aura-marked/);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   }
 });
@@ -195,7 +204,7 @@ test('confirmation mismatch, owner mismatch and no token stop before any mutatio
   const another=plan({repo:'another/aura-achievements'});
   const api=mockAPI();
   await assert.rejects(applyBadgeRun(another,{confirm:another.fingerprint,
-    token:'test-only',fetch:api.fetch}),/owned private repository/);
+    token:'test-only',fetch:api.fetch,reserveWrite:()=>{}}),/owned private repository/);
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
 });
 test('CLI plan/apply are separate with required explicit review',()=>{
@@ -210,7 +219,7 @@ test('badge runner reuses a private workspace created by activity without creati
   const api=mockAPI({existing:true,existingMarker:'shared'});
   const p=plan({pulls:1,quickdraw:false});
   const result=await applyBadgeRun(p,{confirm:p.fingerprint,
-    token:'test-only',fetch:api.fetch,sleep:async()=>{}});
+    token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}});
   assert.equal(api.created,false);
   assert.equal(result.workspaceReused,true);
   assert.equal(result.mergedPulls.length,1);
@@ -263,7 +272,7 @@ test('v2 plan binds descriptions and excluded list, and safe legacy plans still 
 
 test('status reads only GH Aura-owned private workspace and distinguishes events from awards',async()=>{
   const api=mockAPI({existing:true,statusMixed:true,existingMarker:'shared'});
-  const status=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+  const status=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch,reserveWrite:()=>{}});
   assert.equal(status.private,true);
   assert.equal(status.readOnly,true);
   assert.equal(status.status,'observed-workspace-events-awards-unverified');
@@ -278,7 +287,7 @@ test('status reads only GH Aura-owned private workspace and distinguishes events
   assert.ok(status.verify.includes('?tab=achievements'));
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   const bad=mockAPI({existing:true,existingMarker:false});
-  await assert.rejects(inspectBadgeWorkspace({repo,token:'test-only',fetch:bad.fetch}),
+  await assert.rejects(inspectBadgeWorkspace({repo,token:'test-only',fetch:bad.fetch,reserveWrite:()=>{}}),
     /marker missing/);
   assert.equal(bad.requests.filter(x=>x.method!=='GET').length,0);
 });
@@ -287,7 +296,7 @@ test('Quickdraw replay checks beyond first 100 issue/PR records before writing',
   const api=mockAPI({existing:true,existingMarker:'shared',issueOnSecondPage:true});
   const p=plan({pulls:0,quickdraw:true});
   const result=await applyBadgeRun(p,{confirm:p.fingerprint,
-    token:'test-only',fetch:api.fetch,sleep:async()=>{}});
+    token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}});
   assert.equal(result.quickdrawIssue,null);
   assert.equal(result.mergedPulls.length,0);
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
@@ -297,7 +306,7 @@ test('Quickdraw refuses unknown full issue history rather than duplicating actio
   const api=mockAPI({existing:true,existingMarker:'shared',issueHistoryTooLarge:true});
   const p=plan({pulls:0,quickdraw:true});
   await assert.rejects(applyBadgeRun(p,{confirm:p.fingerprint,
-    token:'test-only',fetch:api.fetch,sleep:async()=>{}}),/history exceeds/);
+    token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}}),/history exceeds/);
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   assert.ok(api.requests.some(x=>x.path.endsWith('per_page=100&page=12')));
 });
@@ -308,7 +317,7 @@ test('next plans only uncompleted private-workspace tier exercises without a Git
     const file=join(folder,'next.json');
     const api=mockAPI({existing:true,existingMarker:'shared',statusMixed:true});
     const planned=await planNextBadgeRun({repo,tier:'bronze',output:file,
-      token:'test-only',fetch:api.fetch});
+      token:'test-only',fetch:api.fetch,reserveWrite:()=>{}});
     assert.equal(planned.format,'gh-aura-private-badges-v2');
     assert.equal(planned.tier,'bronze');
     assert.equal(planned.start,1);
@@ -330,7 +339,7 @@ test('next refuses interrupted exercise branches before writing an approval file
     const api=mockAPI({existing:true,existingMarker:'shared',statusMixed:true,
       pendingBranch:'gh-aura/badge-0002'});
     await assert.rejects(planNextBadgeRun({repo,tier:'bronze',output:file,
-      token:'test-only',fetch:api.fetch}),/Review branch/);
+      token:'test-only',fetch:api.fetch,reserveWrite:()=>{}}),/Review branch/);
     assert.equal(existsSync(file),false);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   }finally{rmSync(folder,{recursive:true,force:true});}
@@ -343,7 +352,7 @@ test('next fails closed for unmarked or public workspaces without creating a rep
   ]) {
     const api=mockAPI(options);
     await assert.rejects(planNextBadgeRun({repo,tier:'bronze',
-      token:'test-only',fetch:api.fetch}),/marker missing|non-private/);
+      token:'test-only',fetch:api.fetch,reserveWrite:()=>{}}),/marker missing|non-private/);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
     assert.equal(api.created,false);
   }
@@ -389,7 +398,7 @@ test('next refuses incomplete, conflicting and gapped workspace evidence',()=>{
 test('status does not mistake a slow QA issue closure for Quickdraw eligibility',async()=>{
   const api=mockAPI({existing:true,existingMarker:'shared',statusMixed:true,
     slowQuickdraw:true});
-  const report=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+  const report=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch,reserveWrite:()=>{}});
   assert.equal(report.observed.closedOwnedExerciseIssues,1);
   assert.equal(report.observed.quickdrawTimingCandidates,0);
   assert.equal(report.events.closedQAIssues[0].elapsedSeconds,480);
@@ -402,7 +411,7 @@ test('incorrect PR head SHA and submitted reviews abort before any merge',async(
     const api=mockAPI({existing:true,existingMarker:'shared',...opt});
     const p=plan({pulls:1,quickdraw:false});
     await assert.rejects(applyBadgeRun(p,{
-      confirm:p.fingerprint,token:'test-only',fetch:api.fetch,sleep:async()=>{}
+      confirm:p.fingerprint,token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}
     }),/PR head differs|submitted or uninspectable reviews/);
     assert.equal(api.requests.filter(x=>x.method==='PUT'&&x.path.endsWith('/merge')).length,0);
   }
@@ -412,7 +421,7 @@ test('runner reports a late Quickdraw close as non-qualifying timing evidence',a
   const api=mockAPI({existing:true,existingMarker:'shared',patchSlowClose:true});
   const p=plan({pulls:0,quickdraw:true});
   const result=await applyBadgeRun(p,{
-    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,sleep:async()=>{}
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,reserveWrite:()=>{},sleep:async()=>{}
   });
   assert.equal(result.quickdrawTimingCandidate,false);
   assert.ok(result.quickdrawIssue);
@@ -460,10 +469,64 @@ test('status refuses to count reviewed or third-party merged PRs as YOLO candida
   for(const options of [{statusReviewed:true},{otherMerger:true}]){
     const api=mockAPI({existing:true,existingMarker:'shared',
       statusMixed:true,...options});
-    const result=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+    const result=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch,reserveWrite:()=>{}});
     assert.equal(result.observed.yoloSelfMergeNoReviewCandidate,null);
     assert.equal(result.observed.yoloInspectedMergedPRs,1);
     assert.equal(result.events.yoloReviewEvidence[0].qualifiesAsEvent,false);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   }
+});
+
+test('an exhausted persistent write budget stops before any GitHub mutation',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:1,quickdraw:false});
+  let checks=0;
+  await assert.rejects(applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:()=>{checks++;throw Error('Local hourly content budget exhausted');},
+    sleep:async()=>{}
+  }),/budget exhausted/);
+  assert.equal(checks,1);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+});
+
+test('an incomplete replay never relies on stale cached default-branch SHA',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared',doneIndices:[1]});
+  const p=plan({pulls:2,quickdraw:false});
+  const result=await applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:()=>{},sleep:async()=>{}
+  });
+  assert.deepEqual(result.skippedAlreadyMerged,[1]);
+  assert.equal(result.mergedPulls.length,1);
+  const baseReads=api.requests.filter(x=>x.path===('/repos/'+repo+'/git/ref/heads/main'));
+  assert.equal(baseReads.length,1);
+  assert.equal(api.requests.filter(x=>x.method!=='GET'&&x.path==='/user/repos').length,0);
+});
+
+test('Quickdraw reserves open and close as an inseparable pair before opening a QA issue',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:0,quickdraw:true});
+  const reservations=[];
+  const result=await applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:(owner,count)=>{reservations.push(count);return {remaining:10};},
+    sleep:async()=>{}
+  });
+  assert.deepEqual(reservations,[2]);
+  assert.ok(result.quickdrawIssue);
+  assert.equal(result.quickdrawTimingCandidate,true);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,2);
+});
+
+test('an insufficient two-write quota refuses Quickdraw before the issue exists',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:0,quickdraw:true});
+  await assert.rejects(applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:(owner,count)=>{
+      assert.equal(count,2);throw Error('Local remaining content budget is too low');
+    },sleep:async()=>{}
+  }),/budget is too low/);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
 });
