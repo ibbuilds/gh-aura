@@ -121,9 +121,10 @@ export function recommendProfileTechniques({query='',direction='minimal',include
     throw Error('Technique limit must be 1..25.');
   const words=intentWords(query);
   const ranked=PROFILE_TECHNIQUES.filter(t=>includeExternal||!t.thirdParty)
-    .map(item=>({item,score:intentMatchScore(item,words)+
-      (item.tags.includes(direction)?4:0)+(item.risk==='low'?2:0)}))
-    .filter(x=>!words.length||x.score>0);
+    .map(item=>{const match=intentMatchScore(item,words);
+      return {item,match,score:match+(item.tags.includes(direction)?4:0)+
+        (item.risk==='low'?2:0)};})
+    .filter(x=>!words.length||x.match>0);
   ranked.sort((a,b)=>b.score-a.score||a.item.id.localeCompare(b.item.id));
   const selected=ranked.length?ranked:
     PROFILE_TECHNIQUES.filter(x=>!x.thirdParty).slice(0,6).map(item=>({item}));
