@@ -2,8 +2,8 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  sources: { usage: 'sources list | sources show ID | sources recommend [--query TEXT] [--direction minimal|technical|expressive|barebones] [--external] [--json]', flags:['query','category','direction','external','limit','format','output','force'], max:2 },
-  agent: { usage: 'agent capabilities [--json] | agent spec [--direction technical] [--goal ROLE] [--max-words 120] [--output spec.json]', flags:['config','direction','goal','language','max-words','max-projects','notes','external','format','output','force'], max:1 },
+  sources: { usage: 'sources list | sources show ID | sources recommend --query "biografía" | sources design --query "terminal" [--external] [--catalog sources.json]', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
+  agent: { usage: 'agent capabilities | agent spec [--direction technical] [--visual-brief TEXT] | agent bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
   mcp: { usage: 'mcp (local stdio, read-only tools only)', flags:[], max:0 },
   'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
@@ -23,7 +23,7 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['notes','category','query','max-words','max-projects','direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
+const VALUES = new Set(['catalog','visual-brief','voice','perspective','focus','bio-words','notes','category','query','max-words','max-projects','direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
 const FLAGS = new Set(['external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
@@ -204,28 +204,39 @@ export function validateOptions(command, options) {
 
   if (command === 'sources') {
     const [action,id]=options.positional;
-    if (!['list','show','recommend'].includes(action)|| (action==='show'&&!id) ||
-        (action!=='show'&&id)|| (action!=='recommend'&&
-          ['query','category','direction','limit','external'].some(k=>options[k]!==undefined)))
-      throw Error('Use sources list, sources show ID or sources recommend [--query TEXT].');
+    if (!['list','show','recommend','design'].includes(action)||
+        (action==='show'&&!id)||(action!=='show'&&id)||
+        (!['recommend','design'].includes(action)&&
+          ['query','category','direction','limit','external'].some(k=>options[k]!==undefined))||
+        (action==='design'&&options.category!==undefined))
+      throw Error('Use sources list, sources show ID, sources recommend or sources design --query TEXT.');
     if(options.direction&&!['barebones','minimal','technical','expressive'].includes(options.direction))
       throw Error('Invalid source art direction.');
     if(options.limit!==undefined&&(!/^\d+$/.test(options.limit)||
-        Number(options.limit)<1||Number(options.limit)>25))
-      throw Error('--limit must be 1..25.');
+        Number(options.limit) < 1 || Number(options.limit) > (action==='design'?25:50)))
+      throw Error('--limit exceeds the allowed source or design bound.');
   }
   if (command === 'agent') {
     const [action]=options.positional;
-    if(!['capabilities','spec'].includes(action))
-      throw Error('Use agent capabilities or agent spec.');
+    if(!['capabilities','spec','bio'].includes(action))
+      throw Error('Use agent capabilities, spec or bio.');
     if(action==='capabilities'&&
-      ['direction','goal','language','max-words','max-projects','notes','external'].some(k=>options[k]!==undefined))
+      ['direction','goal','language','max-words','max-projects','notes','external',
+        'visual-brief','voice','perspective','focus','bio-words']
+      .some(k=>options[k]!==undefined))
       throw Error('agent capabilities takes no profile design arguments.');
-    for(const [name,min,max] of [['max-words',30,1000],['max-projects',0,6]]) {
+    for(const [name,min,max] of [['max-words',30,1000],
+      ['max-projects',0,6],['bio-words',12,250]]) {
       if(options[name]!==undefined&&(!/^\d+$/.test(options[name])||
           Number(options[name])<min||Number(options[name])>max))
         throw Error('--'+name+' must be '+min+'..'+max+'.');
     }
+    if(options.voice&&!['direct','technical','approachable','editorial','distinctive'].includes(options.voice))
+      throw Error('Invalid --voice value.');
+    if(options.perspective&&!['first-person','third-person','no-pronouns'].includes(options.perspective))
+      throw Error('Invalid --perspective value.');
+    if(options.focus&&!['engineering','research','products','open-source','learning','creative','custom'].includes(options.focus))
+      throw Error('Invalid --focus value.');
   }
   if (command === 'brief' && ((options.prompt && options.format === 'json') || (!options.prompt && options.format === 'markdown'))) throw new Error('brief exports JSON; use --prompt for writing instructions, without --json.');
 }
