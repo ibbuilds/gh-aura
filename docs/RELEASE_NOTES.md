@@ -1,51 +1,43 @@
-# GH Aura v1.12.0
+# GH Aura v1.13.0
 
-**Safe Gold progression for GitHub achievements, with exact-commit merge verification and rate-aware execution.** GH Aura remains a free, local-first Node.js 22+ CLI, one marked user-owned private workspace, zero runtime dependencies.
+**Faster, rate-aware progress toward GitHub Achievements without sacrificing repo integrity.**
+
+GH Aura is a local-first CLI for Node.js 22+, zero runtime dependencies, one reusable owned private workspace, and explicit approval of every write batch.
 
 ## Install
 
-Download `gh-aura-1.12.0.tgz` and `SHA256SUMS.txt` from GitHub Releases, verify the checksum, then install:
+Download `gh-aura-1.13.0.tgz` and `SHA256SUMS.txt` from the [GitHub Release](https://github.com/ibbuilds/gh-aura/releases/latest), verify the checksum, and install:
 
 ```bash
-npm install --global ./gh-aura-1.12.0.tgz
+npm install --global ./gh-aura-1.13.0.tgz
 gh-aura init YOUR_USERNAME
 ```
 
-No npm registry publication is required.
+## Efficiency improvements
 
-## Confirmed maximum targets
+The PR exercise runner uses the GitHub squash-merge SHA it just received as the verified parent for the **next** exercise branch. Compared with the previous implementation, an uninterrupted 16-PR batch avoids **15 extra base-branch GET requests**. Previously redundant fixed sleeps after GitHub repository/branch creation were removed; a documented **minimum 1-second pause between mutative requests** remains.
 
-- Pull Shark: base **2**, Bronze **16**, Silver **128**, Gold **1,024** eligible merged PRs, reflected in first-party GitHub achievement-detail fragments.
-- YOLO: **one** merge without a submitted review; no documented higher tiers.
-- Quickdraw: **one** issue or PR closed within **five minutes** of opening; no documented higher tiers.
+A new **atomic, locally persisted rolling hourly write budget** caps GH Aura to 480 mutative requests per authenticated GitHub account in 60 minutes on the same computer, leaving limited headroom below GitHub's general ~500 content-generating requests/hour secondary limit. The ledger uses a hashed account key and records only timestamps, not credentials. It fails closed on concurrent reservation, corrupt data or clock inconsistency; an uncertain write still uses a reservation. The apply output exposes remaining locally reserved capacity.
 
-These are trigger/tier references, not guarantees that GitHub counts exercise actions in a self-owned private repository.
+This is not a rate-limit bypass: GitHub can impose tighter secondary limits, and external clients share the effective account budget. The 1,024-PR Gold target still needs genuine eligible events, not faster local arithmetic. Four REST mutations per generated PR imply about **4,096 writes** for 1,024 PRs (theoretical best case ~8.2 hours at GitHub's general 500/hour ceiling, with no guarantee those PRs earn awards). The CLI provides no unattended mass-execution loop.
 
-## Staged max-goal workflow
+## Workflow
 
 ```bash
-# Initial 2-PR pilot, with YOLO and Quickdraw event attempts
 gh-aura badges auto --tier base --output pilot.json
-# Review pilot.json carefully; approve its own fingerprint:
+# Inspect and separately approve the pilot's SHA-256 fingerprint:
 gh-aura badges auto apply --review pilot.json --confirm FINGERPRINT
 gh-aura badges auto status
 
-# First check whether GitHub has actually awarded the base achievements.
-# Then plan the next checkpoint from observed workspace history:
+# Only after checking the actual badge in your GitHub profile:
 gh-aura badges auto next --goal max --output next.json
-# Read and separately approve the new plan:
-gh-aura badges auto apply --review next.json --confirm FINGERPRINT
+gh-aura badges auto apply --review next.json --confirm NEXT_FINGERPRINT
 ```
 
-Repeat `next --goal max` and individually approved `apply` until the workspace records the maximum reported 1,024 PR event threshold. The tool never claims Gold was awarded by GitHub. It progresses 2 → 16 → 128 → 1,024 and refuses sequence gaps, unreadable histories, unexpected files or pending exercise branches. Each batch is capped at 16 PRs.
+Progress remains staged at 2 / 16 / 128 / 1,024 PR event milestones, with 16 PRs maximum per approved batch; YOLO and Quickdraw have single-level event candidates. All writes go to the same marked, user-owned private workspace. No repos are force-updated or deleted, and no unrelated/third-party repos are touched.
 
-## Hardened event execution
+## Verification and remaining limit
 
-- Each PR merge checks **zero submitted reviews** before merging and supplies the exact SHA of the generated head commit as a race-condition guard.
-- The runner enforces at least **1.1 seconds between content-generating write requests** in one process. GitHub also documents general account-wide secondary limits (~80 content writes/minute and ~500/hour) and may restrict bursts more severely. Avoid continuous high-volume batches; no failed write is automatically retried.
-- Quickdraw reports whether the API-confirmed opening and closing times satisfy the five-minute candidate window. Read-only status samples PR review and merger identity for a YOLO event candidate.
-- Only one owned, marker-identified private workspace is used; other existing repositories, public projects and third-party accounts are never modified. No forced pushes or deletions.
+CI covers Node.js 22/24 on Linux, macOS and Windows, local Git/mock REST tests, bundled package smoke and live strictly read-only public GitHub integration. No real GitHub private-account write or badge award was verified by this patch. GitHub's award decisions require a controlled, authorized pilot.
 
-**Actual GitHub achievement award validation remains pending.** The connection used to maintain this project cannot create the required disposable private test account or inspect private award state. CI tests simulated GitHub API interactions and read-only integration, not actual badge awards.
-
-[Achievement rules](https://github.com/ibbuilds/gh-aura/blob/main/docs/ACHIEVEMENTS.md) · [Detailed CLI guide](https://github.com/ibbuilds/gh-aura/blob/main/docs/BADGE_RUN.md) · [Release-readiness checklist](https://github.com/ibbuilds/gh-aura/blob/main/docs/RELEASE_READINESS.md)
+[Runner details](https://github.com/ibbuilds/gh-aura/blob/main/docs/BADGE_RUN.md) · [Achievement matrix](https://github.com/ibbuilds/gh-aura/blob/main/docs/ACHIEVEMENTS.md) · [External validation](https://github.com/ibbuilds/gh-aura/blob/main/docs/RELEASE_READINESS.md)

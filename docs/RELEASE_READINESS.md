@@ -1,6 +1,6 @@
 # GH Aura — release readiness and external validation
 
-**Status: v1.12.0, 2026-11-12.** This is an operator checklist, not a declaration of completed production validation. GitHub CI checks syntax, unit tests, package tests, six platform combinations and live **read-only** integration; it does not create or delete private GitHub repositories.
+**Status: v1.13.0, 2026-11-12.** This is an operator checklist, not a declaration of completed production validation. GitHub CI checks syntax, unit tests, package tests, six platform combinations and live **read-only** integration; it does not create or delete private GitHub repositories.
 
 ## 1. Repository governance — account administrator required
 
@@ -24,7 +24,7 @@ Use **a dedicated disposable GitHub test account with its own restricted token**
 5. After running a 2-PR pilot and **manually checking the actual GitHub badges after indexing**, exercise `badges auto next --goal max --output next.json` in read-only mode. Confirm checkpoints 2 → 16 → 128 → 1,024 and reject incomplete PR history, unexpected files, pending branches and review-state ambiguities. Review and separately apply each batch. Stop if the observed badge is absent despite adequate processing time; do **not** mass-produce speculative PRs. Compare observed events to manually visible profile achievements after GitHub processing; no guaranteed award. Apply a second non-overlapping `activity` date plan to the **same** workspace. Verify fast-forward ancestry, retained badge files and one additional push; reject repeated paths and changed remote revisions. Reapply the badge plan: completed exercises should not be duplicated. Confirm public and unmarked repositories refuse modification.
 6. **Only after reviewing all results**, remove disposable repositories manually using the test account. Do not publish sensitive account data or private URLs.
 
-The badge runner spaces individual content-generating writes at least 1.1 seconds apart; GitHub also documents general secondary limits of about 80 content writes per minute and 500 per hour **across the account**. Do not run multiple large batches continuously; secondary controls may be stricter. No automatic retries of failed/unknown write outcomes are permitted.
+The badge runner serializes individual content-generating writes at least 1 second apart and reserves each one in an atomically updated rolling 480/hour local ledger, persisted between CLI invocations for the same authenticated account. GitHub also documents general secondary limits of about 80 content writes per minute and 500 per hour **across the entire account**, including other machines/apps. Verify that exhausted, corrupted, clock-skewed or concurrently locked local ledgers refuse a mutation. Do not run continuous batches or assume GitHub accepts the full local quota; secondary controls may be stricter. No automatic retries of failed/unknown write outcomes are permitted.
 
 Current tests in `tests/calendar.test.mjs` and `tests/badge-run.test.mjs` use a local Git bare repository and simulated GitHub API endpoints. Until real tests are performed with explicit account authorization, remote write results remain **unverified**.
 

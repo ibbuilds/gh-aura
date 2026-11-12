@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.13.0 — 2026-11-12
+
+- Optimized each verified PR batch: cache GitHub's returned squash-merge commit SHA as the next branch base, eliminating **15 default-branch GET requests per uninterrupted 16-PR batch**; reset the cache when previously completed exercises are skipped.
+- Removed fixed post-creation sleeps already covered by GitHub's documented >=1-second separation between mutative requests; set serial default spacing to 1,000 ms.
+- Added `src/badge-write-budget.mjs`: an atomic per-account, locally persisted rolling **480 content-writing operations/hour** reservation ledger with a hashed owner key, permissions restricted where supported, and fail-closed concurrency/corruption/clock checks. It survives CLI restarts and prevents fast consecutive batches on the same machine from blindly exceeding GitHub's general ~500/hour secondary cap.
+- Report local remaining quota and the rolling-window boundary in apply output. Quota reservations persist even for failed/uncertain write operations; the CLI never retries them automatically.
+- Added reproducible offline tests for SHA caching, quota expiry and isolation, concurrent locks, malformed ledgers and early refusal before GitHub mutation.
+- No GitHub private-account writes or actual achievement awards were performed by CI. GitHub's real quotas and private badge rules still require controlled live validation.
+
+
 ## 1.12.0 — 2026-11-12
 
 - Confirmed the known maximum Pull Shark tier at 1,024 merged eligible PRs and single-tier YOLO/Quickdraw criteria against first-party profile fragments; private self-owned attribution remains unverified.

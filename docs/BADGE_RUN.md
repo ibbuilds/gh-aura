@@ -47,7 +47,8 @@ Apply requires a token able to create a private repo if needed, then use Content
 - Checks the default-branch exercise file before opening a PR; already merged exercises are skipped on replay.
 - Creates bounded synthetic exercise PRs, verifies no submitted GitHub reviews and merges only the exact expected head SHA, **if repository protections permit**.
 - Searches issue-history pages before opening Quickdraw's labeled issue; verifies actual creation/closure timestamps where supplied; incomplete evidence fails closed rather than creating duplicates.
-- Paces content writes by at least 1.1 seconds; GitHub also limits content generation across the account to roughly 80 writes/minute and 500/hour, with stricter abuse controls possible. Never force-pushes, edits other repos, deletes a repo or retries uncertain writes automatically.
+- Performs serial mutative requests at least **1 second apart** and reserves them in a locally persisted **480/hour sliding-window ledger per authenticated account** (across repeated CLI processes on one machine). GitHub's own general guidelines are approximately **80 content creations/minute** and **500/hour**, with stricter secondary or account-wide limits possible. Never force-pushes, edits other repos, deletes a repo or retries uncertain writes automatically.
+- Reuses GitHub's confirmed default-branch SHA from one squash merge as the base of the next exercise PR, saving one GET per additional PR. If a completed exercise is skipped, it re-fetches the branch head. Previously redundant fixed sleeps are removed; the one-second mutation spacing remains.
 
 For higher tiers, ask GH Aura to derive the next batch from the actual private workspace rather than manually guessing `--start`:
 
@@ -81,3 +82,11 @@ This **read-only** command checks the exact marked private workspace, paging thr
 - Remote write operations are mocked in CI and must be verified against an **authorized disposable test account** before claiming production success.
 
 [Full mapped catalog](ACHIEVEMENTS.md) · [Privacy and security](../SECURITY.md) · [Validation checklist](RELEASE_READINESS.md)
+
+## Throughput: what can and cannot be made faster
+
+The current REST workflow requires approximately **four GitHub content-changing API requests per PR** (branch ref, file commit, open PR, merge), plus read-only verification. For 1,024 PRs that is roughly **4,096 writes**, excluding workspace setup and Quickdraw. At GitHub's general 500 content-generating writes/hour secondary guideline the optimistic theoretical minimum is about **8.2 hours**; the CLI's locally tracked 480/hour allowance is more conservative. Actual limits may be lower, and **none of the exercise events is guaranteed to earn a badge**.
+
+GH Aura optimizes the unnecessary reads and waits, not the GitHub eligibility requirements. In an uninterrupted 16-PR batch it avoids **15 default-branch GETs** by using the merge SHA just confirmed by GitHub. It does not dispatch parallel mutative calls or game rate limiting, because GitHub explicitly recommends serialized writes with a pause of at least one second.
+
+The local ledger uses a hashed account key at `~/.cache/gh-aura/badge-write-budget/`, without secrets, and survives separate CLI invocations. When its rolling hourly limit is exhausted, the next action refuses **before** sending a new mutation and reports an approximate number of minutes to wait. A failed or uncertain write still reserves a slot. This protects only GH Aura on the **same machine**; account activity elsewhere still counts toward GitHub's actual limits. There are no unattended retries or automatic batch chaining.

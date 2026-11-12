@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.12.0 (maximum-tier staged goals and PR verification); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.13.0 (efficient and rate-bounded achievement workflow); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
@@ -34,7 +34,7 @@ The primary offline reference is a dated structural study of [200 company-associ
 
 ## Operating rules
 
-- Use GitHub's documented REST/GraphQL API, request/byte budgets, conditional ETags and a bounded local public cache. Historical/ambiguous data stays `unknown`; private content never leaks through public reports.
+- Use GitHub's documented REST/GraphQL API, request/byte budgets, conditional ETags, a persisted per-account badge write ledger and a bounded local public cache. Historical/ambiguous data stays `unknown`; private content never leaks through public reports.
 - Favor one straightforward command over another abstraction or mandatory configuration step.
 - Require a source link and honest confidence label for achievement and project evidence; a README heading or CI config is not passing tests.
 - Versioned GitHub releases only after syntax, unit, offline package and live **read-only** integration checks pass on the supported OS/Node matrix.
