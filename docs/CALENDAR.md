@@ -2,7 +2,7 @@
 
 GH Aura can plan **synthetic, explicitly labeled** Git commits for selected UTC dates and upload them into **one user-owned private workspace**. This can affect the contribution graph when GitHub's eligibility rules are satisfied, but does **not** establish real historical professional work and cannot guarantee a particular graph color or total.
 
-There is no separate product called "Calendar Studio". The public CLI commands are `gh-aura activity plan` and `gh-aura activity apply`. The older `gh-aura calendar` alias remains available to avoid breaking existing scripts.
+The public CLI commands are `gh-aura activity plan` and `gh-aura activity apply`. The older `gh-aura calendar` alias remains available to avoid breaking existing scripts.
 
 ## Set up a reusable workspace
 
