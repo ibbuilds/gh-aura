@@ -1,60 +1,46 @@
-# GH Aura v1.6.0
+# GH Aura 1.7.0
 
-**CLI-only, local-first GitHub profile enhancement with user-approved actions.** No paid API, hosted dashboard, mandatory AI provider, telemetry or background activity.
+**Simple, explicit GitHub profile CLI with a 200-account ordinary-visibility engineering reference.** Node.js 22+, no paid API, runtime dependency, hosted dashboard, compulsory AI or background process.
 
 ## Install
 
-Requires Node.js 22+. Download the attached `gh-aura-1.6.0.tgz` and `SHA256SUMS.txt` from this GitHub Release and verify the checksum.
+Download the attached `gh-aura-1.7.0.tgz` and `SHA256SUMS.txt` from this GitHub Release. Verify the checksum, then run:
 
 ```bash
-npm install --global ./gh-aura-1.6.0.tgz
+npm install --global ./gh-aura-1.7.0.tgz
 gh-aura init YOUR_USERNAME
 ```
 
-The package is distributed via GitHub Releases; it is not in the public npm registry.
+The tarball is published through GitHub Releases, not the public npm registry.
 
-## Changes since v1.5.1
+## What's new
 
-**1. Real local Git attribution review**
+- **200 public ordinary-visibility professional profile references.** A dated, manually executed research run examined 1,040 accounts and selected 200 from 35 company organizations. Selection required publicly visible company-organization membership plus matching self-described employer and engineering role, with a 2,000-follower cap to reduce celebrity-heavy sampling. These signals do **not** certify current employment, competence or hiring outcomes.
+- **Bounded, sourced research.** The study used 145 GitHub HTTP requests, kept public links and profile-structure observations rather than copied biographies, and lives outside the installable package. Runtime generation makes **zero research-profile API calls**.
+- **Four simple optional command aliases.** `activity`, `badges`, `readme`, and `pins` preserve every existing advanced command. Their simplified usage is documented and tested.
+- **Updated editorial context.** `brief` uses aggregate presentation patterns from the 200-person sample and a separate 16-person employer-owned author source, without copying profiles or automatically declaring jobs, skills, achievements or historical experience.
 
-```bash
-gh-aura contributions --local .
-gh-aura contributions --local . --emails-file historical-identities.txt
-```
-
-Inspect original local Git author metadata without any GitHub API call, printing private email addresses, modifying commits or claiming this guarantees GitHub contribution graph credit. The scan caps at 5,000 commits and reports shallow history and unknown ownership.
-
-**2. Reviewed documentation PRs**
+## Simple workflow
 
 ```bash
-gh-aura work preview --repo OWNER/PROJECT --path docs/setup.md --file revised.md --save review.json
-gh-aura work apply --review review.json
+gh-aura init YOUR_USERNAME
+gh-aura activity 2022
+gh-aura activity 2020..2024
+gh-aura badges free
+gh-aura readme minimal --output draft.md
+gh-aura pins --goal "backend engineer"
+
+# Publish a profile change only when the complete diff is approved:
+gh-aura preview --file draft.md --save review.json
+gh-aura apply --review review.json --pr
 ```
 
-Use a scoped GitHub token to open an **unmerged PR** with exactly one user-authored Markdown change. Full diff review, current repository visibility/revision, exact content fingerprint and single-file checks are required. Private repos require explicit opt-in. No auto-merge, filler commits, synthetic awards or unreviewed code changes.
+These are shortcuts for existing `contributions`, `achievements`, `profile` and `showcase`. They do not add extra API requests, create automatic contributions or award badges. GitHub controls its contribution calendar, achievements and pinned repository UI.
 
-**3. Source-linked CI and release context**
+## Verified behavior
 
-```bash
-gh-aura audit --deep 2 --checks --stats
-```
+The release is gated on syntax checks, offline tests, package installation, and live read-only GitHub integration across Node.js 22/24 and Linux/macOS/Windows. No person's GitHub profile or contribution history is modified during tests.
 
-Optional extra GitHub API requests show the latest observed Actions run and release for selected projects, with source links. A previous successful run does **not** prove the current code works. Without `--checks`, the normal bounded tree inspection remains unchanged.
+The research sample is **not** an interview experiment. It is a transparent presentation study, and source membership/company fields can be outdated. The owner selected this approach in preference to a human hiring-manager study; GH Aura does not claim recruitment outcome improvements.
 
-**4. Simple project-story commands**
-
-```bash
-gh-aura story set YOUR_USERNAME/project --contribution "Built the API authentication flow" --proof https://github.com/YOUR_USERNAME/project
-gh-aura story list
-gh-aura story remove YOUR_USERNAME/project --dry-run
-```
-
-Project summaries and personal claims stay in local configuration until the owner explicitly previews and publishes their profile README. No external requests or new runtime dependencies.
-
-## Validation and limits
-
-Tests cover Linux, macOS and Windows with Node 22 and 24, packed installation, mocked publish conflict/replay/privacy cases and real **read-only** GitHub integration. The new human-review study protocol is documented in [docs/HUMAN_VALIDATION.md](https://github.com/ibbuilds/gh-aura/blob/main/docs/HUMAN_VALIDATION.md); it **does not** claim to contain results from real hiring managers yet.
-
-GitHub alone grants achievements, decides contribution graph eligibility and controls profile pins. GH Aura does not create historical fake activity, guarantee awards or alter any user's profile without explicit reviewed authorization.
-
-Source: [README](https://github.com/ibbuilds/gh-aura/blob/main/README.md) · [Changelog](https://github.com/ibbuilds/gh-aura/blob/main/CHANGELOG.md).
+[Primary study method](https://github.com/ibbuilds/gh-aura/blob/main/research/ORDINARY_STUDY.md) · [Security](https://github.com/ibbuilds/gh-aura/blob/main/SECURITY.md) · [CLI reference](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md)

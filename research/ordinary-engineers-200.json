@@ -1,0 +1,5251 @@
+{
+  "schema": "gh-aura-ordinary-visibility-engineers-200-v1",
+  "observedAt": "2026-11-12T05:56:50.023Z",
+  "selection": "Public company-org member + self-listed matching employer and engineering role. Max 15/company; <=2000 followers; target 200. Follower cap is a sample choice, not an engineering ability signal.",
+  "employmentStatus": "UNVERIFIED. Dual signals do not certify current employment or seniority.",
+  "caveats": [
+    "Public org members may be external collaborators or contractors.",
+    "Company and role are self-reported and may be stale; keyword filtering is imperfect.",
+    "Members with hidden memberships or sparse bios are excluded.",
+    "No payroll, hiring outcomes, performance or individual competence verified.",
+    "Follower cap excludes high-visibility accounts but does not verify employment or seniority.",
+    "Only root HEAD:README.md inspected; no biography, README prose, emails or images retained."
+  ],
+  "organizations": [
+    {
+      "org": "github",
+      "company": "GitHub"
+    },
+    {
+      "org": "microsoft",
+      "company": "Microsoft"
+    },
+    {
+      "org": "google",
+      "company": "Google"
+    },
+    {
+      "org": "shopify",
+      "company": "Shopify"
+    },
+    {
+      "org": "cloudflare",
+      "company": "Cloudflare"
+    },
+    {
+      "org": "vercel",
+      "company": "Vercel"
+    },
+    {
+      "org": "stripe",
+      "company": "Stripe"
+    },
+    {
+      "org": "gitlabhq",
+      "company": "GitLab"
+    },
+    {
+      "org": "elastic",
+      "company": "Elastic"
+    },
+    {
+      "org": "hashicorp",
+      "company": "HashiCorp"
+    },
+    {
+      "org": "Netflix",
+      "company": "Netflix"
+    },
+    {
+      "org": "DataDog",
+      "company": "Datadog"
+    },
+    {
+      "org": "redhat",
+      "company": "Red Hat"
+    },
+    {
+      "org": "mozilla",
+      "company": "Mozilla"
+    },
+    {
+      "org": "docker",
+      "company": "Docker"
+    },
+    {
+      "org": "grafana",
+      "company": "Grafana"
+    },
+    {
+      "org": "sentry",
+      "company": "Sentry"
+    },
+    {
+      "org": "digitalocean",
+      "company": "DigitalOcean"
+    },
+    {
+      "org": "uber",
+      "company": "Uber"
+    },
+    {
+      "org": "airbnb",
+      "company": "Airbnb"
+    },
+    {
+      "org": "supabase",
+      "company": "Supabase"
+    },
+    {
+      "org": "facebook",
+      "company": "Meta"
+    },
+    {
+      "org": "aws",
+      "company": "Amazon"
+    },
+    {
+      "org": "nvidia",
+      "company": "NVIDIA"
+    },
+    {
+      "org": "atlassian",
+      "company": "Atlassian"
+    },
+    {
+      "org": "JetBrains",
+      "company": "JetBrains"
+    },
+    {
+      "org": "databricks",
+      "company": "Databricks"
+    },
+    {
+      "org": "tailscale",
+      "company": "Tailscale"
+    },
+    {
+      "org": "mongodb",
+      "company": "MongoDB"
+    },
+    {
+      "org": "twilio",
+      "company": "Twilio"
+    },
+    {
+      "org": "postmanlabs",
+      "company": "Postman"
+    },
+    {
+      "org": "dropbox",
+      "company": "Dropbox"
+    },
+    {
+      "org": "salesforce",
+      "company": "Salesforce"
+    },
+    {
+      "org": "netlify",
+      "company": "Netlify"
+    },
+    {
+      "org": "canonical",
+      "company": "Canonical"
+    },
+    {
+      "org": "sourcegraph",
+      "company": "Sourcegraph"
+    },
+    {
+      "org": "cockroachdb",
+      "company": "Cockroach Labs"
+    },
+    {
+      "org": "gitpod-io",
+      "company": "Gitpod"
+    },
+    {
+      "org": "gradle",
+      "company": "Gradle"
+    },
+    {
+      "org": "prisma",
+      "company": "Prisma"
+    },
+    {
+      "org": "open-telemetry",
+      "company": "OpenTelemetry"
+    }
+  ],
+  "candidates": 2094,
+  "examined": 1040,
+  "qualified": 205,
+  "selected": 200,
+  "requests": 145,
+  "excludedHighVisibility": 2,
+  "companyCounts": {
+    "Shopify": 7,
+    "Netflix": 9,
+    "Datadog": 6,
+    "Uber": 11,
+    "Atlassian": 8,
+    "Salesforce": 5,
+    "Canonical": 9,
+    "Grafana": 15,
+    "DigitalOcean": 5,
+    "MongoDB": 7,
+    "Vercel": 9,
+    "Stripe": 4,
+    "Supabase": 5,
+    "NVIDIA": 6,
+    "JetBrains": 6,
+    "Databricks": 4,
+    "Postman": 11,
+    "Gitpod": 1,
+    "Gradle": 6,
+    "GitHub": 2,
+    "Google": 9,
+    "Docker": 4,
+    "Dropbox": 1,
+    "Microsoft": 7,
+    "Elastic": 4,
+    "Twilio": 2,
+    "Airbnb": 1,
+    "Netlify": 1,
+    "HashiCorp": 14,
+    "GitLab": 1,
+    "Amazon": 4,
+    "Sourcegraph": 1,
+    "Tailscale": 5,
+    "Mozilla": 5,
+    "Cloudflare": 5
+  },
+  "errors": [],
+  "summary": {
+    "bioPresent": 200,
+    "websitePresent": 120,
+    "withPins": 157,
+    "medianPins": 4,
+    "rootReadmes": 69,
+    "medianReadmeWords": 54,
+    "readmesWithoutImages": 33,
+    "readmesWithLinks": 57,
+    "readmesWithStatWidgets": 7
+  },
+  "records": [
+    {
+      "login": "aaronccasanova",
+      "profile": "https://github.com/aaronccasanova",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/aaronccasanova",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 27,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "alessbell",
+      "profile": "https://github.com/alessbell",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/alessbell",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 30,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "words": 0,
+          "headings": 0,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "0intro",
+      "profile": "https://github.com/0intro",
+      "org": "DataDog",
+      "company": "Datadog",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/DataDog/people",
+        "publicProfile": "https://github.com/0intro",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 10,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "aetheryx",
+      "profile": "https://github.com/aetheryx",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/aetheryx",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 24,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "0x6368656174",
+      "profile": "https://github.com/0x6368656174",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/0x6368656174",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 98,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "AbhJ",
+      "profile": "https://github.com/AbhJ",
+      "org": "salesforce",
+      "company": "Salesforce",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/salesforce/people",
+        "publicProfile": "https://github.com/AbhJ",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 36,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "5dc119a4aad8e82f8b6e64753e853cd3b663c78f0649d86fed1baa8c683417da",
+          "words": 126,
+          "headings": 4,
+          "images": 11,
+          "links": 20,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "adisazhar123",
+      "profile": "https://github.com/adisazhar123",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/adisazhar123",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 39,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "abecevello",
+      "profile": "https://github.com/abecevello",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/abecevello",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 65,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "anaivanov",
+      "profile": "https://github.com/anaivanov",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/anaivanov",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 26,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "arkahood",
+      "profile": "https://github.com/arkahood",
+      "org": "digitalocean",
+      "company": "DigitalOcean",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/digitalocean/people",
+        "publicProfile": "https://github.com/arkahood",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 69,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "7ee092ee6a0b136d9e5cdfba1fd9d96a401d4c9f8d9744d5e409d9c0de99553e",
+          "words": 26,
+          "headings": 2,
+          "images": 1,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "akshatnitd",
+      "profile": "https://github.com/akshatnitd",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/akshatnitd",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 122,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "aelse",
+      "profile": "https://github.com/aelse",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/aelse",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 152,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "ajdavis",
+      "profile": "https://github.com/ajdavis",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/ajdavis",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 106,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "afiffahreza",
+      "profile": "https://github.com/afiffahreza",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/afiffahreza",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 23,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "observed",
+          "sha256": "184e307e7bcbcedca9d61f7b20cf4650acfb7358763f865e324546a9e0617797",
+          "words": 27,
+          "headings": 1,
+          "images": 2,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "anatrajkovska",
+      "profile": "https://github.com/anatrajkovska",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/anatrajkovska",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 16,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "benemdon-stripe",
+      "profile": "https://github.com/benemdon-stripe",
+      "org": "stripe",
+      "company": "Stripe",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/stripe/people",
+        "publicProfile": "https://github.com/benemdon-stripe",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 49,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "bab03efe8e7c0f457a01b104c0d4d348fcadc45cfc44700224864c709095f20f",
+          "words": 17,
+          "headings": 0,
+          "images": 1,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "bohkoval",
+      "profile": "https://github.com/bohkoval",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/bohkoval",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 90,
+        "website": true,
+        "pins": 1,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Aaron-9900",
+      "profile": "https://github.com/Aaron-9900",
+      "org": "DataDog",
+      "company": "Datadog",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/DataDog/people",
+        "publicProfile": "https://github.com/Aaron-9900",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 26,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "words": 0,
+          "headings": 0,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "alloydwhitlock",
+      "profile": "https://github.com/alloydwhitlock",
+      "org": "supabase",
+      "company": "Supabase",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/supabase/people",
+        "publicProfile": "https://github.com/alloydwhitlock",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 77,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "5d3bf08d5db1b4a1d5f321994712755dddfc864495b564b2db549cded43d1ad2",
+          "words": 398,
+          "headings": 6,
+          "images": 0,
+          "links": 5,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "aahouzi",
+      "profile": "https://github.com/aahouzi",
+      "org": "nvidia",
+      "company": "NVIDIA",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/nvidia/people",
+        "publicProfile": "https://github.com/aahouzi",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 31,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "67c6b7bde3aec2f8fe3088f75eeaddbecb6edff65697001aec10e894f40493b4",
+          "words": 41,
+          "headings": 0,
+          "images": 3,
+          "links": 1,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "adam-enko",
+      "profile": "https://github.com/adam-enko",
+      "org": "JetBrains",
+      "company": "JetBrains",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/JetBrains/people",
+        "publicProfile": "https://github.com/adam-enko",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 37,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "alex-khakhlyuk",
+      "profile": "https://github.com/alex-khakhlyuk",
+      "org": "databricks",
+      "company": "Databricks",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/databricks/people",
+        "publicProfile": "https://github.com/alex-khakhlyuk",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 31,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "appurva21",
+      "profile": "https://github.com/appurva21",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/appurva21",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 21,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "alesancor1",
+      "profile": "https://github.com/alesancor1",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/alesancor1",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": false,
+        "pins": 5,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "easyCZ",
+      "profile": "https://github.com/easyCZ",
+      "org": "gitpod-io",
+      "company": "Gitpod",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gitpod-io/people",
+        "publicProfile": "https://github.com/easyCZ",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 51,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "abstratt",
+      "profile": "https://github.com/abstratt",
+      "org": "gradle",
+      "company": "Gradle",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gradle/people",
+        "publicProfile": "https://github.com/abstratt",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 18,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "abraham",
+      "profile": "https://github.com/abraham",
+      "org": "github",
+      "company": "GitHub",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/github/people",
+        "publicProfile": "https://github.com/abraham",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 57,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "7c34e6d5c0b82054213650082dbde95a301b6634b96d8aebc6e061163511d3fb",
+          "words": 185,
+          "headings": 1,
+          "images": 35,
+          "links": 50,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "aaronj1335",
+      "profile": "https://github.com/aaronj1335",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/aaronj1335",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 66,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "achntrl",
+      "profile": "https://github.com/achntrl",
+      "org": "DataDog",
+      "company": "Datadog",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/DataDog/people",
+        "publicProfile": "https://github.com/achntrl",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 34,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "66f7f718fb5e64ec25f0abc2b03a5b136b45ef4a26b8de284bbace2d9a92453e",
+          "words": 11,
+          "headings": 2,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "Benehiko",
+      "profile": "https://github.com/Benehiko",
+      "org": "docker",
+      "company": "Docker",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/docker/people",
+        "publicProfile": "https://github.com/Benehiko",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 51,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "observed",
+          "sha256": "aa7050eb9c3a85a33f0179f20c5146095d1cacf73ec58706339b1ab0f537010f",
+          "words": 26,
+          "headings": 1,
+          "images": 1,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "axelavargas",
+      "profile": "https://github.com/axelavargas",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/axelavargas",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "7e7e9cfccfdc11abd5f85b19de55fce7e207c9252ac0bc868b59ee0c8b4ddc6a",
+          "words": 254,
+          "headings": 0,
+          "images": 0,
+          "links": 14,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "ATechAdventurer",
+      "profile": "https://github.com/ATechAdventurer",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/ATechAdventurer",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 154,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "7a4b7c75c59c53dac3d4b1880f5335d1863c98730b0470cbcd95884c402bf5c7",
+          "words": 79,
+          "headings": 1,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "fuhry",
+      "profile": "https://github.com/fuhry",
+      "org": "dropbox",
+      "company": "Dropbox",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/dropbox/people",
+        "publicProfile": "https://github.com/fuhry",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 96,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "247arjun",
+      "profile": "https://github.com/247arjun",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/247arjun",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 43,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "observed",
+          "sha256": "7ffb025d7590896a63f72445aa33d33cfea396bbf1cb670ff20128908010e2f3",
+          "words": 327,
+          "headings": 3,
+          "images": 0,
+          "links": 17,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "benjamincanac",
+      "profile": "https://github.com/benjamincanac",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/benjamincanac",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 75,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "1891c231018b2c7f5c7abb42c75776db2c714e4811241fb8bc40e6d4e666272b",
+          "words": 40,
+          "headings": 1,
+          "images": 1,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "amirpouya",
+      "profile": "https://github.com/amirpouya",
+      "org": "elastic",
+      "company": "Elastic",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/elastic/people",
+        "publicProfile": "https://github.com/amirpouya",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 50,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "agulen",
+      "profile": "https://github.com/agulen",
+      "org": "DataDog",
+      "company": "Datadog",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/DataDog/people",
+        "publicProfile": "https://github.com/agulen",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 29,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "amdziuk",
+      "profile": "https://github.com/amdziuk",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/amdziuk",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 23,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "awprice",
+      "profile": "https://github.com/awprice",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/awprice",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 44,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "67cbb748918b5d9fb977b312683b3c341f0a64bf2cf815c07a6996fac579e21a",
+          "words": 0,
+          "headings": 0,
+          "images": 1,
+          "links": 1,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "behackett",
+      "profile": "https://github.com/behackett",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/behackett",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 46,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "droidpl-stripe",
+      "profile": "https://github.com/droidpl-stripe",
+      "org": "stripe",
+      "company": "Stripe",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/stripe/people",
+        "publicProfile": "https://github.com/droidpl-stripe",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 53,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jadametz",
+      "profile": "https://github.com/jadametz",
+      "org": "twilio",
+      "company": "Twilio",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/twilio/people",
+        "publicProfile": "https://github.com/jadametz",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 18,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "c15ca0f8e423d546cfd1ff9ca611902f8068f04d5ffc89e491083f4b88aa07d9",
+          "words": 73,
+          "headings": 1,
+          "images": 0,
+          "links": 4,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "alexandercbooth",
+      "profile": "https://github.com/alexandercbooth",
+      "org": "github",
+      "company": "GitHub",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/github/people",
+        "publicProfile": "https://github.com/alexandercbooth",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 40,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "333fred",
+      "profile": "https://github.com/333fred",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/333fred",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 88,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "DanielThomas",
+      "profile": "https://github.com/DanielThomas",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/DanielThomas",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 48,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "bw-dani",
+      "profile": "https://github.com/bw-dani",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/bw-dani",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 18,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "joherpec",
+      "profile": "https://github.com/joherpec",
+      "org": "airbnb",
+      "company": "Airbnb",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/airbnb/people",
+        "publicProfile": "https://github.com/joherpec",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 66,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "codenirvana",
+      "profile": "https://github.com/codenirvana",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/codenirvana",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 27,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "serhalp",
+      "profile": "https://github.com/serhalp",
+      "org": "netlify",
+      "company": "Netlify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/netlify/people",
+        "publicProfile": "https://github.com/serhalp",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 103,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "austinvalle",
+      "profile": "https://github.com/austinvalle",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/austinvalle",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 44,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "e9bef90301a60491c034ba422829f551f6bd979d451749b40b8f36a492d944f0",
+          "words": 3,
+          "headings": 1,
+          "images": 1,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "ccfelius",
+      "profile": "https://github.com/ccfelius",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/ccfelius",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "observed",
+          "sha256": "390e3f811b25e959f7fb383c31d7b5fabd45b260a6bd8873c37b7c36d0f16968",
+          "words": 80,
+          "headings": 0,
+          "images": 0,
+          "links": 5,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "dshukertjr",
+      "profile": "https://github.com/dshukertjr",
+      "org": "supabase",
+      "company": "Supabase",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/supabase/people",
+        "publicProfile": "https://github.com/dshukertjr",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 90,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "championballer",
+      "profile": "https://github.com/championballer",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/championballer",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 37,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Preskton",
+      "profile": "https://github.com/Preskton",
+      "org": "twilio",
+      "company": "Twilio",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/twilio/people",
+        "publicProfile": "https://github.com/Preskton",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 110,
+        "website": true,
+        "pins": 1,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "rymai",
+      "profile": "https://github.com/rymai",
+      "org": "gitlabhq",
+      "company": "GitLab",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gitlabhq/people",
+        "publicProfile": "https://github.com/rymai",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 44,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Balaji2198",
+      "profile": "https://github.com/Balaji2198",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/Balaji2198",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 51,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "cinaglia",
+      "profile": "https://github.com/cinaglia",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/cinaglia",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 36,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "HyukjinKwon",
+      "profile": "https://github.com/HyukjinKwon",
+      "org": "databricks",
+      "company": "Databricks",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/databricks/people",
+        "publicProfile": "https://github.com/HyukjinKwon",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 157,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "demianbrecht",
+      "profile": "https://github.com/demianbrecht",
+      "org": "salesforce",
+      "company": "Salesforce",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/salesforce/people",
+        "publicProfile": "https://github.com/demianbrecht",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 134,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "alexcwatt",
+      "profile": "https://github.com/alexcwatt",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/alexcwatt",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 30,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "2427b1bf4928241968d16d241213d37ae7ca9b2f7e93da4ca53a26fd6625703e",
+          "words": 55,
+          "headings": 1,
+          "images": 0,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "andrewhong04",
+      "profile": "https://github.com/andrewhong04",
+      "org": "aws",
+      "company": "Amazon",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/aws/people",
+        "publicProfile": "https://github.com/andrewhong04",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 44,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "afender",
+      "profile": "https://github.com/afender",
+      "org": "nvidia",
+      "company": "NVIDIA",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/nvidia/people",
+        "publicProfile": "https://github.com/afender",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 23,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "63d7f5682b34249ffca6240f17b2ac9219d4732933694206d6cd6113af1db42d",
+          "words": 61,
+          "headings": 1,
+          "images": 0,
+          "links": 1,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "arif-ali",
+      "profile": "https://github.com/arif-ali",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/arif-ali",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 30,
+        "website": true,
+        "pins": 5,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "9f9b33519b3cfd189126569077aa160ff6cbc029db39a53fb4c1c9f9a66c917e",
+          "words": 8,
+          "headings": 1,
+          "images": 2,
+          "links": 2,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "michaellzc",
+      "profile": "https://github.com/michaellzc",
+      "org": "sourcegraph",
+      "company": "Sourcegraph",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/sourcegraph/people",
+        "publicProfile": "https://github.com/michaellzc",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 27,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "ali-a-a",
+      "profile": "https://github.com/ali-a-a",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/ali-a-a",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 71,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "words": 0,
+          "headings": 0,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "ibdafna",
+      "profile": "https://github.com/ibdafna",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/ibdafna",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 27,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "gabolaev",
+      "profile": "https://github.com/gabolaev",
+      "org": "docker",
+      "company": "Docker",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/docker/people",
+        "publicProfile": "https://github.com/gabolaev",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 29,
+        "website": false,
+        "pins": 5,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "ferhatelmas",
+      "profile": "https://github.com/ferhatelmas",
+      "org": "supabase",
+      "company": "Supabase",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/supabase/people",
+        "publicProfile": "https://github.com/ferhatelmas",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 118,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "6be4142df930fb010b2440c6705889625ca7afaac4f7f724c06d618bcb3218e9",
+          "words": 69,
+          "headings": 1,
+          "images": 0,
+          "links": 7,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "cjoy",
+      "profile": "https://github.com/cjoy",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/cjoy",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 31,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "danni-popova",
+      "profile": "https://github.com/danni-popova",
+      "org": "tailscale",
+      "company": "Tailscale",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/tailscale/people",
+        "publicProfile": "https://github.com/danni-popova",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jazzyarchitects",
+      "profile": "https://github.com/jazzyarchitects",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/jazzyarchitects",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 83,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "d38209b6706a6ba9df387ec82f18ae7d039bb8add31bc2db0d5a3145d69cd625",
+          "words": 79,
+          "headings": 3,
+          "images": 17,
+          "links": 12,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "dieDeMiguel",
+      "profile": "https://github.com/dieDeMiguel",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/dieDeMiguel",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 99,
+        "website": true,
+        "pins": 5,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "fd44498130ae70ad12eac076cf4f5518478f7e18fee1ac0e572104b675fd6837",
+          "words": 322,
+          "headings": 3,
+          "images": 0,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "breathingdust",
+      "profile": "https://github.com/breathingdust",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/breathingdust",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 55,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jasonk000",
+      "profile": "https://github.com/jasonk000",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/jasonk000",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 30,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "andrew--r",
+      "profile": "https://github.com/andrew--r",
+      "org": "DataDog",
+      "company": "Datadog",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/DataDog/people",
+        "publicProfile": "https://github.com/andrew--r",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 96,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "bgrins",
+      "profile": "https://github.com/bgrins",
+      "org": "mozilla",
+      "company": "Mozilla",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mozilla/people",
+        "publicProfile": "https://github.com/bgrins",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 32,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "dgowrie",
+      "profile": "https://github.com/dgowrie",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/dgowrie",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 158,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "kamalaknn",
+      "profile": "https://github.com/kamalaknn",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/kamalaknn",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 24,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "beliaev-maksim",
+      "profile": "https://github.com/beliaev-maksim",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/beliaev-maksim",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 44,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "aghassemlouei",
+      "profile": "https://github.com/aghassemlouei",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/aghassemlouei",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 27,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "dgzlopes",
+      "profile": "https://github.com/dgzlopes",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/dgzlopes",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 37,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "0e3c994ecafc337187d2304b43fd56b6e5b1b4f3b378f6d8c03d1eb405fc3038",
+          "words": 4,
+          "headings": 1,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "paraskevasleivadaros",
+      "profile": "https://github.com/paraskevasleivadaros",
+      "org": "digitalocean",
+      "company": "DigitalOcean",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/digitalocean/people",
+        "publicProfile": "https://github.com/paraskevasleivadaros",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 94,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "0d971da1543e01430b6c8e3efb613c1f3a0848208f4909e4ccdcaaf024720b98",
+          "words": 117,
+          "headings": 4,
+          "images": 9,
+          "links": 20,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "damboscolo",
+      "profile": "https://github.com/damboscolo",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/damboscolo",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 24,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "words": 0,
+          "headings": 0,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "AndreyAkinshin",
+      "profile": "https://github.com/AndreyAkinshin",
+      "org": "JetBrains",
+      "company": "JetBrains",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/JetBrains/people",
+        "publicProfile": "https://github.com/AndreyAkinshin",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 8,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "eperret",
+      "profile": "https://github.com/eperret",
+      "org": "salesforce",
+      "company": "Salesforce",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/salesforce/people",
+        "publicProfile": "https://github.com/eperret",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 73,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "ahalhalli",
+      "profile": "https://github.com/ahalhalli",
+      "org": "nvidia",
+      "company": "NVIDIA",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/nvidia/people",
+        "publicProfile": "https://github.com/ahalhalli",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 27,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Erisa",
+      "profile": "https://github.com/Erisa",
+      "org": "tailscale",
+      "company": "Tailscale",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/tailscale/people",
+        "publicProfile": "https://github.com/Erisa",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 82,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "BloodStainedCrow",
+      "profile": "https://github.com/BloodStainedCrow",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/BloodStainedCrow",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 28,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "emeraldsanto",
+      "profile": "https://github.com/emeraldsanto",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/emeraldsanto",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 50,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "rwh-stripe",
+      "profile": "https://github.com/rwh-stripe",
+      "org": "stripe",
+      "company": "Stripe",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/stripe/people",
+        "publicProfile": "https://github.com/rwh-stripe",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 45,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "chrisarcand",
+      "profile": "https://github.com/chrisarcand",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/chrisarcand",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 53,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "karkum",
+      "profile": "https://github.com/karkum",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/karkum",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "rayandas",
+      "profile": "https://github.com/rayandas",
+      "org": "digitalocean",
+      "company": "DigitalOcean",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/digitalocean/people",
+        "publicProfile": "https://github.com/rayandas",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 86,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "observed",
+          "sha256": "28efbfba3a9cc88df2ca3a48c38a9d2615c0b52187821098bc4eed835709b194",
+          "words": 109,
+          "headings": 2,
+          "images": 12,
+          "links": 14,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "aakchaudhary",
+      "profile": "https://github.com/aakchaudhary",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/aakchaudhary",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 21,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "aishukamal",
+      "profile": "https://github.com/aishukamal",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/aishukamal",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "timothyg-stripe",
+      "profile": "https://github.com/timothyg-stripe",
+      "org": "stripe",
+      "company": "Stripe",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/stripe/people",
+        "publicProfile": "https://github.com/timothyg-stripe",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 64,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "guicaulada",
+      "profile": "https://github.com/guicaulada",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/guicaulada",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 17,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "observed",
+          "sha256": "05e4b9e27e2f013e38dd2a32b29db65f6fc6f460f5d03d045444dd3fa1244519",
+          "words": 121,
+          "headings": 5,
+          "images": 6,
+          "links": 6,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "FlorentCollin",
+      "profile": "https://github.com/FlorentCollin",
+      "org": "cloudflare",
+      "company": "Cloudflare",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/cloudflare/people",
+        "publicProfile": "https://github.com/FlorentCollin",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 37,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "4542037c2d9013b30a7f260085683ce55401dce86b534ec98422fc2b5cdef7fb",
+          "words": 12,
+          "headings": 0,
+          "images": 0,
+          "links": 1,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "CarlesCG",
+      "profile": "https://github.com/CarlesCG",
+      "org": "elastic",
+      "company": "Elastic",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/elastic/people",
+        "publicProfile": "https://github.com/CarlesCG",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 45,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "davidgcs",
+      "profile": "https://github.com/davidgcs",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/davidgcs",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 18,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "232a3cab8b4324a5438971ff814e5f00fa59f570f29af72474dac5385c18e909",
+          "words": 505,
+          "headings": 12,
+          "images": 18,
+          "links": 25,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "cgsheeh",
+      "profile": "https://github.com/cgsheeh",
+      "org": "mozilla",
+      "company": "Mozilla",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mozilla/people",
+        "publicProfile": "https://github.com/cgsheeh",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 30,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "hairyhenderson",
+      "profile": "https://github.com/hairyhenderson",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/hairyhenderson",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 99,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "e9b3ca17c067e457b9f1fad24b1a57918bbe2a53a7470c649b506a16070bf825",
+          "words": 4,
+          "headings": 1,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "ajschmidt8",
+      "profile": "https://github.com/ajschmidt8",
+      "org": "nvidia",
+      "company": "NVIDIA",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/nvidia/people",
+        "publicProfile": "https://github.com/ajschmidt8",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 26,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jeroenvervaeke",
+      "profile": "https://github.com/jeroenvervaeke",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/jeroenvervaeke",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 45,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "1ce1e1c14bcd90f78cd2419dc4514e76e5dd2c93d6f26d3d82f7e246c603c93b",
+          "words": 192,
+          "headings": 4,
+          "images": 0,
+          "links": 16,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "rishavbharti",
+      "profile": "https://github.com/rishavbharti",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/rishavbharti",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 50,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "3f36c4bd4e9ae75dc8d536469f2b02ed40a18b0732390fc5c9968d5ffda3c103",
+          "words": 205,
+          "headings": 4,
+          "images": 1,
+          "links": 11,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "alastair-breeze",
+      "profile": "https://github.com/alastair-breeze",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/alastair-breeze",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 34,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "dbanck",
+      "profile": "https://github.com/dbanck",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/dbanck",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 28,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "choller",
+      "profile": "https://github.com/choller",
+      "org": "mozilla",
+      "company": "Mozilla",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mozilla/people",
+        "publicProfile": "https://github.com/choller",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 39,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "itsgareth",
+      "profile": "https://github.com/itsgareth",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/itsgareth",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "sreeram-venkitesh",
+      "profile": "https://github.com/sreeram-venkitesh",
+      "org": "digitalocean",
+      "company": "DigitalOcean",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/digitalocean/people",
+        "publicProfile": "https://github.com/sreeram-venkitesh",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 103,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "7d38c7d10e9d344d20429397a2fee8ae130da539f706a70e762ce7f12e7e39ed",
+          "words": 254,
+          "headings": 0,
+          "images": 8,
+          "links": 13,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "fabianotessarolo",
+      "profile": "https://github.com/fabianotessarolo",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/fabianotessarolo",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 156,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "pkosiec",
+      "profile": "https://github.com/pkosiec",
+      "org": "databricks",
+      "company": "Databricks",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/databricks/people",
+        "publicProfile": "https://github.com/pkosiec",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 66,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "f72013f8d46b7ae323eddd6dfdf6737224b6cc89e0e58e4485b118772b7f832e",
+          "words": 49,
+          "headings": 1,
+          "images": 1,
+          "links": 1,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "shamasis",
+      "profile": "https://github.com/shamasis",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/shamasis",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 140,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "LaurentGoderre",
+      "profile": "https://github.com/LaurentGoderre",
+      "org": "docker",
+      "company": "Docker",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/docker/people",
+        "publicProfile": "https://github.com/LaurentGoderre",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 78,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "eb9ce37f9edc685baa84ee818577c727c5b0eecafb01fadd9446c2a0a2b926bf",
+          "words": 0,
+          "headings": 0,
+          "images": 2,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "jaydeluca",
+      "profile": "https://github.com/jaydeluca",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/jaydeluca",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 121,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "kallebysantos",
+      "profile": "https://github.com/kallebysantos",
+      "org": "supabase",
+      "company": "Supabase",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/supabase/people",
+        "publicProfile": "https://github.com/kallebysantos",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 31,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Lykathia",
+      "profile": "https://github.com/Lykathia",
+      "org": "tailscale",
+      "company": "Tailscale",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/tailscale/people",
+        "publicProfile": "https://github.com/Lykathia",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 82,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "1866689942e7175d6015dcbdffae49caa738a4ff700b902d05ef215c5af9446e",
+          "words": 42,
+          "headings": 1,
+          "images": 4,
+          "links": 4,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "davinkevin",
+      "profile": "https://github.com/davinkevin",
+      "org": "gradle",
+      "company": "Gradle",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gradle/people",
+        "publicProfile": "https://github.com/davinkevin",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 88,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "AArnott",
+      "profile": "https://github.com/AArnott",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/AArnott",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 158,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "gautambaghel",
+      "profile": "https://github.com/gautambaghel",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/gautambaghel",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 72,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Johngeorgesample",
+      "profile": "https://github.com/Johngeorgesample",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/Johngeorgesample",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 62,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "fd32ad21766e436792210ddb74edef7f66b1d84fb32526d530fbae800a30035a",
+          "words": 38,
+          "headings": 0,
+          "images": 0,
+          "links": 5,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "vasilyprokopov",
+      "profile": "https://github.com/vasilyprokopov",
+      "org": "digitalocean",
+      "company": "DigitalOcean",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/digitalocean/people",
+        "publicProfile": "https://github.com/vasilyprokopov",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 64,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "gtdeng",
+      "profile": "https://github.com/gtdeng",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/gtdeng",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 19,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "avan1235",
+      "profile": "https://github.com/avan1235",
+      "org": "JetBrains",
+      "company": "JetBrains",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/JetBrains/people",
+        "publicProfile": "https://github.com/avan1235",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 30,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "shreys7",
+      "profile": "https://github.com/shreys7",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/shreys7",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 63,
+        "website": false,
+        "pins": 1,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "midhun1998",
+      "profile": "https://github.com/midhun1998",
+      "org": "salesforce",
+      "company": "Salesforce",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/salesforce/people",
+        "publicProfile": "https://github.com/midhun1998",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 30,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "ff1e08854b55482eabc69f9a9c335bb32ad5eb3ce131a056541e2e5332e7dc68",
+          "words": 97,
+          "headings": 1,
+          "images": 7,
+          "links": 4,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "Arinzeokeke",
+      "profile": "https://github.com/Arinzeokeke",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/Arinzeokeke",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 62,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "healeycodes",
+      "profile": "https://github.com/healeycodes",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/healeycodes",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 25,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "bfba10b9462510581e2289fac2766ac16e4a4aad8cc19bc1fbbbf2c9473fa0e1",
+          "words": 21,
+          "headings": 0,
+          "images": 0,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "ChrsMark",
+      "profile": "https://github.com/ChrsMark",
+      "org": "elastic",
+      "company": "Elastic",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/elastic/people",
+        "publicProfile": "https://github.com/ChrsMark",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 77,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "gabrieldluca",
+      "profile": "https://github.com/gabrieldluca",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/gabrieldluca",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 57,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "aa9ae0184211e1149d6ad2931a6a5f765b687a6132f3cd9045c0ea6a326f26d0",
+          "words": 1,
+          "headings": 0,
+          "images": 1,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "kmorkos",
+      "profile": "https://github.com/kmorkos",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/kmorkos",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 24,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "viveknigam3003",
+      "profile": "https://github.com/viveknigam3003",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/viveknigam3003",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 81,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "465f01ecc741f148051acb60d2db4d451445a9afca54a4b8b291a99c0a2fc39f",
+          "words": 230,
+          "headings": 4,
+          "images": 1,
+          "links": 9,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "HugoRCD",
+      "profile": "https://github.com/HugoRCD",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/HugoRCD",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 49,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "8e2f4000d504362e8a4c74efcaa032e2c4006daa4dec5b1ae8e93df04ff82fcc",
+          "words": 13,
+          "headings": 0,
+          "images": 5,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "maxcleme",
+      "profile": "https://github.com/maxcleme",
+      "org": "docker",
+      "company": "Docker",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/docker/people",
+        "publicProfile": "https://github.com/maxcleme",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 109,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "eb806b49e77f901d2f10c54d727cf82d8227408a248d2d29141ffbb43cbe5a1b",
+          "words": 159,
+          "headings": 3,
+          "images": 0,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "guichristovao",
+      "profile": "https://github.com/guichristovao",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/guichristovao",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 16,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "86599fe2c8969a89ee7ab937d6d7f4637368a76d700c553c20c6553f71c894ee",
+          "words": 54,
+          "headings": 3,
+          "images": 2,
+          "links": 5,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "VShingala",
+      "profile": "https://github.com/VShingala",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/VShingala",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 28,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "d41c6552bf8ef87b0e97be71498aeace5c23daa1a44f5539e74070118f942c11",
+          "words": 54,
+          "headings": 4,
+          "images": 16,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "AaronRM",
+      "profile": "https://github.com/AaronRM",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/AaronRM",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 67,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "alfonsocvu",
+      "profile": "https://github.com/alfonsocvu",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/alfonsocvu",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 43,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "icyJoseph",
+      "profile": "https://github.com/icyJoseph",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/icyJoseph",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 156,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "0f5838158d481515d07a344e6dc64159891266e3843ea7d722ebece44972d111",
+          "words": 159,
+          "headings": 10,
+          "images": 2,
+          "links": 18,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "gulducat",
+      "profile": "https://github.com/gulducat",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/gulducat",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 24,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "b1a62d266d8e1ee9039ce36ddeaba708733599ba187db222a4aea405190d66d8",
+          "words": 96,
+          "headings": 1,
+          "images": 0,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "davehunt",
+      "profile": "https://github.com/davehunt",
+      "org": "mozilla",
+      "company": "Mozilla",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mozilla/people",
+        "publicProfile": "https://github.com/davehunt",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 62,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "azavodov",
+      "profile": "https://github.com/azavodov",
+      "org": "JetBrains",
+      "company": "JetBrains",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/JetBrains/people",
+        "publicProfile": "https://github.com/azavodov",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 67,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "yadav-aman",
+      "profile": "https://github.com/yadav-aman",
+      "org": "postmanlabs",
+      "company": "Postman",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/postmanlabs/people",
+        "publicProfile": "https://github.com/yadav-aman",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 30,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "78d62b6cde94828459ede1e1895656c79ae469ecfeffa64718354ca7624475e8",
+          "words": 59,
+          "headings": 3,
+          "images": 29,
+          "links": 9,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "allevato",
+      "profile": "https://github.com/allevato",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/allevato",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 67,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "james-elicx",
+      "profile": "https://github.com/james-elicx",
+      "org": "cloudflare",
+      "company": "Cloudflare",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/cloudflare/people",
+        "publicProfile": "https://github.com/james-elicx",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 57,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "17a31a115b16b8f6e148bb6637c4cee98b9fd44749c40e4349b313dff55c7db8",
+          "words": 78,
+          "headings": 0,
+          "images": 1,
+          "links": 6,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "hamzahashicorp",
+      "profile": "https://github.com/hamzahashicorp",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/hamzahashicorp",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 79,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "lewismc",
+      "profile": "https://github.com/lewismc",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/lewismc",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 46,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "uros-db",
+      "profile": "https://github.com/uros-db",
+      "org": "databricks",
+      "company": "Databricks",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/databricks/people",
+        "publicProfile": "https://github.com/uros-db",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 64,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "amaiorano",
+      "profile": "https://github.com/amaiorano",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/amaiorano",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 98,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "criamico",
+      "profile": "https://github.com/criamico",
+      "org": "elastic",
+      "company": "Elastic",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/elastic/people",
+        "publicProfile": "https://github.com/criamico",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 29,
+        "website": false,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "martincostello",
+      "profile": "https://github.com/martincostello",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/martincostello",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 94,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "5b94c45ae8926d92bbb683f98b0fa534262931b3677d66b469e5bf4f69d06420",
+          "words": 222,
+          "headings": 3,
+          "images": 0,
+          "links": 0,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "AlexMaclean",
+      "profile": "https://github.com/AlexMaclean",
+      "org": "nvidia",
+      "company": "NVIDIA",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/nvidia/people",
+        "publicProfile": "https://github.com/AlexMaclean",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 26,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "bahne-dev",
+      "profile": "https://github.com/bahne-dev",
+      "org": "JetBrains",
+      "company": "JetBrains",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/JetBrains/people",
+        "publicProfile": "https://github.com/bahne-dev",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 70,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "82d20a8c7f2081080b3a3cd4ffb489016edb5725635ba730a6058a2f9e1ccf39",
+          "words": 34,
+          "headings": 1,
+          "images": 0,
+          "links": 4,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "macintacos",
+      "profile": "https://github.com/macintacos",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/macintacos",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 60,
+        "website": true,
+        "pins": 3,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "observed",
+          "sha256": "8c892df8f36f4e2b3b7f6cb625e372fb46f26a9a5b15eb16bee227f5bc71258a",
+          "words": 65,
+          "headings": 0,
+          "images": 0,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "ernestl",
+      "profile": "https://github.com/ernestl",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/ernestl",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jtolio",
+      "profile": "https://github.com/jtolio",
+      "org": "cloudflare",
+      "company": "Cloudflare",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/cloudflare/people",
+        "publicProfile": "https://github.com/jtolio",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 30,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "hashi-divyansh",
+      "profile": "https://github.com/hashi-divyansh",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/hashi-divyansh",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 89,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "rafaelcaricio",
+      "profile": "https://github.com/rafaelcaricio",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/rafaelcaricio",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 32,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "AxelGeist",
+      "profile": "https://github.com/AxelGeist",
+      "org": "DataDog",
+      "company": "Datadog",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/DataDog/people",
+        "publicProfile": "https://github.com/AxelGeist",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 20,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "5be52baee27f7e161414aedf2ae921db35139626dab2c971828a7b528076b70a",
+          "words": 43,
+          "headings": 0,
+          "images": 1,
+          "links": 1,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "jakobht",
+      "profile": "https://github.com/jakobht",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/jakobht",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 24,
+        "website": false,
+        "pins": 5,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "cheeseandcereal",
+      "profile": "https://github.com/cheeseandcereal",
+      "org": "aws",
+      "company": "Amazon",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/aws/people",
+        "publicProfile": "https://github.com/cheeseandcereal",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 139,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "anasassi119",
+      "profile": "https://github.com/anasassi119",
+      "org": "nvidia",
+      "company": "NVIDIA",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/nvidia/people",
+        "publicProfile": "https://github.com/anasassi119",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "observed",
+          "sha256": "a9655c9e7287462a05159a6ae31d65642da4b7ca6118eb0a8d456afd3609a14e",
+          "words": 31,
+          "headings": 0,
+          "images": 3,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "irisgve",
+      "profile": "https://github.com/irisgve",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/irisgve",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 54,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "observed",
+          "sha256": "0c9127fafc7006bd99716ea32679b22958a8547f1c7ee6b9b2c7970ad02a5795",
+          "words": 109,
+          "headings": 4,
+          "images": 2,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "sailorfrag",
+      "profile": "https://github.com/sailorfrag",
+      "org": "tailscale",
+      "company": "Tailscale",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/tailscale/people",
+        "publicProfile": "https://github.com/sailorfrag",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 158,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "mbroadst",
+      "profile": "https://github.com/mbroadst",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/mbroadst",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 29,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "abatishchev",
+      "profile": "https://github.com/abatishchev",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/abatishchev",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 60,
+        "website": true,
+        "pins": 1,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "amanakin",
+      "profile": "https://github.com/amanakin",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/amanakin",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": false,
+        "pins": 5,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "observed",
+          "sha256": "15fbc3bb421a620e4ee2e80b3624b91c78b768f4e2cbc3b48a5ff836b93112ad",
+          "words": 22,
+          "headings": 3,
+          "images": 0,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "mauricewittek",
+      "profile": "https://github.com/mauricewittek",
+      "org": "grafana",
+      "company": "Grafana",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/grafana/people",
+        "publicProfile": "https://github.com/mauricewittek",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "5ac4db19dd4609ce7230037c6935809e8f9b076b6545d76c4d13a05fbc0d973e",
+          "words": 10,
+          "headings": 1,
+          "images": 0,
+          "links": 1,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "soniaappasamy",
+      "profile": "https://github.com/soniaappasamy",
+      "org": "tailscale",
+      "company": "Tailscale",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/tailscale/people",
+        "publicProfile": "https://github.com/soniaappasamy",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 20,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "brysonreece",
+      "profile": "https://github.com/brysonreece",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/brysonreece",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 63,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "5d4803241588e9d9d89b4fd5800eb36f837d0b1efffcc74953820152e21a7be6",
+          "words": 40,
+          "headings": 3,
+          "images": 10,
+          "links": 10,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "jhlopes",
+      "profile": "https://github.com/jhlopes",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/jhlopes",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "setu4993",
+      "profile": "https://github.com/setu4993",
+      "org": "salesforce",
+      "company": "Salesforce",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/salesforce/people",
+        "publicProfile": "https://github.com/setu4993",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 20,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "c6e06b1f600d9c8e792d6d1936ff8a88a948dc8be36259c2e498b594a995ca1c",
+          "words": 50,
+          "headings": 1,
+          "images": 0,
+          "links": 5,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "abeckDev",
+      "profile": "https://github.com/abeckDev",
+      "org": "microsoft",
+      "company": "Microsoft",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/microsoft/people",
+        "publicProfile": "https://github.com/abeckDev",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 149,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "tedpennings",
+      "profile": "https://github.com/tedpennings",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/tedpennings",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 144,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "cogwirrel",
+      "profile": "https://github.com/cogwirrel",
+      "org": "aws",
+      "company": "Amazon",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/aws/people",
+        "publicProfile": "https://github.com/cogwirrel",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 62,
+        "website": true,
+        "pins": 1,
+        "pinsDescribed": 1,
+        "readme": {
+          "state": "observed",
+          "sha256": "b7ca6773b723bfedc039b51557d2a646f042daa1910ac446c796a69911cddda8",
+          "words": 71,
+          "headings": 2,
+          "images": 0,
+          "links": 3,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "mohammaddaoudfarooqi",
+      "profile": "https://github.com/mohammaddaoudfarooqi",
+      "org": "mongodb",
+      "company": "MongoDB",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mongodb/people",
+        "publicProfile": "https://github.com/mohammaddaoudfarooqi",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 100,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "2e8b0f65238a5637083878d83d8e3968e53f779f622b8c04749dd1a6ea4be396",
+          "words": 252,
+          "headings": 4,
+          "images": 0,
+          "links": 5,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "erichaagdev",
+      "profile": "https://github.com/erichaagdev",
+      "org": "gradle",
+      "company": "Gradle",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gradle/people",
+        "publicProfile": "https://github.com/erichaagdev",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 40,
+        "website": true,
+        "pins": 2,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "kflansburg",
+      "profile": "https://github.com/kflansburg",
+      "org": "cloudflare",
+      "company": "Cloudflare",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/cloudflare/people",
+        "publicProfile": "https://github.com/kflansburg",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 58,
+        "website": true,
+        "pins": 5,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "lfades",
+      "profile": "https://github.com/lfades",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/lfades",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 31,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 2,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "iBrandyJackson",
+      "profile": "https://github.com/iBrandyJackson",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/iBrandyJackson",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 69,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "kakshay21",
+      "profile": "https://github.com/kakshay21",
+      "org": "atlassian",
+      "company": "Atlassian",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/atlassian/people",
+        "publicProfile": "https://github.com/kakshay21",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 73,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "gabelluardo",
+      "profile": "https://github.com/gabelluardo",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/gabelluardo",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 28,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "KianNH",
+      "profile": "https://github.com/KianNH",
+      "org": "cloudflare",
+      "company": "Cloudflare",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/cloudflare/people",
+        "publicProfile": "https://github.com/KianNH",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 43,
+        "website": true,
+        "pins": 4,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "observed",
+          "sha256": "e1f2bdd402c3675c2e18fd364228c16d93add6a4d5669c991ccd213f4c54fa59",
+          "words": 20,
+          "headings": 1,
+          "images": 0,
+          "links": 2,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "jackofallops",
+      "profile": "https://github.com/jackofallops",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/jackofallops",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 114,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "wesleytodd",
+      "profile": "https://github.com/wesleytodd",
+      "org": "Netflix",
+      "company": "Netflix",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/Netflix/people",
+        "publicProfile": "https://github.com/wesleytodd",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 53,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "Flipez",
+      "profile": "https://github.com/Flipez",
+      "org": "mozilla",
+      "company": "Mozilla",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/mozilla/people",
+        "publicProfile": "https://github.com/Flipez",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 44,
+        "website": true,
+        "pins": 5,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "observed",
+          "sha256": "ac2ffe38b6403ff756912e6bca5f2be23ea7fcf5bad8e9518cc85e66e87a0288",
+          "words": 726,
+          "headings": 11,
+          "images": 0,
+          "links": 69,
+          "stats": false
+        }
+      }
+    },
+    {
+      "login": "etiennestuder",
+      "profile": "https://github.com/etiennestuder",
+      "org": "gradle",
+      "company": "Gradle",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gradle/people",
+        "publicProfile": "https://github.com/etiennestuder",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 33,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "AndreyMarkinPPC",
+      "profile": "https://github.com/AndreyMarkinPPC",
+      "org": "google",
+      "company": "Google",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/google/people",
+        "publicProfile": "https://github.com/AndreyMarkinPPC",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 37,
+        "website": false,
+        "pins": 3,
+        "pinsDescribed": 3,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "lucleray",
+      "profile": "https://github.com/lucleray",
+      "org": "vercel",
+      "company": "Vercel",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/vercel/people",
+        "publicProfile": "https://github.com/lucleray",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 19,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 5,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jar-b",
+      "profile": "https://github.com/jar-b",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/jar-b",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 67,
+        "website": false,
+        "pins": 4,
+        "pinsDescribed": 4,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "justin-the-developer",
+      "profile": "https://github.com/justin-the-developer",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/justin-the-developer",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 25,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "observed",
+          "sha256": "92311973fb8136752c8aec5efe1633eecdc38b1a214a26d24489335019faf798",
+          "words": 5,
+          "headings": 0,
+          "images": 3,
+          "links": 2,
+          "stats": true
+        }
+      }
+    },
+    {
+      "login": "gegarcia",
+      "profile": "https://github.com/gegarcia",
+      "org": "canonical",
+      "company": "Canonical",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/canonical/people",
+        "publicProfile": "https://github.com/gegarcia",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "facewindu",
+      "profile": "https://github.com/facewindu",
+      "org": "gradle",
+      "company": "Gradle",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gradle/people",
+        "publicProfile": "https://github.com/facewindu",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 35,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "cbothner",
+      "profile": "https://github.com/cbothner",
+      "org": "shopify",
+      "company": "Shopify",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/shopify/people",
+        "publicProfile": "https://github.com/cbothner",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 33,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "jasonpilz",
+      "profile": "https://github.com/jasonpilz",
+      "org": "hashicorp",
+      "company": "HashiCorp",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/hashicorp/people",
+        "publicProfile": "https://github.com/jasonpilz",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 17,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "danabens",
+      "profile": "https://github.com/danabens",
+      "org": "aws",
+      "company": "Amazon",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/aws/people",
+        "publicProfile": "https://github.com/danabens",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 40,
+        "website": true,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "bzz",
+      "profile": "https://github.com/bzz",
+      "org": "JetBrains",
+      "company": "JetBrains",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/JetBrains/people",
+        "publicProfile": "https://github.com/bzz",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "100-499",
+        "bioChars": 22,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "felipefzdz",
+      "profile": "https://github.com/felipefzdz",
+      "org": "gradle",
+      "company": "Gradle",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/gradle/people",
+        "publicProfile": "https://github.com/felipefzdz",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 34,
+        "website": false,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "kdugue-uber",
+      "profile": "https://github.com/kdugue-uber",
+      "org": "uber",
+      "company": "Uber",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/uber/people",
+        "publicProfile": "https://github.com/kdugue-uber",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "0-99",
+        "bioChars": 25,
+        "website": false,
+        "pins": 0,
+        "pinsDescribed": 0,
+        "readme": {
+          "state": "not-observed-at-root"
+        }
+      }
+    },
+    {
+      "login": "PragTob",
+      "profile": "https://github.com/PragTob",
+      "org": "supabase",
+      "company": "Supabase",
+      "evidence": {
+        "publicMembership": "https://github.com/orgs/supabase/people",
+        "publicProfile": "https://github.com/PragTob",
+        "selfListedCompany": true,
+        "selfDescribedEngineeringRole": true,
+        "employerVerified": false
+      },
+      "structure": {
+        "followerBand": "500-2000",
+        "bioChars": 137,
+        "website": true,
+        "pins": 6,
+        "pinsDescribed": 6,
+        "readme": {
+          "state": "observed",
+          "sha256": "8c8a41bf6ec2dd65cf20868f78141e1cfae2ac7dd765736dd929f9f2a5358d6b",
+          "words": 214,
+          "headings": 0,
+          "images": 13,
+          "links": 22,
+          "stats": false
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,6 @@
-# Professional engineering profile study
+# Professional engineering profile study (historical baseline)
+
+**Current primary reference:** [200 ordinary-visibility engineer accounts](ORDINARY_STUDY.md). This document retains the older 100-account baseline and separately employer-sourced examples for provenance; its counts are historical, not the runtime primary cohort.
 
 **Date:** 2026-11-11  
 **Purpose:** Study how PEOPLE associated with professional software engineering present their GitHub work. The prior project-contributor baseline is kept for historical reproducibility, but is **not** the professional reference used by the writer.

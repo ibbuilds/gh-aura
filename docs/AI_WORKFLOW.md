@@ -12,7 +12,7 @@ gh-aura config set editorial.maxWords 180
 gh-aura config set profile.visual 20
 ```
 
-The target role and target company describe where you want to apply, **not** existing credentials or proof that you work there. Language and word target guide an external writer. Existing text is not automatically translated; local template labels remain English.
+The target role and target company describe where you want to apply, **not** existing credentials or proof that you work there. Language and word target guide an external writer. Existing text is not automatically translated; local template labels support en/es through --language.
 
 ## Export evidence and instructions
 
@@ -25,7 +25,7 @@ gh-aura brief --prompt --output writer.txt
 
 The compact JSON context is limited to **12,000 bytes**. Existing README excerpts are capped at 1,200 characters rather than the previous 24,000. Truncation and omitted lists are declared; missing facts are not filled in. Pretty-printed JSON files and the surrounding writing instructions are larger than the compact data alone. No fixed model-token savings are claimed because tokenization differs by provider.
 
-The reference contains 100 public company-associated engineering profiles and 16 company-author-source examples. The 100 rely on self-reported company/role plus public organization membership; they are not 100 employer-verified employees. The smaller employer-sourced set has dated company-owned pages, not HR certification. Neither study measured hiring results. The writer may learn structure, never borrow another person's identity, seniority, employment or achievements. See [industry research and evidence tiers](../research/INDUSTRY_STUDY.md).
+The reference contains 200 ordinary-visibility company-associated engineering profiles and 16 separate employer-author-source examples. The 200 rely on self-reported company/role plus public organization membership; they are not 200 employer-verified employees. The smaller employer-sourced set has dated company-owned pages, not HR certification. Neither study measured hiring results. The writer may learn structure, never borrow another person's identity, seniority, employment or achievements. See [ordinary-visibility 200-person study](../research/ORDINARY_STUDY.md).
 
 A configured `profile.projectStories` array can supply explicit personal contribution, design trade-offs, outcome and evidence links. These are **user-provided claims**, not GitHub-verified facts; an editor must not create unprovided impact or job titles. See [Project stories](PROJECT_STORIES.md).
 

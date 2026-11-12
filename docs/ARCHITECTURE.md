@@ -32,7 +32,7 @@ Presentation intensity changes layout and optional decoration only. It cannot cr
 
 ## Data and resource limits
 
-Public cache entries retain short-lived observations, isolated by credential-derived keys without persisting tokens. Network/JSON budgets are explicit and tested. Optional inspections and historical detail queries stay bounded. The sample of 100 public contributor accounts is versioned research outside the installed package, not a runtime crawler.
+Public cache entries retain short-lived observations, isolated by credential-derived keys without persisting tokens. Network/JSON budgets are explicit and tested. Optional inspections and historical detail queries stay bounded. The current ordinary-visibility sample of 200 public company-associated engineering accounts is versioned research outside the installed package, not a runtime crawler.
 
 ## Publication
 
@@ -44,7 +44,7 @@ Core logic is unit-tested offline; the subprocess flow uses isolated transport f
 
 ## Professional reference data (v1.3)
 
-The CLI has a compact read-only local `reference.mjs` aggregate and source-linked professional examples. Two research sources remain **distinct**: 100 public company-organization members with self-reported company and engineering role (employment **unverified**), and 16 profiles associated with engineering author pages published by employers (sources may be stale). Neither offers proof of hiring outcomes. Research datasets and one-time collectors live under `research/` and `scripts/` but are excluded from the runtime npm tarball; ordinary commands never fetch the 116 reference accounts. `references` executes offline. `brief` selects at most four short source links and structural counts rather than copying profiles, retaining the existing 12 KiB context budget. See [study methodology](../research/INDUSTRY_STUDY.md).
+The CLI has a compact read-only local `reference.mjs` aggregate and source-linked professional examples. Two research sources remain **distinct**: 200 ordinary-visibility public company-organization members with self-reported company and engineering role (employment **unverified**), and 16 profiles associated with engineering author pages published by employers (sources may be stale). Neither offers proof of hiring outcomes. Research datasets and one-time collectors live under `research/` and `scripts/` but are excluded from the runtime npm tarball; ordinary commands never fetch the 216 reference accounts. `references` executes offline. `brief` selects at most four short source links and structural counts rather than copying profiles, retaining the existing 12 KiB context budget. See [current 200-person study](../research/ORDINARY_STUDY.md) and [historical methodology](../research/INDUSTRY_STUDY.md).
 
 ## Hiring-oriented review (v1.4)
 
