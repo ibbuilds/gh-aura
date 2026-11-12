@@ -41,7 +41,7 @@ The normal audit includes a **first-minute hiring-manager review** and remains r
 | Can projects be approached quickly? | Optional README presence and conventional setup/usage headings | Headings don't prove that commands work |
 | Can a visitor contact the developer? | Public website or configured links | A link is not crawled or availability-checked |
 | Do project descriptions align with the target role? | Conservative keyword matches on public descriptions/topics/languages | Metadata doesn't prove suitability, and missing keywords don't imply failure |
-| Is engineering depth demonstrated? | **Unknown in this release** | No source execution, tests/CI verification, design review or personal-ownership confirmation |
+| Is engineering depth demonstrated? | Opt-in `--deep 2` checks source file structure only | Detection does not establish passing tests/CI, design quality or ownership |
 
 Findings use **clear**, **needs-work**, and **unknown** states. “Unknown” is critical: private work, atypical README names and inaccessible data must not be scored as weak engineering ability. The report has no percentage called “hireability” or interview probability.
 
@@ -49,7 +49,7 @@ The report includes a small project-evidence table with observed documentation s
 
 ## What we should improve next
 
-1. **Deep evidence on shortlisted projects.** Explicit `--inspect 2`–`--inspect 3` should optionally detect tests, CI workflows, runnable examples, architecture documentation, releases and dependencies, while reporting that detection is not execution or certification. Avoid pulling or analyzing all repositories by default. Respect existing API budgets and caching.
+1. **Deeper quality evidence beyond file names.** `--deep 2` now detects test/CI/manifests/docs/examples with source URLs; release history, actual pass/fail status and runnable examples remain future work. Avoid pulling or analyzing all repositories by default. Respect existing API budgets and caching.
 2. **Personal contribution statements.** Let a user attach short, manually confirmed “What I built / Why / Trade-offs / How to verify” metadata to a project. An owned repository alone does not prove that the account owner designed every part.
 3. **Job-description comparison.** Accept a local plain-text job description and extract user-confirmed skill and problem-domain requirements. Explain matching project evidence, missing demonstrable signals and unknowns. Never invent claims to match a job.
 4. **Editorial impact.** Make profiles reflect real ownership and role-relevant problem solving, while allowing minimal/regular/flashy output without copy-pasted biographies or fake metrics.

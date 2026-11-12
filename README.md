@@ -12,7 +12,7 @@ cd gh-aura
 npm link
 
 gh-aura init YOUR_USERNAME
-gh-aura audit --inspect 6
+gh-aura audit --inspect 3 --deep 2
 gh-aura profile --output draft.md
 gh-aura preview --file draft.md --save review.json
 ```
@@ -74,6 +74,10 @@ Use `gh-aura references` or `gh-aura references --company Microsoft` to browse s
 ## Real contribution history and privacy
 
 Use `gh-aura contributions --from 2020 --to 2026 --days` to inspect the dates that GitHub actually recognizes, or add `--private --recover` for anonymized-private-visibility guidance and a local checklist for genuinely missing old attribution. GH Aura never creates fake commits or rewrites dates. [Read the activity guide](docs/ACTIVITY.md).
+
+## Optional project evidence
+
+Run `gh-aura audit --inspect 3 --deep 2` to inspect READMEs plus the public test/CI/build/architecture/example file structure of up to two selected projects. GH Aura reports source links and explicitly labels passing tests, CI and personal authorship as **unverified**. `--deep` defaults to zero additional requests. [Read the evidence guide](docs/PROJECT_EVIDENCE.md).
 
 ## Resource use
 

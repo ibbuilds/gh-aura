@@ -31,7 +31,7 @@ export async function requestJSON(path, options = {}) {
   const token = tokenFor(options);
   const cached = cache?.read(API_VERSION + path, token);
   if (cache?.fresh(cached)) { cache.hits++; return cache.observe(cached); }
-  const repositoryContent = /^\/repos\/([^/]+)\/([^/?]+)\/(?:contents\/|readme(?:\?|$)|releases(?:\?|$)|commits(?:\?|$))/.exec(path);
+  const repositoryContent = /^\/repos\/([^/]+)\/([^/?]+)\/(?:contents\/|readme(?:\?|$)|releases(?:\?|$)|commits(?:\?|$)|git\/trees\/)/.exec(path);
   if (method === 'GET' && options.publicRead === true && token && repositoryContent) {
     // A token may see a repository that became private after it was listed. Check
     // live visibility before fetching any new contents; old public cache hits are bounded by TTL.

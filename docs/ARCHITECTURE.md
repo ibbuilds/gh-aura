@@ -48,3 +48,7 @@ The CLI has a compact read-only local `reference.mjs` aggregate and source-linke
 ## Hiring-oriented review (v1.4)
 
 `src/readiness.mjs` is a pure, read-only analysis of a normalized public profile snapshot. The existing `audit` CLI adds a role-oriented first-minute review to the current report, without another API call. Every check is `clear`, `needs-work` or `unknown`, with an evidence URL and explicit user action. Documentation signals do not certify runnable code, CI, engineering expertise or ownership. No percentage called “hireability” or prediction of employment is generated. Source and tradeoffs: [Hiring readiness](HIRING_READINESS.md).
+
+## Optional bounded source-structure evidence
+
+`project-evidence.mjs` performs one public Git tree inspection per explicitly selected project (up to five), detecting paths for tests, CI, architecture, examples and manifests with source URLs. Truncated trees yield `unknown`, not negative findings. `--deep` defaults to 0, honors existing API request/byte budgets, and never executes cloned project code. Authenticated reads recheck the public visibility of the selected repository before retrieving its Git tree. No observed file presence is described as passing tests, successful CI, complete architecture or personal authorship. See [Project evidence](PROJECT_EVIDENCE.md).

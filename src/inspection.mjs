@@ -42,19 +42,24 @@ export function describeReadme(response, repo) {
  * then remaining requests go to recommended public projects.
  * Uninspected projects are unknown, never assumed to lack a README.
  */
+export function pickRepositories(snapshot, config, count) {
+  if (!Number.isInteger(count) || count < 0 || count > 20) throw new Error('Repository inspection count must be between 0 and 20.');
+  const chosen = config.profile.featured.length
+    ? selectFeatured(snapshot, config).map((repo) => ({ repo })) : [];
+  const ranked = rankRepositories(snapshot, config, { limit: count });
+  const seen = new Set();
+  return [...chosen, ...ranked].filter(({ repo }) => {
+    if (seen.has(repo.full_name)) return false;
+    seen.add(repo.full_name); return true;
+  }).slice(0, count);
+}
+
 export async function inspectRepositories(snapshot, config, count, options = {}) {
   if (!Number.isInteger(count) || count < 0 || count > 20) {
     throw new Error('--inspect must be between 0 and 20.');
   }
   if (count === 0) return snapshot;
-  const chosen = config.profile.featured.length
-    ? selectFeatured(snapshot, config).map((repo) => ({ repo })) : [];
-  const ranked = rankRepositories(snapshot, config, { limit: count });
-  const seen = new Set();
-  const picks = [...chosen, ...ranked].filter(({ repo }) => {
-    if (seen.has(repo.full_name)) return false;
-    seen.add(repo.full_name); return true;
-  }).slice(0, count);
+  const picks = pickRepositories(snapshot, config, count);
   const byName = new Map(snapshot.repos.map((repo) => [repo.full_name, repo]));
   for (const { repo } of picks) {
     const [owner, name] = repo.full_name.split('/');
