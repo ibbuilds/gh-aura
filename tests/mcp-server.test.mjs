@@ -24,7 +24,7 @@ test('MCP modern stateless discovery, resources and prompts follow the 2026 prot
   assert.equal(list.result.resultType,'complete');
   assert.ok(list.result.tools.every(x=>x.annotations.readOnlyHint));
   const resourceList=await handleMcpMessage(req(3,'resources/list'));
-  assert.equal(resourceList.result.resources.length,7);
+  assert.equal(resourceList.result.resources.length,5);
   const resource=await handleMcpMessage(req(4,'resources/read',{
     uri:'gh-aura://sources/catalog'}));
   assert.match(resource.result.contents[0].text,/github-profile/);
@@ -36,7 +36,7 @@ test('MCP modern stateless discovery, resources and prompts follow the 2026 prot
   assert.match(biography.result.contents[0].text,/original/);
   assert.equal(biography.result.contents[0].mimeType,'text/markdown');
   const promptList=await handleMcpMessage(req(5,'prompts/list'));
-  assert.equal(promptList.result.prompts.length,5);
+  assert.equal(promptList.result.prompts.length,4);
   const prompt=await handleMcpMessage(req(6,'prompts/get',{
     name:'create_professional_profile',arguments:{role:'backend',direction:'technical'}}));
   assert.match(prompt.result.messages[0].content.text,/backend/);
