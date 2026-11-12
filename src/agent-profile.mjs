@@ -3,7 +3,7 @@ import { resolveProfileDirection } from './profile-directions.mjs';
 import { findProfileSources, getProfileSource } from './profile-sources.mjs';
 import { checkDraft } from './editorial.mjs';
 import { diffText } from './diff.mjs';
-import { plain } from './text.mjs';
+import { plain, httpsUrl } from './text.mjs';
 
 export const PROFILE_SPEC_FORMAT='gh-aura-profile-spec-v1';
 const DIRECTION_NAMES=['barebones','minimal','technical','expressive'];
@@ -20,6 +20,19 @@ const names=(items,kind,max)=> {
     throw Error('Invalid '+kind+' list.');
   return [...new Set(items)];
 };
+function validateLinks(links){
+  if(!Array.isArray(links)||links.length>20)
+    throw Error('Profile links must be an array with up to 20 items.');
+  return links.map(link=>{
+    if(!link||typeof link!=='object'||Array.isArray(link)||
+       Object.keys(link).some(k=>!['label','url'].includes(k)))
+      throw Error('Profile links need only a label and HTTPS URL.');
+    const label=safeText(link.label,80,'Link label');
+    const url=safeText(link.url,500,'Link URL');
+    if(!label||!httpsUrl(url))throw Error('Profile link must contain a label and safe HTTPS URL.');
+    return {label,url};
+  });
+}
 export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
   validateConfig(config);
   const direction=options.direction||config.editorial.direction||'minimal';
@@ -42,6 +55,7 @@ export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
   if(!Number.isInteger(maxProjects)||maxProjects<0||maxProjects>6)
     throw Error('Profile maxProjects must be 0..6.');
   const featured=names(options.featured??config.profile.featured,'repo',6);
+  const links=validateLinks(options.links??config.profile.links);
   const notes=safeText(options.notes??'',700,'Editorial notes');
   const recommended=findProfileSources({query:role,direction,
     includeExternal,limit:6}).sources;
@@ -50,7 +64,7 @@ export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
   return {
     format:PROFILE_SPEC_FORMAT,
     purpose:'Create a custom, evidence-grounded, hiring-oriented GitHub README. This is an editable intent, not a Markdown template.',
-    direction:intent.name,language,goal:role,maxWords,sections,maxProjects,featured,
+    direction:intent.name,language,goal:role,maxWords,sections,maxProjects,featured,links,
     includeExternal,sourceIds:fallbacks.map(x=>x.id),notes,
     design:intent, provenance:{
       publicGitHub:'observations only; fetch at use time',
@@ -77,6 +91,7 @@ export function validateProfileSpec(input){
     Object.entries(c).some(([k,v])=>!SECTION_NAMES.includes(k)||typeof v!=='boolean'))
     throw Error('Invalid spec section switches.');
   const featured=names(input.featured,'repo',6);
+  const links=validateLinks(input.links);
   const sourceIds=names(input.sourceIds,'source',20);
   for(const id of sourceIds) {
     const source=getProfileSource(id);
@@ -84,12 +99,12 @@ export function validateProfileSpec(input){
       throw Error('An external source cannot be enabled without opt-in.');
   }
   return {...input,goal,notes,sections:{...c},featured,sourceIds,
-    design:resolveProfileDirection(input.direction)};
+    links,design:resolveProfileDirection(input.direction)};
 }
 export function refineProfileSpec(input,changes={}){
   const current=validateProfileSpec(input);
   const allowed=['direction','goal','language','maxWords','sections','maxProjects',
-    'featured','includeExternal','sourceIds','notes'];
+    'featured','links','includeExternal','sourceIds','notes'];
   if(!changes||typeof changes!=='object'||Array.isArray(changes)||
     Object.keys(changes).some(k=>!allowed.includes(k)))
     throw Error('Profile refinement can change only approved spec fields.');
