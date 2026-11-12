@@ -75,6 +75,10 @@ Use `gh-aura references` or `gh-aura references --company Microsoft` to browse s
 
 [Industry research and limitations](research/INDUSTRY_STUDY.md) · [Writing workflow](docs/AI_WORKFLOW.md)
 
+## Achievement tasks on request
+
+`gh-aura achievements --prepare pull-shark --repo USER/PROJECT` can inspect a public project's real open issues and prepare a local work checklist. Add `--private` to prepare **without accessing** a private repo. No fake accounts, blank PRs or stars are created; the user must do the genuine work and GitHub controls the award. [Preparation guide](docs/ACHIEVEMENT_ACTIONS.md).
+
 ## Real contribution history and privacy
 
 Use `gh-aura contributions --from 2020 --to 2026 --days` to inspect the dates that GitHub actually recognizes, or add `--private --recover` for anonymized-private-visibility guidance and a local checklist for genuinely missing old attribution. GH Aura never creates fake commits or rewrites dates. [Read the activity guide](docs/ACTIVITY.md).
