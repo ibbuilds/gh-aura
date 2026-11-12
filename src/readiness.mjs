@@ -138,6 +138,14 @@ export function hiringReview(snapshot, config) {
       setupHeadingDetected: documentation === 'available' ? setup : null,
       usageHeadingDetected: documentation === 'available' ? usage : null,
       testingHeadingDetected: documentation === 'available' ? testing : null,
+      treeInspection: repo.evidence?.state || 'not-inspected',
+      testFiles: repo.evidence?.categories?.tests?.status || 'unknown',
+      ciWorkflow: repo.evidence?.categories?.ci?.status || 'unknown',
+      architectureDocs: repo.evidence?.categories?.architecture?.status || 'unknown',
+      manifest: repo.evidence?.categories?.manifest?.status || 'unknown',
+      exampleSources: repo.evidence?.categories?.examples?.status || 'unknown',
+      testEvidenceUrls: repo.evidence?.categories?.tests?.sources || [],
+      ciEvidenceUrls: repo.evidence?.categories?.ci?.sources || [],
       testedCode: 'unknown',
       ciStatus: 'unknown',
       personalOwnershipOfWork: 'unverified',
@@ -184,7 +192,7 @@ export function hiringReview(snapshot, config) {
   }
 
   add('technical-evidence', 'Engineering depth', 'unknown',
-    'This review does not execute projects, inspect architecture, tests or CI, or verify your personal contribution.',
+    'This review can detect source/test/CI files when requested, but does not execute code, validate test results or verify your personal contribution.',
     'For your strongest two projects, demonstrate what problem they solve, which trade-offs you made and how to run and test them.',
     projects[0]?.url || profile, 2);
 
@@ -200,7 +208,7 @@ export function hiringReview(snapshot, config) {
     actions: actionable.map((item) => ({ id: item.id, priority: item.priority, nextStep: item.action, source: item.source })),
     limitations: [
       'No inference of seniority, current employment, skills or code quality from stars, language or repository size.',
-      'Project documentation detection uses headings and cannot certify runnable examples or correct tests.',
+      'Documentation and source-file detection cannot certify runnable examples, passing CI, code correctness or authorship.',
       'Private work and confidential commercial experience may be absent and must not be treated as no experience.',
       'Contribution squares, cosmetic badges, follower counts and daily streaks do not establish hiring suitability.',
       'Only a human reviewer can judge whether the actual work supports a job application.',
@@ -222,14 +230,14 @@ export function renderHiringReview(review) {
   }
   if (review.featuredProjects.length) {
     lines.push('### Featured project evidence', '',
-      '| Project | README | Setup | Usage | Tests |', '| --- | --- | --- | --- | --- |');
+      '| Project | README | Setup | Usage | Test files | CI config |', '| --- | --- | --- | --- | --- | --- |');
     for (const p of review.featuredProjects) {
       const status = (v) => v === null ? 'not checked' : v ? 'heading found' : 'heading not found';
       lines.push('| [' + p.repository + '](' + p.url + ') | ' + p.documentation +
         ' | ' + status(p.setupHeadingDetected) + ' | ' + status(p.usageHeadingDetected) +
-        ' | not verified |');
+        ' | ' + p.testFiles + ' | ' + p.ciWorkflow + ' |');
     }
-    lines.push('', 'A README heading does not prove a project runs or is correctly tested.', '');
+    lines.push('', 'Tests and CI are not verified as passing; source file paths and README headings do not prove code correctness or authorship.', '');
   }
   lines.push('### Important limits', '', ...review.limitations.map((x) => '- ' + x), '');
   return lines.join('\n');

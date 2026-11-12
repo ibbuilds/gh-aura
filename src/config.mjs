@@ -4,7 +4,7 @@ import { httpsUrl, plain } from './text.mjs';
 
 export const DEFAULT_CONFIG = {
   user: '',
-  scan: { maxRepos: 200, inspectRepos: 0, maxRequests: 60 },
+  scan: { maxRepos: 200, inspectRepos: 0, deepRepos: 0, maxRequests: 60 },
   profile: {
     style: 'minimal', visual: -1, name: '', headline: '', about: '', location: '',
     technologies: [], featured: [], excluded: [], maxProjects: 3,
@@ -69,6 +69,7 @@ export function validateConfig(config) {
   integer(config.editorial.maxWords, 30, 1000, 'editorial.maxWords');
   integer(config.scan.maxRepos, 1, 500, 'scan.maxRepos');
   integer(config.scan.inspectRepos, 0, 20, 'scan.inspectRepos');
+  integer(config.scan.deepRepos, 0, 5, 'scan.deepRepos');
   integer(p.maxProjects, 0, 6, 'profile.maxProjects');
   integer(config.showcase.limit, 1, 6, 'showcase.limit');
   for (const [key, value] of Object.entries(p.sections)) {

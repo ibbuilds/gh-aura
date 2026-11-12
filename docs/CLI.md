@@ -35,6 +35,8 @@ gh-aura profile --visual 20 --output restrained.md
 
 The existing `audit` command now includes a **first-minute hiring-manager review** with a target role, public bio, profile README, shortlisted projects, documentation and contact links, and explicit unknowns for code quality and personal authorship. Set `editorial.targetRole` or override it with `audit --goal "backend engineer"`. This is not an interview-probability score. See [Hiring readiness](HIRING_READINESS.md).
 
+Pass `--deep N` (0–5) with `audit`, `showcase`, or `brief` to inspect public repository file structure for test/CI/build/architecture/example paths. This is **opt-in** (default zero); no code is executed, no test result or personal authorship is inferred, and API response budgets still apply. [Project evidence details](PROJECT_EVIDENCE.md).
+
 Inspection adds sampled public README reads. Conventional headings are heuristic signals, not proof of code quality. Scores concern presentation evidence, not engineer quality or hiring probability. Unknown information is not a negative finding.
 
 `--output` writes a local file; status goes to stderr so stdout stays useful for data. Existing output files require `--force`.

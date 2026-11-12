@@ -15,6 +15,7 @@ export async function run(command, options) {
   }
   if (options.limit !== undefined) config.showcase.limit = Number(options.limit);
   if (options.inspect !== undefined) config.scan.inspectRepos = Number(options.inspect);
+  if (options.deep !== undefined) config.scan.deepRepos = Number(options.deep);
   validateConfig(config);
   const session = new ReadSession({ maxRequests: options.budget === undefined ? config.scan.maxRequests : Number(options.budget) });
   const cache = options.fresh || process.env.GH_AURA_NO_CACHE === '1' ? null : new ReadCache();
@@ -31,6 +32,10 @@ export async function run(command, options) {
     if (!['contributions', 'achievements'].includes(command) && config.scan.inspectRepos) {
       const { inspectRepositories } = await import('../inspection.mjs');
       await inspectRepositories(snapshot, config, config.scan.inspectRepos, api);
+    }
+    if (['audit', 'showcase', 'brief'].includes(command) && config.scan.deepRepos) {
+      const { inspectProjectEvidence } = await import('../project-evidence.mjs');
+      await inspectProjectEvidence(snapshot, config, config.scan.deepRepos, api);
     }
     if (cache?.hits) process.stderr.write('Using recent public data (up to 5 minutes old). Use --fresh to reload.\n');
     if (command === 'achievements') {

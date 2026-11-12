@@ -24,7 +24,15 @@ export function rankRepositories(snapshot, config, options = {}) {
     const stars = Math.max(0, Number(repo.stargazers_count) || 0);
     const factors = {
       relevance: terms.length ? clamp(relevant.length / Math.min(terms.length, 3)) : 0.5,
-      substance: clamp((repo.fork ? 0.05 : 0.4) + (repo.language ? 0.3 : 0) + (repo.size > 0 ? 0.3 : 0)),
+      // File presence is a stronger observable proxy than stars/size, but it
+      // does not certify that tests pass or that the owner wrote the code.
+      substance: clamp((repo.fork ? 0.05 : 0.35) + (repo.language ? 0.12 : 0) +
+        (repo.size > 0 ? 0.12 : 0) +
+        (repo.evidence?.categories?.tests?.status === 'observed' ? 0.13 : 0) +
+        (repo.evidence?.categories?.ci?.status === 'observed' ? 0.10 : 0) +
+        (repo.evidence?.categories?.manifest?.status === 'observed' ? 0.08 : 0) +
+        (repo.evidence?.categories?.architecture?.status === 'observed' ? 0.06 : 0) +
+        (repo.evidence?.categories?.examples?.status === 'observed' ? 0.04 : 0)),
       presentation: clamp((metadata + docs) / (known ? 1 : 0.55)),
       maintenance: age === null ? 0.5 : age <= 90 ? 1 : age <= 365 ? 0.8 : age <= 730 ? 0.5 : 0.15,
       popularity: clamp(Math.log1p(stars) / Math.log1p(100)),
@@ -41,6 +49,11 @@ export function rankRepositories(snapshot, config, options = {}) {
     if (inspected?.features?.installation) reasons.push('README includes setup instructions');
     if (inspected?.features?.usage) reasons.push('README includes usage/examples');
     if (inspected?.state === 'missing') reasons.push('Improve: add a README');
+    if (repo.evidence?.categories?.tests?.status === 'observed') reasons.push('Test files observed (not run)');
+    if (repo.evidence?.categories?.ci?.status === 'observed') reasons.push('CI workflow found (status not verified)');
+    if (repo.evidence?.categories?.manifest?.status === 'observed') reasons.push('Build/dependency manifest found');
+    if (repo.evidence?.categories?.architecture?.status === 'observed') reasons.push('Architecture documentation path found');
+    if (repo.evidence?.categories?.examples?.status === 'observed') reasons.push('Example/demo source paths found');
     if (repo.homepage) reasons.push('Project/demo link provided (not availability-tested)');
     if (age !== null && age <= 365) reasons.push('Updated within the past year');
     if (!repo.description) reasons.push('Improve: add a one-line description');
@@ -48,7 +61,12 @@ export function rankRepositories(snapshot, config, options = {}) {
     if (repo.fork) reasons.push('Fork: review your own contribution before showcasing');
     if (repo.size === 0) reasons.push('Empty repository');
     return { repo, score: Math.round(clamp(score) * 1000) / 10, factors, reasons,
-      limitations: known ? ['Documentation checks do not prove code quality.'] : ['README not inspected; documentation quality is unknown.'] };
+      limitations: [
+        known ? 'Documentation checks do not prove code quality.' : 'README not inspected; documentation quality is unknown.',
+        repo.evidence?.state === 'available'
+          ? 'File presence does not mean tests or CI passed, nor prove authorship.'
+          : 'Source/test/CI structure not fully inspected; engineering depth is unknown.',
+      ] };
   });
   candidates.sort((a, b) => b.score - a.score || a.repo.full_name.localeCompare(b.repo.full_name));
   return candidates.slice(0, options.limit ?? config.showcase.limit);
