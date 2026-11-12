@@ -14,7 +14,8 @@ const validStatements=(statements)=>{
     throw Error('Biography claims must be an array with at most eight statements.');
   return statements.map(item=>{
     if(!item||typeof item!=='object'||Array.isArray(item)||
-       Object.keys(item).some(k=>!['statement','proofUrl'].includes(k)))
+       Object.keys(item).some(k=>!['statement','proofUrl','provenance'].includes(k))||
+       (item.provenance!==undefined&&item.provenance!=='user-supplied-not-independently-verified'))
       throw Error('Biography claims accept only statement and proofUrl.');
     const statement=str(item.statement,220,'claim');
     const proofUrl=str(item.proofUrl||'',500,'proof link');
