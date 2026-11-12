@@ -54,6 +54,12 @@ function mockAPI(options={}) {
     if(path===base+'/issues?state=all&per_page=100')return response(
       options.alreadyDone?[{title:'[GH-AURA-QA-0001] Validate private sandbox setup',
         state:'closed'}]:[]);
+    if(options.statusMixed&&path===base+'/pulls/1'&&method==='GET')
+      return response({number:1,merged_at:'2026-11-12T01:00:00Z',
+        user:{login:'example'},merged_by:{login:options.otherMerger?'another':'example'},
+        base:{ref:'main'}});
+    if(path.startsWith(base+'/pulls/')&&path.endsWith('/reviews?per_page=100')&&method==='GET')
+      return response(options.submittedReview||options.statusReviewed?[{state:'APPROVED'}]:[]);
     if(path===base+'/pulls?state=closed&per_page=100&page=1')return response(
       options.statusMixed?[
         {number:1,merged_at:'2026-11-12T01:00:00Z',html_url:'https://github.com/'+repo+'/pull/1',
@@ -102,8 +108,6 @@ function mockAPI(options={}) {
       prs++;return response({number:prs,html_url:'https://github.com/'+repo+'/pull/'+prs,
         head:{sha:options.wrongHead?'e'.repeat(40):'b'.repeat(40)}},201);
     }
-    if(path===base+'/pulls/'+prs+'/reviews?per_page=100'&&method==='GET')
-      return response(options.submittedReview?[{state:'APPROVED'}]:[]);
     if(path===base+'/pulls/'+prs+'/merge'&&method==='PUT'){
       assert.equal(body.merge_method,'squash');
       assert.equal(body.sha,'b'.repeat(40),'merge must bind exact generated PR head SHA');
@@ -266,6 +270,10 @@ test('status reads only GH Aura-owned private workspace and distinguishes events
   assert.equal(status.observed.mergedOwnedExercisePullRequests,1);
   assert.equal(status.observed.closedOwnedExerciseIssues,1);
   assert.equal(status.observed.quickdrawTimingCandidates,1);
+  assert.equal(status.observed.yoloSelfMergeNoReviewCandidate,1);
+  assert.equal(status.observed.yoloInspectedMergedPRs,1);
+  assert.equal(status.observed.yoloEvidenceComplete,true);
+  assert.equal(status.events.yoloReviewEvidence[0].reviewCount,0);
   assert.equal(status.observed.pullSharkLocalTierCandidate,null);
   assert.ok(status.verify.includes('?tab=achievements'));
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
@@ -446,4 +454,16 @@ test('maximum-level goal advances through base, bronze, silver and gold stage bo
   assert.equal(complete.observedMergedExercises,1024);
   assert.throws(()=>nextBadgePlanFromWorkspace(report,tree,{repo,goal:'max',tier:'gold'}),
     /either --tier or --goal/);
+});
+
+test('status refuses to count reviewed or third-party merged PRs as YOLO candidates',async()=>{
+  for(const options of [{statusReviewed:true},{otherMerger:true}]){
+    const api=mockAPI({existing:true,existingMarker:'shared',
+      statusMixed:true,...options});
+    const result=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+    assert.equal(result.observed.yoloSelfMergeNoReviewCandidate,null);
+    assert.equal(result.observed.yoloInspectedMergedPRs,1);
+    assert.equal(result.events.yoloReviewEvidence[0].qualifiesAsEvent,false);
+    assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+  }
 });
