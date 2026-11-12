@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.14.0 — 2026-11-12
+
+- Added opt-in `badges auto --strategy git-batch` and `badges auto next --goal max --strategy git-batch` to stage up to 16 source branches with local Git fast-import and one atomic create-only multi-ref push.
+- Reduced per-PR REST mutations from four to two in successful atomic batches: open and SHA-verified merge remain normal GitHub API actions; source branch and commit creation move into one Git transport push.
+- Protected existing refs with a fresh default-branch SHA check, remote branch-existence preflight, per-ref empty expected leases and an atomic push without fallback. The default branch is not pushed or rewritten.
+- v3 SHA-256 review format binds the opt-in Git strategy; existing approved v1/v2 plans still use the original REST runner.
+- Conservatively reserve one local hourly budget unit for each new branch created by Git push, in addition to PR operations; GitHub's own limits still apply.
+- Added real-local-bare-Git and mocked-GitHub-REST tests for atomic 16-branch creation, stale parents, idempotent replay and no modifications to unmarked repositories.
+- GitHub.com private push acceptance and actual achievement awards remain pending controlled, authorized testing.
+
+
 ## 1.13.0 — 2026-11-12
 
 - Optimized each verified PR batch: cache GitHub's returned squash-merge commit SHA as the next branch base, eliminating **15 default-branch GET requests per uninterrupted 16-PR batch**; reset the cache when previously completed exercises are skipped.
