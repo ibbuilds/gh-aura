@@ -31,6 +31,6 @@ The user owns the design. **Never fill a rigid template, clone another profile o
 
 10. Apply revisions to the existing ProfileSpec (voice, projects, links, design, word budget, media) without discarding unrelated decisions. `gh_aura_profile_validate` / `gh-aura check --file draft.md` performs heuristics, **not** a factuality certificate.
 11. `gh_aura_profile_preview` or `gh_aura_profile_diff` shows an unapproved, read-only diff. Present it and request the owner's review.
-12. The **human independently** saves a local draft, runs `gh-aura preview --file draft.md --save review.json`, and approves `gh-aura apply --review review.json --pr`. No agent tool creates an approval code or publishes.
+12. The **human independently** saves a local draft, runs `gh-aura preview --file draft.md --save review.json`, and approves `gh-aura apply --review review.json --pr`. No agent tool can publish. No agent tool creates an approval code.
 
 Use Activity, Badges and Pins as optional context. Synthetic practice is not professional experience and GitHub alone awards achievements. If MCP/CLI is unavailable, provide a portable brief and instructions, not a false claim that the account was inspected.
