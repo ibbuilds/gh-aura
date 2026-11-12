@@ -70,3 +70,24 @@ test('private badge status does not attempt a network read without a token',()=>
     assert.match(invalid.stderr,/accepts only optional --repo/);
   }finally{rmSync(dir,{recursive:true,force:true});}
 });
+
+test('badges auto next validates tier and runs read-only before authentication',()=>{
+  const root=mkdtempSync(join(tmpdir(),'aura-next-offline-rejections-'));
+  try{
+    const noToken=run(['badges','auto','next','--repo','example/aura-private',
+      '--tier','bronze'],root);
+    assert.notEqual(noToken.status,0);
+    assert.match(noToken.stderr,/GH_TOKEN|GITHUB_TOKEN/);
+    const missingTier=run(['badges','auto','next','--repo','example/aura-private'],root);
+    assert.notEqual(missingTier.status,0);
+    assert.match(missingTier.stderr,/requires --tier/);
+    const disallowed=run(['badges','auto','next','--repo','example/aura-private',
+      '--tier','bronze','--start','16'],root);
+    assert.notEqual(disallowed.status,0);
+    assert.match(disallowed.stderr,/requires --tier/);
+    const invalidCount=run(['badges','auto','next','--repo','example/aura-private',
+      '--tier','bronze','--pulls','0'],root);
+    assert.notEqual(invalidCount.status,0);
+    assert.match(invalidCount.stderr,/--pulls.*1\.\.16/);
+  }finally{rmSync(root,{recursive:true,force:true});}
+});
