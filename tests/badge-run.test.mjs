@@ -54,6 +54,12 @@ function mockAPI(options={}) {
     if(path===base+'/issues?state=all&per_page=100')return response(
       options.alreadyDone?[{title:'[GH-AURA-QA-0001] Validate private sandbox setup',
         state:'closed'}]:[]);
+    if(options.statusMixed&&path===base+'/pulls/1'&&method==='GET')
+      return response({number:1,merged_at:'2026-11-12T01:00:00Z',
+        user:{login:'example'},merged_by:{login:options.otherMerger?'another':'example'},
+        base:{ref:'main'}});
+    if(path.startsWith(base+'/pulls/')&&path.endsWith('/reviews?per_page=100')&&method==='GET')
+      return response(options.submittedReview||options.statusReviewed?[{state:'APPROVED'}]:[]);
     if(path===base+'/pulls?state=closed&per_page=100&page=1')return response(
       options.statusMixed?[
         {number:1,merged_at:'2026-11-12T01:00:00Z',html_url:'https://github.com/'+repo+'/pull/1',
@@ -68,10 +74,12 @@ function mockAPI(options={}) {
         state:'closed',html_url:'https://github.com/'+repo+'/issues/11',
         user:{login:'example'}}]:[]);
     if(path===base+'/issues' && method==='POST'){
-      issue++;return response({number:issue,html_url:'https://github.com/'+repo+'/issues/'+issue},201);
+      issue++;return response({number:issue,created_at:'2026-11-12T01:00:00Z',
+        html_url:'https://github.com/'+repo+'/issues/'+issue},201);
     }
     if(path===base+'/issues/'+issue && method==='PATCH'){
-      assert.equal(body.state,'closed');return response({number:issue,state:'closed'});
+      assert.equal(body.state,'closed');return response({number:issue,state:'closed',
+        closed_at:options.patchSlowClose?'2026-11-12T01:08:00Z':'2026-11-12T01:00:05Z'});
     }
     if(path.startsWith(base+'/contents/docs/gh-aura/exercise-')&&method==='GET') {
       return options.alreadyDone?response({sha:'c'.repeat(40),type:'file'}):response({},404);
@@ -97,10 +105,12 @@ function mockAPI(options={}) {
       return response({commit:{sha:'b'.repeat(40)}});
     }
     if(path===base+'/pulls'&&method==='POST'){
-      prs++;return response({number:prs,html_url:'https://github.com/'+repo+'/pull/'+prs},201);
+      prs++;return response({number:prs,html_url:'https://github.com/'+repo+'/pull/'+prs,
+        head:{sha:options.wrongHead?'e'.repeat(40):'b'.repeat(40)}},201);
     }
     if(path===base+'/pulls/'+prs+'/merge'&&method==='PUT'){
       assert.equal(body.merge_method,'squash');
+      assert.equal(body.sha,'b'.repeat(40),'merge must bind exact generated PR head SHA');
       return response({merged:true,sha:'d'.repeat(40)});
     }
     throw Error('Unexpected GitHub API: '+method+' '+path);
@@ -143,6 +153,11 @@ test('private automation creates one sandbox repo, closes one issue and merges 2
   assert.equal(result.mergedPulls.length,2);
   assert.equal(result.skippedAlreadyMerged.length,0);
   assert.match(result.quickdrawIssue,/\/issues\/1$/);
+  assert.equal(result.quickdrawTimingCandidate,true);
+  assert.ok(result.yoloReviewFreeCandidate);
+  assert.equal(result.contentWrites,2+2*4+2);
+  assert.ok(result.pacing.minimumWriteGapMs>=1000);
+  assert.ok(result.mergedPulls.every(pr=>pr.exactHeadVerified&&pr.reviewedSubmissions===0));
   assert.match(result.note,/GitHub alone/);
   const writes=api.requests.filter(x=>x.method!=='GET');
   assert.equal(writes.filter(x=>x.path.endsWith('/pulls')&&x.method==='POST').length,2);
@@ -255,6 +270,10 @@ test('status reads only GH Aura-owned private workspace and distinguishes events
   assert.equal(status.observed.mergedOwnedExercisePullRequests,1);
   assert.equal(status.observed.closedOwnedExerciseIssues,1);
   assert.equal(status.observed.quickdrawTimingCandidates,1);
+  assert.equal(status.observed.yoloSelfMergeNoReviewCandidate,1);
+  assert.equal(status.observed.yoloInspectedMergedPRs,1);
+  assert.equal(status.observed.yoloEvidenceComplete,true);
+  assert.equal(status.events.yoloReviewEvidence[0].reviewCount,0);
   assert.equal(status.observed.pullSharkLocalTierCandidate,null);
   assert.ok(status.verify.includes('?tab=achievements'));
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
@@ -376,4 +395,75 @@ test('status does not mistake a slow QA issue closure for Quickdraw eligibility'
   assert.equal(report.events.closedQAIssues[0].elapsedSeconds,480);
   assert.equal(report.events.closedQAIssues[0].quickdrawTimingCandidate,false);
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+});
+
+test('incorrect PR head SHA and submitted reviews abort before any merge',async()=>{
+  for(const opt of [{wrongHead:true},{submittedReview:true}]){
+    const api=mockAPI({existing:true,existingMarker:'shared',...opt});
+    const p=plan({pulls:1,quickdraw:false});
+    await assert.rejects(applyBadgeRun(p,{
+      confirm:p.fingerprint,token:'test-only',fetch:api.fetch,sleep:async()=>{}
+    }),/PR head differs|submitted or uninspectable reviews/);
+    assert.equal(api.requests.filter(x=>x.method==='PUT'&&x.path.endsWith('/merge')).length,0);
+  }
+});
+
+test('runner reports a late Quickdraw close as non-qualifying timing evidence',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared',patchSlowClose:true});
+  const p=plan({pulls:0,quickdraw:true});
+  const result=await applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,sleep:async()=>{}
+  });
+  assert.equal(result.quickdrawTimingCandidate,false);
+  assert.ok(result.quickdrawIssue);
+  assert.equal(result.mergedPulls.length,0);
+});
+
+test('maximum-level goal advances through base, bronze, silver and gold stage boundaries',()=>{
+  const make=(n)=>{
+    const events=Array.from({length:n},(_,i)=>({index:i+1}));
+    const tree={truncated:false,tree:[
+      {path:'README.md'},...events.map(x=>({
+        path:'docs/gh-aura/exercise-'+String(x.index).padStart(4,'0')+'.md'
+      }))
+    ]};
+    const report={status:'observed-workspace-events-awards-unverified',
+      repository:'https://github.com/'+repo,
+      observed:{pullsComplete:true,issuesComplete:true},
+      events:{mergedPullRequests:events},
+      verify:'https://github.com/example?tab=achievements'};
+    return {tree,report};
+  };
+  const expected=[
+    [0,'base',2,2],[1,'base',1,2],[2,'bronze',14,16],
+    [16,'silver',16,32],[127,'silver',1,128],
+    [128,'gold',16,144],[1008,'gold',16,1024],
+  ];
+  for(const [n,tier,pulls,nextStart] of expected){
+    const {tree,report}=make(n);
+    const plan=nextBadgePlanFromWorkspace(report,tree,{repo,goal:'max'});
+    assert.equal(plan.tier,tier,'stage for '+n);
+    assert.equal(plan.pulls,pulls,'pulls for '+n);
+    assert.equal(plan.nextStart,nextStart,'next index for '+n);
+    assert.equal(badgeDigest(plan),plan.fingerprint);
+  }
+  const {tree,report}=make(1024);
+  const complete=nextBadgePlanFromWorkspace(report,tree,{repo,goal:'max'});
+  assert.equal(complete.status,'target-reached-in-workspace-events-award-unverified');
+  assert.equal(complete.tier,'gold');
+  assert.equal(complete.observedMergedExercises,1024);
+  assert.throws(()=>nextBadgePlanFromWorkspace(report,tree,{repo,goal:'max',tier:'gold'}),
+    /either --tier or --goal/);
+});
+
+test('status refuses to count reviewed or third-party merged PRs as YOLO candidates',async()=>{
+  for(const options of [{statusReviewed:true},{otherMerger:true}]){
+    const api=mockAPI({existing:true,existingMarker:'shared',
+      statusMixed:true,...options});
+    const result=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+    assert.equal(result.observed.yoloSelfMergeNoReviewCandidate,null);
+    assert.equal(result.observed.yoloInspectedMergedPRs,1);
+    assert.equal(result.events.yoloReviewEvidence[0].qualifiesAsEvent,false);
+    assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+  }
 });

@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.11.0 (progress-aware read-only badge batch planning); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.12.0 (maximum-tier staged goals and PR verification); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
@@ -9,7 +9,7 @@ GH Aura helps developers show **real, inspectable work** clearly on GitHub. It h
 | Module | Shipped CLI | What it does |
 | --- | --- | --- |
 | Activity | `activity` / `contributions` | Inspect actual activity, plan labeled synthetic date ranges and explicitly apply to a reusable private workspace without rewriting existing history |
-| Achievements | `badges` / `achievements` | Map all 19 known achievements/highlights by eligibility; plan tier-bound private PR/issue exercise batches, inspect observed events, never promise awards |
+| Achievements | `badges` / `achievements` | Map 19 known achievements/highlights, stage Pull Shark progression through base/Bronze/Silver/Gold, verify review-free PR merges and quick closures in the shared private workspace; never promise awards |
 | Profile | `readme` / `profile` | Minimal, regular or flashy README drafts; 0–100 visual intensity, en/es labels, section/project/story overrides, optional external writing |
 | Showcase | `pins` / `showcase` | Rank up to six public projects for the intended role and inspect documented project evidence |
 

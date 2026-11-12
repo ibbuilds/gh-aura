@@ -31,7 +31,7 @@ gh-aura badges auto --tier silver --start 16 --output silver-16.json
 gh-aura badges auto --tier gold --start 128 --output gold-128.json
 ```
 
-`--tier base|bronze|silver|gold` chooses a **community/product-observed threshold** of 2/16/128/1,024. `--start` is the **index of exercises in the selected workspace**, not a count of earned badges or all of your account's merged PRs.
+`--tier base|bronze|silver|gold` chooses a **first-party profile-fragment-observed threshold** of 2/16/128/1,024. YOLO and Quickdraw have no higher documented tiers. `--goal max` is only supported by read-only `auto next` and stages all four Pull Shark milestones; actual earned badges must be checked manually before continuing. `--start` is the **index of exercises in the selected workspace**, not a count of earned badges or all of your account's merged PRs.
 
 Plans are fully offline and include the exact repo, the requested operations, all sixteen excluded categories, bounds, estimated maximum request count, next batch position, and a SHA-256 fingerprint. Default/no-tier behavior remains compatible with earlier `--pulls 0..16 --start 0..1023` plans. A batch can only include exercises 1..1,024; there is no unattended loop.
 
@@ -45,20 +45,20 @@ gh-aura badges auto apply --review bronze.json --confirm THE_64_CHARACTER_FINGER
 Apply requires a token able to create a private repo if needed, then use Contents, Pull requests and Issues permissions in that workspace. Every batch:
 - Verifies authenticated ownership, private visibility, non-fork status and the GH Aura workspace README marker (existing unmarked repos are never adopted).
 - Checks the default-branch exercise file before opening a PR; already merged exercises are skipped on replay.
-- Opens bounded synthetic exercise PRs and merges them with GitHub's standard endpoint **only if repository rules permit**.
-- Searches issue-history pages before opening Quickdraw's labeled issue; uncertain or truncated history fails closed instead of blindly creating duplicates.
-- Never force-pushes, edits other repos, deletes a repo or retries uncertain writes automatically.
+- Creates bounded synthetic exercise PRs, verifies no submitted GitHub reviews and merges only the exact expected head SHA, **if repository protections permit**.
+- Searches issue-history pages before opening Quickdraw's labeled issue; verifies actual creation/closure timestamps where supplied; incomplete evidence fails closed rather than creating duplicates.
+- Paces content writes by at least 1.1 seconds; GitHub also limits content generation across the account to roughly 80 writes/minute and 500/hour, with stricter abuse controls possible. Never force-pushes, edits other repos, deletes a repo or retries uncertain writes automatically.
 
 For higher tiers, ask GH Aura to derive the next batch from the actual private workspace rather than manually guessing `--start`:
 
 ```bash
 # Read-only private GitHub API checks; requires GH_TOKEN / GITHUB_TOKEN
-gh-aura badges auto next --tier silver --output next.json
+gh-aura badges auto next --goal max --output next.json
 # Review the new SHA-256 plan first; then separately authorize:
 gh-aura badges auto apply --review next.json --confirm FINGERPRINT
 ```
 
-`auto next` verifies the exact workspace marker and ownership, reads completed GH Aura PRs and a non-truncated Git tree, checks that exercise files correspond to a gap-free sequence of merged PRs, then refuses pending exercise branches. It never creates a repository or performs GitHub writes. If the workspace already meets the **reported** target by observed exercise events, it reports a local target reached and creates no plan; this is **not a GitHub-awarded tier**. If evidence is incomplete or inconsistent, it stops rather than guessing.
+`auto next --goal max` chooses the **next** reported milestone (base 2, Bronze 16, Silver 128, Gold 1,024) from observed completed exercises; it does not attempt Gold from zero in one shot. It verifies exact workspace ownership and marker, completed GH Aura PRs, an untruncated Git tree, gap-free matching exercise files and absence of pending branches. It never creates a repository or performs GitHub writes. If the workspace already meets the **reported** target by observed exercise events, it reports a local target reached and creates no plan; this is **not a GitHub-awarded tier**. If evidence is incomplete or inconsistent, it stops rather than guessing.
 
 Existing exercise paths are skipped on replay, and merged PRs do not imply that GitHub has attributed an achievement.
 
@@ -70,7 +70,7 @@ gh-aura badges auto status
 gh-aura badges auto status --repo YOUR_USERNAME/my-gh-aura-private
 ```
 
-This **read-only** command checks the exact marked private workspace, paging through up to twelve pages each of closed PRs and issues. It counts merges made by the authenticated owner from GH Aura's exercise branches and closed labeled QA issues; Quickdraw timing candidates require a verified close within 300 seconds. If a result list is truncated, it marks completeness false. A local Pull Shark tier candidate is only a workspace event count; **it is not confirmation of a badge**. Check `https://github.com/YOUR_USERNAME?tab=achievements` with the appropriate visibility settings.
+This **read-only** command checks the exact marked private workspace, paging through up to twelve pages each of closed PRs and issues. It counts merges authored by the account from GH Aura's exercise branches, plus bounded inspection of the PR merger and formal reviews for a YOLO event candidate. It measures five-minute Quickdraw timing from GitHub's actual timestamps. If a result list is truncated, it marks completeness false. A local Pull Shark tier candidate is only a workspace event count; **it is not confirmation of a badge**. Check `https://github.com/YOUR_USERNAME?tab=achievements` with the appropriate visibility settings.
 
 ## Deliberate exclusions and limits
 

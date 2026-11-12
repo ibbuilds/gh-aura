@@ -80,14 +80,40 @@ test('badges auto next validates tier and runs read-only before authentication',
     assert.match(noToken.stderr,/GH_TOKEN|GITHUB_TOKEN/);
     const missingTier=run(['badges','auto','next','--repo','example/aura-private'],root);
     assert.notEqual(missingTier.status,0);
-    assert.match(missingTier.stderr,/requires --tier/);
+    assert.match(missingTier.stderr,/requires exactly one of/);
     const disallowed=run(['badges','auto','next','--repo','example/aura-private',
       '--tier','bronze','--start','16'],root);
     assert.notEqual(disallowed.status,0);
-    assert.match(disallowed.stderr,/requires --tier/);
+    assert.match(disallowed.stderr,/requires exactly one of/);
     const invalidCount=run(['badges','auto','next','--repo','example/aura-private',
       '--tier','bronze','--pulls','0'],root);
     assert.notEqual(invalidCount.status,0);
     assert.match(invalidCount.stderr,/--pulls.*1\.\.16/);
+  }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+test('max-level goal is accepted only by read-only next and cannot be applied unreviewed',()=>{
+  const root=mkdtempSync(join(tmpdir(),'aura-max-goal-'));
+  try{
+    const goal=run(['badges','auto','next','--repo','example/gh-aura-workspace',
+      '--goal','max'],root);
+    assert.notEqual(goal.status,0);
+    assert.match(goal.stderr,/GH_TOKEN|GITHUB_TOKEN/);
+    const conflicting=run(['badges','auto','next','--repo','example/gh-aura-workspace',
+      '--goal','max','--tier','gold'],root);
+    assert.notEqual(conflicting.status,0);
+    assert.match(conflicting.stderr,/requires exactly one of/);
+    const invalid=run(['badges','auto','next','--repo','example/gh-aura-workspace',
+      '--goal','platinium'],root);
+    assert.notEqual(invalid.status,0);
+    assert.match(invalid.stderr,/requires exactly one of/);
+    const plan=run(['badges','auto','plan','--repo','example/gh-aura-workspace',
+      '--goal','max'],root);
+    assert.notEqual(plan.status,0);
+    assert.match(plan.stderr,/--goal is reserved/);
+    const status=run(['badges','auto','status','--repo','example/gh-aura-workspace',
+      '--goal','max'],root);
+    assert.notEqual(status.status,0);
+    assert.match(status.stderr,/accepts only optional/);
   }finally{rmSync(root,{recursive:true,force:true});}
 });

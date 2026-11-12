@@ -2,7 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--start 0..1023] [--no-quickdraw] [--output badges.json] | badges auto next --tier base|bronze|silver|gold [--output next.json] | badges auto apply --review badges.json --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','no-quickdraw','role','output','force','review','confirm'], max: 1 },
+  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--output badges.json] | badges auto next --goal max [--output next.json] | badges auto next --tier base|bronze|silver|gold | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
@@ -31,7 +31,7 @@ export const HELP = [
   '  gh-aura badges free         Explore no-cost achievement opportunities',
   '  gh-aura badges auto        Plan private workspace exercises',
   '  gh-aura badges auto status Read-only observed exercise events',
-  '  gh-aura badges auto next   Plan next batch without duplicate PRs',
+  '  gh-aura badges auto next   Plan next safe batch; --goal max reaches Gold stages',
   '  gh-aura readme minimal      Generate a profile README draft',
   '  gh-aura pins                Recommend projects to feature',
   '  gh-aura activity plan 2022 --density 65 --output plan.json', '',
@@ -97,10 +97,10 @@ export function validateOptions(command, options) {
 
   if (command === 'badge-run') {
     const action = options.positional[0];
-    const planKeys = ['repo','pulls','start','tier','no-quickdraw','role','output','force'];
+    const planKeys = ['repo','pulls','start','tier','goal','no-quickdraw','role','output','force'];
     if (action === 'plan') {
-      if (options.review || options.confirm) {
-        throw Error('badges auto plan accepts --repo OWNER/PRIVATE_REPO, optionally --pulls, --start and --output.');
+      if (options.review || options.confirm || options.goal) {
+        throw Error('badges auto plan accepts --tier and --pulls, but --goal is reserved for read-only badges auto next.');
       }
       if(options.tier && !['base','bronze','silver','gold'].includes(options.tier))
         throw Error('--tier must be base, bronze, silver or gold.');
@@ -110,10 +110,14 @@ export function validateOptions(command, options) {
         }
       }
     } else if (action === 'next') {
-      const allowed=['positional','tier','repo','pulls','role','no-quickdraw','output','force'];
-      if (!options.tier || !['base','bronze','silver','gold'].includes(options.tier) ||
+      const allowed=['positional','tier','goal','repo','pulls','role','no-quickdraw','output','force'];
+      const tier=options.tier;
+      const goal=options.goal;
+      if (Boolean(tier)===Boolean(goal) ||
+          (tier&&!['base','bronze','silver','gold'].includes(tier)) ||
+          (goal&&!['base','bronze','silver','gold','max'].includes(goal)) ||
           Object.keys(options).some(key=>!allowed.includes(key))) {
-        throw Error('badges auto next requires --tier base|bronze|silver|gold; optional --repo, --pulls, --role, --no-quickdraw, --output.');
+        throw Error('badges auto next requires exactly one of --tier base|bronze|silver|gold or --goal max|base|bronze|silver|gold; optional --repo, --pulls and --output.');
       }
       if(options.pulls!==undefined&&(!/^\d+$/.test(options.pulls)||
           Number(options.pulls)<1||Number(options.pulls)>16))
