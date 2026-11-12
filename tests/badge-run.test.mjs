@@ -8,7 +8,7 @@ import { planBadgeRun, badgeDigest, loadBadgePlan, applyBadgeRun,
 import { parseArgs, validateOptions } from '../src/cli-options.mjs';
 
 const repo='example/aura-achievements';
-const plan=(opts={})=>planBadgeRun({repo,pulls:2,quickdraw:true,role:'backend',...opts});
+const plan=(opts={})=>planBadgeRun({repo,quickdraw:true,role:'backend',...opts});
 const response=(data,status=200)=>Response.json(data,{status});
 function mockAPI(options={}) {
   const requests=[],privateRepo=options.privateRepo!==false;
