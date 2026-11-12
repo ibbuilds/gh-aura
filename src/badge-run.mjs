@@ -309,8 +309,13 @@ export async function inspectBadgeWorkspace(opts={}) {
       if(!issue.pull_request&&issue.state==='closed'&&
         issue.user?.login?.toLowerCase()===owner.toLowerCase()&&
         /^\[GH-AURA-QA-\d{4}\]/.test(issue.title||'')){
+        const opened=Date.parse(issue.created_at||'');
+        const closed=Date.parse(issue.closed_at||'');
+        const elapsedSeconds=Number.isFinite(opened)&&Number.isFinite(closed)&&
+          closed>=opened?Math.floor((closed-opened)/1000):null;
         issues.push({number:issue.number,url:issue.html_url,
-          createdAt:issue.created_at,closedAt:issue.closed_at});
+          createdAt:issue.created_at,closedAt:issue.closed_at,elapsedSeconds,
+          quickdrawTimingCandidate:elapsedSeconds!==null&&elapsedSeconds<=300});
       }
     }
     if(batch.length<100){issuesComplete=true;break;}
@@ -326,6 +331,7 @@ export async function inspectBadgeWorkspace(opts={}) {
     observed:{
       mergedOwnedExercisePullRequests:merged.length,
       closedOwnedExerciseIssues:issues.length,
+      quickdrawTimingCandidates:issues.filter(x=>x.quickdrawTimingCandidate).length,
       pullsComplete,issuesComplete,
       pullSharkLocalTierCandidate:observedTierCandidate,
       caveat:'Counts are only observed events in this private workspace, not total qualifying account events or awarded badges.',
