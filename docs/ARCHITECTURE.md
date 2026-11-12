@@ -13,17 +13,17 @@ src/work.mjs                       explicit reviewed single-file documentation P
 src/github.mjs + cache.mjs          REST/GraphQL adapter and public-only ETag cache
 src/session.mjs                    HTTP request/response-size budgets and stats
 src/contributions.mjs              real GitHub contribution periods
-src/calendar.mjs + calendar-apply.mjs  synthetic practice planner + approved new-private-repo Git push
+src/calendar.mjs + calendar-apply.mjs  date planner + reviewed fast-forward private workspace push
 src/local-attribution.mjs          offline Git author metadata counts
 src/achievements.mjs               source-linked achievement capability catalog
-src/badge-run.mjs                  optional fingerprint-approved private sandbox PR/issue runner
+src/badge-run.mjs + workspace.mjs  reviewed PR/issue exercises + shared workspace identity
 src/project-evidence.mjs           optional public source-file and CI observations
 src/engine.mjs + readiness.mjs      explainable repo ranking and first-minute review
 src/render.mjs + editorial.mjs      deterministic layouts, bounded optional editor brief
 src/reference.mjs                  small dated offline reference aggregate
 ```
 
-No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `calendar apply` and `badge-run apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Calendar apply creates a new private repository containing explicitly generated practice commits; it cannot grant achievements or edit pins. Badge automation uses private-owned marked sandbox repositories only and never asserts a GitHub award.
+No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `activity apply` (legacy `calendar apply`) and `badges auto apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Activity and badge operations can share one marked, private, owned repository. Activity appends commits by fast-forward only after checking the marker, remote head and planned path collisions; it cannot grant achievements or edit pins. Badge exercises never claim GitHub awarded a badge. Deletion is not automated.
 
 ## Resources, privacy and data integrity
 
