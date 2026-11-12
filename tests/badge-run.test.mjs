@@ -82,7 +82,7 @@ function mockAPI(options={}) {
         closed_at:options.patchSlowClose?'2026-11-12T01:08:00Z':'2026-11-12T01:00:05Z'});
     }
     if(path.startsWith(base+'/contents/docs/gh-aura/exercise-')&&method==='GET') {
-      const number=Number(/exercise-(\\d{4})\\.md/.exec(path)?.[1]);
+      const number=Number(/exercise-(\d{4})\.md/.exec(path)?.[1]);
       const done=options.alreadyDone||options.doneIndices?.includes(number);
       return done?response({sha:'c'.repeat(40),type:'file'}):response({},404);
     }
