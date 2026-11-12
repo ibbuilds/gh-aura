@@ -118,20 +118,20 @@ export function validateOptions(command, options) {
     const [action, shorthand] = options.positional;
     const planning = ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force'];
     const applying = ['review','repo','confirm','author-name','author-email'];
-    if (!['plan','apply'].includes(action)) throw Error('Use calendar plan [YEAR] or calendar apply --review FILE.');
+    if (!['plan','apply'].includes(action)) throw Error('Use activity plan [YEAR] or activity apply --review FILE.');
     if (action === 'plan') {
       if (shorthand && (!/^\d{4}$/.test(shorthand) || options.year || options.from || options.to)) {
-        throw Error('Use one year (calendar plan 2022), or --from/--to, not both.');
+        throw Error('Use one year (activity plan 2022), or --from/--to, not both.');
       }
       if (shorthand) options.year = shorthand;
       if ((options.year && (options.from || options.to)) || applying.some(k=>options[k]!==undefined)) {
-        throw Error('calendar plan accepts date/density options only, not remote write arguments.');
+        throw Error('activity plan accepts date/density options only, not remote write arguments.');
       }
       if (options.year && !/^\d{4}$/.test(String(options.year))) throw Error('--year must be YYYY.');
     } else if (options.positional.length !== 1 ||
         !['review','confirm','author-name','author-email'].every(k=>options[k]) ||
         planning.some(k=>options[k]!==undefined)) {
-      throw Error('calendar apply requires --review FILE --repo OWNER/NEW_PRIVATE_REPO --confirm FINGERPRINT --author-name NAME --author-email VERIFIED_EMAIL.');
+      throw Error('activity apply requires --review FILE --confirm FINGERPRINT --author-name NAME --author-email VERIFIED_EMAIL (optional --repo OWNER/PRIVATE_WORKSPACE).');
     }
   }
   if (command === 'story') {
