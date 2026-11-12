@@ -1,6 +1,6 @@
 # Security
 
-Four explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), `work apply` for one user-authored Markdown file through an unmerged PR, `calendar apply` for a NEW owned private practice repository, and `badge-run apply` for an owned, marked private sandbox. Existing repository history and account settings are never rewritten.
+Four explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), `work apply` for one user-authored Markdown file through an unmerged PR, `activity apply` for a marked owned private practice workspace (legacy `calendar apply` accepted), and `badge-run apply` for an owned, marked private sandbox. Existing repository history and account settings are never rewritten.
 
 ## Credentials
 
@@ -40,6 +40,6 @@ In the ordinary profile or `work` PR mode, partial failures may leave a branch. 
 
 `badge-run plan` / `badges auto` plans offline. `badge-run apply` requires an approved fingerprint and only creates or uses a **private, owned GH Aura-marked sandbox repository**. It can open and merge exercise PRs and close a QA issue. Existing unmarked repos, public repos, other users' repos and unexpected branches are rejected. No force-push, bypass of branch protection, public automation, third-party action or hidden scheduling. An interrupted run may leave partial private state; inspect it before retrying. GitHub can deny badge awards for sandbox/self-created events. See [badge sandbox guide](docs/BADGE_RUN.md).
 
-## Calendar Studio synthetic private history
+## Activity: reviewed synthetic private history
 
-`calendar plan` is offline and produces a SHA-256-bound date blueprint. `calendar apply` requires explicit fingerprint approval, a new private repo owned by the authenticated account and a supplied GitHub-linked author email. It prepares deterministic Git history locally, then makes one Git push. It never force-pushes or mutates existing repositories. Tokens are not persisted to Git arguments or config. Synthetic commits are not independently verified historical professional work and GitHub may not count them. See [Calendar Studio](docs/CALENDAR.md).
+`activity plan` is offline and produces a SHA-256-bound date blueprint. `activity apply` requires explicit fingerprint approval, a new or previously marked private workspace owned by the authenticated account and a supplied GitHub-linked author email. It prepares deterministic Git history locally, then makes one Git push. For a marked existing workspace, it checks tree collisions and the exact default-branch SHA, then appends commits without force. It refuses unmarked or non-owned repositories. Tokens are not persisted to Git arguments or config. Synthetic commits are not independently verified historical professional work and GitHub may not count them. See [Activity workspace](docs/CALENDAR.md).
