@@ -1,5 +1,7 @@
 # 60-second hiring-manager usability study
 
+> Status (2026-11-12): no external reviewer sessions have been conducted or independently verified. This is a prospective protocol, not reported user-study results. See [release readiness](RELEASE_READINESS.md).
+
 **Status:** Protocol available. **No human review results have been collected.**
 
 GH Aura can audit public evidence and generate profile drafts, but it cannot know whether a hiring manager actually understands the result or whether it increases interviews. That requires voluntary, consent-based human evaluation. Do not substitute engineer profile fame, follower counts or repository stars for these observations.
