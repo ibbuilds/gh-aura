@@ -111,6 +111,10 @@ GH Aura's [definitive product plan](docs/PRODUCT_PLAN.md) organizes the CLI into
 
 GitHub controls achievements; the tool cannot grant every badge, fabricate historical contributions or certify professional experience. Pins and account settings remain manual. Private-repository activity is not a route to guaranteed awards. Annual history requires authenticated reads. Showcase scores describe presentation evidence, not code quality or hiring probability.
 
+## Human review status
+
+The engineering and CLI tests verify behavior, not employment outcomes. A [consent-based 60-second reviewer study protocol](docs/HUMAN_VALIDATION.md) is ready, but **no human reviewer results have been collected**. GH Aura does not claim that its templates guarantee interviews.
+
 ## Development
 
 ```bash

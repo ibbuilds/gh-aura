@@ -184,6 +184,14 @@ Allow users to exclude/force-include/reorder candidates, identify why a repo is 
 
 `story set/list/remove` manages user-supplied, source-linked descriptions of individual work entirely locally. The CLI never upgrades such claims to verified engineering achievements; `profile` and `audit --job` can reuse the configured stories. No AI/paid provider or GitHub write is involved until a separately approved profile review.
 
+## Implemented feature status — v1.6.0
+
+- Authentic local Git author analysis: `contributions --local PATH [--emails-file FILE]` performs zero network requests and prints no sensitive author identity values. No authorship changes or false eligibility claims.
+- Explicit reviewed documentation PRs: `work preview` and `work apply` authorize exactly one root README/docs Markdown change. A scoped token is required only for the approved PR creation; no automatic merge or GitHub award.
+- Optional observed GitHub Actions status and published release evidence: `audit --deep 2 --checks`, with bounded, visibility-verified API requests. A passing historic run is not a technical certification.
+- Local project-story management: `story set/list/remove` replaces manual JSON editing for user-supplied problem, contribution and evidence notes.
+- **Human 60-second evaluation remains unperformed**: [protocol](HUMAN_VALIDATION.md) is documented, but reviewers and profile-owner consent are necessary. Issue #21 must remain open pending actual evaluation.
+
 ## Tracked implementation work
 
 - [#22 — A1: real historical contributions and private visibility](https://github.com/ibbuilds/gh-aura/issues/22)

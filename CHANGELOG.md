@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.6.0 — 2026-11-11
 
 - Added `story list/set/remove` for command-driven, local-only project contribution narratives with `--dry-run`, validation and no API cost.
 
@@ -88,3 +88,4 @@ Added candidate README inspection and terminal diffs.
 ## 0.1.0 — 2026-11-11
 
 Initial audit, showcase, achievement guide and three README styles.
+
