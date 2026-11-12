@@ -44,6 +44,13 @@ test('explicit historical observations preserve existing days and only fill targ
   assert.equal(a.settings.existingHistory,'supplied-verified-counts');
   assert.throws(()=>planCalendar({from:'2022-01-01',to:'2022-01-31',now},new Map()),/incomplete/);
 });
+test('100 percent density means every date even with weekends preference zero',()=>{
+  const a=planCalendar({from:'2022-01-01',to:'2022-01-31',
+    mode:'workweek',weekends:0,density:100,intensity:1,seed:7,now});
+  assert.equal(a.days.length,31);
+  assert.equal(a.summary.selectedDays,31);
+  assert.equal(a.summary.syntheticCommits,31);
+});
 test('zero density has zero generated work; invalid ranges and oversized plans fail',()=>{
   const p=plan({density:0});
   assert.equal(p.days.length,0);
