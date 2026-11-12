@@ -3,6 +3,7 @@ import { readFileSync, statSync, writeFileSync } from 'node:fs';
 import { requestJSON, getJSON, decodeReadme, tokenFor, validateLogin } from './github.mjs';
 import { workspaceRepo, managedWorkspaceReadme, WORKSPACE_README } from './workspace.mjs';
 import { reserveBadgeWrite, BADGE_WRITE_HOURLY_BUDGET } from './badge-write-budget.mjs';
+import { stageBadgeBranches } from './badge-bulk-git.mjs';
 import { ACHIEVEMENT_MATRIX, PRIVATE_AUTOMATABLE, PULL_SHARK_TIERS,
   MATRIX_VERSION, achievementMatrixSummary } from './achievement-matrix.mjs';
 
@@ -10,6 +11,7 @@ const MARKER='GH-AURA-PRIVATE-BADGE-SANDBOX-V1';
 const MAX_PULLS=16;
 const MAX_EXERCISE_INDEX=1024;
 const PLAN_FORMAT='gh-aura-private-badges-v2';
+const BATCH_PLAN_FORMAT='gh-aura-private-badges-v3';
 const LEGACY_PLAN_FORMAT='gh-aura-private-badges-v1';
 const maxFile=65536;
 const DOCS=[
@@ -36,11 +38,13 @@ function planPayload(doc){
   const base={format:doc.format,repo:doc.repo,private:doc.private,
     pulls:doc.pulls,start:doc.start,quickdraw:doc.quickdraw,role:doc.role};
   if(doc.format===LEGACY_PLAN_FORMAT)return base;
-  return {...base,tier:doc.tier??null,targetThreshold:doc.targetThreshold??null,
+  const extended={...base,tier:doc.tier??null,targetThreshold:doc.targetThreshold??null,
     catalogVersion:doc.catalogVersion,attempts:doc.attempts,excluded:doc.excluded,
     note:doc.note,verification:doc.verification,
     estimatedRequestUpperBound:doc.estimatedRequestUpperBound,
     nextStart:doc.nextStart,remainingToTier:doc.remainingToTier};
+  return doc.format===BATCH_PLAN_FORMAT
+    ?{...extended,strategy:doc.strategy}:extended;
 }
 export function badgeDigest(doc) {
   return createHash('sha256').update(JSON.stringify(planPayload(doc))).digest('hex');
@@ -51,6 +55,9 @@ export function badgeDigest(doc) {
  */
 export function planBadgeRun(options={}) {
   const repo=validRepo(workspaceRepo(options.repo));
+  const strategy=options.strategy||'rest';
+  if(!['rest','git-batch'].includes(strategy))
+    throw Error('--strategy must be rest or git-batch.');
   const start=int(options.start??0,'--start',0,MAX_EXERCISE_INDEX-1);
   const tier=options.tier||null;
   if(tier && !Object.hasOwn(PULL_SHARK_TIERS,tier))
@@ -80,12 +87,14 @@ export function planBadgeRun(options={}) {
     badge:x.id,name:x.name,category:x.category,reason:x.reason,route:x.route,
   }));
   const doc={
-    format:PLAN_FORMAT,catalogVersion:MATRIX_VERSION,repo,private:true,
+    format:strategy==='git-batch'?BATCH_PLAN_FORMAT:PLAN_FORMAT,
+    ...(strategy==='git-batch'?{strategy}:{}),
+    catalogVersion:MATRIX_VERSION,repo,private:true,
     pulls,start,quickdraw,role,tier,targetThreshold,
     attempts,excluded,
     note:'Only PR/issue events are attempted in one marked private workspace. GitHub decides if an award/tier is granted. No third-party activity.',
     verification:'Check the authenticated account on GitHub manually; completed API operations are not earned badges.',
-    estimatedRequestUpperBound:20+pulls*12,
+    estimatedRequestUpperBound:strategy==='git-batch'?25+pulls*6:20+pulls*12,
     nextStart:start+pulls,
     remainingToTier:targetThreshold===null?null:targetThreshold-start-pulls,
   };
@@ -100,10 +109,13 @@ export function loadBadgePlan(path) {
   let p;
   try{p=JSON.parse(readFileSync(path,'utf8'));}
   catch{throw Error('Invalid badge plan JSON.');}
-  if(![PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(p?.format)||p.private!==true||
+  if(![BATCH_PLAN_FORMAT,PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(p?.format)||
+    p.private!==true||
     !/^[a-f0-9]{64}$/.test(p.fingerprint||'')||badgeDigest(p)!==p.fingerprint)
     throw Error('Badge plan fingerprint mismatch or unsupported format.');
-  const canonical=planBadgeRun({...p,tier:p.format===LEGACY_PLAN_FORMAT?null:p.tier});
+  const canonical=planBadgeRun({...p,
+    tier:p.format===LEGACY_PLAN_FORMAT?null:p.tier,
+    strategy:p.format===BATCH_PLAN_FORMAT?p.strategy:'rest'});
   if(p.format===LEGACY_PLAN_FORMAT){
     const previous={...canonical,format:LEGACY_PLAN_FORMAT};
     if(badgeDigest(previous)!==p.fingerprint)
@@ -135,7 +147,8 @@ const sandboxReadme=WORKSPACE_README;
 async function applyBadgeRun(doc,opts={}) {
   const token=tokenFor(opts);
   if(!token)throw Error('GH_TOKEN/GITHUB_TOKEN with repository creation and private Contents/Pull requests/Issues permissions is required.');
-  if(doc.private!==true||![PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(doc.format)||
+  if(doc.private!==true||
+    ![BATCH_PLAN_FORMAT,PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(doc.format)||
     badgeDigest(doc)!==doc.fingerprint)
     throw Error('Invalid or altered private sandbox plan.');
   if(typeof opts.confirm!=='string'||opts.confirm!==doc.fingerprint||
@@ -210,7 +223,9 @@ async function applyBadgeRun(doc,opts={}) {
     workspaceReused:!created,
     requested:{pulls:doc.pulls,quickdraw:doc.quickdraw,start:doc.start},
     mergedPulls:[],skippedAlreadyMerged:[],quickdrawIssue:null,
-    requests:0,contentWrites:0,quickdrawTimingCandidate:null,yoloReviewFreeCandidate:null,
+    requests:0,contentWrites:0,gitPushes:0,stagedBranches:0,
+    strategy:doc.strategy||'rest',
+    quickdrawTimingCandidate:null,yoloReviewFreeCandidate:null,
     note:'Operations were requested and executed. GitHub alone grants or refuses achievements; private eligibility is not guaranteed.'};
   const eventIndex=String(doc.start+1).padStart(4,'0');
   if(doc.quickdraw){
@@ -253,40 +268,79 @@ async function applyBadgeRun(doc,opts={}) {
       // A close inside five minutes is an event candidate, not a confirmed badge.
     }
   }
+  const batchMode=doc.format===BATCH_PLAN_FORMAT&&doc.strategy==='git-batch';
+  let preparedHeads=new Map();
+  if(batchMode&&doc.pulls) {
+    // Preflight all target paths before making any branch changes.
+    // Previously merged exercises remain untouched on the default branch.
+    const pending=[];
+    for(let i=0;i<doc.pulls;i++){
+      const index=doc.start+i+1;
+      const id=String(index).padStart(4,'0');
+      const filepath='docs/gh-aura/exercise-'+id+'.md';
+      const encoded=filepath.split('/').map(encodeURIComponent).join('/');
+      const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
+      if(committed){results.skippedAlreadyMerged.push(index);continue;}
+      pending.push({index,text:exerciseText(doc,index)});
+    }
+    if(pending.length){
+      const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
+      if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
+        throw Error('Cannot verify the default branch before Git batch staging.');
+      const stage=await stageBadgeBranches({
+        baseSha:baseRef.object.sha,branch,repo:doc.repo,token,
+        entries:pending,gitRunner:opts.gitRunner,testRemote:opts.testRemote,
+        reservePush:async count=>{
+          if(!verifiedOwner)throw Error('Atomic push requires verified ownership.');
+          const elapsed=Date.now()-lastWriteAt;
+          if(lastWriteAt>0&&elapsed<gap)await pause(gap-elapsed);
+          // Account for each new branch conservatively, despite one Git push.
+          // GitHub may charge branch creation differently from API requests.
+          latestLocalBudget=await reserve(verifiedOwner,count);
+          contentWrites+=count;
+          lastWriteAt=Date.now();
+        },
+      });
+      preparedHeads=stage.shaByIndex;
+      results.gitPushes=stage.gitPushes;
+      results.stagedBranches=stage.prepared;
+    }
+  }
   let lastMergedBaseSha=null;
   for(let i=0;i<doc.pulls;i++){
     const index=doc.start+i+1;
     const id=String(index).padStart(4,'0');
-    const filepath='docs/gh-aura/exercise-'+id+'.md';
-    const encoded=filepath.split('/').map(encodeURIComponent).join('/');
-    // The default branch document is the idempotent proof of a completed merge.
-    const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
-    if(committed){
-      results.skippedAlreadyMerged.push(index);
-      // A previous process may have merged these PRs. Re-read the base before
-      // any subsequent branch creation; never assume a stale head.
-      lastMergedBaseSha=null;
-      continue;
-    }
     const head='gh-aura/badge-'+id;
-    const prior=await call(base+'/git/ref/heads/'+head);
-    if(prior)throw Error('Review branch '+head+' already exists without a merged document. Inspect GitHub; no overwrite.');
-    let baseSha=lastMergedBaseSha;
-    if(!baseSha){
-      const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
-      if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
-        throw Error('Could not verify latest default branch revision.');
-      baseSha=baseRef.object.sha;
+    let exactHead;
+    if(batchMode){
+      // Already-completed entries were checked during the batch preflight.
+      if(!preparedHeads.has(index))continue;
+      exactHead=preparedHeads.get(index);
+    }else{
+      const filepath='docs/gh-aura/exercise-'+id+'.md';
+      const encoded=filepath.split('/').map(encodeURIComponent).join('/');
+      const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
+      if(committed){
+        results.skippedAlreadyMerged.push(index);
+        lastMergedBaseSha=null;
+        continue;
+      }
+      const prior=await call(base+'/git/ref/heads/'+head);
+      if(prior)throw Error('Review branch '+head+' already exists without a merged document. Inspect GitHub; no overwrite.');
+      let baseSha=lastMergedBaseSha;
+      if(!baseSha){
+        const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
+        if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
+          throw Error('Could not verify latest default branch revision.');
+        baseSha=baseRef.object.sha;
+      }
+      await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseSha});
+      const written=await call(base+'/contents/'+encoded,'PUT',{
+        message:'docs(sandbox): add generated exercise '+id,
+        branch:head,content:Buffer.from(exerciseText(doc,index)).toString('base64'),
+      });
+      exactHead=written?.commit?.sha;
     }
-    // The prior successful squash merge returns the exact new base SHA.
-    // Reusing it eliminates one default-branch GET for every later PR in
-    // this batch, without force updates or guessing a commit.
-    await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseSha});
-    const written=await call(base+'/contents/'+encoded,'PUT',{
-      message:'docs(sandbox): add generated exercise '+id,
-      branch:head,content:Buffer.from(exerciseText(doc,index)).toString('base64'),
-    });
-    const exactHead=written?.commit?.sha;
     if(!/^[a-f0-9]{40}$/i.test(exactHead||''))
       throw Error('Cannot verify the exact generated commit SHA. No PR was opened; inspect the branch.');
     const pr=await call(base+'/pulls','POST',{
@@ -296,6 +350,8 @@ async function applyBadgeRun(doc,opts={}) {
     });
     if(!Number.isInteger(pr?.number)||!pr?.html_url)
       throw Error('PR creation outcome unknown; inspect GitHub before retrying.');
+    if(batchMode&&!pr?.head?.sha)
+      throw Error('GitHub did not return a verified PR head SHA for the atomic batch. No merge attempted.');
     if(pr?.head?.sha&&pr.head.sha!==exactHead)
       throw Error('The PR head differs from the reviewed generated commit. No merge attempted.');
     // GitHub's YOLO criterion is "merged without a review": check actual
@@ -495,6 +551,7 @@ export function nextBadgePlanFromWorkspace(status,tree,options={}) {
     ...(options.pulls===undefined?{}:{pulls:options.pulls}),
     ...(options.role===undefined?{}:{role:options.role}),
     quickdraw:!options['no-quickdraw'],
+    strategy:options.strategy,
   });
   // The reviewed SHA-bound plan records this checkpoint tier and exact actions,
   // never an unverified claim that the user's full goal has been awarded.
@@ -509,7 +566,7 @@ export async function planNextBadgeRun(opts={}) {
     '/git/trees/'+encodeURIComponent(report.defaultBranch)+'?recursive=1';
   const tree=await getJSON(path,{...opts,publicRead:false,cache:undefined,allowMissing:false});
   const doc=nextBadgePlanFromWorkspace(report,tree,{...opts,repo});
-  if(doc.format===PLAN_FORMAT) {
+  if([PLAN_FORMAT,BATCH_PLAN_FORMAT].includes(doc.format)) {
     // Detect interrupted/in-progress exercise branches before writing a local plan.
     for(let n=doc.start+1;n<=doc.start+doc.pulls;n++) {
       const head='gh-aura/badge-'+String(n).padStart(4,'0');

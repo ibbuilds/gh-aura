@@ -17,6 +17,7 @@ src/calendar.mjs + calendar-apply.mjs  date planner + reviewed fast-forward priv
 src/local-attribution.mjs          offline Git author metadata counts
 src/achievements.mjs + achievement-matrix.mjs  sourced catalog and eligible private routes
 src/badge-run.mjs + workspace.mjs  reviewed PR/issue exercises + shared workspace identity
+src/badge-bulk-git.mjs              optional atomic create-only PR-source Git push
 src/badge-write-budget.mjs          atomic local per-account rolling write quota
 src/project-evidence.mjs           optional public source-file and CI observations
 src/engine.mjs + readiness.mjs      explainable repo ranking and first-minute review
@@ -24,7 +25,7 @@ src/render.mjs + editorial.mjs      deterministic layouts, bounded optional edit
 src/reference.mjs                  small dated offline reference aggregate
 ```
 
-No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `activity apply` (legacy `calendar apply`) and `badges auto apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Activity and badge operations can share one marked, private, owned repository. Activity appends commits by fast-forward only after checking the marker, remote head and planned path collisions; it cannot grant achievements or edit pins. Badge batches are individually SHA-bound and capped at sixteen PRs; the runner paces content writes, reserves hourly quota across local invocations, reuses verified merge SHA for the next PR branch and binds each merge to the generated PR head. Read-only `badges auto status` checks bounded pages of workspace PR/issue events and sampled submitted-review/merger evidence. `badges auto next --goal max` progresses through reported 2, 16, 128 and 1,024 PR checkpoints, never claims a GitHub-awarded badge. Deletion is not automated.
+No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `activity apply` (legacy `calendar apply`) and `badges auto apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Activity and badge operations can share one marked, private, owned repository. Activity appends commits by fast-forward only after checking the marker, remote head and planned path collisions; it cannot grant achievements or edit pins. Badge batches are individually SHA-bound and capped at sixteen PRs; the runner paces content writes, reserves hourly quota across local invocations, reuses verified merge SHA for the next PR branch and binds each merge to the generated PR head. An optional v3 reviewed strategy stages up to sixteen new source branch refs in one atomic Git push, with fresh parent SHA and per-ref absence leases, never directly touching the default branch. Read-only `badges auto status` checks bounded pages of workspace PR/issue events and sampled submitted-review/merger evidence. `badges auto next --goal max` progresses through reported 2, 16, 128 and 1,024 PR checkpoints, never claims a GitHub-awarded badge. Deletion is not automated.
 
 ## Resources, privacy and data integrity
 

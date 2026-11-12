@@ -117,3 +117,29 @@ test('max-level goal is accepted only by read-only next and cannot be applied un
     assert.match(status.stderr,/accepts only optional/);
   }finally{rmSync(root,{recursive:true,force:true});}
 });
+
+test('atomic Git strategy is opt-in, SHA-bound and rejected on unreviewed apply',()=>{
+  const root=mkdtempSync(join(tmpdir(),'aura-bulk-cli-'));
+  try{
+    const file=join(root,'atomic.json');
+    const proposed=run(['badges','auto','--repo','example/private-workspace',
+      '--strategy','git-batch','--tier','base','--output',file],root);
+    assert.equal(proposed.status,0,proposed.stderr);
+    const p=JSON.parse(readFileSync(file,'utf8'));
+    assert.equal(p.format,'gh-aura-private-badges-v3');
+    assert.equal(p.strategy,'git-batch');
+    assert.equal(p.pulls,2);
+    const invalid=run(['badges','auto','--repo','example/private-workspace',
+      '--strategy','magic'],root);
+    assert.notEqual(invalid.status,0);
+    assert.match(invalid.stderr,/--strategy must/);
+    const unapproved=run(['badges','auto','apply','--review',file,
+      '--confirm','0'.repeat(64)],root);
+    assert.notEqual(unapproved.status,0);
+    assert.match(unapproved.stderr,/GH_TOKEN|GITHUB_TOKEN|confirm/);
+    const status=run(['badges','auto','status',
+      '--repo','example/private-workspace','--strategy','git-batch'],root);
+    assert.notEqual(status.status,0);
+    assert.match(status.stderr,/status accepts only/);
+  }finally{rmSync(root,{recursive:true,force:true});}
+});

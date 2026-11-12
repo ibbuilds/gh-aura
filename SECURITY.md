@@ -43,3 +43,13 @@ In the ordinary profile or `work` PR mode, partial failures may leave a branch. 
 ## Activity: reviewed synthetic private history
 
 `activity plan` is offline and produces a SHA-256-bound date blueprint. `activity apply` requires explicit fingerprint approval, a new or previously marked private workspace owned by the authenticated account and a supplied GitHub-linked author email. It prepares deterministic Git history locally, then makes one Git push. For a marked existing workspace, it checks tree collisions and the exact default-branch SHA, then appends commits without force. It refuses unmarked or non-owned repositories. Tokens are not persisted to Git arguments or config. Synthetic commits are not independently verified historical professional work and GitHub may not count them. See [Activity workspace](docs/CALENDAR.md).
+
+## Optional atomic Git batch strategy
+
+The explicitly reviewed `--strategy git-batch` uses local `git fast-import` to prepare up to sixteen source branches, then a **single create-only atomic multi-ref push**. It is bound into a new v3 SHA-256 plan, and cannot be silently enabled for previous v1/v2 REST plans. The repo must be private, owned by the authenticated account, and GH Aura-marked.
+
+The tool fetches the default branch and verifies its exact SHA, rejects existing target refs, pushes with `--atomic` and per-ref empty-expected leases, and verifies every resulting branch SHA before opening a PR. No update or force-rewrite of any existing branch is permitted; `main` is never pushed. An unsupported or rejected atomic push stops the operation without a non-atomic fallback. Never retry uncertain writes automatically.
+
+Git credentials are passed through ephemeral process environment variables, never included in Git command arguments or repository content. Git errors suppress raw stderr that might contain secrets. The local hourly budget conservatively reserves one unit per staged branch plus PR operations, while GitHub may account for Git transport differently or enforce stricter anti-abuse limits. The fast strategy remains experimental pending authorized GitHub.com private-write tests.
+
+[Fast atomic Git strategy](docs/BADGE_FAST.md)

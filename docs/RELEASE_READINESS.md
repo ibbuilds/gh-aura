@@ -1,6 +1,6 @@
 # GH Aura — release readiness and external validation
 
-**Status: v1.13.0, 2026-11-12.** This is an operator checklist, not a declaration of completed production validation. GitHub CI checks syntax, unit tests, package tests, six platform combinations and live **read-only** integration; it does not create or delete private GitHub repositories.
+**Status: v1.14.0, 2026-11-12.** This is an operator checklist, not a declaration of completed production validation. GitHub CI checks syntax, unit tests, package tests, six platform combinations and live **read-only** integration; it does not create or delete private GitHub repositories.
 
 ## 1. Repository governance — account administrator required
 
@@ -26,7 +26,7 @@ Use **a dedicated disposable GitHub test account with its own restricted token**
 
 The badge runner serializes individual content-generating writes at least 1 second apart and reserves each one in an atomically updated rolling 480/hour local ledger, persisted between CLI invocations for the same authenticated account. GitHub also documents general secondary limits of about 80 content writes per minute and 500 per hour **across the entire account**, including other machines/apps. Verify that exhausted, corrupted, clock-skewed or concurrently locked local ledgers refuse a mutation. Do not run continuous batches or assume GitHub accepts the full local quota; secondary controls may be stricter. No automatic retries of failed/unknown write outcomes are permitted.
 
-Current tests in `tests/calendar.test.mjs` and `tests/badge-run.test.mjs` use a local Git bare repository and simulated GitHub API endpoints. Until real tests are performed with explicit account authorization, remote write results remain **unverified**.
+Current tests in `tests/calendar.test.mjs` and `tests/badge-run.test.mjs` use a local Git bare repository and simulated GitHub API endpoints. Until real tests are performed with explicit account authorization, remote write results remain **unverified**. **Additional v1.14 pilot:** use `badges auto --tier base --strategy git-batch` on an authorized disposable account; verify one atomic two-ref Git push, unchanged default branch, valid owner/marker and two PRs. Test existing refs and stale baseline rejection. Do not attempt Gold-scale batching until GitHub actually awards the pilot badge.
 
 ## 3. Optional cleanup — not automated
 

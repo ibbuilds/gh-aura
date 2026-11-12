@@ -2,7 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--output badges.json] | badges auto next --goal max [--output next.json] | badges auto next --tier base|bronze|silver|gold | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','no-quickdraw','role','output','force','review','confirm'], max: 1 },
+  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--output badges.json] | badges auto next --goal max [--strategy git-batch] [--output next.json] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
@@ -20,7 +20,7 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
@@ -97,8 +97,10 @@ export function validateOptions(command, options) {
 
   if (command === 'badge-run') {
     const action = options.positional[0];
-    const planKeys = ['repo','pulls','start','tier','goal','no-quickdraw','role','output','force'];
+    const planKeys = ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force'];
     if (action === 'plan') {
+      if (options.strategy && !['rest','git-batch'].includes(options.strategy))
+        throw Error('--strategy must be rest or git-batch.');
       if (options.review || options.confirm || options.goal) {
         throw Error('badges auto plan accepts --tier and --pulls, but --goal is reserved for read-only badges auto next.');
       }
@@ -110,9 +112,11 @@ export function validateOptions(command, options) {
         }
       }
     } else if (action === 'next') {
-      const allowed=['positional','tier','goal','repo','pulls','role','no-quickdraw','output','force'];
+      const allowed=['positional','tier','goal','strategy','repo','pulls','role','no-quickdraw','output','force'];
       const tier=options.tier;
       const goal=options.goal;
+      if (options.strategy && !['rest','git-batch'].includes(options.strategy))
+        throw Error('--strategy must be rest or git-batch.');
       if (Boolean(tier)===Boolean(goal) ||
           (tier&&!['base','bronze','silver','gold'].includes(tier)) ||
           (goal&&!['base','bronze','silver','gold','max'].includes(goal)) ||
