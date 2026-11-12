@@ -3,24 +3,53 @@ import { selectFeatured } from './engine.mjs';
 import { renderHiringReview } from './readiness.mjs';
 import { md, html, httpsUrl, repoUrl } from './text.mjs';
 
+const PROFILE_COPY = Object.freeze({
+  en: Object.freeze({
+    selected: 'Selected work', featured: 'Featured work', project: 'Project',
+    description: 'Description', contribution: 'My contribution',
+    sourceRepository: 'Source repository', tradeoffs: 'Trade-offs',
+    outcome: 'Outcome (user-provided)', evidence: 'Evidence',
+    problem: 'Problem', engineeringTradeoffs: 'Engineering trade-offs',
+    inspectEvidence: 'Inspect evidence', technologies: 'Technologies',
+    inferredLanguages: 'Languages in public repositories',
+    stats: 'Public repository snapshot', repositories: 'repositories',
+    stars: 'stars', observed: 'Observed', links: 'Links', website: 'Website',
+    myWork: 'My work',
+  }),
+  es: Object.freeze({
+    selected: 'Trabajo seleccionado', featured: 'Proyectos destacados', project: 'Proyecto',
+    description: 'Descripción', contribution: 'Mi contribución',
+    sourceRepository: 'Repositorio de código', tradeoffs: 'Decisiones técnicas',
+    outcome: 'Resultado (declarado por el usuario)', evidence: 'Evidencia',
+    problem: 'Problema', engineeringTradeoffs: 'Decisiones y compromisos técnicos',
+    inspectEvidence: 'Ver evidencia', technologies: 'Tecnologías',
+    inferredLanguages: 'Lenguajes detectados en repositorios públicos',
+    stats: 'Resumen de repositorios públicos', repositories: 'repositorios',
+    stars: 'estrellas', observed: 'Consultado el', links: 'Enlaces', website: 'Sitio web',
+    myWork: 'Mi trabajo',
+  }),
+});
+
 export function renderProfile(snapshot, config, chosenStyle) {
   const plan = presentationPlan({ ...config.profile, ...(chosenStyle ? { style: chosenStyle, visual: -1 } : {}) });
   const style = plan.style;
   if (!['minimal', 'regular', 'flashy'].includes(style)) throw new Error('Choose minimal, regular, or flashy.');
   const p = config.profile;
+  const copy = PROFILE_COPY[config.editorial?.language || 'en'];
+  if (!copy) throw new Error('Unsupported profile language. Choose en or es.');
   const sections = plan.sections;
   const projects = sections.projects ? selectFeatured(snapshot, config) : [];
   const storyFor = (repo) => p.projectStories.find((entry) =>
     [repo.full_name.toLowerCase(), repo.name.toLowerCase()].includes(entry.repo.toLowerCase()));
 
   const technologies = [...new Set(p.technologies.length ? p.technologies : snapshot.repos.map((repo) => repo.language).filter(Boolean))].slice(0, p.technologies.length ? 12 : plan.maxTechnologyLabels);
-  const techLabel = p.technologies.length ? 'Technologies' : 'Languages in public repositories';
+  const techLabel = p.technologies.length ? copy.technologies : copy.inferredLanguages;
   const name = p.name || snapshot.user.name || snapshot.username;
   const about = p.about || snapshot.user.bio || '';
   const links = p.links.map((link) => ({ label: link.label, url: httpsUrl(link.url) })).filter((link) => link.url);
   const blog = String(snapshot.user.blog || '');
   const website = httpsUrl(blog.includes(':') ? blog : 'https://' + blog);
-  if (blog && website && !links.some((link) => link.url === website)) links.push({ label: 'Website', url: website });
+  if (blog && website && !links.some((link) => link.url === website)) links.push({ label: copy.website, url: website });
   const lines = [];
   if (style === 'flashy') {
     lines.push('<div align="center">', '', '<h1>' + html(name) + '</h1>');
@@ -35,25 +64,25 @@ export function renderProfile(snapshot, config, chosenStyle) {
     if (p.location) lines.push(md(p.location), '');
   }
   if (sections.projects && projects.length) {
-    lines.push('## ' + (style === 'minimal' ? 'Selected work' : 'Featured work'), '');
+    lines.push('## ' + (style === 'minimal' ? copy.selected : copy.featured), '');
     if (style === 'regular') {
       const hasStories = projects.some((repo) => Boolean(storyFor(repo)));
-      lines.push(hasStories ? '| Project | Description | My contribution |' : '| Project | Description |',
+      lines.push(hasStories ? '| ' + copy.project + ' | ' + copy.description + ' | ' + copy.contribution + ' |' : '| ' + copy.project + ' | ' + copy.description + ' |',
         hasStories ? '| --- | --- | --- |' : '| --- | --- |');
       for (const repo of projects) {
         const story = storyFor(repo);
         const contribution = story?.contribution ? md(story.contribution) : '—';
         lines.push('| [' + md(repo.name) + '](' + repoUrl(repo) + ') | ' +
-          md(story?.problem || repo.description || 'Source repository') +
+          md(story?.problem || repo.description || copy.sourceRepository) +
           (hasStories ? ' | ' + contribution : '') + ' |');
       }
       if (hasStories) for (const repo of projects) {
         const story = storyFor(repo);
         if (!story) continue;
         const extras = [
-          story.tradeoffs ? 'Trade-offs: ' + md(story.tradeoffs) : null,
-          story.outcome ? 'Outcome (user-provided): ' + md(story.outcome) : null,
-          story.proof ? '[Evidence](' + httpsUrl(story.proof) + ')' : null,
+          story.tradeoffs ? copy.tradeoffs + ': ' + md(story.tradeoffs) : null,
+          story.outcome ? copy.outcome + ': ' + md(story.outcome) : null,
+          story.proof ? '[' + copy.evidence + '](' + httpsUrl(story.proof) + ')' : null,
         ].filter(Boolean);
         if (extras.length) lines.push('', '**' + md(repo.name) + '** — ' + extras.join(' · '));
       }
@@ -64,14 +93,14 @@ export function renderProfile(snapshot, config, chosenStyle) {
           (repo.description ? (style === 'flashy' ? '\n\n' : ' — ') + md(repo.description) : ''));
         if (story) {
           if (style === 'minimal') {
-            if (story.contribution) lines[lines.length - 1] += ' · My work: ' + md(story.contribution);
-            if (story.proof) lines[lines.length - 1] += ' · [Evidence](' + httpsUrl(story.proof) + ')';
+            if (story.contribution) lines[lines.length - 1] += ' · ' + copy.myWork + ': ' + md(story.contribution);
+            if (story.proof) lines[lines.length - 1] += ' · [' + copy.evidence + '](' + httpsUrl(story.proof) + ')';
           } else {
-            if (story.problem) lines.push('', '**Problem:** ' + md(story.problem));
-            if (story.contribution) lines.push('', '**My contribution:** ' + md(story.contribution));
-            if (story.tradeoffs) lines.push('', '**Engineering trade-offs:** ' + md(story.tradeoffs));
-            if (story.outcome) lines.push('', '**Outcome (user-provided):** ' + md(story.outcome));
-            if (story.proof) lines.push('', '[Inspect evidence](' + httpsUrl(story.proof) + ')');
+            if (story.problem) lines.push('', '**' + copy.problem + ':** ' + md(story.problem));
+            if (story.contribution) lines.push('', '**' + copy.contribution + ':** ' + md(story.contribution));
+            if (story.tradeoffs) lines.push('', '**' + copy.engineeringTradeoffs + ':** ' + md(story.tradeoffs));
+            if (story.outcome) lines.push('', '**' + copy.outcome + ':** ' + md(story.outcome));
+            if (story.proof) lines.push('', '[' + copy.inspectEvidence + '](' + httpsUrl(story.proof) + ')');
           }
         }
         if (style === 'flashy') lines.push('');
@@ -92,10 +121,10 @@ export function renderProfile(snapshot, config, chosenStyle) {
   }
   if (sections.stats && !snapshot.truncated) {
     const stars = snapshot.repos.reduce((sum, repo) => sum + (Number(repo.stargazers_count) || 0), 0);
-    lines.push('## Public repository snapshot', '', snapshot.repos.length + ' repositories · ' + stars + ' stars',
-      '', 'Observed ' + md(snapshot.observedAt.slice(0, 10)) + '.', '');
+    lines.push('## ' + copy.stats, '', snapshot.repos.length + ' ' + copy.repositories + ' · ' + stars + ' ' + copy.stars,
+      '', copy.observed + ' ' + md(snapshot.observedAt.slice(0, 10)) + '.', '');
   }
-  if (sections.links && links.length) lines.push('## Links', '', ...links.map((link) => '- [' + md(link.label) + '](' + link.url + ')'), '');
+  if (sections.links && links.length) lines.push('## ' + copy.links, '', ...links.map((link) => '- [' + md(link.label) + '](' + link.url + ')'), '');
   if (sections.extras) for (const section of p.extras) lines.push('## ' + md(section.title), '', section.body.trim(), '');
   return lines.join('\n').trim() + '\n';
 }

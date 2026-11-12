@@ -30,6 +30,7 @@ gh-aura audit --inspect 6 --stats
 gh-aura audit OTHER_USER --json --output report.json
 gh-aura showcase --goal "platform engineer" --limit 4 --inspect 6
 gh-aura profile --style minimal --output draft.md
+gh-aura profile --style regular --language es --output perfil.md
 gh-aura profile --visual 20 --output restrained.md
 ```
 
@@ -40,6 +41,10 @@ Pass `--deep N` (0–5) with `audit`, `showcase`, or `brief` to inspect public r
 Inspection adds sampled public README reads. Conventional headings are heuristic signals, not proof of code quality. Scores concern presentation evidence, not engineer quality or hiring probability. Unknown information is not a negative finding.
 
 `--output` writes a local file; status goes to stderr so stdout stays useful for data. Existing output files require `--force`.
+
+### Presentation language
+
+`profile --language es` (or `config set editorial.language es`) localizes **only the deterministic template headings**, project-story labels, and related metadata labels. English is the default. User-provided biography, projects, links, and descriptions remain unchanged; no AI or translation API is invoked. `brief --language es --prompt` passes the editorial-language preference to an external writer, which remains optional. 
 
 ### Your project contributions
 
