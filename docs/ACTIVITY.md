@@ -25,6 +25,17 @@ A year shorthand expands to January 1/December 31. The report uses **UTC** and s
 
 When authentication is missing, daily and annual GraphQL contribution counts remain **unknown**, not zero. A valid token supplies read access; it is never written into the report.
 
+## Local Git attribution diagnosis (fully offline)
+
+```bash
+gh-aura contributions --local .
+gh-aura contributions --local /path/to/actual-repo --from 2020 --to 2026 --json
+# Optional: a local-only text file listing Git author emails you have linked to GitHub
+gh-aura contributions --local . --emails-file verified-emails.txt
+```
+
+Unlike GitHub GraphQL reports, these commands inspect *only a repository you name*, using local Git. No tokens, GitHub API requests, raw emails, commit messages, private source files or remote URLs are included in the output. The CLI compares up to 5,000 original author email values against your local `git config user.email` or an optional local-only identity file, reporting counts without printing identities. **A match is not proof that the email is verified on GitHub or that a commit qualifies for the graph.** Shallow or capped history is explicitly identified. It neither modifies Git nor supplies fabricated calendar dates.
+
 ## Limitations
 
 - GitHub counts eligible activity, not hours worked, seniority or code quality.

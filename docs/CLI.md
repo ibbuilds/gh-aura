@@ -161,6 +161,12 @@ These commands only create checklists based on real public issues where visible;
 
 `--details` adds bounded public release/attributed-commit/PR evidence: three repositories and ten recently updated merged PRs. PR dates are explicitly opening dates, not guessed merge dates. Repository creation is not project start or career level. Email attribution, branch eligibility and private-visibility settings are manual checks. No dates, authors or histories are rewritten.
 
+## Offline local Git author attribution
+
+`gh-aura contributions --local .` inspects actual author metadata in a local Git working tree without fetching GitHub data or using an account token. `--from` and `--to` filter by **Git author timestamp**, which is not proof of when work was completed. The default comparison uses the repository's configured `user.email`. For several historical identities use `--emails-file verified-emails.txt` containing only the local email addresses that **you** believe you have linked to GitHub. The CLI does not verify account email ownership; confirm the list in GitHub settings yourself.
+
+The output contains only aggregate counts: matched, other, or unclassified. No author emails, commit messages, remote URLs or source are exported. It checks at most 5,000 commits, detects shallow clones and never edits Git. It does not assert whether GitHub should award any particular contribution. See [Activity documentation](ACTIVITY.md).
+
 ## API failures
 
 401: token rejected. 403: permissions, rules or quota. 429/rate-limit: obey retry instructions. 409/422 during publication: inspect the current state and preview again. Resource-budget errors: reduce the scan or deliberately adjust the request cap. No automatic quota purchases, account rotation or background retry loops.

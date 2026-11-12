@@ -40,6 +40,7 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `achievements --plan --scope free` | Plan no-cost achievable badges; private eligibility remains unverified |
 | `contributions --all` | Inspect authentic activity across available years |
 | `contributions --plan` | Suggest verifiable, future-only work on real repos (no automatic commits) |
+| `contributions --local .` | Inspect real local commit author attribution offline, without exposing emails |
 | `brief --prompt -o writer.txt` | Prepare grounded instructions for your chosen writer |
 | `references` | Browse source-linked engineer profile examples offline |
 | `check --file draft.md` | Check a draft locally; no API or AI calls |
