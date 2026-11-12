@@ -13,12 +13,12 @@ const run=(argv,dir)=>{
     env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:''},
   });
 };
-test('Calendar Studio plan and badge-run plan are entirely offline CLI entrypoints',()=>{
+test('GH Aura activity plan and badge-run plan are entirely offline CLI entrypoints',()=>{
   const root=mkdtempSync(join(tmpdir(),'aura-offline-automation-'));
   try{
     const calendarFile=join(root,'calendar.json');
     const badgeFile=join(root,'badges.json');
-    let r=run(['calendar','plan','2022','--density','60','--seed','7','--output',calendarFile],root);
+    let r=run(['activity','plan','2022','--density','60','--seed','7','--output',calendarFile],root);
     assert.equal(r.status,0,r.stderr);
     const calendar=JSON.parse(readFileSync(calendarFile,'utf8'));
     assert.equal(calendar.format,'gh-aura-synthetic-calendar-v1');
@@ -30,7 +30,13 @@ test('Calendar Studio plan and badge-run plan are entirely offline CLI entrypoin
     assert.equal(badges.format,'gh-aura-private-badges-v1');
     assert.equal(badges.private,true);
     assert.equal(badges.pulls,2);
-    const reject=run(['calendar','apply','--review',calendarFile,
+    const init=run(['init','example'],root);
+    assert.equal(init.status,0,init.stderr);
+    const defaultBadge=join(root,'default-badges.json');
+    r=run(['badges','auto','--pulls','1','--output',defaultBadge],root);
+    assert.equal(r.status,0,r.stderr);
+    assert.equal(JSON.parse(readFileSync(defaultBadge,'utf8')).repo,'example/gh-aura-workspace');
+    const reject=run(['activity','apply','--review',calendarFile,
       '--repo','example/private-timeline','--author-name','Example User',
       '--author-email','someone@example.com','--confirm',calendar.fingerprint],root);
     assert.notEqual(reject.status,0);
@@ -41,10 +47,10 @@ test('Calendar Studio plan and badge-run plan are entirely offline CLI entrypoin
     assert.match(noToken.stderr,/GH_TOKEN|GITHUB_TOKEN/);
   }finally{rmSync(root,{recursive:true,force:true});}
 });
-test('Calendar Studio refuses an unapproved push before reading a plan',()=>{
+test('GH Aura activity refuses an unapproved push before reading a plan',()=>{
   const root=mkdtempSync(join(tmpdir(),'aura-reject-'));
   try{
-    const x=run(['calendar','apply','--repo','example/private-repo'],root);
+    const x=run(['activity','apply','--repo','example/private-repo'],root);
     assert.notEqual(x.status,0);
     assert.match(x.stderr,/requires --review/);
     const y=run(['badges','auto','apply'],root);
