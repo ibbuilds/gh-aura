@@ -54,6 +54,10 @@ Only \`calendar apply\` can create a new private repo and push. It refuses exist
 
 Generated documentation in each practice commit is explicitly marked **synthetic**. GitHub profile contributions may not update immediately; ensure [Private contributions](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements) is enabled and that the authored email is verified. **Do not infer employment, years of experience or badge eligibility from this activity.**
 
+### Verified author identity (v1.8.1)
+
+Before any repository creation, GH Aura verifies the author identity. The ID-based `ID+USERNAME@users.noreply.github.com` address derived from the authenticated account works without extra email scope. For other addresses, the token requires the GitHub **Email addresses (read)** user permission or `user:email` (classic personal access token), and the address must appear as **verified**. A missing permission, unverified email or unavailable account creation timestamp fails closed. The list of private account emails is never logged, cached or saved to a plan.
+
 ### Resource and safety limits
 
 - No automatic background process, repeated requests, force-push, history edits or writes to existing repositories.
