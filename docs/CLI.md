@@ -52,6 +52,18 @@ Inspection adds sampled public README reads. Conventional headings are heuristic
 
 `gh-aura audit --job vacancy.txt --deep 2 --json` analyzes locally stored plain-text job requirements and maps recognized technology/domain terms to **explicitly selected public projects**. The job text is parsed before any network requests, stays on the user's machine, is never included verbatim in reports, and is not sent to GitHub or an AI model. Result states are `mentioned-in-public-metadata`, `user-claimed`, or `not-observed-in-selected-projects`; none proves skill or a hiring probability. See [job description matching](JOB_MATCH.md).
 
+### Your project contributions — simple commands
+
+```bash
+gh-aura story set YOUR_USERNAME/project --contribution "Built an API authentication layer" --proof https://github.com/YOUR_USERNAME/project
+gh-aura story set YOUR_USERNAME/project --problem "How to handle high-volume API requests"
+gh-aura story list
+gh-aura story remove YOUR_USERNAME/project --dry-run
+gh-aura story remove YOUR_USERNAME/project
+```
+
+These commands change **only the local** `.gh-aura.json`, after validating every field. `--dry-run` prints the local configuration diff without writing; project descriptions and outcomes are user-supplied, not independently verified. Only explicitly selected projects are displayed in generated profile styles. No GitHub API requests, code execution or external AI are required.
+
 ### Your project contributions
 
 Set `profile.projectStories` with a JSON array of the projects you actually worked on. Each record can include `repo`, `problem`, `contribution`, `tradeoffs`, `outcome` and an optional HTTPS `proof` link. Stories are displayed **only** for showcased projects and are marked as user-supplied, not externally verified. See [Project stories](PROJECT_STORIES.md) for a copyable example and the minimal/regular/flashy differences.

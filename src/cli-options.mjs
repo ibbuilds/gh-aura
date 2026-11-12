@@ -2,6 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
+  story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
   init: { usage: 'init [USER] [--config FILE]', flags: ['config', 'output', 'force'], max: 1 },
@@ -17,7 +18,7 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks']);
 export const HELP = [
   'GH Aura — a GitHub profile toolkit. You choose every change.', '',
@@ -28,6 +29,7 @@ export const HELP = [
   'Explore:', '  showcase       Recommend projects to pin',
   '  achievements   Explore badges and relevant public evidence',
   '  work           Preview and open reviewed documentation PRs',
+  '  story          Manage your own project contributions locally',
   '  contributions  Inspect annual activity and visibility checks',
   '  brief --prompt Export grounded instructions for any writer',
   '  check          Check a draft locally before reviewing it',
@@ -89,6 +91,25 @@ export function validateOptions(command, options) {
   if (command === 'achievements' && options.repo && !options.prepare) throw new Error('--repo requires --prepare BADGE_ID.');
 
 
+  if (command === 'story') {
+    const [action] = options.positional;
+    const editable = ['problem', 'contribution', 'tradeoffs', 'outcome', 'proof'];
+    if (!['list', 'set', 'remove'].includes(action)) {
+      throw new Error('Use story list, story set OWNER/REPO --contribution TEXT, or story remove OWNER/REPO.');
+    }
+    if (action === 'list' && (options.positional.length !== 1 || options['dry-run'] ||
+        editable.some((key) => options[key] !== undefined))) {
+      throw new Error('story list takes no project or edit flags.');
+    }
+    if (action === 'set' && (options.positional.length !== 2 ||
+        !editable.some((key) => options[key] !== undefined))) {
+      throw new Error('story set requires OWNER/REPO and at least one --contribution/--problem/--tradeoffs/--outcome/--proof flag.');
+    }
+    if (action === 'remove' && (options.positional.length !== 2 ||
+        editable.some((key) => options[key] !== undefined))) {
+      throw new Error('story remove needs only OWNER/REPO, optionally --dry-run.');
+    }
+  }
   if (command === 'work') {
     const action = options.positional[0];
     if (!['preview', 'apply'].includes(action)) {

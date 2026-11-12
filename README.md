@@ -39,6 +39,7 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `showcase --goal "backend engineer"` | Recommend relevant projects to pin |
 | `achievements --plan --scope free` | Plan no-cost achievable badges; private eligibility remains unverified |
 | `work preview/apply` | Review a real Markdown documentation change and open an unmerged PR |
+| `story list/set/remove` | Manage your own project problem, contribution and evidence notes locally |
 | `contributions --all` | Inspect authentic activity across available years |
 | `contributions --plan` | Suggest verifiable, future-only work on real repos (no automatic commits) |
 | `contributions --local .` | Inspect real local commit author attribution offline, without exposing emails |
