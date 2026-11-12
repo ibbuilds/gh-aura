@@ -103,8 +103,10 @@ test('review fingerprint binds repo, task count, starting index and mode',()=>{
 test('private automation creates one sandbox repo, closes one issue and merges 2 PRs',async()=>{
   const api=mockAPI();
   const p=plan();
-  const result=await applyBadgeRun(p,{confirm:p.fingerprint,
-    token:'test-only',fetch:api.fetch,sleep:async()=>{}});
+  let result;
+  try { result=await applyBadgeRun(p,{confirm:p.fingerprint,
+    token:'test-only',fetch:api.fetch,sleep:async()=>{}}); }
+  catch(error) { throw Error(error.message+'; sequence='+api.requests.map(x=>x.method+' '+x.path).join(' | ')); }
   assert.equal(api.created,true);
   assert.equal(result.private,true);
   assert.equal(result.mergedPulls.length,2);
