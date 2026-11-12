@@ -52,7 +52,7 @@ test('packaged surface is restricted to the runtime and essential documentation'
   assert.ok(existsSync(file('AGENTS.md')));
   assert.ok(existsSync(file('llms.txt')));
   const skill=readFileSync(file('skills/gh-aura-profile/SKILL.md'),'utf8');
-  assert.match(skill,/^---\\nname: gh-aura-profile\\ndescription:/);
+  assert.match(skill,/^---\nname: gh-aura-profile\ndescription:/);
   assert.match(skill,/agent's tools never publish|No agent tool can publish/);
 });
 
