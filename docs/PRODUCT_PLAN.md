@@ -1,14 +1,14 @@
 # Product scope and acceptance
 
-**Current release:** v1.15.0
+**Current release:** v1.16.0
 
 The four primary modules are implemented. A passed CI test does **not** establish an actual GitHub award or production-write success.
 
 | Module | Shipped behavior | Evidence | Remaining gate |
 | --- | --- | --- | --- |
 | Activity | Read contribution history; offline date plans; apply synthetic practice to one private workspace | Unit/local Git + live **read-only** checks | Real private write and contribution attribution |
-| Badges | Eligibility catalog; Pull Shark/YOLO/Quickdraw event attempts; tiers and atomic Git batching | Mock API + local bare Git checks | Verify awards and private GitHub push on disposable account |
-| README | Draft styles, en/es, review diff, direct/PR publication | E2E mocked GitHub publishing | Independent first-use study |
+| Badges | Eligibility catalog; three private event attempts; two-account read-only check; tiers and atomic Git batching | Mock API + local bare Git checks | Verify awards and private GitHub push on disposable account |
+| README | Draft styles, flexible AI art directions, en/es, review diff, direct/PR publication | E2E mocked GitHub publishing | Independent first-use study |
 | Pins | Rank public repos with evidence and role preferences | Unit + read-only integration | User pins manually on GitHub |
 
 Additional commands: `audit`, `work`, `config`, `story`, `brief`, `references`.

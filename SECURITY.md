@@ -13,7 +13,7 @@ Public, foreign, forked, archived or unmarked existing workspace repos are rejec
 
 ## Permissions and approvals
 
-Use `GH_TOKEN` or `GITHUB_TOKEN` with the least required access. Contents write is needed for publishing; PRs and Issues permissions are needed for badge events. Never commit tokens or put them in review files. Private repository reads require explicit consent. Publish paths bypass stale public caches, validate branch/file revisions and reject changed approvals.
+Use `GH_TOKEN` or `GITHUB_TOKEN` with the least required access. Optional `GH_AURA_COLLAB_TOKEN` authenticates a distinct second account for the **read-only** `badges auto accounts` preflight only. It must already be authorized to view the private workspace. Neither token is stored by GH Aura. Contents write is needed for publishing; PRs and Issues permissions are needed for badge events. Never commit tokens or put them in review files. Private repository reads require explicit consent. Publish paths bypass stale public caches, validate branch/file revisions and reject changed approvals.
 
 The opt-in `git-batch` mode creates up to sixteen source refs with one atomic, create-only Git push; it never pushes the default branch or overwrites an existing ref. It requires local Git and a distinct reviewed plan. A local write ledger limits GH Aura to 480 reserved writes per hour/account on one machine, **not** GitHub's actual global quota. Unknown outcomes are not automatically retried.
 

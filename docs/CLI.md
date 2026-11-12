@@ -32,7 +32,18 @@ gh-aura badges auto status
 gh-aura badges auto next --goal max --strategy git-batch --output next.json
 ```
 
-Every batch requires its own reviewed fingerprint. Up to 16 PRs per batch, one marked private workspace, never a guaranteed award. [Badge rules](ACHIEVEMENTS.md) · [Runner](BADGE_RUN.md).
+Every batch requires its own reviewed fingerprint. Up to 16 PRs per batch, one marked private workspace, never a guaranteed award. Optional `badges auto accounts` verifies two distinct tokens can read that workspace, without writing. [Badge rules](ACHIEVEMENTS.md) · [Runner](BADGE_RUN.md).
+
+## AI-assisted art direction (not fixed templates)
+
+```bash
+gh-aura config set editorial.direction barebones
+gh-aura config set profile.sections.stats false
+gh-aura config set profile.maxProjects 2
+gh-aura brief --prompt --direction technical --output prompt.md
+```
+
+Directions: `barebones` (links only), `minimal` (short intro and projects), `technical` (engineering evidence), `expressive` (one deliberate visual accent). These guide any AI writing the README; they never copy somebody else's profile or force a layout. Explicit project, link, visual and section choices take priority. No AI service is required or called by GH Aura.
 
 ## README and pins
 

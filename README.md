@@ -35,6 +35,15 @@ gh-aura badges auto --tier base --strategy git-batch --output badges.json
 
 Review each JSON plan before applying it. Activity needs a verified author email; badges need a token with private repo/PR/issue access. GitHub decides whether synthetic practice appears on the graph or earns an achievement. **No badges are guaranteed.**
 
+For an original README assisted by any AI (without rigid templates or an AI subscription):
+
+```bash
+gh-aura brief --prompt --direction technical --output prompt.md
+# Directions: barebones, minimal, technical, expressive
+```
+
+You control sections, projects, links and visuals through `gh-aura config`. The AI only drafts text; GH Aura never sends your token to an AI provider.
+
 To publish a real profile draft:
 
 ```bash
@@ -43,6 +52,8 @@ gh-aura apply --review review.json --pr
 ```
 
 `--pr` opens an **unmerged** review PR. Project pins remain a manual GitHub choice.
+
+Optional two-account access check: `GH_AURA_COLLAB_TOKEN` + `GH_TOKEN`, then `gh-aura badges auto accounts`. This checks access only; it does not grant achievements.
 
 [Commands](docs/CLI.md) · [Activity](docs/ACTIVITY.md) · [Badges](docs/BADGE_RUN.md) · [Security](SECURITY.md) · [Verified scope](docs/PRODUCT_PLAN.md)
 
