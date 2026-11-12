@@ -295,7 +295,8 @@ export async function inspectBadgeWorkspace(opts={}) {
     for(const pr of batch){
       if(pr.merged_at&&pr.user?.login?.toLowerCase()===owner.toLowerCase()&&
         /^gh-aura\/badge-\d{4}$/.test(pr.head?.ref||'')&&pr.base?.ref===branch){
-        merged.push({number:pr.number,url:pr.html_url,mergedAt:pr.merged_at});
+        merged.push({number:pr.number,url:pr.html_url,mergedAt:pr.merged_at,
+          index:Number(pr.head.ref.slice('gh-aura/badge-'.length))});
       }
     }
     if(batch.length<100){pullsComplete=true;break;}
@@ -308,8 +309,13 @@ export async function inspectBadgeWorkspace(opts={}) {
       if(!issue.pull_request&&issue.state==='closed'&&
         issue.user?.login?.toLowerCase()===owner.toLowerCase()&&
         /^\[GH-AURA-QA-\d{4}\]/.test(issue.title||'')){
+        const opened=Date.parse(issue.created_at||'');
+        const closed=Date.parse(issue.closed_at||'');
+        const elapsedSeconds=Number.isFinite(opened)&&Number.isFinite(closed)&&
+          closed>=opened?Math.floor((closed-opened)/1000):null;
         issues.push({number:issue.number,url:issue.html_url,
-          createdAt:issue.created_at,closedAt:issue.closed_at});
+          createdAt:issue.created_at,closedAt:issue.closed_at,elapsedSeconds,
+          quickdrawTimingCandidate:elapsedSeconds!==null&&elapsedSeconds<=300});
       }
     }
     if(batch.length<100){issuesComplete=true;break;}
@@ -320,10 +326,12 @@ export async function inspectBadgeWorkspace(opts={}) {
     :null;
   return {
     repository:'https://github.com/'+repo,private:true,readOnly:true,
+    defaultBranch:branch,
     status:'observed-workspace-events-awards-unverified',
     observed:{
       mergedOwnedExercisePullRequests:merged.length,
       closedOwnedExerciseIssues:issues.length,
+      quickdrawTimingCandidates:issues.filter(x=>x.quickdrawTimingCandidate).length,
       pullsComplete,issuesComplete,
       pullSharkLocalTierCandidate:observedTierCandidate,
       caveat:'Counts are only observed events in this private workspace, not total qualifying account events or awarded badges.',
@@ -335,6 +343,85 @@ export async function inspectBadgeWorkspace(opts={}) {
   };
 }
 
+/**
+ * Determine the next PR exercise index from *verified merged events* and the
+ * repository's complete tree. This is a conservative workspace-local index,
+ * NOT a count of achievements or an account-wide Pull Shark threshold.
+ * Holes, unexplained generated files and partial observations fail closed.
+ */
+export function nextBadgePlanFromWorkspace(status,tree,options={}) {
+  if(status?.status!=='observed-workspace-events-awards-unverified'||
+     status?.observed?.pullsComplete!==true||
+     status?.observed?.issuesComplete!==true)
+    throw Error('Cannot plan next batch: workspace event history is incomplete.');
+  if(tree?.truncated!==false||!Array.isArray(tree.tree))
+    throw Error('Cannot plan next batch: workspace tree inspection is incomplete.');
+  if(!options.tier||!Object.hasOwn(PULL_SHARK_TIERS,options.tier))
+    throw Error('badges auto next requires --tier base, bronze, silver or gold.');
+  const repo=validRepo(workspaceRepo(options.repo));
+  if(status.repository!=='https://github.com/'+repo)
+    throw Error('Workspace status and selected repository do not match.');
+  const docs=new Set(tree.tree.map(x=>x?.path).filter(x=>typeof x==='string'));
+  const merged=status.events?.mergedPullRequests;
+  if(!Array.isArray(merged))
+    throw Error('Cannot plan next batch without observed merged PR records.');
+  const seen=new Set();
+  const asPath=n=>'docs/gh-aura/exercise-'+String(n).padStart(4,'0')+'.md';
+  for(const pr of merged) {
+    const n=pr?.index;
+    if(!Number.isInteger(n)||n<1||n>MAX_EXERCISE_INDEX||seen.has(n))
+      throw Error('Invalid or duplicate GH Aura exercise PR index; inspect GitHub before proceeding.');
+    if(!docs.has(asPath(n)))
+      throw Error('Merged exercise PR lacks its default-branch document; inspect GitHub before proceeding.');
+    seen.add(n);
+  }
+  for(const path of docs) {
+    const match=/^docs\/gh-aura\/exercise-(\d{4})\.md$/.exec(path);
+    if(match && !seen.has(Number(match[1])))
+      throw Error('Unverified exercise file in workspace; inspect GitHub before proceeding.');
+  }
+  let start=0;
+  while(seen.has(start+1))start++;
+  if(seen.size!==start)
+    throw Error('Gaps in merged PR sequence; resolve the partial history before planning another batch.');
+  const target=PULL_SHARK_TIERS[options.tier];
+  if(start>=target)
+    return {status:'target-reached-in-workspace-events-award-unverified',
+      repository:status.repository,tier:options.tier,observedMergedExercises:start,
+      note:'The workspace reached this reported event threshold; GitHub alone determines earned achievements and tiers.',
+      verify:status.verify};
+  return planBadgeRun({
+    repo,tier:options.tier,start,
+    ...(options.pulls===undefined?{}:{pulls:options.pulls}),
+    ...(options.role===undefined?{}:{role:options.role}),
+    quickdraw:!options['no-quickdraw'],
+  });
+}
+
+/** Read only: never creates repositories, issues, branches or PRs. */
+export async function planNextBadgeRun(opts={}) {
+  const repo=validRepo(workspaceRepo(opts.repo));
+  const report=await inspectBadgeWorkspace({...opts,repo});
+  const path='/repos/'+repo.split('/').map(encodeURIComponent).join('/')+
+    '/git/trees/'+encodeURIComponent(report.defaultBranch)+'?recursive=1';
+  const tree=await getJSON(path,{...opts,publicRead:false,cache:undefined,allowMissing:false});
+  const doc=nextBadgePlanFromWorkspace(report,tree,{...opts,repo});
+  if(doc.format===PLAN_FORMAT) {
+    // Detect interrupted/in-progress exercise branches before writing a local plan.
+    for(let n=doc.start+1;n<=doc.start+doc.pulls;n++) {
+      const head='gh-aura/badge-'+String(n).padStart(4,'0');
+      const branchRef=await getJSON('/repos/'+repo.split('/').map(encodeURIComponent).join('/')+
+        '/git/ref/heads/'+head,{...opts,publicRead:false,cache:undefined});
+      if(branchRef)
+        throw Error('Review branch '+head+' exists without a confirmed merged exercise. Inspect GitHub before another plan.');
+    }
+    if(opts.output)writeFileSync(opts.output,JSON.stringify(doc,null,2)+'\n',
+      {flag:opts.force?'w':'wx',mode:0o600});
+  }
+  process.stdout.write(JSON.stringify(doc,null,2)+'\n');
+  return doc;
+}
+
 export async function runBadgeAutomation(command,opts={}) {
   if(command==='plan')return writeBadgePlan({...opts,quickdraw:!opts['no-quickdraw']});
   if(command==='status'){
@@ -342,7 +429,8 @@ export async function runBadgeAutomation(command,opts={}) {
     process.stdout.write(JSON.stringify(observed,null,2)+'\n');
     return observed;
   }
-  if(command!=='apply')throw Error('Use badges auto plan, apply or status.');
+  if(command==='next')return planNextBadgeRun(opts);
+  if(command!=='apply')throw Error('Use badges auto plan, next, apply or status.');
   const plan=loadBadgePlan(opts.review);
   const result=await applyBadgeRun(plan,{confirm:opts.confirm});
   process.stdout.write(JSON.stringify(result,null,2)+'\n');
