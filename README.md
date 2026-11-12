@@ -46,6 +46,8 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 
 The audit now includes an evidence-based **first-minute hiring-manager review**, with visible facts, missing presentation work and unknown technical quality. It never produces a fake employment probability or hireability percentage. See [Hiring readiness and next steps](docs/HIRING_READINESS.md).
 
+Deterministic templates support **English or Spanish headings** with `profile --language es`; this changes only GH Aura's labels, not the user's own statements or repository descriptions. Use `config set editorial.language es` to save the preference.
+
 Run `gh-aura COMMAND --help` for options. Existing `minimal`, `regular` and `flashy` styles remain available.
 
 ## Presentation, not invented experience

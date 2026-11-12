@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added `profile --language en|es` for localized deterministic README headings and project-story labels without external translation or API calls.
+- Kept the Spanish/English language choice independent from profile visual intensity and publishing approval.
+
+
 ## 1.4.0 — 2026-11-11
 
 - Added a role-aware first-minute **hiring-manager review** to the existing `audit` command, with `--goal` override.
