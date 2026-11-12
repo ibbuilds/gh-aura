@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-import { realpathSync } from 'node:fs';
+import { realpathSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { AGENT_TOOL_DEFINITIONS, agentCapabilities, runAgentTool } from './agent-tools.mjs';
 import { listProfileSources } from './profile-sources.mjs';
 
 const CURRENT='2026-07-28';
 const LEGACY='2025-11-25';
-const SERVER={name:'gh-aura',version:'1.17.0'};
+const SERVER={name:'gh-aura',
+  version:JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8')).version};
 const description='Read-only profile engineering, curated resources and verified local previews. No tool can publish, delete, pay, create accounts or grant GitHub badges.';
 const CAPS={tools:{},resources:{},prompts:{}};
 const RESOURCES=[
