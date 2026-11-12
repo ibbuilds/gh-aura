@@ -51,6 +51,9 @@ test('100 percent density means every date even with weekends preference zero',(
   assert.equal(a.days.length,31);
   assert.equal(a.summary.selectedDays,31);
   assert.equal(a.summary.syntheticCommits,31);
+  const years=planCalendar({from:'2020',to:'2021',density:100,
+    mode:'workweek',weekends:0,intensity:1,now});
+  assert.equal(years.summary.selectedDays,731);
 });
 test('zero density has zero generated work; invalid ranges and oversized plans fail',()=>{
   const p=plan({density:0});
