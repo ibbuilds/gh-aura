@@ -141,9 +141,10 @@ Each item now identifies its collectible/paid/program/historical class, source d
 gh-aura contributions --from 2020-01-01 --to 2024-12-31
 gh-aura contributions --from 2020 --to 2026 --days --json
 gh-aura contributions --from 2020 --to 2026 --private --recover
+gh-aura contributions --plan
 ```
 
-These read-only flags extend the existing annual `contributions --year` / `--all` commands. Dates are UTC; the tool partitions the selected interval by year and batches up to four historical GraphQL collections per API request. `--days` exports daily counts exactly as GitHub reports them, never invented data. `--private` displays opt-in visibility guidance; it does not change settings or access private repository contents. `--recover` prints manual steps for legitimately missing historical attribution (author email, branches, forks, private visibility) without modifying Git history. See [Activity](ACTIVITY.md).
+These read-only flags extend the existing annual `contributions --year` / `--all` commands. Dates are UTC; the tool partitions the selected interval by year and batches up to four historical GraphQL collections per API request. `--days` exports daily counts exactly as GitHub reports them, never invented data. `--private` displays opt-in visibility guidance; it does not change settings or access private repository contents. `--plan` suggests conditional future, genuine repo tasks using already collected public metadata. It never schedules dates, fabricates issues, starts work or makes more API requests.\n\n`--recover` prints manual steps for legitimately missing historical attribution (author email, branches, forks, private visibility) without modifying Git history. See [Activity](ACTIVITY.md).
 
 ### Prepare meaningful achievement work
 

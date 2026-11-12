@@ -123,6 +123,45 @@ export async function readContributionWindows(login, windows, options) {
   return collected;
 }
 
+/**
+ * Future-only, read-only candidate work. Never invent an issue, a deadline, a
+ * contribution event or a missing test. No GitHub requests are made here.
+ */
+export function futureWorkPlan(snapshot, now = new Date()) {
+  const root = 'https://github.com/' + snapshot.username;
+  const ranked = snapshot.repos.filter((repo) =>
+    repo.private === false && !repo.fork && !repo.archived &&
+    repo.full_name?.toLowerCase() !== (snapshot.username + '/' + snapshot.username).toLowerCase())
+    .sort((a, b) => String(b.pushed_at || '').localeCompare(String(a.pushed_at || ''))
+      || String(a.full_name).localeCompare(String(b.full_name))).slice(0, 3);
+  return {
+    status: 'user-verification-required',
+    createdAt: now.toISOString(),
+    scope: 'Future meaningful work only; no dates, commits or achievements scheduled.',
+    source: root + '?tab=repositories',
+    selected: ranked.length,
+    tasks: ranked.map((repo) => ({
+      repository: repo.full_name, source: 'https://github.com/' + repo.full_name,
+      kind: repo.description ? 'improve-real-project' : 'document-real-project',
+      observation: repo.description
+        ? 'Public repository exists with a description; source quality and outstanding work are uninspected.'
+        : 'Public repository description is missing; this is a presentation gap, not a Git contribution.',
+      proposedWork: repo.description
+        ? 'Inspect current bugs, tests or documentation. Choose a reproducible deficiency and implement a real fix with verification.'
+        : 'First describe this project accurately. If a real usage/setup example is missing, implement and test that documentation.',
+      evidenceRequired: 'A reproducible defect, test, runnable example, or actual user-facing documentation need.',
+      approval: 'User must inspect and choose the task. No work is started by GH Aura.',
+      contributionCount: 'unknown-until-github-accepts-actual-work',
+    })),
+    limitations: [
+      'No issue, test failure or missing feature has been verified from public metadata.',
+      'Updating a repository description does not itself create a contribution graph event.',
+      'GitHub decides which substantive commits, pull requests and reviews qualify.',
+      'No calendars are painted, commit dates changed or activity automatically generated.',
+    ],
+  };
+}
+
 export async function contributionsReport(snapshot, options = {}) {
   const now = options.now ?? new Date();
   const windows = historyWindows(snapshot.user.created_at, { ...options, now });
@@ -168,6 +207,7 @@ export async function contributionsReport(snapshot, options = {}) {
     report.milestones.push({ date: repo.created_at, event: 'Public repository created: ' + repo.name, source: 'https://github.com/' + repo.full_name });
   }
   if (options.details) await detailMilestones(report, snapshot, options);
+  if (options.plan) report.futureWorkPlan = futureWorkPlan(snapshot, now);
   if (options.recover) report.recoveryPlan = [
     { task: 'Inspect real commit authorship locally', status: 'manual',
       command: 'git log --all --format="%h %ad %ae" --date=short',
@@ -203,6 +243,16 @@ export function renderContributions(report) {
     md(report.privateVisibility.description), '',
     md(report.privateVisibility.instructions), '',
     'Source: ' + report.privateVisibility.source, '');
+  if (report.futureWorkPlan) {
+    const plan = report.futureWorkPlan;
+    lines.push('## Future meaningful work candidates (user-directed)', '',
+      plan.scope, '',
+      ...(plan.tasks.length ? plan.tasks.map((task) =>
+        '- **[' + md(task.repository) + '](' + task.source + ')**: ' + md(task.proposedWork) +
+        ' (verify a real need first; no contribution is assumed)') :
+        ['No suitable public owned repositories were found; choose a real project or external collaboration manually.']),
+      '', ...plan.limitations.map((item) => '- ' + md(item)), '');
+  }
   if (report.recoveryPlan) {
     lines.push('## Authentic attribution recovery (manual)', '',
       'Review and restore credit for existing work. No history is rewritten.', '');
