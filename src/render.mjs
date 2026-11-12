@@ -1,6 +1,7 @@
 import { presentationPlan } from './editorial.mjs';
 import { selectFeatured } from './engine.mjs';
 import { renderHiringReview } from './readiness.mjs';
+import { renderJobMatch } from './job-match.mjs';
 import { md, html, httpsUrl, repoUrl } from './text.mjs';
 
 const PROFILE_COPY = Object.freeze({
@@ -147,6 +148,7 @@ export function renderAuditMarkdown(report) {
     'Public repositories scanned: ' + report.publicRepositoriesScanned,
     'Repository READMEs inspected: ' + (report.repositoryReadmesInspected || 0), '',
     ...(report.hiringReview ? [renderHiringReview(report.hiringReview), ''] : []),
+    ...(report.jobMatch ? [renderJobMatch(report.jobMatch), ''] : []),
     '## Findings', ''];
   if (!report.findings.length) lines.push('No findings from the implemented checks.', '');
   for (const finding of report.findings) lines.push('### ' + finding.severity.toUpperCase() + ': ' + md(finding.title), '',

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added optional `audit --job FILE` for a fully local, bounded, explainable job-posting term map against real selected project evidence.
+- Clearly separate observed repository metadata, user-supplied project stories and unknown qualifications; no external job text upload or paid AI.
+
+
 - Added `profile --language en|es` for localized deterministic README headings and project-story labels without external translation or API calls.
 - Kept the Spanish/English language choice independent from profile visual intensity and publishing approval.
 
