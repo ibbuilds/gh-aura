@@ -144,7 +144,7 @@ test('wrong confirmation and existing repo fail without any creation/push',async
       if(url.endsWith('/user'))return Response.json({login:'example',created_at:'2019-01-01'});
       if(url.includes('/user/emails'))return Response.json([{email:'example@users.noreply.github.com',verified:true}]);
       return Response.json({full_name:'example/existing',private:true});
-    }}),/already exists/);
+    }}),/Refusing non-owned|private workspace/);
   assert.equal(calls,3);
 });
 test('calendar CLI accepts separate plan/apply but rejects unreviewed writes',()=>{
@@ -194,7 +194,7 @@ test('ID-based noreply from authenticated account needs no email scope',async()=
   };
   await assert.rejects(applyCalendar(p,{repo:'example/existing',confirm:p.fingerprint,
     authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
-    token:'test-token',fetch}),/already exists/);
+    token:'test-token',fetch}),/Refusing non-owned|private workspace/);
   assert.equal(urls.length,2);
   assert.ok(!urls.some(url=>url.includes('/user/emails')));
 });
