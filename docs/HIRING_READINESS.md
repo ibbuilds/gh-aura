@@ -67,6 +67,10 @@ These future capabilities are deliberately **not** advertised as implemented. Th
 
 Work done in private organizations may be substantive and unavailable for public demonstration. A user can describe such experience accurately without exposing confidential code. The tool should respect that distinction.
 
+## Human validation remains outstanding
+
+A [consent-based 60-second evaluation protocol](HUMAN_VALIDATION.md) is available. No reviewer study has been run, and no claim of improved hiring results is supported. Keep issue #21 open until real respondents participate and anonymized findings are reviewed.
+
 ## Source context
 
 - [GitHub's hiring-oriented profile guide](https://docs.github.com/en/account-and-profile/tutorials/using-your-github-profile-to-enhance-your-resume)
