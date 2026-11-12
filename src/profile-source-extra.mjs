@@ -9,7 +9,7 @@ const defaultOpts={
   limitations:'Not every HTML/CSS feature works in GitHub Markdown.',
 };
 const official=(id,title,category,url,tags,use,limitations='Check GitHub rendering and mobile accessibility.')=>({
-  id,title,category,url,tags,use,limitations,...defaultOpts,trust:'github-official',
+  ...defaultOpts,id,title,category,url,tags,use,limitations,trust:'github-official',
 });
 const thirdParty=(id,title,url,tags,use,limitations,license='Inspect project and brand terms before use')=>({
   ...defaultOpts,id,title,url,tags,category:'visual',
