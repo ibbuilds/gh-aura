@@ -15,7 +15,7 @@ src/session.mjs                    HTTP request/response-size budgets and stats
 src/contributions.mjs              real GitHub contribution periods
 src/calendar.mjs + calendar-apply.mjs  date planner + reviewed fast-forward private workspace push
 src/local-attribution.mjs          offline Git author metadata counts
-src/achievements.mjs               source-linked achievement capability catalog
+src/achievements.mjs + achievement-matrix.mjs  sourced catalog and eligible private routes
 src/badge-run.mjs + workspace.mjs  reviewed PR/issue exercises + shared workspace identity
 src/project-evidence.mjs           optional public source-file and CI observations
 src/engine.mjs + readiness.mjs      explainable repo ranking and first-minute review
@@ -23,7 +23,7 @@ src/render.mjs + editorial.mjs      deterministic layouts, bounded optional edit
 src/reference.mjs                  small dated offline reference aggregate
 ```
 
-No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `activity apply` (legacy `calendar apply`) and `badges auto apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Activity and badge operations can share one marked, private, owned repository. Activity appends commits by fast-forward only after checking the marker, remote head and planned path collisions; it cannot grant achievements or edit pins. Badge exercises never claim GitHub awarded a badge. Deletion is not automated.
+No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `activity apply` (legacy `calendar apply`) and `badges auto apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Activity and badge operations can share one marked, private, owned repository. Activity appends commits by fast-forward only after checking the marker, remote head and planned path collisions; it cannot grant achievements or edit pins. Badge batches are individually SHA-bound and capped at sixteen PRs; the read-only `badges auto status` checks bounded pages of workspace PR/issue events, never claims a GitHub-awarded badge. Deletion is not automated.
 
 ## Resources, privacy and data integrity
 

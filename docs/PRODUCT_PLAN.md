@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.9.0 (unified activity and private workspace); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.10.0 (achievement coverage and bounded verification); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
@@ -9,7 +9,7 @@ GH Aura helps developers show **real, inspectable work** clearly on GitHub. It h
 | Module | Shipped CLI | What it does |
 | --- | --- | --- |
 | Activity | `activity` / `contributions` | Inspect actual activity, plan labeled synthetic date ranges and explicitly apply to a reusable private workspace without rewriting existing history |
-| Achievements | `badges` / `achievements` | Explore eligibility and attempt bounded private PR/issue exercises in the same workspace; report operations, never promise awards |
+| Achievements | `badges` / `achievements` | Map all 19 known achievements/highlights by eligibility; plan tier-bound private PR/issue exercise batches, inspect observed events, never promise awards |
 | Profile | `readme` / `profile` | Minimal, regular or flashy README drafts; 0–100 visual intensity, en/es labels, section/project/story overrides, optional external writing |
 | Showcase | `pins` / `showcase` | Rank up to six public projects for the intended role and inspect documented project evidence |
 
@@ -23,7 +23,7 @@ Public analysis, profile reference browsing and drafting are read-only. Only the
 
 - `apply --review FILE`: update the public `USERNAME/USERNAME` profile README; optionally `--pr` for an unmerged PR.
 - `activity apply --review FILE --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create **or reuse** one marked owned private workspace, append dated synthetic practice without force pushing or overwriting paths. Optional `--repo OWNER/REPO` overrides the configured workspace. [Activity guide](CALENDAR.md).
-- `badges auto apply --review FILE --confirm FINGERPRINT`: reuse that same marked owned private workspace for bounded PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
+- `badges auto apply --review FILE --confirm FINGERPRINT`: reuse that same marked owned private workspace for bounded PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. `badges auto status` is read-only and reports only observed events. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
 - `work apply --review FILE`: open an unmerged PR with one user-authored `README.md` or `docs/**/*.md` documentation change. A scoped token is required; private repos require explicit consent.
 
 No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project protections. Private-owned sandbox PR merges are an explicitly reviewed exception to the general never-auto-merge documentation PR workflow. Generated practice is labeled synthetic, not historical employment evidence.
