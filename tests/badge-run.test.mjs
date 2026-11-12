@@ -27,7 +27,7 @@ function mockAPI(options={}) {
     if(path==='/user/repos' && method==='POST'){
       created=true;
       assert.equal(body.private,true);
-      return response({full_name:repo,private:true,default_branch:'main',archived:false,fork:false},{status:201});
+      return response({full_name:repo,private:true,default_branch:'main',archived:false,fork:false},201);
     }
     if(path===base+'/contents/README.md?ref=main'){
       const text=options.existing ? options.existingMarker===false?'# Regular private repo':
@@ -45,7 +45,7 @@ function mockAPI(options={}) {
       options.alreadyDone?[{title:'[GH-AURA-QA-0001] Validate private sandbox setup',
         state:'closed'}]:[]);
     if(path===base+'/issues' && method==='POST'){
-      issue++;return response({number:issue,html_url:'https://github.com/'+repo+'/issues/'+issue},{status:201});
+      issue++;return response({number:issue,html_url:'https://github.com/'+repo+'/issues/'+issue},201);
     }
     if(path===base+'/issues/'+issue && method==='PATCH'){
       assert.equal(body.state,'closed');return response({number:issue,state:'closed'});
@@ -58,7 +58,7 @@ function mockAPI(options={}) {
       return response({object:{sha:'a'.repeat(40)}});
     if(path===base+'/git/refs'&&method==='POST'){
       assert.ok(body.ref.startsWith('refs/heads/gh-aura/badge-'));
-      return response({ref:body.ref},{status:201});
+      return response({ref:body.ref},201);
     }
     if(path.startsWith(base+'/contents/docs/gh-aura/exercise-')&&method==='PUT'){
       assert.equal(body.branch.startsWith('gh-aura/badge-'),true);
@@ -66,7 +66,7 @@ function mockAPI(options={}) {
       return response({commit:{sha:'b'.repeat(40)}});
     }
     if(path===base+'/pulls'&&method==='POST'){
-      prs++;return response({number:prs,html_url:'https://github.com/'+repo+'/pull/'+prs},{status:201});
+      prs++;return response({number:prs,html_url:'https://github.com/'+repo+'/pull/'+prs},201);
     }
     if(path===base+'/pulls/'+prs+'/merge'&&method==='PUT'){
       assert.equal(body.merge_method,'squash');
