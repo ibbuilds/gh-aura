@@ -294,7 +294,7 @@ export async function inspectBadgeWorkspace(opts={}) {
     if(!Array.isArray(batch))throw Error('Cannot verify private pull requests.');
     for(const pr of batch){
       if(pr.merged_at&&pr.user?.login?.toLowerCase()===owner.toLowerCase()&&
-        /^gh-aura\\/badge-\\d{4}$/.test(pr.head?.ref||'')&&pr.base?.ref===branch){
+        /^gh-aura\/badge-\d{4}$/.test(pr.head?.ref||'')&&pr.base?.ref===branch){
         merged.push({number:pr.number,url:pr.html_url,mergedAt:pr.merged_at});
       }
     }
@@ -307,7 +307,7 @@ export async function inspectBadgeWorkspace(opts={}) {
     for(const issue of batch){
       if(!issue.pull_request&&issue.state==='closed'&&
         issue.user?.login?.toLowerCase()===owner.toLowerCase()&&
-        /^\\[GH-AURA-QA-\\d{4}\\]/.test(issue.title||'')){
+        /^\[GH-AURA-QA-\d{4}\]/.test(issue.title||'')){
         issues.push({number:issue.number,url:issue.html_url,
           createdAt:issue.created_at,closedAt:issue.closed_at});
       }
@@ -339,13 +339,13 @@ export async function runBadgeAutomation(command,opts={}) {
   if(command==='plan')return writeBadgePlan({...opts,quickdraw:!opts['no-quickdraw']});
   if(command==='status'){
     const observed=await inspectBadgeWorkspace(opts);
-    process.stdout.write(JSON.stringify(observed,null,2)+'\\n');
+    process.stdout.write(JSON.stringify(observed,null,2)+'\n');
     return observed;
   }
   if(command!=='apply')throw Error('Use badges auto plan, apply or status.');
   const plan=loadBadgePlan(opts.review);
   const result=await applyBadgeRun(plan,{confirm:opts.confirm});
-  process.stdout.write(JSON.stringify(result,null,2)+'\\n');
+  process.stdout.write(JSON.stringify(result,null,2)+'\n');
   return result;
 }
 export { applyBadgeRun };
