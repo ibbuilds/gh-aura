@@ -1,89 +1,66 @@
-# Commands
+# GH Aura: AI tools and CLI
 
-Run `gh-aura COMMAND --help` for exact flags. All reads/plans are local or read-only unless a command explicitly says `apply`.
+`gh-aura COMMAND --help` gives full options. AI tools can read, guide, validate and preview but **never publish**.
 
-## Four workflows
+## Connect an AI agent
 
-| Command | What it does |
-| --- | --- |
-| `activity YEAR` or `activity YEAR..YEAR` | Inspect observed contributions |
-| `badges free`, `badges all`, `badges BADGE_ID` | Explain achievement eligibility |
-| `readme minimal|regular|flashy` | Draft a profile README |
-| `pins --goal "backend"` | Rank public repositories; pin manually |
+Local MCP stdio command: `gh-aura mcp`. Compatible client example:
 
-## Activity
-
-```bash
-gh-aura activity 2022
-gh-aura activity plan 2022 --density 70 --output activity.json
-gh-aura activity apply --review activity.json --confirm FINGERPRINT \
-  --author-name "Name" --author-email VERIFIED_EMAIL
+```json
+{"mcpServers":{"gh-aura":{"command":"gh-aura","args":["mcp"]}}}
 ```
 
-`--density 0..100` selects the proportion of dates; `--intensity 1..6` controls commits/day. Date ranges, `--mode`, `--weekends`, `--growth` and `--seed` are optional. Plans are synthetic, not past professional work.
+Or use the [portable Agent Skill](../skills/gh-aura-profile/SKILL.md) in an agent that supports Skills. Other models can consume `gh-aura brief --prompt`.
 
-## Achievements
+## Sources and design techniques
 
 ```bash
-gh-aura badges free
-gh-aura badges auto --tier base --strategy git-batch --output badges.json
-gh-aura badges auto apply --review badges.json --confirm FINGERPRINT
-gh-aura badges auto status
-gh-aura badges auto next --goal max --strategy git-batch --output next.json
+gh-aura sources list --json
+gh-aura sources recommend --query "biografía sobria" --json
+gh-aura sources design --query "terminal y pixel art" --direction expressive --json
+gh-aura sources show github-diagrams --json
+gh-aura sources recommend --query "iconos" --external --json
 ```
 
-Every batch requires its own reviewed fingerprint. Up to 16 PRs per batch, one marked private workspace, never a guaranteed award. Optional `badges auto accounts` verifies two distinct tokens can read that workspace, without writing. [Badge rules](ACHIEVEMENTS.md) · [Runner](BADGE_RUN.md).
+Sources have URLs, licensing and maintenance caveats; techniques are **composable building blocks, not READMEs to paste**. Third-party and user-supplied sources require `--external` to be recommended.
 
-## Agents: MCP, Skill and curated sources
+To add your own trusted reading references, create a JSON file:
+
+```json
+{"format":"gh-aura-custom-sources-v1","sources":[{"id":"my-art","title":"My licensed artwork","url":"https://example.org/art","category":"design","tags":["pixel","hero"],"license":"Author permission"}]}
+```
+
+Use `gh-aura sources list --catalog ./sources.json --json` or set `GH_AURA_SOURCES_FILE=/absolute/sources.json` for the MCP process. GH Aura does not open URLs, copy biographies or auto-embed artwork.
+
+## Biography and original composition
 
 ```bash
 gh-aura agent capabilities --json
-gh-aura sources list --json
-gh-aura sources recommend --query "icons" --external --direction expressive --json
-gh-aura agent spec --direction technical --goal "backend" --output spec.json
-gh-aura mcp
+gh-aura agent spec --goal "backend" --direction technical --visual-brief "One code block, no charts"
+gh-aura agent bio --voice editorial --perspective first-person --focus research --bio-words 70
+gh-aura brief --prompt --direction expressive --external --output prompt.md
 ```
 
-MCP is local stdio (modern `2026-07-28` / legacy `2025-11-25`), with read-only profile, source, diff, Pins, Activity and Badges tools. **No agent publish/approval.** Configure a compatible client with `{"mcpServers":{"gh-aura":{"command":"gh-aura","args":["mcp"]}}}`, or use the [Agent Skill](../skills/gh-aura-profile/SKILL.md). Third-party images require opt-in.
+Four direction hints: `barebones`, `minimal`, `technical`, `expressive`. Voice, narrative focus, media, claims, project order, paragraphs and technology evidence are independently configurable through the editable ProfileSpec and MCP tools. Claims supplied by the user are **not** automatically verified.
 
-## AI-assisted art direction (not fixed templates)
-
-```bash
-gh-aura config set editorial.direction barebones
-gh-aura config set profile.sections.stats false
-gh-aura config set profile.maxProjects 2
-gh-aura brief --prompt --direction technical --output prompt.md
-```
-
-Directions: `barebones` (links only), `minimal` (short intro and projects), `technical` (engineering evidence), `expressive` (one deliberate visual accent). These guide any AI writing the README; they never copy somebody else's profile or force a layout. Explicit project, link, visual and section choices take priority. No AI service is required or called by GH Aura.
-
-## README and pins
+## Core GitHub functions
 
 ```bash
+gh-aura activity 2022
+gh-aura badges free
 gh-aura readme minimal --output draft.md
-gh-aura check --file draft.md
+gh-aura pins --goal "backend" --limit 6
+gh-aura audit --goal "backend" --inspect 3 --deep 2
+```
+
+## Review before publishing
+
+```bash
+gh-aura check --file draft.md --strict
 gh-aura preview --file draft.md --save review.json
 gh-aura apply --review review.json --pr
-gh-aura pins --goal "backend" --limit 6
 ```
 
-A profile `apply` without `--pr` publishes the approved README directly. Both check remote revisions.
+Only the owner can authorize GitHub writes. Synthetic `activity apply` and `badges auto apply` require separate, fingerprint-reviewed private workspace plans. No agent can infer actual awards from repository events.
 
-## Additional tools
-
-```bash
-gh-aura audit --goal "backend" --inspect 3 --deep 2
-gh-aura contributions --all --days
-gh-aura contributions --local . --emails-file emails.txt
-gh-aura achievements --scope free --plan
-gh-aura config show
-gh-aura story list
-gh-aura brief --prompt
-gh-aura references
-gh-aura work preview --repo OWNER/REPO --path docs/setup.md --file edit.md --save work.json
-gh-aura work apply --review work.json
-```
-
-`work apply` opens an unmerged PR for one user-authored Markdown file, not automatic collaboration. [Work safety](WORK.md).
-
-Use `--fresh` for updated public reads, `--budget N` to bound API calls, `--stats` for request counts. Authenticated GraphQL/private workflows require a suitable `GH_TOKEN` or `GITHUB_TOKEN`. Nothing runs in the background.
+[Agent guidance](../AGENTS.md) · [Architecture](ARCHITECTURE.md) · [Security](../SECURITY.md)

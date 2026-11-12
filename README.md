@@ -1,12 +1,12 @@
 # GH Aura
 
-**AI-first GitHub profile toolkit.** Your AI creates original, professional READMEs using GH Aura's source library and tools. CLI mode also works without AI.
+**AI-first GitHub profile toolkit.** Create an original, professional README with your own AI. GH Aura provides real project context, composition techniques, curated resources, biography controls and read-only previews—not fixed templates.
 
-**Node.js 22+ · Free · No runtime dependencies**
+**Node.js 22+ · Free · Zero runtime dependencies**
 
 ## Install
 
-[Latest release](https://github.com/ibbuilds/gh-aura/releases/latest) or run from source:
+[Latest GitHub Release](https://github.com/ibbuilds/gh-aura/releases/latest), or:
 
 ```bash
 git clone https://github.com/ibbuilds/gh-aura.git
@@ -15,62 +15,45 @@ npm link
 gh-aura init USERNAME
 ```
 
-## Main commands
+## Build with any AI
 
-```bash
-gh-aura activity 2022            # Read real contributions
-gh-aura badges free              # Achievement opportunities
-gh-aura readme minimal -o me.md  # Draft a profile README
-gh-aura pins --goal "backend"    # Recommend public projects
-```
-
-## Optional private workspace
-
-Activity and badge exercises reuse **one owned, GH Aura-marked private repo**, default `USERNAME/gh-aura-workspace`. No repo is created by `init`. Only fingerprint-approved `apply` commands write remotely.
-
-```bash
-gh-aura activity plan 2022 --density 70 --output activity.json
-gh-aura badges auto --tier base --strategy git-batch --output badges.json
-```
-
-Review each JSON plan before applying it. Activity needs a verified author email; badges need a token with private repo/PR/issue access. GitHub decides whether synthetic practice appears on the graph or earns an achievement. **No badges are guaranteed.**
-
-## Connect an AI agent
-
-MCP-compatible clients can use local `gh-aura mcp`:
+Connect an MCP-compatible client to `gh-aura mcp`:
 
 ```json
 {"mcpServers":{"gh-aura":{"command":"gh-aura","args":["mcp"]}}}
 ```
 
-Or use the [portable Agent Skill](skills/gh-aura-profile/SKILL.md) and CLI:
+Alternatively, load the [Agent Skill](skills/gh-aura-profile/SKILL.md), or export a portable prompt. Tell your AI what you want in ordinary language; the layout and biography remain yours.
 
 ```bash
-gh-aura agent capabilities --json
-gh-aura sources recommend --query "markdown" --direction technical --json
-gh-aura agent spec --direction technical --goal "backend engineer"
-```
-
-For a writing prompt usable with any AI:
-
-```bash
+gh-aura sources recommend --query "biografía minimalista" --json
+gh-aura sources design --query "terminal retro" --direction expressive --json
+gh-aura agent bio --voice technical --focus engineering --bio-words 70
+gh-aura agent spec --direction technical --visual-brief "Clean, original, 2 projects"
 gh-aura brief --prompt --direction technical --output prompt.md
-# Directions: barebones, minimal, technical, expressive
 ```
 
-You control sections, projects, links and visuals through `gh-aura config`. The AI drafts and revises; MCP only reads, validates and previews. **No AI tool publishes or approves.**
+**30 curated references and 25 layout techniques**, plus optional user-supplied resources in a local JSON file. External image providers are opt-in; GitHub's Markdown rules still apply. No AI vendor, paid API or template is required.
 
-To publish a real profile draft:
+## Traditional CLI
 
 ```bash
+gh-aura activity 2022           # Observed contributions
+gh-aura badges free             # Achievement eligibility
+gh-aura readme minimal -o me.md # Deterministic draft without AI
+gh-aura pins --goal "backend"   # Public project recommendations
+```
+
+## Publish only after your own review
+
+```bash
+gh-aura check --file me.md
 gh-aura preview --file me.md --save review.json
 gh-aura apply --review review.json --pr
 ```
 
-`--pr` opens an **unmerged** review PR. Project pins remain a manual GitHub choice.
+The AI **cannot approve or publish**. `--pr` opens a reviewable, unmerged PR. Pins remain manual. Optional Activity/Badge exercises use one owned, marked private workspace and separate approvals; GitHub does not guarantee awards.
 
-Optional two-account access check: `GH_AURA_COLLAB_TOKEN` + `GH_TOKEN`, then `gh-aura badges auto accounts`. This checks access only; it does not grant achievements.
+[AI and CLI](docs/CLI.md) · [Source/biography safety](SECURITY.md) · [Product status](docs/PRODUCT_PLAN.md)
 
-[Commands](docs/CLI.md) · [Activity](docs/ACTIVITY.md) · [Badges](docs/BADGE_RUN.md) · [Security](SECURITY.md) · [Verified scope](docs/PRODUCT_PLAN.md)
-
-**Distribution:** only the [latest GitHub Release](https://github.com/ibbuilds/gh-aura/releases/latest) has downloadable assets; historical Git tags remain available. npm registry publication is not configured. MIT licensed.
+Only the newest GitHub Release retains downloadable assets; historical Git tags remain. MIT.
