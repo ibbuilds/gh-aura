@@ -140,9 +140,21 @@ async function applyBadgeRun(doc,opts={}) {
   if(typeof opts.confirm!=='string'||opts.confirm!==doc.fingerprint||
     !/^[a-f0-9]{64}$/.test(opts.confirm))throw Error('Badge plan confirmation mismatch. Review the plan before applying.');
   const maxCalls=20+doc.pulls*12;
-  let requests=0;
+  let requests=0,contentWrites=0,lastWriteAt=0;
+  const pause=opts.sleep||((ms)=>new Promise(resolve=>setTimeout(resolve,ms)));
+  const gap=opts.writeGapMs??1100;
+  if(!Number.isInteger(gap)||gap<0||gap>10000)
+    throw Error('Invalid content write pacing (0..10000ms).');
   const call=async (path,method='GET',body=undefined)=>{
     if(++requests>maxCalls)throw Error('Badge automation API request budget reached; inspect the repository before retrying.');
+    if(method!=='GET'){
+      // GitHub has secondary content-write rate limits (~80/minute, ~500/hour).
+      // Even on a private account: limit writes, do not retry 403/429 or unknown outcomes.
+      const elapsed=Date.now()-lastWriteAt;
+      if(lastWriteAt>0&&elapsed<gap)await pause(gap-elapsed);
+      lastWriteAt=Date.now();
+      contentWrites++;
+    }
     const shared={...opts,publicRead:false,cache:undefined};
     return method==='GET' ? getJSON(path,shared)
       : requestJSON(path,{...shared,method,body});
@@ -153,7 +165,6 @@ async function applyBadgeRun(doc,opts={}) {
   if(givenOwner.toLowerCase()!==owner.toLowerCase())
     throw Error('Badge runner only operates on an owned private repository of the authenticated user.');
   const base='/repos/'+encodeURIComponent(owner)+'/'+encodeURIComponent(name);
-  const pause=opts.sleep||((ms)=>new Promise(resolve=>setTimeout(resolve,ms)));
   let repo=await call(base);
   let created=false;
   if(!repo){
@@ -189,7 +200,7 @@ async function applyBadgeRun(doc,opts={}) {
     workspaceReused:!created,
     requested:{pulls:doc.pulls,quickdraw:doc.quickdraw,start:doc.start},
     mergedPulls:[],skippedAlreadyMerged:[],quickdrawIssue:null,
-    requests:0,
+    requests:0,contentWrites:0,quickdrawTimingCandidate:null,yoloReviewFreeCandidate:null,
     note:'Operations were requested and executed. GitHub alone grants or refuses achievements; private eligibility is not guaranteed.'};
   const eventIndex=String(doc.start+1).padStart(4,'0');
   if(doc.quickdraw){
@@ -216,8 +227,16 @@ async function applyBadgeRun(doc,opts={}) {
         body:'QA exercise: verify that this repo is private, owned by the requester, and contains the sandbox marker before closing. This is generated test activity, not a production defect.',
       });
       if(!Number.isInteger(issue?.number))throw Error('Issue creation result uncertain. Inspect the sandbox before retrying.');
-      await call(base+'/issues/'+issue.number,'PATCH',{state:'closed',state_reason:'completed'});
+      const closed=await call(base+'/issues/'+issue.number,'PATCH',{state:'closed',state_reason:'completed'});
+      if(closed?.state!=='closed')
+        throw Error('Issue closure was not confirmed by GitHub. Inspect the workspace before retrying.');
       results.quickdrawIssue=issue.html_url||null;
+      const openedAt=Date.parse(issue.created_at||'');
+      const closedAt=Date.parse(closed.closed_at||'');
+      const elapsed=Number.isFinite(openedAt)&&Number.isFinite(closedAt)&&closedAt>=openedAt
+        ?Math.floor((closedAt-openedAt)/1000):null;
+      results.quickdrawTimingCandidate=elapsed===null?null:elapsed<=300;
+      // A close inside five minutes is an event candidate, not a confirmed badge.
     }
   }
   for(let i=0;i<doc.pulls;i++){
@@ -236,11 +255,13 @@ async function applyBadgeRun(doc,opts={}) {
       throw Error('Could not verify latest default branch revision.');
     await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseRef.object.sha});
     await pause(700);
-    await call(base+'/contents/'+encoded,'PUT',{
+    const written=await call(base+'/contents/'+encoded,'PUT',{
       message:'docs(sandbox): add generated exercise '+id,
       branch:head,content:Buffer.from(exerciseText(doc,index)).toString('base64'),
     });
-    await pause(700);
+    const exactHead=written?.commit?.sha;
+    if(!/^[a-f0-9]{40}$/i.test(exactHead||''))
+      throw Error('Cannot verify the exact generated commit SHA. No PR was opened; inspect the branch.');
     const pr=await call(base+'/pulls','POST',{
       title:'docs(sandbox): generated engineering exercise '+id,
       head,base:branch,
@@ -248,16 +269,27 @@ async function applyBadgeRun(doc,opts={}) {
     });
     if(!Number.isInteger(pr?.number)||!pr?.html_url)
       throw Error('PR creation outcome unknown; inspect GitHub before retrying.');
-    await pause(700);
+    if(pr?.head?.sha&&pr.head.sha!==exactHead)
+      throw Error('The PR head differs from the reviewed generated commit. No merge attempted.');
+    // GitHub's YOLO criterion is "merged without a review": check actual
+    // submitted reviews, not mere reviewer requests or ordinary PR comments.
+    const reviews=await call(base+'/pulls/'+pr.number+'/reviews?per_page=100');
+    if(!Array.isArray(reviews)||reviews.length)
+      throw Error('PR has submitted or uninspectable reviews; refusing unreviewed self-merge. Inspect GitHub.');
     const merge=await call(base+'/pulls/'+pr.number+'/merge','PUT',{
-      merge_method:'squash',
+      merge_method:'squash',sha:exactHead,
       commit_title:'docs(sandbox): complete generated exercise '+id,
     });
-    if(merge?.merged!==true)throw Error('GitHub did not confirm the merge. Inspect PR '+pr.number+'.');
-    results.mergedPulls.push({number:pr.number,url:pr.html_url});
-    await pause(500);
+    if(merge?.merged!==true)
+      throw Error('GitHub did not confirm the merge. Inspect PR '+pr.number+'.');
+    results.mergedPulls.push({number:pr.number,url:pr.html_url,
+      reviewedSubmissions:0,exactHeadVerified:true});
+    if(!results.yoloReviewFreeCandidate)results.yoloReviewFreeCandidate=pr.html_url;
   }
   results.requests=requests;
+  results.contentWrites=contentWrites;
+  results.pacing={minimumWriteGapMs:gap,
+    note:'Individual writes are paced; GitHub also limits content creation across the entire account per hour and can impose stricter secondary limits. Do not run continuous batches without checking rate limits.'};
   results.verify='https://github.com/'+owner+'?tab=achievements';
   return results;
 }
