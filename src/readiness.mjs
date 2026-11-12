@@ -147,7 +147,9 @@ export function hiringReview(snapshot, config) {
       testEvidenceUrls: repo.evidence?.categories?.tests?.sources || [],
       ciEvidenceUrls: repo.evidence?.categories?.ci?.sources || [],
       testedCode: 'unknown',
-      ciStatus: 'unknown',
+      ciStatus: repo.evidence?.verifiedSignals?.latestActionsRun?.status || 'unknown',
+      ciStatusSource: repo.evidence?.verifiedSignals?.latestActionsRun?.source || null,
+      latestRelease: repo.evidence?.verifiedSignals?.latestPublishedRelease || null,
       personalOwnershipOfWork: 'unverified',
       note: 'README headings and repository metadata are presentation signals, not proof of correct code or personal expertise.',
     };
@@ -230,12 +232,12 @@ export function renderHiringReview(review) {
   }
   if (review.featuredProjects.length) {
     lines.push('### Featured project evidence', '',
-      '| Project | README | Setup | Usage | Test files | CI config |', '| --- | --- | --- | --- | --- | --- |');
+      '| Project | README | Setup | Usage | Test files | CI config | Latest Actions |', '| --- | --- | --- | --- | --- | --- | --- |');
     for (const p of review.featuredProjects) {
       const status = (v) => v === null ? 'not checked' : v ? 'heading found' : 'heading not found';
       lines.push('| [' + p.repository + '](' + p.url + ') | ' + p.documentation +
         ' | ' + status(p.setupHeadingDetected) + ' | ' + status(p.usageHeadingDetected) +
-        ' | ' + p.testFiles + ' | ' + p.ciWorkflow + ' |');
+        ' | ' + p.testFiles + ' | ' + p.ciWorkflow + ' | ' + p.ciStatus + ' |');
     }
     lines.push('', 'Tests and CI are not verified as passing; source file paths and README headings do not prove code correctness or authorship.', '');
   }

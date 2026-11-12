@@ -17,6 +17,10 @@ gh-aura brief --deep 2 --output brief.json
 
 `--inspect N` reads selected project README files, and `--deep N` (0–5) fetches the Git tree for the selected public repositories. User-selected featured repositories are inspected before auto-ranked suggestions. Each request is subject to the same API request, response byte and cache budgets. Nothing executes untrusted code or downloads source-file content.
 
+## Optional observed CI runs and releases
+
+`gh-aura audit --deep 2 --checks` (or `showcase --deep 2 --checks`) explicitly adds two bounded public GitHub API reads per selected project: its most recent GitHub Actions run on the configured branch and its most recently listed published release. Without `--checks`, deep inspection remains **one Git tree request per repo**. A recent run's status and URL are observations, not proof that the latest branch is green; GitHub may use other CI providers and different workflow events. No run or release is reported as unknown/not-observed rather than a code-quality failure. API session/byte limits still apply. GitHub-authenticated public reads recheck repo visibility before the Actions endpoint.
+
 ## Signals and their limits
 
 | Detected feature | What it tells us | What it cannot tell us |

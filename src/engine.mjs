@@ -54,6 +54,8 @@ export function rankRepositories(snapshot, config, options = {}) {
     if (repo.evidence?.categories?.manifest?.status === 'observed') reasons.push('Build/dependency manifest found');
     if (repo.evidence?.categories?.architecture?.status === 'observed') reasons.push('Architecture documentation path found');
     if (repo.evidence?.categories?.examples?.status === 'observed') reasons.push('Example/demo source paths found');
+    if (repo.evidence?.verifiedSignals?.latestActionsRun?.status === 'success') reasons.push('A GitHub Actions run reported success (not proof of current code quality)');
+    if (repo.evidence?.verifiedSignals?.latestPublishedRelease?.status === 'observed') reasons.push('A published release was observed (not a code quality guarantee)');
     if (repo.homepage) reasons.push('Project/demo link provided (not availability-tested)');
     if (age !== null && age <= 365) reasons.push('Updated within the past year');
     if (!repo.description) reasons.push('Improve: add a one-line description');

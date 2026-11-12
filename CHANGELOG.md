@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added opt-in `--checks` after `--deep N` to retrieve the latest public GitHub Actions run and release for selected repos. Extra API usage is explicit, source-linked and never treated as proof of code correctness.
+
 - Added `work preview/apply` for a narrowly scoped, user-authored Markdown PR. It requires full diff review, exact revision approval and a scoped token; PRs are never merged automatically.
 
 
