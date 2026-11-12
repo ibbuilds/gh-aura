@@ -34,6 +34,9 @@ export function reserveBadgeWrite(owner,opts={}) {
   const maxWrites=opts.maxWrites??BADGE_WRITE_HOURLY_BUDGET;
   if(!Number.isInteger(maxWrites)||maxWrites<1||maxWrites>BADGE_WRITE_HOURLY_BUDGET)
     throw Error('Invalid hourly write budget.');
+  const count=opts.count??1;
+  if(!Number.isInteger(count)||count<1||count>maxWrites)
+    throw Error('Invalid number of remote writes to reserve.');
   const directory=opts.directory||join(homedir(),'.cache','gh-aura','badge-write-budget');
   safeDirectory(directory);
   const id=createHash('sha256').update(owner.toLowerCase()).digest('hex').slice(0,28);
@@ -64,13 +67,13 @@ export function reserveBadgeWrite(owner,opts={}) {
     }
     const since=now-BADGE_WRITE_WINDOW_MS;
     entries=entries.filter(t=>t>since);
-    if(entries.length>=maxWrites) {
+    if(entries.length+count>maxWrites) {
       const until=Math.max(1,Math.ceil((entries[0]+BADGE_WRITE_WINDOW_MS-now)/60000));
       throw Error('Local badge write safety budget exhausted ('+maxWrites+
         ' writes/hour). Retry the reviewed operation after at least '+until+
         ' minute(s). Other GitHub clients may consume additional quota.');
     }
-    entries.push(now);
+    for(let i=0;i<count;i++)entries.push(now);
     const temp=join(directory,id+'.'+process.pid+'.'+randomUUID()+'.tmp');
     try {
       writeFileSync(temp,JSON.stringify({format:'gh-aura-write-budget-v1',
