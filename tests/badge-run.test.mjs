@@ -136,7 +136,7 @@ test('public and unmarked existing repositories are rejected before any write',a
   for(const opts of [{existing:true,privateRepo:false},{existing:true,existingMarker:false}]) {
     const api=mockAPI(opts);
     await assert.rejects(applyBadgeRun(p,{confirm:p.fingerprint,token:'test-only',
-      fetch:api.fetch,sleep:async()=>{}}),/Only an active|not an explicit/);
+      fetch:api.fetch,sleep:async()=>{}}),/Only an active|not a GH Aura-marked/);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   }
 });
