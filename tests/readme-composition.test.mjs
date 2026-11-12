@@ -82,8 +82,15 @@ test('user-customized source catalogs are bounded, untrusted, opt-in and never f
     const optin=findProfileSources({query:'pixel',sourceFile:file,includeExternal:true});
     assert.ok(optin.sources.some(x=>x.id==='custom-my-portfolio'));
     assert.equal(getProfileSource('custom-my-portfolio',{sourceFile:file}).license,'Owner confirms rights');
-    assert.throws(()=>validateProfileSpec({...makeProfileSpec({}),sourceIds:['custom-my-portfolio']}),
-      /external source/);
+    const previous=process.env.GH_AURA_SOURCES_FILE;
+    process.env.GH_AURA_SOURCES_FILE=file;
+    try{
+      assert.throws(()=>validateProfileSpec({...makeProfileSpec({}),
+        sourceIds:['custom-my-portfolio']}),/external source/);
+    }finally{
+      if(previous===undefined)delete process.env.GH_AURA_SOURCES_FILE;
+      else process.env.GH_AURA_SOURCES_FILE=previous;
+    }
     const command=run(['sources','recommend','--query','retro','--external',
       '--catalog',file,'--json'],dir);
     assert.equal(command.status,0,command.stderr);
