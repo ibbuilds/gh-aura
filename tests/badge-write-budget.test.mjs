@@ -62,3 +62,21 @@ test('fail-closed on lock collisions, corrupt state, invalid owners and quota ov
   writeFileSync(statePath,'not json');
   assert.throws(()=>reserveBadgeWrite('example',{directory:dir,now:now+1}),/Cannot verify local/);
 }));
+
+test('paired Quickdraw reservations are atomic and never partially consume the final slot',()=>withTemp(dir=>{
+  const now=Date.UTC(2026,10,12,10,0,0);
+  const first=reserveBadgeWrite('example',{directory:dir,now,maxWrites:3,count:2});
+  assert.equal(first.remaining,1);
+  const [file]=readdirSync(dir);
+  const snapshot=readFileSync(join(dir,file),'utf8');
+  assert.throws(()=>reserveBadgeWrite('example',{
+    directory:dir,now:now+1,maxWrites:3,count:2
+  }),/budget exhausted/);
+  assert.equal(readFileSync(join(dir,file),'utf8'),snapshot,'failed pair must not reserve a partial slot');
+  assert.equal(reserveBadgeWrite('example',{
+    directory:dir,now:now+2,maxWrites:3,count:1
+  }).remaining,0);
+  assert.throws(()=>reserveBadgeWrite('example',{
+    directory:dir,now:now+3,maxWrites:3,count:0
+  }),/number of remote writes/);
+}));
