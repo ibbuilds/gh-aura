@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { planBadgeRun, badgeDigest, loadBadgePlan, applyBadgeRun } from '../src/badge-run.mjs';
+import { planBadgeRun, badgeDigest, loadBadgePlan, applyBadgeRun,
+  inspectBadgeWorkspace } from '../src/badge-run.mjs';
 import { parseArgs, validateOptions } from '../src/cli-options.mjs';
 
 const repo='example/aura-achievements';
@@ -45,6 +46,18 @@ function mockAPI(options={}) {
     if(path===base+'/issues?state=all&per_page=100')return response(
       options.alreadyDone?[{title:'[GH-AURA-QA-0001] Validate private sandbox setup',
         state:'closed'}]:[]);
+    if(path===base+'/pulls?state=closed&per_page=100&page=1')return response(
+      options.statusMixed?[
+        {number:1,merged_at:'2026-11-12T01:00:00Z',html_url:'https://github.com/'+repo+'/pull/1',
+         head:{ref:'gh-aura/badge-0001'},base:{ref:'main'},user:{login:'example'}},
+        {number:2,merged_at:null,head:{ref:'gh-aura/badge-0002'},base:{ref:'main'},user:{login:'example'}},
+        {number:3,merged_at:'2026-11-12T01:00:00Z',head:{ref:'other'},base:{ref:'main'},user:{login:'example'}}
+      ]:[]);
+    if(path===base+'/issues?state=all&per_page=100&page=1')return response(
+      options.statusMixed?[{number:11,title:'[GH-AURA-QA-0001] Example',
+        created_at:'2026-11-12T01:00:00Z',closed_at:'2026-11-12T01:00:08Z',
+        state:'closed',html_url:'https://github.com/'+repo+'/issues/11',
+        user:{login:'example'}}]:[]);
     if(path===base+'/issues' && method==='POST'){
       issue++;return response({number:issue,html_url:'https://github.com/'+repo+'/issues/'+issue},201);
     }
@@ -170,4 +183,64 @@ test('badge runner reuses a private workspace created by activity without creati
   assert.equal(result.workspaceReused,true);
   assert.equal(result.mergedPulls.length,1);
   assert.equal(api.requests.some(x=>x.path==='/user/repos'),false);
+});
+
+test('tier planning is bounded and does not imply a GitHub-awarded tier',()=>{
+  const base=plan({tier:'base'});
+  assert.equal(base.format,'gh-aura-private-badges-v2');
+  assert.equal(base.pulls,2);
+  assert.equal(base.targetThreshold,2);
+  const bronze=plan({tier:'bronze'});
+  assert.equal(bronze.pulls,16);
+  assert.equal(bronze.nextStart,16);
+  assert.equal(bronze.remainingToTier,0);
+  const silver=plan({tier:'silver',start:16});
+  assert.equal(silver.pulls,16);
+  assert.equal(silver.quickdraw,false);
+  assert.equal(silver.remainingToTier,96);
+  assert.equal(silver.excluded.length,16);
+  assert.deepEqual(silver.attempts.map(a=>a.badge),['pull-shark','yolo']);
+  const gold=plan({tier:'gold',start:1008});
+  assert.equal(gold.pulls,16);
+  assert.equal(gold.remainingToTier,0);
+  assert.throws(()=>plan({tier:'silver',start:128}),/tier threshold/);
+  assert.throws(()=>plan({tier:'gold',start:1020,pulls:16}),/exceed/);
+  assert.throws(()=>plan({tier:'unobtainium'}),/--tier/);
+});
+
+test('v2 plan binds descriptions and excluded list, and safe legacy plans still load',()=>{
+  const folder=mkdtempSync(join(tmpdir(),'aura-matrix-plan-'));
+  try{
+    const file=join(folder,'plan.json'),p=plan();
+    writeFileSync(file,JSON.stringify(p));
+    assert.equal(loadBadgePlan(file).format,'gh-aura-private-badges-v2');
+    p.excluded[0].reason='tampered display';
+    writeFileSync(file,JSON.stringify(p));
+    assert.throws(()=>loadBadgePlan(file),/fingerprint/);
+    const legacy={format:'gh-aura-private-badges-v1',repo,
+      private:true,pulls:2,start:0,quickdraw:true,role:'backend'};
+    legacy.fingerprint=badgeDigest(legacy);
+    writeFileSync(file,JSON.stringify(legacy));
+    const approved=loadBadgePlan(file);
+    assert.equal(approved.format,'gh-aura-private-badges-v1');
+    assert.deepEqual(approved.attempts.map(item=>item.badge),
+      ['pull-shark','yolo','quickdraw']);
+  }finally{rmSync(folder,{recursive:true,force:true});}
+});
+
+test('status reads only GH Aura-owned private workspace and distinguishes events from awards',async()=>{
+  const api=mockAPI({existing:true,statusMixed:true,existingMarker:'shared'});
+  const status=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+  assert.equal(status.private,true);
+  assert.equal(status.readOnly,true);
+  assert.equal(status.status,'observed-workspace-events-awards-unverified');
+  assert.equal(status.observed.mergedOwnedExercisePullRequests,1);
+  assert.equal(status.observed.closedOwnedExerciseIssues,1);
+  assert.equal(status.observed.pullSharkLocalTierCandidate,null);
+  assert.ok(status.verify.includes('?tab=achievements'));
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+  const bad=mockAPI({existing:true,existingMarker:false});
+  await assert.rejects(inspectBadgeWorkspace({repo,token:'test-only',fetch:bad.fetch}),
+    /marker missing/);
+  assert.equal(bad.requests.filter(x=>x.method!=='GET').length,0);
 });
