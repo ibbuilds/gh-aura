@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 
-const cli=new URL('../src/cli.mjs',import.meta.url);
+const cli=fileURLToPath(new URL('../src/cli.mjs',import.meta.url));
 const run=(argv,dir)=>{
-  return spawnSync(process.execPath,[cli.pathname,...argv],{
+  return spawnSync(process.execPath,[cli,...argv],{
     cwd:dir,encoding:'utf8',timeout:10000,
     env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:''},
   });
