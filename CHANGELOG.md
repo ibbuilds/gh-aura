@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added `contributions --plan` with conditional, future-only task ideas for actual owned repositories; zero extra network requests and no calendar or commit scheduling.
+
 ## 1.5.0 — 2026-11-11
 
 - Added optional `audit --job FILE` for a fully local, bounded, explainable job-posting term map against real selected project evidence.
