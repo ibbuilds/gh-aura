@@ -1,11 +1,14 @@
-# GH Aura v1.16.0
+# GH Aura v1.17.0
 
-**Flexible AI art direction and optional dual-account access checks.**
+**AI-first GitHub profiles without templates or mandatory AI subscriptions.**
 
-- `gh-aura brief --prompt --direction barebones|minimal|technical|expressive` generates model-agnostic writing guidance grounded in real repository data and user-selected sections. These are **creative directions**, not rigid or copied README templates.
-- Use `gh-aura config set editorial.direction technical` to save a preference; other choices (projects, words, links, visuals, language) remain independent.
-- `gh-aura badges auto accounts` checks two distinct local credentials (`GH_TOKEN` and `GH_AURA_COLLAB_TOKEN`) have **read access** to the same owned marked private workspace, with no writes or token storage.
-- No automatic coauthor attribution, accepted-answer manipulation or additional achievement award is claimed. GitHub remains authoritative.
-- Tests, concise docs and the four shipped modules remain intact.
+- Curated offline source library: trust, licensing and third-party privacy notes.
+- Editable `ProfileSpec`; `agent capabilities/spec` and `sources list/show/recommend`.
+- Portable Agent Skill, `AGENTS.md` and `llms.txt` in the installable package.
+- Local `gh-aura mcp` with profile evidence, sources, refinement, validation, read-only diff/preview, Pins, Activity and Badges. Modern `2026-07-28` and legacy `2025-11-25` MCP support.
+- **No agent publishing or approval tool.** Human CLI review remains mandatory.
+- No runtime dependencies; protocol and package tests included.
 
-[Commands](CLI.md) · [Badges](BADGE_RUN.md) · [Product status](PRODUCT_PLAN.md)
+Actual cross-client agent acceptance and real GitHub private-write/achievement behavior still need external validation.
+
+[Commands](CLI.md) · [Scope](PRODUCT_PLAN.md)
