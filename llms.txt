@@ -1,0 +1,22 @@
+# GH Aura
+
+> Local, AI-first GitHub profile engineering. Model-agnostic Agent Skills, MCP stdio and traditional CLI. No runtime dependencies; no mandatory AI provider.
+
+## AI entry points
+- [Agent Skill](skills/gh-aura-profile/SKILL.md): on-demand procedure for creating original, hiring-oriented READMEs.
+- [Agent instructions](AGENTS.md): repo-level trust and publication rules.
+- [MCP and source guide](docs/CLI.md): connect via `gh-aura mcp`, or use CLI discovery.
+
+## Core commands
+- `gh-aura agent capabilities --json`: machine-readable tool contract.
+- `gh-aura sources list --json`: offline curated source library with trust, licensing and privacy notes.
+- `gh-aura sources recommend --query "..." --direction minimal --json`: focused references.
+- `gh-aura agent spec --direction technical --goal "backend" --output spec.json`: editable intent, not a template.
+- `gh-aura brief --prompt --direction technical`: model-agnostic writing prompt using public GitHub context.
+- `gh-aura check --file draft.md`: heuristic validation.
+- `gh-aura mcp`: stdio tools/resources/prompts; read-only remote behavior.
+
+## Publication
+An AI never publishes by itself. The person saves and reviews a Markdown draft, runs `gh-aura preview --file draft.md --save review.json`, then independently approves `gh-aura apply --review review.json --pr`.
+
+[Product scope](docs/PRODUCT_PLAN.md) · [Security](SECURITY.md) · [README](README.md)
