@@ -1,6 +1,6 @@
 # Architecture
 
-Node.js 22+ CLI; ES modules; no runtime dependencies, server or background worker.
+Node.js 22+ CLI; ES modules; no runtime dependencies or cloud backend. MCP runs locally over stdio.
 
 | Area | Runtime |
 | --- | --- |
@@ -9,6 +9,8 @@ Node.js 22+ CLI; ES modules; no runtime dependencies, server or background worke
 | Activity | `src/contributions.mjs`, `src/calendar*.mjs` |
 | Achievements | `src/achievement-matrix.mjs`, `src/badge-run.mjs`, `src/badge-accounts.mjs` |
 | Fast badge staging and write budget | `src/badge-bulk-git.mjs`, `src/badge-write-budget.mjs` |
+| AI MCP and tools | `src/mcp-server.mjs`, `src/agent-tools.mjs`, `src/agent-profile.mjs`, `src/profile-sources.mjs` |
+| Agent Skill | `skills/gh-aura-profile/SKILL.md`, `AGENTS.md`, `llms.txt` |
 | README and review | `src/render.mjs`, `src/profile-directions.mjs`, `src/brief.mjs`, `src/workflow.mjs` |
 | Pins and evidence | `src/engine.mjs`, `src/project-evidence.mjs` |
 
