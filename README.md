@@ -1,6 +1,6 @@
 # GH Aura
 
-A free, local-first CLI for presenting your **actual GitHub work** clearly. Inspect your profile, choose what to feature, draft a README, and publish only after reviewing it.
+A free, local-first CLI for inspecting GitHub activity and badges, planning clearly labeled private practice, and presenting your actual project work. One user-owned private workspace is reused when explicitly approved.
 
 **Node.js 22+ · Zero runtime dependencies · No dashboard or required AI**
 
@@ -20,7 +20,7 @@ The package is distributed via GitHub Releases, not the npm registry.
 ## Four main commands
 
 ```bash
-gh-aura activity 2022           # Actual GitHub contributions for 2022
+gh-aura activity 2022           # Inspect observed contributions for 2022
 gh-aura badges free             # Free achievement opportunities
 gh-aura readme minimal          # Minimal profile README draft
 gh-aura pins --goal "backend"   # Project recommendations
@@ -32,7 +32,7 @@ All four commands are read-only. The original `contributions`, `achievements`, `
 
 Plan account-owned sandbox actions offline with `gh-aura badges auto --repo USER/aura-achievements --output badges.json`; after inspecting the plan, `badges auto apply --review badges.json --confirm FINGERPRINT` can create a private repo and run bounded PR/issue exercises. GH Aura reports attempted operations, **not guaranteed badges**, and never interacts with third-party repositories automatically. [Details](docs/BADGE_RUN.md).
 
-Calendar Studio is a separate **synthetic practice** sandbox, not historical professional work. Plan offline with `gh-aura calendar plan 2022 --density 70 --output calendar.json`; the separately approved `calendar apply` creates a new private repository only after verifying account ownership and author identity. [Calendar guide](docs/CALENDAR.md).
+**Activity** also plans dated, explicitly synthetic practice with `gh-aura activity plan 2022 --density 70 --output plan.json`. After approving its fingerprint, `activity apply` creates or safely reuses the same owned private workspace as `badges auto`. GitHub alone decides what appears in your contribution graph. [Activity guide](docs/CALENDAR.md).
 
 ## Review before publishing
 
@@ -70,7 +70,7 @@ This creates an unmerged PR, never a guaranteed achievement. Profile styles are 
 
 GH Aura's editorial reference uses [200 public, ordinary-visibility engineering profiles](research/ORDINARY_STUDY.md) from 35 company GitHub organizations. Company membership and self-described work are **signals, not independently verified employment**. Their structure is summarized offline; no biographies are copied or profiles fetched during normal CLI use.
 
-GitHub decides which events count toward contributions and achievements. GH Aura cannot guarantee badges, historical activity, job offers or code quality; public repo pins are selected through GitHub's interface. No background jobs or unattended profile changes. Calendar Studio creates an explicitly labeled synthetic practice series only after a separate approval.
+GitHub decides which events count toward contributions and achievements. GH Aura cannot guarantee badges, historical activity, job offers or code quality; public repo pins are selected through GitHub's interface. No background jobs or unattended profile changes. Synthetic activity is labeled and requires separate approval; one marked private workspace can be reused. Never delete it casually.
 
 Public reads use a five-minute cache, explicit API budgets and optional `--stats` reporting. Publishing never uses cached revisions. No subscription or paid API is necessary.
 
