@@ -152,11 +152,22 @@ jobs:
           research/company-engineers-20261111 4eeb94b7e90a136e0c7b07262c3f006780a5f11a
           research/ordinary-engineers-20261111 b7e5d8f73acddf3e3927f7dd649084aabbfdaaf0
           research/profile-baseline-20261111 69189227848f494d209c11b9f69d861421390f5a
+          feat/calendar-studio 833e48f50d1efb4a95d07e26ffb94facd1b5888d
+          feat/private-badge-run 137b1467bc9d03f51e6ef22e1375fff5cbef42b6
+          release/v1.8.0 ade201b8bb56fb2e0bd73169790b9edaa071a599
           OBSOLETE_BRANCHES
 
-          # The cleanup PR itself is deleted only if GitHub confirms it was merged.
-          own="$(gh api "repos/$GH_REPO/commits/$GITHUB_SHA/pulls" --jq '.[] | select(.merged_at != null and .head.ref == "chore/repo-cleanup") | .head.ref' 2>/dev/null || true)"
-          if [[ "$own" == "chore/repo-cleanup" ]]; then
-            gh api --method DELETE "repos/$GH_REPO/git/refs/heads/$own" >/dev/null || true
+          # Delete the merged maintenance PR head only if its ref still has the
+          # exact head SHA GitHub recorded for that PR. Never delete moved work.
+          own_pr="$(gh api "repos/$GH_REPO/commits/$GITHUB_SHA/pulls" \
+            --jq '.[] | select(.merged_at != null and (.head.ref == "chore/repo-cleanup" or .head.ref == "fix/v1.8.1-release-readiness")) | [.head.ref,.head.sha] | @tsv' 2>/dev/null || true)"
+          if [[ -n "$own_pr" ]]; then
+            read -r own expected_own <<< "$own_pr"
+            current_own="$(gh api "repos/$GH_REPO/git/ref/heads/$own" --jq '.object.sha' 2>/dev/null || true)"
+            if [[ "$current_own" == "$expected_own" ]]; then
+              gh api --method DELETE "repos/$GH_REPO/git/refs/heads/$own" >/dev/null || true
+            else
+              echo "Merged maintenance branch moved or disappeared; leaving it alone."
+            fi
           fi
           echo "Pruned $deleted obsolete branches (unchanged heads only)."
