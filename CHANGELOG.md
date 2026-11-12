@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.5.1 — 2026-11-11
 
 - Added `contributions --plan` with conditional, future-only task ideas for actual owned repositories; zero extra network requests and no calendar or commit scheduling.
 
