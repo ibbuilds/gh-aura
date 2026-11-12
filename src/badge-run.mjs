@@ -370,7 +370,7 @@ export function nextBadgePlanFromWorkspace(status,tree,options={}) {
     seen.add(n);
   }
   for(const path of docs) {
-    const match=/^docs\\/gh-aura\\/exercise-(\\d{4})\\.md$/.exec(path);
+    const match=/^docs\/gh-aura\/exercise-(\d{4})\.md$/.exec(path);
     if(match && !seen.has(Number(match[1])))
       throw Error('Unverified exercise file in workspace; inspect GitHub before proceeding.');
   }
@@ -409,10 +409,10 @@ export async function planNextBadgeRun(opts={}) {
       if(branchRef)
         throw Error('Review branch '+head+' exists without a confirmed merged exercise. Inspect GitHub before another plan.');
     }
-    if(opts.output)writeFileSync(opts.output,JSON.stringify(doc,null,2)+'\\n',
+    if(opts.output)writeFileSync(opts.output,JSON.stringify(doc,null,2)+'\n',
       {flag:opts.force?'w':'wx',mode:0o600});
   }
-  process.stdout.write(JSON.stringify(doc,null,2)+'\\n');
+  process.stdout.write(JSON.stringify(doc,null,2)+'\n');
   return doc;
 }
 
