@@ -59,7 +59,7 @@ Details: [Activity](ACTIVITY.md) · [Achievements](ACHIEVEMENTS.md) · [Genuine 
 ## Private badge automation (explicit)
 
 ```bash
-gh-aura badges auto --tier base --output base.json
+gh-aura badges auto --tier base --strategy git-batch --output base.json
 gh-aura badges auto --tier bronze --output bronze.json
 gh-aura badges auto next --goal max --output next.json
 # Review the exact plan and fingerprint before any write:
@@ -68,7 +68,7 @@ gh-aura badges auto apply --review bronze.json --confirm FINGERPRINT
 gh-aura badges auto status
 ```
 
-Creates or resumes the **same marked private GH Aura workspace** used by `activity apply` (configure once with `gh-aura config set workspace.repo OWNER/REPO` or default to `USER/gh-aura-workspace` after `gh-aura init USER`). `badges auto next --goal max` chooses the next unmet workspace milestone (2 / 16 / 128 / 1,024); `--tier` can still target one stage. Both read the marked repo, confirm complete merged PRs and the Git tree, reject pending branches, and save a separately reviewed batch without remote writes. Each reviewed batch allows 16 PRs. Confirmed merge SHAs eliminate duplicate reads; serial writes obey a one-second gap and an atomic local 480/hour ledger. GitHub's actual quota may be lower and includes other apps. `--tier` selects reported Pull Shark thresholds (base 2, bronze 16, silver 128, gold 1,024) but never grants badges. `badges auto status` also reads a bounded sample of PR details/reviews to classify a self-merged, review-free YOLO event candidate and measures Quickdraw closure timing, returning **awards unverified**. The versioned registry classifies seven active, two historical, two disabled, three internal and five profile/program badges. Public/third-party repos are never touched; other achievements require genuine collaborators, public independent stars, accepted answers, payments or program eligibility. GitHub decides whether private/self-generated events count. See [private badge automation](BADGE_RUN.md).
+GH Aura creates or reuses one owned, marked private workspace (default `USER/gh-aura-workspace` after `init USER`). `badges auto next --goal max` plans the next safe milestone (2, 16, 128, 1,024). Each reviewed batch allows up to 16 PRs. The **opt-in** `--strategy git-batch` prepares those source branches using one atomic create-only Git push and then opens/merges actual PRs separately. Old approved v1/v2 REST plans remain unchanged; new Git-batch plans use a fingerprint-bound v3 format. GitHub's actual quotas and achievement eligibility still apply. [Runner guide](BADGE_RUN.md) · [Atomic Git batches](BADGE_FAST.md).
 
 ## Audit, project relevance and evidence
 
