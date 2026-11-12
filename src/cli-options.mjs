@@ -11,13 +11,13 @@ export const SPECS = {
   apply: { usage: 'apply --review review.json [--pr] | apply [USER] --file draft.md --approve CODE [--pr]', flags: [...COMMON, 'file', 'approve', 'review', 'format', 'pr'], max: 1 },
   showcase: { usage: 'showcase [USER] [--goal TEXT] [--limit 6] [--inspect 6]', flags: [...DATA, 'goal', 'limit'], max: 1 },
   achievements: { usage: 'achievements [USER] [--json]', flags: [...READ, 'format', 'output', 'force'], max: 1 },
-  contributions: { usage: 'contributions [USER] [--year YYYY | --all] [--details] [--json]', flags: [...READ, 'year', 'all', 'format', 'output', 'force', 'details'], max: 1 },
+  contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--days] [--private] [--recover] [--details]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'format', 'output', 'force', 'details'], max: 1 },
   brief: { usage: 'brief [USER] [--prompt] [--style minimal|regular|flashy | --visual 0..100] [-o brief.json]', flags: [...DATA, 'style', 'visual', 'prompt'], max: 1 },
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'budget', 'brief', 'company']);
-const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company']);
+const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover']);
 export const HELP = [
   'GH Aura — a GitHub profile toolkit. You choose every change.', '',
   'Start:', '  gh-aura init USER', '  gh-aura audit',
@@ -75,5 +75,8 @@ export function validateOptions(command, options) {
   if (options.visual !== undefined && (!/^\d+$/.test(options.visual) || Number(options.visual) > 100)) throw new Error('--visual must be an integer from 0 to 100.');
   if (options.budget !== undefined && (!/^\d+$/.test(options.budget) || Number(options.budget) < 1 || Number(options.budget) > 500)) throw new Error('--budget must be an integer from 1 to 500.');
   if (command === 'contributions' && options.all && options.year !== undefined) throw new Error('Choose --all or --year, not both.');
+  if (command === 'contributions' && (options.from !== undefined || options.to !== undefined) && (options.all || options.year !== undefined)) throw new Error('Choose --from/--to or --year/--all, not both.');
+  if (command === 'contributions' && options.year !== undefined && !/^\d{4}$/.test(options.year)) throw new Error('--year must be a four-digit year.');
+
   if (command === 'brief' && ((options.prompt && options.format === 'json') || (!options.prompt && options.format === 'markdown'))) throw new Error('brief exports JSON; use --prompt for writing instructions, without --json.');
 }

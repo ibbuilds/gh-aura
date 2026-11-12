@@ -1,0 +1,40 @@
+# Activity: honest history, any year or date interval
+
+GH Aura reads what GitHub says about a developer's activity. It does **not** manufacture contributions, alter commit timestamps or change account settings.
+
+## Use
+
+The ordinary command remains `gh-aura contributions`. The new flags are optional:
+
+```bash
+gh-aura contributions --all
+gh-aura contributions --year 2024
+gh-aura contributions --from 2020-01-01 --to 2024-12-31
+gh-aura contributions --from 2020 --to 2024 --days --json --output history.json
+gh-aura contributions --from 2020 --to 2026 --private --recover
+```
+
+A year shorthand expands to January 1/December 31. The report uses **UTC** and splits requested intervals into one-calendar-year API windows. If the start predates account creation, it starts with the account's first UTC date. Historical windows are batched in up to **four** read-only GraphQL collections per request to reduce network overhead. The request byte/session budgets still apply.
+
+`--days` includes observed daily totals (including real zeros reported by GitHub). Without it, the output stays compact. These totals are GitHub-visible events subject to permissions and calendar eligibility, not a statement that the person worked on every day.
+
+`--private` adds privacy guidance; it does not unlock private repositories or change the user's contribution visibility. On GitHub, visit **Your profile → Contribution settings → Private contributions** to opt into anonymized private counts. The report never exports private repository names.
+
+`--recover` produces a checklist for **actual** historical work: inspect original commit author emails locally, associate eligible old emails with the account, check qualifying default/gh-pages branches, forks, and private visibility. GH Aura makes **zero** history edits. GitHub can rebuild a contribution graph after a legitimately used old author email is associated with the account.
+
+When authentication is missing, daily and annual GraphQL contribution counts remain **unknown**, not zero. A valid token supplies read access; it is never written into the report.
+
+## Limitations
+
+- GitHub counts eligible activity, not hours worked, seniority or code quality.
+- A changed Git author date or an artificially backdated commit does not prove old work.
+- GitHub can show anonymized private activity; that does not reveal repo details to outsiders.
+- Account privacy is a user setting; visibility may differ for owners, organization members and anonymous visitors.
+- A zero or incomplete GraphQL response is not proof of inactivity.
+- Batch queries have higher GraphQL complexity than a single-year query even when the HTTP request count is lower; the max-four policy bounds that complexity.
+
+## Official sources
+
+- [Profile contributions reference](https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference)
+- [Troubleshooting missing contributions](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/troubleshooting-missing-contributions)
+- [Private contributions and achievements visibility](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements)

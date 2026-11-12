@@ -110,6 +110,16 @@ Target-company preferences may guide external writing only: `gh-aura config set 
 
 `achievements` is an offline guide with no configured account; otherwise it adds bounded public PR/star evidence. No count guarantees eligibility or ownership. `achievements.earned` is explicitly self-reported; `achievements.excluded` controls omissions; `achievements.allowPaid` defaults false. Historical, program, paid and community-reported entries remain distinguished. The tool does not award badges or manufacture private-repository interactions.
 
+## Contribution ranges and attribution recovery
+
+```bash
+gh-aura contributions --from 2020-01-01 --to 2024-12-31
+gh-aura contributions --from 2020 --to 2026 --days --json
+gh-aura contributions --from 2020 --to 2026 --private --recover
+```
+
+These read-only flags extend the existing annual `contributions --year` / `--all` commands. Dates are UTC; the tool partitions the selected interval by year and batches up to four historical GraphQL collections per API request. `--days` exports daily counts exactly as GitHub reports them, never invented data. `--private` displays opt-in visibility guidance; it does not change settings or access private repository contents. `--recover` prints manual steps for legitimately missing historical attribution (author email, branches, forks, private visibility) without modifying Git history. See [Activity](ACTIVITY.md).
+
 ## Contributions
 
 `contributions --year YYYY` selects a year; `--all` queries annual windows from account creation. GraphQL counts require authenticated read access and reflect the token's visibility, not all professional work. Missing authentication leaves counts unknown.

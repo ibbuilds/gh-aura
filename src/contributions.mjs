@@ -2,16 +2,6 @@ import { graphql, tokenFor, getJSON } from './github.mjs';
 import { md } from './text.mjs';
 
 const SOURCE = 'https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference';
-const QUERY = `query ProfileHistory($login: String!, $from: DateTime!, $to: DateTime!) {
-  user(login: $login) {
-    contributionsCollection(from: $from, to: $to) {
-      totalCommitContributions totalIssueContributions totalPullRequestContributions
-      totalPullRequestReviewContributions totalRepositoryContributions restrictedContributionsCount
-      contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }
-    }
-  }
-}`;
-
 export function historyYears(createdAt, options = {}) {
   const now = options.now ?? new Date();
   const joined = new Date(createdAt);
@@ -42,13 +32,112 @@ export function summarizeYear(year, collection) {
   };
 }
 
+
+const HIST_FIELDS = [
+  'totalCommitContributions totalIssueContributions totalPullRequestContributions',
+  'totalPullRequestReviewContributions totalRepositoryContributions restrictedContributionsCount',
+  'contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }',
+].join(' ');
+
+function parseUTCDate(value, edge) {
+  if (typeof value !== 'string' || !/^\d{4}(?:-\d{2}-\d{2})?$/.test(value)) {
+    throw new Error('--' + edge + ' must be a UTC date YYYY-MM-DD or a year YYYY.');
+  }
+  const text = /^\d{4}$/.test(value) ? value + (edge === 'from' ? '-01-01' : '-12-31') : value;
+  const time = Date.parse(text + 'T00:00:00.000Z');
+  if (!Number.isFinite(time) || new Date(time).toISOString().slice(0, 10) !== text) {
+    throw new Error('--' + edge + ' is not a valid calendar date.');
+  }
+  return time;
+}
+
+/** Bound each query window to one UTC calendar year, with optional user date range. */
+export function historyWindows(createdAt, options = {}) {
+  const now = options.now ?? new Date();
+  const created = new Date(createdAt);
+  if (!Number.isFinite(created.getTime()) || created > now) {
+    throw new Error('GitHub returned an invalid account creation date.');
+  }
+  const dates = options.from !== undefined || options.to !== undefined;
+  if (dates && (options.all || options.year !== undefined)) {
+    throw new Error('Use --from/--to or --year/--all, not both.');
+  }
+  if (options.to !== undefined) {
+    const requestedEnd = parseUTCDate(options.to, 'to');
+    if (requestedEnd > now.getTime() && String(options.to) !== String(now.getUTCFullYear())) {
+      throw new Error('Requested interval is empty or outside the account lifetime (future --to).');
+    }
+  }
+  const yearList = dates
+    ? null : historyYears(createdAt, options);
+  const start = dates ? Math.max(Date.UTC(created.getUTCFullYear(), created.getUTCMonth(), created.getUTCDate()),
+    options.from === undefined ? 0 : parseUTCDate(options.from, 'from'))
+    : null;
+  const end = dates ? Math.min(now.getTime(), options.to === undefined ? now.getTime()
+    : parseUTCDate(options.to, 'to') + 86399999)
+    : null;
+  if (dates && (start > end || end < created.getTime())) {
+    throw new Error('Requested date interval is empty or outside the account lifetime.');
+  }
+  const years = yearList || Array.from(
+    { length: new Date(end).getUTCFullYear() - new Date(start).getUTCFullYear() + 1 },
+    (_, index) => new Date(start).getUTCFullYear() + index);
+  return years.map((year) => {
+    const from = new Date(dates ? Math.max(Date.UTC(year, 0, 1), start) : Date.UTC(year, 0, 1));
+    const to = new Date(Math.min(Date.UTC(year + 1, 0, 1) - 1000, now.getTime(),
+      dates ? end : Infinity));
+    if (to < from) throw new Error('Requested date interval is empty.');
+    return { year, from: from.toISOString(), to: to.toISOString() };
+  });
+}
+
+/**
+ * Each alias is a separate <=1-year ContributionsCollection, with a read-only
+ * GraphQL request batching at most 4 years. A single-year call keeps the
+ * original query shape for backwards-compatible mocks/usage.
+ */
+export async function readContributionWindows(login, windows, options) {
+  const collected = [];
+  for (let offset = 0; offset < windows.length; offset += 4) {
+    const batch = windows.slice(offset, offset + 4);
+    if (batch.length === 1) {
+      const w = batch[0];
+      const query = 'query ProfileHistory($login:String!,$from:DateTime!,$to:DateTime!){user(login:$login){contributionsCollection(from:$from,to:$to){' + HIST_FIELDS + '}}}';
+      const data = await graphql(query, { login, from: w.from, to: w.to }, options);
+      if (!data.user?.contributionsCollection) throw new Error('Contribution data is unavailable; no history was inferred.');
+      collected.push({ window: w, collection: data.user.contributionsCollection });
+      continue;
+    }
+    const declarations = batch.map((_, i) => '$from' + i + ':DateTime!,$to' + i + ':DateTime!').join(',');
+    const fields = batch.map((_, i) => 'y' + i + ':contributionsCollection(from:$from' + i + ',to:$to' + i + '){' + HIST_FIELDS + '}').join(' ');
+    const variables = { login };
+    for (const [i, w] of batch.entries()) { variables['from' + i] = w.from; variables['to' + i] = w.to; }
+    const query = 'query ProfileHistoryBatch($login:String!,' + declarations + '){user(login:$login){' + fields + '}}';
+    const data = await graphql(query, variables, options);
+    for (const [i, w] of batch.entries()) {
+      const collection = data.user?.['y' + i];
+      if (!collection) throw new Error('GitHub returned incomplete contribution collections; no partial graph was used.');
+      collected.push({ window: w, collection });
+    }
+  }
+  return collected;
+}
+
 export async function contributionsReport(snapshot, options = {}) {
   const now = options.now ?? new Date();
-  const years = historyYears(snapshot.user.created_at, { ...options, now });
+  const windows = historyWindows(snapshot.user.created_at, { ...options, now });
   const report = {
     user: snapshot.username, observedAt: now.toISOString(), accountCreatedAt: snapshot.user.created_at,
     status: tokenFor(options) ? 'observed' : 'authentication_required',
-    years: [], milestones: [],
+    years: [], milestones: [], interval: {
+      from: windows[0]?.from || null, to: windows.at(-1)?.to || null,
+      timezone: 'UTC', requestedFrom: options.from ?? null, requestedTo: options.to ?? null,
+    }, privateVisibility: options.private ? {
+      requested: true, enabledByCLI: false, status: 'manual-account-setting',
+      description: 'GitHub may show anonymized eligible private activity if the account opts in. This command does not enable the setting or expose private repository names.',
+      instructions: 'On your GitHub profile: Contribution settings → Private contributions.',
+      source: 'https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements',
+    } : null,
     coverage: 'Counts reflect what GitHub exposes to this token, not all work ever performed. Restricted counts have no repository details. A zero is not proof of inactivity.',
     diagnostics: [
       { check: 'Commit email attribution', status: 'manual', action: 'Confirm that emails used by your real commits are associated with your account. Do not publish your email inventory.' },
@@ -59,14 +148,19 @@ export async function contributionsReport(snapshot, options = {}) {
     sources: [SOURCE, 'https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/troubleshooting-missing-contributions'],
   };
   if (tokenFor(options)) {
-    for (const year of years) {
-      // Each collection covers less than one calendar year, including leap years.
-      const from = new Date(Date.UTC(year, 0, 1));
-      const end = new Date(Math.min(Date.UTC(year + 1, 0, 1) - 1000, now.getTime()));
-      const data = await graphql(QUERY, { login: snapshot.username, from: from.toISOString(), to: end.toISOString() }, options);
-      const collection = data.user?.contributionsCollection;
-      if (!collection) throw new Error('Contribution data is unavailable for this user; no history was inferred.');
-      report.years.push(summarizeYear(year, collection));
+    const observed = await readContributionWindows(snapshot.username, windows, options);
+    for (const { window, collection } of observed) {
+      const row = summarizeYear(window.year, collection);
+      row.from = window.from;
+      row.to = window.to;
+      if (options.days) {
+        const first = window.from.slice(0, 10), last = window.to.slice(0, 10);
+        row.days = collection.contributionCalendar.weeks
+          .flatMap((week) => week.contributionDays || [])
+          .filter((day) => day.date >= first && day.date <= last)
+          .map((day) => ({ date: day.date, count: day.contributionCount }));
+      }
+      report.years.push(row);
     }
   }
   report.milestones.push({ date: snapshot.user.created_at, event: 'GitHub account created', source: 'https://github.com/' + snapshot.username });
@@ -74,6 +168,20 @@ export async function contributionsReport(snapshot, options = {}) {
     report.milestones.push({ date: repo.created_at, event: 'Public repository created: ' + repo.name, source: 'https://github.com/' + repo.full_name });
   }
   if (options.details) await detailMilestones(report, snapshot, options);
+  if (options.recover) report.recoveryPlan = [
+    { task: 'Inspect real commit authorship locally', status: 'manual',
+      command: 'git log --all --format="%h %ad %ae" --date=short',
+      reason: 'Compare actual commit email/date on your own clones. Keep private emails private.' },
+    { task: 'Confirm historical email addresses on GitHub', status: 'manual',
+      url: 'https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/troubleshooting-missing-contributions',
+      reason: 'Adding a historical author email to the same account may restore credit for existing qualifying commits without rewriting them.' },
+    { task: 'Check branch, fork and repository eligibility', status: 'manual',
+      url: 'https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference',
+      reason: 'Not every legitimate commit appears on the contribution graph.' },
+    { task: 'Opt into anonymized private counts only if desired', status: 'manual',
+      url: 'https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements',
+      reason: 'This changes profile visibility in GitHub settings; GH Aura never exposes private repo contents.' },
+  ];
   report.timelineNote = 'Repository creation dates are not project start dates or evidence of seniority. Up to 12 creation milestones are shown; --details adds bounded release, authored-commit and merged-PR evidence, not a complete career history.';
   return report;
 }
@@ -82,8 +190,25 @@ export function renderContributions(report) {
   const lines = ['# Contributions: @' + md(report.user), '', md(report.coverage), ''];
   if (report.status === 'authentication_required') lines.push('Provide GH_TOKEN/GITHUB_TOKEN to read annual contribution counts. No graph data was inferred.', '');
   if (report.years.length) {
-    lines.push('| Year | Contributions | Commits | PRs | Reviews | Active days |', '| --- | ---: | ---: | ---: | ---: | ---: |');
-    for (const year of report.years) lines.push('| ' + [year.year, year.total, year.commits, year.pullRequests, year.reviews, year.activeDays].join(' | ') + ' |');
+    lines.push('| Year | UTC interval | Contributions | Commits | PRs | Reviews | Active days |', '| --- | --- | ---: | ---: | ---: | ---: | ---: |');
+    for (const year of report.years) {
+      lines.push('| ' + [year.year, year.from?.slice(0, 10) + ' to ' + year.to?.slice(0, 10), year.total,
+        year.commits, year.pullRequests, year.reviews, year.activeDays].join(' | ') + ' |');
+      if (year.days) lines.push('', 'Daily contributions (' + year.year + ', UTC):',
+        ...year.days.map((day) => '- ' + day.date + ': ' + day.count), '');
+    }
+    lines.push('');
+  }
+  if (report.privateVisibility) lines.push('## Private contribution visibility', '',
+    md(report.privateVisibility.description), '',
+    md(report.privateVisibility.instructions), '',
+    'Source: ' + report.privateVisibility.source, '');
+  if (report.recoveryPlan) {
+    lines.push('## Authentic attribution recovery (manual)', '',
+      'Review and restore credit for existing work. No history is rewritten.', '');
+    for (const item of report.recoveryPlan) lines.push('- **' + md(item.task) + '**: ' + md(item.reason),
+      ...(item.command ? ['  Local command: `' + item.command + '`'] : []),
+      ...(item.url ? ['  Source: ' + item.url] : []));
     lines.push('');
   }
   lines.push('## Visibility checks', '');
