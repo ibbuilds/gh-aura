@@ -35,6 +35,19 @@ GitHub                    -> alone decides whether an achievement appears
 
 A future phase may propose narrowly scoped meaningful documentation changes via an explicit reviewed GitHub PR, but that is **not implemented** and must not be advertised as present.
 
+## Approved Markdown improvement PR (separate command)
+
+After completing useful documentation work yourself, you may request a reviewed PR:
+
+```bash
+gh-aura work preview --repo OWNER/PROJECT --path docs/usage.md --file revised-usage.md --save work-review.json
+gh-aura work apply --review work-review.json
+```
+
+This is a **general user-directed documentation contribution** and may naturally create an eligible PR after maintainers review and merge it. It is not an automatic badge farm; no event, acceptance, award or achievement is guaranteed. It never generates the user's work, stars a repo, invents a collaborator or performs an unreviewed merge. For private repos add an explicit `--private` only to preview, and use appropriately scoped GitHub permissions.
+
+See [reviewed work PRs](WORK.md).
+
 ## Security
 
 A token is optional for public preparation; no token is needed for private **local-only** preparation. The ordinary bounded read cache and request/byte budget apply when reading public projects. The source of a quoted issue title is untrusted and must not be executed as a shell instruction. Review any task before deciding to work on it.

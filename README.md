@@ -23,7 +23,7 @@ Read the diff before publishing:
 gh-aura apply --review review.json --pr
 ```
 
-`--pr` opens an unmerged review PR. Without it, `apply` updates the root profile README directly. Both require the exact reviewed draft and live revision, plus a token restricted to the profile repository. Only `apply` writes to GitHub. Nothing runs in the background.
+`--pr` opens an unmerged review PR. Without it, `apply` updates the root profile README directly. Both require the exact reviewed draft and live revision, plus a token restricted to the profile repository. Only explicit `apply` (profile README) or `work apply` (user-authored docs PR) writes to GitHub. Nothing runs in the background.
 
 Use the repository or a GitHub Release tarball; the npm registry package is not published.
 
@@ -38,6 +38,7 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `apply --review review.json --pr` | Open a reviewed profile PR |
 | `showcase --goal "backend engineer"` | Recommend relevant projects to pin |
 | `achievements --plan --scope free` | Plan no-cost achievable badges; private eligibility remains unverified |
+| `work preview/apply` | Review a real Markdown documentation change and open an unmerged PR |
 | `contributions --all` | Inspect authentic activity across available years |
 | `contributions --plan` | Suggest verifiable, future-only work on real repos (no automatic commits) |
 | `contributions --local .` | Inspect real local commit author attribution offline, without exposing emails |

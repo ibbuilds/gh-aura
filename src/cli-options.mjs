@@ -2,6 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
+  work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
   init: { usage: 'init [USER] [--config FILE]', flags: ['config', 'output', 'force'], max: 1 },
   config: { usage: 'config show|get|set|reset [KEY] [VALUE] [--dry-run]', flags: ['config', 'dry-run'], max: 3 },
@@ -16,7 +17,7 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan']);
 export const HELP = [
   'GH Aura — a GitHub profile toolkit. You choose every change.', '',
@@ -26,13 +27,14 @@ export const HELP = [
   '  gh-aura apply --review review.json', '',
   'Explore:', '  showcase       Recommend projects to pin',
   '  achievements   Explore badges and relevant public evidence',
+  '  work           Preview and open reviewed documentation PRs',
   '  contributions  Inspect annual activity and visibility checks',
   '  brief --prompt Export grounded instructions for any writer',
   '  check          Check a draft locally before reviewing it',
   '  references     Browse sourced working-engineer profile examples (offline)',
   '  config         Read or change local preferences', '',
   'Use gh-aura COMMAND --help for options. No command runs in the background.',
-  'Only apply writes to GitHub. Add --stats to a read command to measure its cost.',
+  'Only apply and work apply can write to GitHub, after explicit review. Read commands support --stats.',
 ].join('\n') + '\n';
 
 export function parseArgs(tokens) {
@@ -87,6 +89,20 @@ export function validateOptions(command, options) {
   if (command === 'achievements' && options.repo && !options.prepare) throw new Error('--repo requires --prepare BADGE_ID.');
 
 
+  if (command === 'work') {
+    const action = options.positional[0];
+    if (!['preview', 'apply'].includes(action)) {
+      throw new Error('Use work preview --repo OWNER/REPO --path README.md --file draft.md, or work apply --review FILE.');
+    }
+    if (action === 'preview' && (!options.repo || !options.path || !options.file ||
+        options.review || options.format)) {
+      throw new Error('work preview requires --repo OWNER/REPO, --path README.md (or docs/...), and --file draft.md. Only --save saves a review.');
+    }
+    if (action === 'apply' && (!options.review || options.repo || options.path || options.file ||
+        options.save || options.private || options.force)) {
+      throw new Error('work apply requires only --review REVIEW.json; repo, path and draft are bound to that review.');
+    }
+  }
   if (command === 'contributions' && options['emails-file'] && !options.local) throw new Error('--emails-file requires --local PATH.');
   if (command === 'contributions' && options.local && (options.year !== undefined || options.all || options.private || options.days || options.details || options.plan)) throw new Error('--local is offline; use only --from, --to, --recover, or --emails-file with it.');
   if (command === 'contributions' && options.year !== undefined && !/^\d{4}$/.test(options.year)) throw new Error('--year must be a four-digit year.');

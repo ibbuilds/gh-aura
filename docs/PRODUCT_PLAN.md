@@ -55,7 +55,7 @@ gh-aura preview --file draft.md --save review.json
 gh-aura apply --review review.json --pr
 ```
 
-Only `apply` writes remotely. It never merges its review PR. Everything else is read-only or produces a local file.
+Only explicit, reviewed `apply` writes the profile README remotely. A separately authorized `work apply` will support opening an unmerged documentation PR. Everything else is read-only or produces a local file.
 
 ### Proposed, not yet implemented
 
@@ -172,6 +172,13 @@ Allow users to exclude/force-include/reorder candidates, identify why a repo is 
 | **R — Hardening** | Documentation, privacy, cross-platform tests, package and GitHub Release | All checks green; source and API quota budgets documented |
 
 **Priority:** A1 → B1 → B2 → C1 → D1 → R. Each stage may release independently after its gates; don't wait for every feature to ship useful improvements. The core must remain minimal.
+
+## Incremental implementation status
+
+- **Current v1.5.1:** Historical GraphQL windows, authenticity-recovery guidance, bounded public repo inspection, achievement capability registry and read-only task preparation, configurable profile strategies and privacy-conscious job matching are implemented.
+- **Next feature in review:** A narrowly scoped, user-reviewed Markdown documentation PR workflow for real work; GitHub awards are never guaranteed and the user supplies the substantive change.
+- **Remaining verification:** independent recruiter/engineer usability study, actual test/CI status evidence, more nuanced job-domain matching, and review of GitHub private attribution boundary cases.
+- Previously proposed nested commands are **concept sketches**. The actual shipped CLI uses concise flags such as `contributions --recover`, `achievements --plan` and `achievements --prepare`. Use `gh-aura COMMAND --help` for authoritative syntax.
 
 ## Tracked implementation work
 

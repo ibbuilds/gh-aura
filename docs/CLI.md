@@ -135,6 +135,19 @@ Each item now identifies its collectible/paid/program/historical class, source d
 
 `achievements` is an offline guide with no configured account; otherwise it adds bounded public PR/star evidence. No count guarantees eligibility or ownership. `achievements.earned` is explicitly self-reported; `achievements.excluded` controls omissions; `achievements.allowPaid` defaults false. Historical, program, paid and community-reported entries remain distinguished. The tool does not award badges or manufacture private-repository interactions.
 
+## Reviewed documentation contributions (PR only)
+
+For user-authored, useful documentation changes in a repository where you have write permission:
+
+```bash
+gh-aura work preview --repo OWNER/PROJECT --path README.md --file updated.md --save work-review.json
+gh-aura work apply --review work-review.json
+```
+
+Only root `README.md` or Markdown files under `docs/` may be changed. For an authorized private repository, add `--private` to `work preview`; this setting is bound to the saved review. The complete diff, file, repository, branch, visibility and remote revision are reviewed before any write. `work apply` requires a fine-grained token with **Contents write** and **Pull requests write** permission for that repository; it creates an **unmerged PR** and never force-pushes. A mismatch causes rejection, and reruns reuse the matching approved PR if it already exists.
+
+The user must create genuinely useful text, run project checks and follow repository maintainer policies. Opening a PR does not guarantee that GitHub awards Pull Shark or any other achievement. See [Reviewed work PRs](WORK.md).
+
 ## Contribution ranges and attribution recovery
 
 ```bash
