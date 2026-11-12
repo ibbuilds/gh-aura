@@ -1,6 +1,6 @@
 {
   "name": "gh-aura",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A local, hiring-oriented CLI for reviewing and presenting real GitHub engineering work.",
   "type": "module",
   "bin": {
