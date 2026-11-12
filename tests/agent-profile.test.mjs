@@ -37,13 +37,15 @@ test('recommendations prefer official Markdown and require opt-in for external i
 
 test('profile spec is independently editable and never injects static README content',()=>{
   const spec=makeProfileSpec({direction:'technical',goal:'backend engineer',
-    sections:{stats:false,projects:true},maxProjects:2});
+    sections:{stats:false,projects:true},maxProjects:2,
+    links:[{label:'Portfolio',url:'https://example.dev'}]});
   assert.equal(spec.format,'gh-aura-profile-spec-v1');
   assert.equal(spec.direction,'technical');
   assert.equal(spec.goal,'backend engineer');
   assert.equal(spec.sections.projects,true);
   assert.equal(spec.sections.stats,false);
   assert.equal(spec.maxProjects,2);
+  assert.equal(spec.links[0].url,'https://example.dev');
   assert.equal(spec.includeExternal,false);
   assert.ok(spec.sourceIds.every(id=>getProfileSource(id).trust!=='third-party'));
   assert.doesNotMatch(JSON.stringify(spec),/Dear Hiring Manager|<img /);
@@ -52,9 +54,11 @@ test('profile spec is independently editable and never injects static README con
   assert.equal(changed.maxWords,90);
   assert.equal(changed.sections.projects,false);
   assert.equal(changed.sections.links,spec.sections.links);
+  assert.deepEqual(changed.links,spec.links);
   assert.equal(changed.direction,'barebones');
   assert.equal(spec.direction,'technical','refinement must not mutate earlier spec');
   assert.throws(()=>refineProfileSpec(spec,{token:'SECRET'}),/approved/);
+  assert.throws(()=>refineProfileSpec(spec,{links:[{label:'bad',url:'javascript:alert(1)'}]}),/HTTPS URL/);
   assert.throws(()=>refineProfileSpec(spec,{maxWords:10}),/word budget/);
   assert.throws(()=>validateProfileSpec({...spec,sourceIds:['shields']}),/external source/);
   assert.throws(()=>makeProfileSpec({goal:'\u0007SECRET'}),/plain text/);
