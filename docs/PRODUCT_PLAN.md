@@ -1,8 +1,8 @@
 # Product scope and acceptance
 
-**Current release:** v1.16.0
+**Current release:** v1.17.0
 
-The four primary modules are implemented. A passed CI test does **not** establish an actual GitHub award or production-write success.
+The four primary modules are implemented. AI-first use now includes a curated source registry, editable ProfileSpec, portable Agent Skill and local MCP tools. A passed CI test does **not** establish an actual GitHub award or production-write success.
 
 | Module | Shipped behavior | Evidence | Remaining gate |
 | --- | --- | --- | --- |
@@ -16,6 +16,10 @@ Additional commands: `audit`, `work`, `config`, `story`, `brief`, `references`.
 ## Release policy
 
 Only the **latest published GitHub Release** has downloadable assets. On successful release publication, CI removes older published release objects **without deleting their Git tags or Git history**. No npm registry publication is configured.
+
+## AI-first acceptance
+
+MCP protocol/packaging is tested offline; independent compatibility checks with three real agent clients and user studies remain **unverified**. Agents can inspect and preview, not publish. The user approves changes separately.
 
 ## Open gates
 
