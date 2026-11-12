@@ -49,11 +49,16 @@ export function reserveBadgeWrite(owner,opts={}) {
     let entries=[];
     if(existsSync(file)) {
       let data;
-      try {data=JSON.parse(readFileSync(file,'utf8'));}
-      catch {throw Error('Cannot verify local badge write budget. No GitHub write will be attempted.');}
+      try {
+        const stat=lstatSync(file);
+        if(!stat.isFile()||stat.isSymbolicLink()||stat.size>100000)
+          throw Error('Local ledger is not a safe bounded regular file.');
+        data=JSON.parse(readFileSync(file,'utf8'));
+      } catch {throw Error('Cannot verify local badge write budget. No GitHub write will be attempted.');}
       if(data?.format!=='gh-aura-write-budget-v1'||!Array.isArray(data.timestamps)||
         data.timestamps.length>10000||
-        !data.timestamps.every(t=>Number.isSafeInteger(t)&&t>=0&&t<=now+300000))
+        !data.timestamps.every((t,i)=>Number.isSafeInteger(t)&&t>=0&&t<=now&&
+          (i===0||t>=data.timestamps[i-1])))
         throw Error('Invalid or inconsistent local badge write budget. No GitHub write will be attempted.');
       entries=data.timestamps;
     }
