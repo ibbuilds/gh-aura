@@ -27,7 +27,7 @@ test('GH Aura activity plan and badge-run plan are entirely offline CLI entrypoi
     r=run(['badges','auto','--repo','example/aura-private','--pulls','2','--output',badgeFile],root);
     assert.equal(r.status,0,r.stderr);
     const badges=JSON.parse(readFileSync(badgeFile,'utf8'));
-    assert.equal(badges.format,'gh-aura-private-badges-v1');
+    assert.equal(badges.format,'gh-aura-private-badges-v2');
     assert.equal(badges.private,true);
     assert.equal(badges.pulls,2);
     const init=run(['init','example'],root);
