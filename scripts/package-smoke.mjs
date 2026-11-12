@@ -15,7 +15,13 @@ function run(args, cwd = process.cwd()) {
 try {
   const [packed] = JSON.parse(run(['pack', '--json', '--ignore-scripts', '--pack-destination', directory]));
   assert.ok(packed.files.some((file) => file.path === 'src/cli.mjs'));
-  assert.ok(packed.files.every((file) => !file.path.startsWith('tests/') && !file.path.startsWith('.github/') && file.path !== '.gh-aura.json'));
+  assert.ok(packed.files.every((file) => !file.path.startsWith('tests/') &&
+    !file.path.startsWith('.github/') && !file.path.startsWith('research/') &&
+    !file.path.startsWith('scripts/') && !file.path.startsWith('docs/') &&
+    file.path !== '.gh-aura.json'));
+  assert.ok(packed.files.every((file) => ['src', 'README.md', 'LICENSE',
+    'CHANGELOG.md', 'SECURITY.md', 'package.json'].includes(file.path.split('/')[0])));
+  assert.ok(packed.files.some((file) => file.path === 'src/reference.mjs'));
   const install = join(directory, 'install');
   run(['install', '--prefix', install, '--offline', '--ignore-scripts', '--no-audit', '--no-fund', resolve(directory, packed.filename)]);
   const cli = join(install, 'node_modules', 'gh-aura', 'src', 'cli.mjs');

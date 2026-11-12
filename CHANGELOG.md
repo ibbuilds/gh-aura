@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.7.1 — 2026-11-12
+
+- Streamlined the root README and command reference to prioritize four direct commands, reviewed publishing, and clear limitations.
+- Replaced an outdated roadmap with a compact, current product status; simplified the architecture guide.
+- Removed the superseded popular-project-contributor research dataset and collector from the current tree; earlier Git history retains the original research.
+- Reduced the published tarball to runtime code and essential top-level documentation; source repository research and detailed docs are still available on GitHub.
+- Strengthened packed-file scope and local documentation-link regression checks.
+- Cleaned up obsolete feature/research/release branches with an explicitly guarded one-time maintenance operation.
+
+
 ## 1.7.0 — 2026-11-12
 
 - Added short aliases `activity`, `badges`, `readme`, and `pins`, retaining original commands and read-only/review-only boundaries.

@@ -1,146 +1,79 @@
 # GH Aura
 
-A small CLI for presenting real GitHub work professionally. Inspect, draft, review, then publish only what you approve.
+A free, local-first CLI for presenting your **actual GitHub work** clearly. Inspect your profile, choose what to feature, draft a README, and publish only after reviewing it.
 
-**Node.js 22+ · No runtime dependencies · No required AI or subscription**
+**Node.js 22+ · Zero runtime dependencies · No dashboard or required AI**
 
-## Start
+## Install
+
+[Download the latest GitHub Release](https://github.com/ibbuilds/gh-aura/releases/latest) or run directly from source:
 
 ```bash
 git clone https://github.com/ibbuilds/gh-aura.git
 cd gh-aura
 npm link
-
 gh-aura init YOUR_USERNAME
-gh-aura audit --inspect 3 --deep 2
-gh-aura profile --output draft.md
-gh-aura preview --file draft.md --save review.json
 ```
 
-Read the diff before publishing:
+The package is distributed via GitHub Releases, not the npm registry.
+
+## Four main commands
 
 ```bash
+gh-aura activity 2022           # Actual GitHub contributions for 2022
+gh-aura badges free             # Free achievement opportunities
+gh-aura readme minimal          # Minimal profile README draft
+gh-aura pins --goal "backend"   # Project recommendations
+```
+
+All four commands are read-only. The original `contributions`, `achievements`, `profile`, and `showcase` commands remain supported.
+
+## Review before publishing
+
+```bash
+gh-aura readme regular --language es --output draft.md
+gh-aura check --file draft.md
+gh-aura preview --file draft.md --save review.json
 gh-aura apply --review review.json --pr
 ```
 
-`--pr` opens an unmerged review PR. Without it, `apply` updates the root profile README directly. Both require the exact reviewed draft and live revision, plus a token restricted to the profile repository. Only explicit `apply` (profile README) or `work apply` (user-authored docs PR) writes to GitHub. Nothing runs in the background.
+`--pr` opens a **reviewable, unmerged pull request** for your public `USERNAME/USERNAME` profile README. Without it, `apply` commits the exact approved README directly. Both require a scoped GitHub token and live revision checks.
 
-Use the repository or a GitHub Release tarball; the npm registry package is not published.
-
-## Simple commands
-
-The four short aliases are **optional**; existing commands remain fully supported:
+## Targeted improvements
 
 ```bash
-gh-aura activity 2022        # Authenticated, real annual activity
-gh-aura activity 2020..2024  # Real history for a year range
-gh-aura badges free          # No-cost achievement opportunities
-gh-aura readme minimal       # Draft a minimal README
-gh-aura readme 80            # Visual intensity 80/100
-gh-aura pins                 # Suggested projects to feature
+gh-aura audit --goal "Backend Engineer" --inspect 3 --deep 2
+gh-aura audit --job vacancy.txt                # Local job description; never uploaded
+gh-aura contributions --all --recover           # Genuine history and attribution guide
+gh-aura contributions --local .                 # Offline Git author-email diagnosis
+gh-aura story set USER/PROJECT --contribution "What I built"
+gh-aura achievements --prepare pull-shark --repo USER/PROJECT
+gh-aura references                              # Offline professional profile references
 ```
 
-They call the original `contributions`, `achievements`, `profile` and `showcase` commands. None of these shortcuts mutates GitHub.
-
-## Commands
-
-| Command | Purpose |
-| --- | --- |
-| `init USER` | Save your account once |
-| `audit --goal "backend engineer" --inspect 3 --stats` | Review first-minute hiring readiness and inspect profile/project evidence |
-| `profile --visual 20` | Generate a restrained draft; `--keep` preserves custom text |
-| `preview --file draft.md --save review.json` | Review the exact proposed change |
-| `apply --review review.json --pr` | Open a reviewed profile PR |
-| `showcase --goal "backend engineer"` | Recommend relevant projects to pin |
-| `achievements --plan --scope free` | Plan no-cost achievable badges; private eligibility remains unverified |
-| `work preview/apply` | Review a real Markdown documentation change and open an unmerged PR |
-| `story list/set/remove` | Manage your own project problem, contribution and evidence notes locally |
-| `contributions --all` | Inspect authentic activity across available years |
-| `contributions --plan` | Suggest verifiable, future-only work on real repos (no automatic commits) |
-| `contributions --local .` | Inspect real local commit author attribution offline, without exposing emails |
-| `brief --prompt -o writer.txt` | Prepare grounded instructions for your chosen writer |
-| `references` | Browse source-linked engineer profile examples offline |
-| `check --file draft.md` | Check a draft locally; no API or AI calls |
-| `config show` | Inspect or change local preferences |
-
-For extra evidence on selected repositories, `gh-aura audit --deep 2 --checks` optionally reads the latest GitHub Actions run and published release, with explicit API costs. A passing past run is not proof of engineering quality.
-
-To compare a job description saved locally against your **selected projects**, run `gh-aura audit --job vacancy.txt --deep 2`. GH Aura never sends the vacancy to GitHub or calls a writing provider; keyword matches are evidence clues, not verified skills or hiring odds. See [local job matching](docs/JOB_MATCH.md).
-
-The audit now includes an evidence-based **first-minute hiring-manager review**, with visible facts, missing presentation work and unknown technical quality. It never produces a fake employment probability or hireability percentage. See [Hiring readiness and next steps](docs/HIRING_READINESS.md).
-
-Deterministic templates support **English or Spanish headings** with `profile --language es`; this changes only GH Aura's labels, not the user's own statements or repository descriptions. Use `config set editorial.language es` to save the preference.
-
-Run `gh-aura COMMAND --help` for options. Existing `minimal`, `regular` and `flashy` styles remain available.
-
-## Presentation, not invented experience
+To propose **your own useful documentation change** in an authorized repository:
 
 ```bash
-gh-aura config set profile.visual 20
-gh-aura config set profile.sections.stats false
-gh-aura config set profile.featured '["YOUR_USERNAME/project-one"]'
-gh-aura config set editorial.targetRole "Backend engineer"
-gh-aura config set editorial.targetCompany "Microsoft"
-gh-aura config set editorial.language en
+gh-aura work preview --repo USER/PROJECT --path README.md --file revision.md --save work.json
+gh-aura work apply --review work.json
 ```
 
-Visual intensity is 0–100: compact below 35, structured at 35–69, visual at 70–100. It changes layout and decorative density, not skills, seniority, history or credibility. Explicit section switches and project selections win. Reset `profile.visual` to inherit a style preset.
+This creates an unmerged PR, never a guaranteed achievement. Profile styles are `minimal`, `regular`, and `flashy`; `readme 0..100` also controls visual intensity. All sections and featured projects are configurable.
 
-## Show what you personally built
+## Reference study and limits
 
-Add user-confirmed `profile.projectStories` to describe the problem, your contribution, engineering trade-offs, outcome and evidence links for selected repositories. **Minimal** keeps the story compact, **regular** organizes it for recruiters and **flashy** expands it. These are user-supplied claims, not facts GH Aura invents or independently certifies. [Configure project stories](docs/PROJECT_STORIES.md).
+GH Aura's editorial reference uses [200 public, ordinary-visibility engineering profiles](research/ORDINARY_STUDY.md) from 35 company GitHub organizations. Company membership and self-described work are **signals, not independently verified employment**. Their structure is summarized offline; no biographies are copied or profiles fetched during normal CLI use.
 
-## Writing grounded in professional engineer profiles
+GitHub decides which events count toward contributions and achievements. GH Aura cannot guarantee badges, historical activity, job offers or code quality; public repo pins are selected through GitHub's interface. No background jobs, fabricated past work, or unattended profile changes.
 
-Our research now separates **200 ordinary-visibility company-associated engineering accounts** from **16 engineer profiles connected to employer-owned author or engineering pages**. The 200-person group has public company-organization membership and matching self-reported employer/role, and excludes especially high-visibility accounts; these signals **do not prove current employment**. The smaller employer-sourced group records official publication links, but those assertions can become outdated. Both datasets record structural features and provenance, **not copied biographies**.
+Public reads use a five-minute cache, explicit API budgets and optional `--stats` reporting. Publishing never uses cached revisions. No subscription or paid API is necessary.
 
-Use `gh-aura references` or `gh-aura references --company Microsoft` to browse source-linked examples without making API requests. The writer uses documented presentation patterns — clear specialization, verifiable contribution and readable featured work — rather than imitating someone's credentials. Setting `editorial.targetCompany` means a company you want to apply to, **not an employer you claim to work for**.
+## Documentation
 
-`brief` combines evidence of your own work with these references and writing preferences. `brief --prompt` prepares original instructions for any editor or AI; GH Aura never invokes a model or sends it your token. `check` catches some repetition, placeholders and claims needing review, but does not certify truth or originality. Neither research cohort measured interviews or hiring success.
-
-[200-account study](research/ORDINARY_STUDY.md) · [Industry research and limitations](research/INDUSTRY_STUDY.md) · [Writing workflow](docs/AI_WORKFLOW.md)
-
-## Achievement tasks on request
-
-`gh-aura achievements --prepare pull-shark --repo USER/PROJECT` can inspect a public project's real open issues and prepare a local work checklist. Add `--private` to prepare **without accessing** a private repo. No fake accounts, blank PRs or stars are created; the user must do the genuine work and GitHub controls the award. [Preparation guide](docs/ACHIEVEMENT_ACTIONS.md).
-
-## Real contribution history and privacy
-
-Use `gh-aura contributions --from 2020 --to 2026 --days` to inspect the dates that GitHub actually recognizes, or add `--private --recover` for anonymized-private-visibility guidance and a local checklist for genuinely missing old attribution. GH Aura never creates fake commits or rewrites dates. [Read the activity guide](docs/ACTIVITY.md).
-
-## Optional project evidence
-
-Run `gh-aura audit --inspect 3 --deep 2` to inspect READMEs plus the public test/CI/build/architecture/example file structure of up to two selected projects. GH Aura reports source links and explicitly labels passing tests, CI and personal authorship as **unverified**. `--deep` defaults to zero additional requests. [Read the evidence guide](docs/PROJECT_EVIDENCE.md).
-
-## Resource use
-
-Public reads reuse a short local cache and ETags. Plain draft generation skips the existing README; preservation and review do not. Read commands default to at most 60 requests, 2 MiB per JSON response and 32 MiB of response data per invocation. Use `--stats`, `--fresh` and an explicit `--budget N` when needed. These are application budgets, not extra GitHub quota.
-
-The reference study is not repeated during use. No server, paid model, hosted database or runtime dependency is required. [Free operation](docs/FREE.md) · [Measured performance](docs/PERFORMANCE.md)
-
-## Product direction
-
-GH Aura's [definitive product plan](docs/PRODUCT_PLAN.md) organizes the CLI into four optional, user-directed modules: **Activity**, **Achievements**, **Profile**, and **Showcase**. The current commands remain compatible. Historical attribution recovery and supported, explicitly approved achievement actions are future work in [the issue tracker](https://github.com/ibbuilds/gh-aura/issues), **not released features**. Private contribution visibility depends on GitHub settings and eligibility; neither private repositories nor badges guarantee employment.
-
-## Boundaries
-
-GitHub controls achievements; the tool cannot grant every badge, fabricate historical contributions or certify professional experience. Pins and account settings remain manual. Private-repository activity is not a route to guaranteed awards. Annual history requires authenticated reads. Showcase scores describe presentation evidence, not code quality or hiring probability.
-
-## Human review status
-
-The engineering and CLI tests verify behavior, not employment outcomes. A [consent-based 60-second reviewer study protocol](docs/HUMAN_VALIDATION.md) is ready, but **no human reviewer results have been collected**. GH Aura does not claim that its templates guarantee interviews.
-
-## Development
+[Command reference](docs/CLI.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Contribution guide](CONTRIBUTING.md) · [Changelog](CHANGELOG.md) · [Research](research/README.md)
 
 ```bash
-npm run check
-npm test
-npm run benchmark
-npm run test:package
+npm run check && npm test && npm run test:package
 ```
 
-CI covers Node 22/24 on Linux, macOS and Windows. Live integration is read-only; publication tests use isolated fixtures. The full research dataset stays out of the installed runtime package.
-
-[Command reference](docs/CLI.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
-
-MIT license.
+MIT licensed.
