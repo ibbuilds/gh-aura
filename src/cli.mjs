@@ -15,13 +15,18 @@ export async function main(argv = process.argv.slice(2)) {
   // No alias changes files or starts GitHub activity by itself.
   if (command === 'activity') {
     const first = tokens[0];
-    if (/^\d{4}$/.test(first || '')) {
-      tokens = ['--year', first, ...tokens.slice(1)];
-    } else if (/^\d{4}\.\.\d{4}$/.test(first || '')) {
-      const [from, to] = first.split('..');
-      tokens = ['--from', from, '--to', to, ...tokens.slice(1)];
+    if (first === 'plan' || first === 'apply') {
+      // Reuse the reviewed calendar engine under the unified activity command.
+      command = 'calendar';
+    } else {
+      if (/^\d{4}$/.test(first || '')) {
+        tokens = ['--year', first, ...tokens.slice(1)];
+      } else if (/^\d{4}\.\.\d{4}$/.test(first || '')) {
+        const [from, to] = first.split('..');
+        tokens = ['--from', from, '--to', to, ...tokens.slice(1)];
+      }
+      command = 'contributions';
     }
-    command = 'contributions';
   } else if (command === 'badges') {
     const first = tokens[0];
     if (first === 'auto' || first === 'automate') {
