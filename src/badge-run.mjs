@@ -36,7 +36,10 @@ function planPayload(doc){
     pulls:doc.pulls,start:doc.start,quickdraw:doc.quickdraw,role:doc.role};
   if(doc.format===LEGACY_PLAN_FORMAT)return base;
   return {...base,tier:doc.tier??null,targetThreshold:doc.targetThreshold??null,
-    catalogVersion:doc.catalogVersion,attempts:doc.attempts,excluded:doc.excluded};
+    catalogVersion:doc.catalogVersion,attempts:doc.attempts,excluded:doc.excluded,
+    note:doc.note,verification:doc.verification,
+    estimatedRequestUpperBound:doc.estimatedRequestUpperBound,
+    nextStart:doc.nextStart,remainingToTier:doc.remainingToTier};
 }
 export function badgeDigest(doc) {
   return createHash('sha256').update(JSON.stringify(planPayload(doc))).digest('hex');
@@ -191,10 +194,22 @@ async function applyBadgeRun(doc,opts={}) {
   const eventIndex=String(doc.start+1).padStart(4,'0');
   if(doc.quickdraw){
     const issueMarker='[GH-AURA-QA-'+eventIndex+']';
-    // Avoid duplicating a closed "quickdraw" exercise on review replay.
-    const oldIssues=await call(base+'/issues?state=all&per_page=100');
-    const exists=Array.isArray(oldIssues)&&oldIssues.some(x=>
-      x.title?.includes(issueMarker)&&!x.pull_request);
+    // GitHub's issues endpoint also returns PRs; scan bounded pages until the
+    // exact unique marker is seen or exhaustion is proven. Never assume a
+    // single first page proves absence on a long-lived workspace.
+    let exists=false,exhausted=false;
+    for(let page=1;page<=12;page++){
+      const suffix=page===1?'':'&page='+page;
+      const listed=await call(base+'/issues?state=all&per_page=100'+suffix);
+      if(!Array.isArray(listed))
+        throw Error('Cannot verify existing QA issues. No new issue created.');
+      if(listed.some(x=>x.title?.includes(issueMarker)&&!x.pull_request)){
+        exists=true;break;
+      }
+      if(listed.length<100){exhausted=true;break;}
+    }
+    if(!exists&&!exhausted)
+      throw Error('QA issue history exceeds the bounded scan. Inspect GitHub before retrying.');
     if(!exists){
       const issue=await call(base+'/issues','POST',{
         title:issueMarker+' Validate private sandbox setup',
@@ -246,12 +261,91 @@ async function applyBadgeRun(doc,opts={}) {
   results.verify='https://github.com/'+owner+'?tab=achievements';
   return results;
 }
+/**
+ * Read-only, bounded verification of operations in the same marked workspace.
+ * PR/issue observations are never interpreted as a GitHub-awarded achievement.
+ */
+export async function inspectBadgeWorkspace(opts={}) {
+  const repo=validRepo(workspaceRepo(opts.repo));
+  const token=tokenFor(opts);
+  if(!token)throw Error('A GH_TOKEN/GITHUB_TOKEN with read permission to the private workspace is required.');
+  const auth={...opts,publicRead:false,cache:undefined};
+  const who=await getJSON('/user',auth);
+  const owner=validateLogin(who?.login);
+  const [givenOwner,name]=repo.split('/');
+  if(givenOwner.toLowerCase()!==owner.toLowerCase())
+    throw Error('Read-only badge status supports only the authenticated user\'s owned workspace.');
+  const base='/repos/'+encodeURIComponent(owner)+'/'+encodeURIComponent(name);
+  const repository=await getJSON(base,auth);
+  if(repository?.private!==true||repository?.archived===true||repository?.fork===true||
+    repository?.full_name?.toLowerCase()!==repo.toLowerCase()||
+    typeof repository?.default_branch!=='string')
+    throw Error('Workspace is missing, non-private, archived, forked or not owned.');
+  const branch=repository.default_branch;
+  const readme=await getJSON(base+'/contents/README.md?ref='+encodeURIComponent(branch),auth);
+  if(!readme||!managedWorkspaceReadme(decodeReadme(readme)))
+    throw Error('Workspace marker missing; no unrelated repository may be inspected.');
+  let calls=3;
+  const merged=[],issues=[];
+  let pullsComplete=false,issuesComplete=false;
+  for(let page=1;page<=12;page++){
+    const batch=await getJSON(base+'/pulls?state=closed&per_page=100&page='+page,auth);
+    calls++;
+    if(!Array.isArray(batch))throw Error('Cannot verify private pull requests.');
+    for(const pr of batch){
+      if(pr.merged_at&&pr.user?.login?.toLowerCase()===owner.toLowerCase()&&
+        /^gh-aura\\/badge-\\d{4}$/.test(pr.head?.ref||'')&&pr.base?.ref===branch){
+        merged.push({number:pr.number,url:pr.html_url,mergedAt:pr.merged_at});
+      }
+    }
+    if(batch.length<100){pullsComplete=true;break;}
+  }
+  for(let page=1;page<=12;page++){
+    const batch=await getJSON(base+'/issues?state=all&per_page=100&page='+page,auth);
+    calls++;
+    if(!Array.isArray(batch))throw Error('Cannot verify private QA issues.');
+    for(const issue of batch){
+      if(!issue.pull_request&&issue.state==='closed'&&
+        issue.user?.login?.toLowerCase()===owner.toLowerCase()&&
+        /^\\[GH-AURA-QA-\\d{4}\\]/.test(issue.title||'')){
+        issues.push({number:issue.number,url:issue.html_url,
+          createdAt:issue.created_at,closedAt:issue.closed_at});
+      }
+    }
+    if(batch.length<100){issuesComplete=true;break;}
+  }
+  const thresholds=PULL_SHARK_TIERS;
+  const observedTierCandidate=pullsComplete
+    ?Object.entries(thresholds).filter(([,n])=>merged.length>=n).at(-1)?.[0]||null
+    :null;
+  return {
+    repository:'https://github.com/'+repo,private:true,readOnly:true,
+    status:'observed-workspace-events-awards-unverified',
+    observed:{
+      mergedOwnedExercisePullRequests:merged.length,
+      closedOwnedExerciseIssues:issues.length,
+      pullsComplete,issuesComplete,
+      pullSharkLocalTierCandidate:observedTierCandidate,
+      caveat:'Counts are only observed events in this private workspace, not total qualifying account events or awarded badges.',
+    },
+    events:{mergedPullRequests:merged,closedQAIssues:issues},
+    requests:calls,
+    verify:'https://github.com/'+owner+'?tab=achievements',
+    note:'Check GitHub profile achievements manually after processing. No official award-grant API is used.',
+  };
+}
+
 export async function runBadgeAutomation(command,opts={}) {
   if(command==='plan')return writeBadgePlan({...opts,quickdraw:!opts['no-quickdraw']});
-  if(command!=='apply')throw Error('Use badge-run plan or badge-run apply.');
+  if(command==='status'){
+    const observed=await inspectBadgeWorkspace(opts);
+    process.stdout.write(JSON.stringify(observed,null,2)+'\\n');
+    return observed;
+  }
+  if(command!=='apply')throw Error('Use badges auto plan, apply or status.');
   const plan=loadBadgePlan(opts.review);
   const result=await applyBadgeRun(plan,{confirm:opts.confirm});
-  process.stdout.write(JSON.stringify(result,null,2)+'\n');
+  process.stdout.write(JSON.stringify(result,null,2)+'\\n');
   return result;
 }
 export { applyBadgeRun };
