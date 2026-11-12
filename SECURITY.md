@@ -1,6 +1,6 @@
 # Security
 
-Four explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), and `work apply` for **one user-authored Markdown file** (`README.md` or `docs/**/*.md`) in an explicitly named, authorized repository. `work apply` creates an unmerged PR only. Calendar Studio adds a separate, explicit `calendar apply` that creates a NEW owned private repository and a dated synthetic practice history. Existing repositories and account settings are never rewritten.
+Four explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), `work apply` for one user-authored Markdown file through an unmerged PR, `calendar apply` for a NEW owned private practice repository, and `badge-run apply` for an owned, marked private sandbox. Existing repository history and account settings are never rewritten.
 
 ## Credentials
 
