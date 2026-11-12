@@ -34,3 +34,13 @@ test('writes configuration locally without overwriting by default', () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('workspace repo is optional but validates a single safe private target', () => {
+  const config = structuredClone(DEFAULT_CONFIG);
+  config.user = 'example';
+  assert.equal(validateConfig(config).workspace.repo, '');
+  config.workspace.repo = 'example/gh-aura-workspace';
+  assert.equal(validateConfig(config).workspace.repo, 'example/gh-aura-workspace');
+  config.workspace.repo = 'example/../other';
+  assert.throws(() => validateConfig(config), /workspace.repo/);
+});
