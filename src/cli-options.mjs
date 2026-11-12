@@ -2,7 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--start 0..1023] [--no-quickdraw] [--output badges.json] | badges auto apply --review badges.json --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','no-quickdraw','role','output','force','review','confirm'], max: 1 },
+  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--start 0..1023] [--no-quickdraw] [--output badges.json] | badges auto next --tier base|bronze|silver|gold [--output next.json] | badges auto apply --review badges.json --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
@@ -31,6 +31,7 @@ export const HELP = [
   '  gh-aura badges free         Explore no-cost achievement opportunities',
   '  gh-aura badges auto        Plan private workspace exercises',
   '  gh-aura badges auto status Read-only observed exercise events',
+  '  gh-aura badges auto next   Plan next batch without duplicate PRs',
   '  gh-aura readme minimal      Generate a profile README draft',
   '  gh-aura pins                Recommend projects to feature',
   '  gh-aura activity plan 2022 --density 65 --output plan.json', '',
@@ -108,6 +109,15 @@ export function validateOptions(command, options) {
           throw Error('--'+key+' must be an integer '+min+'..'+max+'.');
         }
       }
+    } else if (action === 'next') {
+      const allowed=['positional','tier','repo','pulls','role','no-quickdraw','output','force'];
+      if (!options.tier || !['base','bronze','silver','gold'].includes(options.tier) ||
+          Object.keys(options).some(key=>!allowed.includes(key))) {
+        throw Error('badges auto next requires --tier base|bronze|silver|gold; optional --repo, --pulls, --role, --no-quickdraw, --output.');
+      }
+      if(options.pulls!==undefined&&(!/^\\d+$/.test(options.pulls)||
+          Number(options.pulls)<1||Number(options.pulls)>16))
+        throw Error('--pulls must be an integer 1..16 for badges auto next.');
     } else if (action === 'apply') {
       if (!options.review || !/^[a-f0-9]{64}$/i.test(options.confirm||'') ||
           planKeys.some(key=>options[key]!==undefined)) {
@@ -119,7 +129,7 @@ export function validateOptions(command, options) {
         throw Error('badges auto status accepts only optional --repo OWNER/PRIVATE_WORKSPACE.');
       }
     } else {
-      throw Error('Use badges auto plan, apply or status.');
+      throw Error('Use badges auto plan, next, apply or status.');
     }
   }
   if (command === 'calendar') {
