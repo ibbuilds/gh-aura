@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { ACHIEVEMENTS, achievementReport } from '../src/achievements.mjs';
+import { ACHIEVEMENT_MATRIX, PRIVATE_AUTOMATABLE_IDS,
+  achievementMatrixSummary, PULL_SHARK_TIERS } from '../src/achievement-matrix.mjs';
 import { DEFAULT_CONFIG } from '../src/config.mjs';
 import { snapshotForTest } from './fixtures.mjs';
 
@@ -20,7 +22,7 @@ test('registry distinguishes collectible achievements, historical and paid/progr
   assert.equal(byId.get('campus-expert')?.kind, 'program');
   assert.equal(byId.get('open-sourcerer')?.kind, 'experimental');
   assert.ok(ACHIEVEMENTS.every((item) => item.source.startsWith('https://')));
-  assert.ok(ACHIEVEMENTS.every((item) => item.sourceReviewedAt === '2026-11-11'));
+  assert.ok(ACHIEVEMENTS.every((item) => item.sourceReviewedAt === '2026-11-12'));
 });
 
 test('free plan remains offline and never claims awarded status', async () => {
@@ -77,4 +79,34 @@ test('offline CLI supports plan, scope and targeted badge', () => {
 test('invalid filters are rejected locally with no network calls', async () => {
   await assert.rejects(achievementReport(null, config(), { scope: 'everything' }), /--scope/);
   await assert.rejects(achievementReport(null, config(), { badge: 'made-up-badge' }), /Unknown achievement/);
+});
+
+test('matrix catalog covers all current, historical, disabled, staff-only and highlight classes',()=>{
+  const summary=achievementMatrixSummary();
+  assert.deepEqual(summary.categoryCounts,{
+    active:7,historical:2,disabled:2,internal:3,highlight:5
+  });
+  assert.equal(summary.total,19);
+  assert.deepEqual(PRIVATE_AUTOMATABLE_IDS,['pull-shark','yolo','quickdraw']);
+  assert.deepEqual(PULL_SHARK_TIERS,{base:2,bronze:16,silver:128,gold:1024});
+  assert.equal(new Set(ACHIEVEMENT_MATRIX.map(x=>x.id)).size,19);
+  assert.ok(ACHIEVEMENT_MATRIX.every(item=>item.sourceUrls.length>0&&
+    item.sourceUrls.every(source=>source.startsWith('https://'))));
+  assert.ok(ACHIEVEMENT_MATRIX.filter(x=>!x.automatable)
+    .every(x=>x.route!=='private-owned-sandbox'&&x.reason.length>10));
+  assert.ok(ACHIEVEMENTS.every(item=>
+    ACHIEVEMENT_MATRIX.some(entry=>entry.id===item.id)));
+});
+test('no third-party, historical, paid or internal badge can be automatically attempted',async()=>{
+  const report=await achievementReport(null,config(),{scope:'all',plan:true});
+  assert.equal(report.matrix.total,19);
+  const accepted=report.catalog.filter(x=>x.automatableInPrivateWorkspace).map(x=>x.id);
+  assert.deepEqual(accepted.sort(),['pull-shark','quickdraw','yolo']);
+  assert.ok(report.plan.every(x=>x.canGrantAutomatically===false));
+  for(const item of report.plan){
+    if(!accepted.includes(item.id)){
+      assert.equal(item.canAttemptInOnePrivateWorkspace,false);
+      assert.ok(item.exclusionReason);
+    }
+  }
 });
