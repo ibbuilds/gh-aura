@@ -61,14 +61,14 @@ Details: [Activity](ACTIVITY.md) · [Achievements](ACHIEVEMENTS.md) · [Genuine 
 ```bash
 gh-aura badges auto --tier base --output base.json
 gh-aura badges auto --tier bronze --output bronze.json
-gh-aura badges auto next --tier silver --output next.json
+gh-aura badges auto next --goal max --output next.json
 # Review the exact plan and fingerprint before any write:
 gh-aura badges auto apply --review bronze.json --confirm FINGERPRINT
 # Inspect actual repo PR/issue events, without claiming a GitHub award:
 gh-aura badges auto status
 ```
 
-Creates or resumes the **same marked private GH Aura workspace** used by `activity apply` (configure once with `gh-aura config set workspace.repo OWNER/REPO` or default to `USER/gh-aura-workspace` after `gh-aura init USER`). `badges auto next --tier ...` reads the existing marked workspace, verifies its complete merged exercise sequence and tree, rejects pending branches, and saves the next reviewed batch without writing to GitHub. The runner is limited to sixteen PRs per confirmed batch. `--tier` selects reported Pull Shark thresholds (base 2, bronze 16, silver 128, gold 1,024) but never grants badges. `badges auto status` only reads merged GH Aura PRs and closed QA issues in the marked workspace and returns an award-unverified result. The versioned registry classifies seven active, two historical, two disabled, three internal and five profile/program badges. Public/third-party repos are never touched; other achievements require genuine collaborators, public independent stars, accepted answers, payments or program eligibility. GitHub decides whether private/self-generated events count. See [private badge automation](BADGE_RUN.md).
+Creates or resumes the **same marked private GH Aura workspace** used by `activity apply` (configure once with `gh-aura config set workspace.repo OWNER/REPO` or default to `USER/gh-aura-workspace` after `gh-aura init USER`). `badges auto next --goal max` chooses the next unmet workspace milestone (2 / 16 / 128 / 1,024); `--tier` can still target one stage. Both read the marked repo, confirm complete merged PRs and the Git tree, reject pending branches, and save a separately reviewed batch without remote writes. The runner is limited to sixteen PRs per confirmed batch. `--tier` selects reported Pull Shark thresholds (base 2, bronze 16, silver 128, gold 1,024) but never grants badges. `badges auto status` also reads a bounded sample of PR details/reviews to classify a self-merged, review-free YOLO event candidate and measures Quickdraw closure timing, returning **awards unverified**. The versioned registry classifies seven active, two historical, two disabled, three internal and five profile/program badges. Public/third-party repos are never touched; other achievements require genuine collaborators, public independent stars, accepted answers, payments or program eligibility. GitHub decides whether private/self-generated events count. See [private badge automation](BADGE_RUN.md).
 
 ## Audit, project relevance and evidence
 

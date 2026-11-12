@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.12.0 — 2026-11-12
+
+- Confirmed the known maximum Pull Shark tier at 1,024 merged eligible PRs and single-tier YOLO/Quickdraw criteria against first-party profile fragments; private self-owned attribution remains unverified.
+- Added `badges auto next --goal max`: a read-only, milestone-by-milestone path to the reported Gold target (2 → 16 → 128 → 1,024) using verified gap-free workspace events. Each batch still requires its own SHA-256 review and explicit apply.
+- Hardened PR exercise writes: exact generated commit SHA must match GitHub's PR head and is sent as the merge precondition; submitted reviews are inspected before attempting an unreviewed merge.
+- Added local 1.1-second minimum pacing between content-generating GitHub API writes, without automatically retrying uncertain mutations or evading secondary rate limits. Hourly account-wide limits and award processing still require operator attention.
+- Improved outcomes: Quickdraw uses actual issue creation/closure timestamps where available; read-only status inspects bounded pull-request details and reviews to identify a plausible YOLO self-merge event, never a confirmed award.
+- Added staged-goal, review/race, timing and CLI regression tests. No GitHub private workspace or achievement was mutated or awarded as part of CI.
+
+
 ## 1.11.0 — 2026-11-12
 
 - Added `badges auto next --tier ...` to determine the next approved 1–16 PR exercise batch from the **same existing private workspace** without performing any remote writes.

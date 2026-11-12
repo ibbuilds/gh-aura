@@ -34,7 +34,7 @@ gh-aura badges all --json                 # Catalog, read-only
 gh-aura achievements --plan --scope free # Explain potential no-cost actions
 gh-aura badges auto --tier base --output base.json
 gh-aura badges auto --tier bronze --output bronze.json
-gh-aura badges auto next --tier silver --output silver-next.json
+gh-aura badges auto next --goal max --output silver-next.json
 gh-aura badges auto status               # Read-only workspace event observations
 ```
 
@@ -42,7 +42,7 @@ The `badges auto` plan command is offline. It only ever selects **Pull Shark, YO
 
 **Tiers are planning targets, not achievements granted.** Bronze suggests up to sixteen exercise PRs, while silver/gold require separately approved non-overlapping batches. `--start` (0..1023) is a workspace exercise index, not a verified account-wide qualifying count; an already-earned achievement must still be checked on GitHub.
 
-`badges auto status` reads merged exercises and closed QA issues in that exact private workspace, returning `observed-workspace-events-awards-unverified` and a manual verification link. `badges auto next --tier ...` is a separate **read-only** operation that validates that record against the full Git tree before preparing the next non-overlapping approved batch. It cannot confirm a GitHub-issued badge or account-wide tier. No HTML scraping, secondary accounts, fake coauthors, public reaction spam or sponsor payments are used.
+`badges auto status` reads merged exercises and closed QA issues in that exact private workspace, including bounded evidence of no-review self-merges and Quickdraw five-minute timing, returning `observed-workspace-events-awards-unverified` and a manual verification link. `badges auto next --tier ...` is a separate **read-only** operation that validates that record against the full Git tree before preparing the next non-overlapping approved batch. It cannot confirm a GitHub-issued badge or account-wide tier. No HTML scraping, secondary accounts, fake coauthors, public reaction spam or sponsor payments are used.
 
 ## Sources and review boundaries
 
