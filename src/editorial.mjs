@@ -20,6 +20,7 @@ export function writingPrompt(brief) {
     'Write for a 60-second review by an engineering hiring manager: concrete focus, inspectable code, ownership, setup or demo, and relevant links.',
     'Give two or three strongest evidence-backed projects priority over exhaustive tech lists, decorative badges and contributions-calendar cosmetics.',
     'For each highlighted project, explain its real purpose, the account owner’s CONFIRMED contribution and a link to inspect the result. Ask for missing ownership instead of inventing it.',
+    'Use userStory only when the user explicitly supplied it; it is not automatically verified, so ask for evidence of claimed impact and ownership.',
     'Do not invent seniority, employers, years, clients, quantified impact, badges, credentials or contributions. Repository languages alone are not proof of skill.',
     'Use patterns from the company-associated engineering cohort and employer-owned author-page examples ONLY for structural guidance.',
     'The 100-person company-associated cohort relies on public membership and self-description; it is NOT 100 employer-verified employees.',

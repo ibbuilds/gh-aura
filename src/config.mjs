@@ -7,7 +7,7 @@ export const DEFAULT_CONFIG = {
   scan: { maxRepos: 200, inspectRepos: 0, deepRepos: 0, maxRequests: 60 },
   profile: {
     style: 'minimal', visual: -1, name: '', headline: '', about: '', location: '',
-    technologies: [], featured: [], excluded: [], maxProjects: 3,
+    technologies: [], featured: [], excluded: [], projectStories: [], maxProjects: 3,
     sections: {}, links: [], extras: [], accent: 'blue',
   },
   showcase: {
@@ -59,6 +59,37 @@ export function validateConfig(config) {
   for (const key of ['name', 'headline', 'about', 'location', 'accent']) string(p[key], 'profile.' + key);
   if (!/^(?:[a-z][a-z0-9-]{0,19}|#?[a-f0-9]{6})$/i.test(p.accent)) throw new Error('profile.accent must be a color name or six-digit hex value.');
   for (const key of ['technologies', 'featured', 'excluded']) array(p[key], 'profile.' + key);
+
+  if (!Array.isArray(p.projectStories) || p.projectStories.length > 12) {
+    throw new Error('profile.projectStories must be an array with at most 12 entries.');
+  }
+  const knownStories = new Set();
+  for (const story of p.projectStories) {
+    if (!object(story) || Object.keys(story).some((key) =>
+      !['repo', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'].includes(key))) {
+      throw new Error('Project stories accept only repo, problem, contribution, tradeoffs, outcome and proof.');
+    }
+    if (typeof story.repo !== 'string' || story.repo.length > 100 ||
+      !/^[a-z\d._-]+(?:\/[a-z\d._-]+)?$/i.test(story.repo) || story.repo.includes('..')) {
+      throw new Error('Each project story needs a valid repo name or owner/repo.');
+    }
+    const key = story.repo.toLowerCase();
+    if (knownStories.has(key)) throw new Error('Duplicate project story: ' + story.repo);
+    knownStories.add(key);
+    for (const prop of ['problem', 'contribution', 'tradeoffs', 'outcome']) {
+      if (story[prop] !== undefined) {
+        string(story[prop], 'projectStories.' + prop);
+        if (story[prop].length > 700) throw new Error('A project story field cannot exceed 700 characters.');
+      }
+    }
+    if (story.proof !== undefined && story.proof !== '' && !httpsUrl(story.proof)) {
+      throw new Error('Project story proof must be a safe https:// URL.');
+    }
+    if (!['problem', 'contribution', 'tradeoffs', 'outcome', 'proof'].some((key) => story[key])) {
+      throw new Error('Project story needs at least one actual detail or proof link.');
+    }
+  }
+
   for (const key of ['topics', 'preferred', 'excluded']) array(config.showcase[key], 'showcase.' + key);
   string(config.showcase.goal, 'showcase.goal');
   integer(config.scan.maxRequests, 1, 500, 'scan.maxRequests');

@@ -41,6 +41,10 @@ Inspection adds sampled public README reads. Conventional headings are heuristic
 
 `--output` writes a local file; status goes to stderr so stdout stays useful for data. Existing output files require `--force`.
 
+### Your project contributions
+
+Set `profile.projectStories` with a JSON array of the projects you actually worked on. Each record can include `repo`, `problem`, `contribution`, `tradeoffs`, `outcome` and an optional HTTPS `proof` link. Stories are displayed **only** for showcased projects and are marked as user-supplied, not externally verified. See [Project stories](PROJECT_STORIES.md) for a copyable example and the minimal/regular/flashy differences.
+
 ### Visual intensity
 
 `--visual N` or `profile.visual` accepts an integer 0–100. Below 35 uses compact layout; 35–69 uses structured layout; 70–100 uses visual layout. Optional language-label density increases with the number; metrics default on at 85. Explicit section switches and user-selected projects always win. No percentage changes history, skills, seniority or achievements.
