@@ -551,6 +551,7 @@ export function nextBadgePlanFromWorkspace(status,tree,options={}) {
     ...(options.pulls===undefined?{}:{pulls:options.pulls}),
     ...(options.role===undefined?{}:{role:options.role}),
     quickdraw:!options['no-quickdraw'],
+    strategy:options.strategy,
   });
   // The reviewed SHA-bound plan records this checkpoint tier and exact actions,
   // never an unverified claim that the user's full goal has been awarded.
@@ -565,7 +566,7 @@ export async function planNextBadgeRun(opts={}) {
     '/git/trees/'+encodeURIComponent(report.defaultBranch)+'?recursive=1';
   const tree=await getJSON(path,{...opts,publicRead:false,cache:undefined,allowMissing:false});
   const doc=nextBadgePlanFromWorkspace(report,tree,{...opts,repo});
-  if(doc.format===PLAN_FORMAT) {
+  if([PLAN_FORMAT,BATCH_PLAN_FORMAT].includes(doc.format)) {
     // Detect interrupted/in-progress exercise branches before writing a local plan.
     for(let n=doc.start+1;n<=doc.start+doc.pulls;n++) {
       const head='gh-aura/badge-'+String(n).padStart(4,'0');
