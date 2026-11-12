@@ -22,7 +22,7 @@ export async function run(command, options) {
   try {
     if (command === 'achievements' && !options.user && !options.positional[0] && !config.user) {
       const { achievementReport, renderAchievementsMarkdown } = await import('../achievements.mjs');
-      const report = await achievementReport(null, config);
+      const report = await achievementReport(null, config, { badge: options.badge, scope: options.scope, plan: options.plan, private: options.private });
       emit(options.format === 'json' ? report : renderAchievementsMarkdown(report), options); return;
     }
     const login = loginFor(options, config);
@@ -35,7 +35,7 @@ export async function run(command, options) {
     if (cache?.hits) process.stderr.write('Using recent public data (up to 5 minutes old). Use --fresh to reload.\n');
     if (command === 'achievements') {
       const { achievementReport, renderAchievementsMarkdown } = await import('../achievements.mjs');
-      const report = await achievementReport(snapshot, config, api);
+      const report = await achievementReport(snapshot, config, { ...api, badge: options.badge, scope: options.scope, plan: options.plan, private: options.private });
       emit(options.format === 'json' ? report : renderAchievementsMarkdown(report), options); return;
     }
     if (command === 'contributions') {

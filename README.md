@@ -37,7 +37,7 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `preview --file draft.md --save review.json` | Review the exact proposed change |
 | `apply --review review.json --pr` | Open a reviewed profile PR |
 | `showcase --goal "backend engineer"` | Recommend relevant projects to pin |
-| `achievements` | Show opportunities, prerequisites and public evidence |
+| `achievements --plan --scope free` | Plan no-cost achievable badges; private eligibility remains unverified |
 | `contributions --all` | Inspect authentic activity across available years |
 | `brief --prompt -o writer.txt` | Prepare grounded instructions for your chosen writer |
 | `references` | Browse source-linked engineer profile examples offline |
