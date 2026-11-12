@@ -1,6 +1,6 @@
-# Private achievement workflow automation
+# Badges: approved private workflow exercises
 
-GH Aura can run **bounded GitHub workflow exercises** on one privately owned repo without third-party collaboration. GitHub controls what constitutes an Achievement, and may ignore self-generated or private events; **this is a best-effort action runner, not an achievement-granting API**.
+GH Aura can run **bounded GitHub workflow exercises** in the same GH Aura-marked private workspace as `activity apply`, without third-party collaboration. GitHub controls what constitutes an Achievement, and may ignore self-generated or private events; **this is a best-effort action runner, not an achievement-granting API**.
 
 ## One-command plan, then explicit apply
 
@@ -13,7 +13,7 @@ gh-aura badges auto apply --review badges.json --confirm FINGERPRINT
 
 The first command is **completely offline**. The second command requires a free GitHub access token with repository creation, Contents write, Pull requests write, and Issues write for a private repository. GitHub's permission settings may also require approval by your account/organization.
 
-A successful run creates **only a private GitHub repository owned by the authenticated user**, with a marker identifying it as an automated sandbox. It attempts:
+A successful first run may create a **marked private GH Aura workspace owned by the authenticated user**, or reuse an already marked one created by `activity apply`. Configure `workspace.repo` once or use the `USERNAME/gh-aura-workspace` default after `init`. It attempts:
 
 - **Pull Shark:** generate 2 individually reviewable exercise documents, open two PRs and merge them with GitHub's standard merge endpoint if repository rules permit.
 - **YOLO:** those PR merges may be unreviewed in this user-owned sandbox; whether GitHub awards the badge depends on its current conditions.
@@ -27,7 +27,7 @@ gh-aura badges auto --repo YOUR_USERNAME/aura-achievements --pulls 16 --start 2 
 gh-aura badges auto apply --review second.json --confirm SECOND_FINGERPRINT
 \`\`\`
 
-The runner checks existing merged document paths and skips already completed exercises. It refuses a public, archived, forked or unmarked existing repo; it never attempts to use another account or organization's project. Branch conflicts stop the run without a force push. It does not create fake coauthors, star networks, discussions with fabricated answers, or external pull requests.
+The runner checks already merged exercise paths and skips completed ones, while preserving dated activity files in the same repository. It refuses a public, archived, forked or unmarked existing repo; it never attempts to use another account or organization's project. Branch conflicts stop the run without a force push. It does not create fake coauthors, star networks, discussions with fabricated answers, or external pull requests.
 
 ## Explicit exclusions
 
@@ -53,6 +53,6 @@ Other experimental or retired badges are not advertised as automatable.
 
 ## Request budget and failure handling
 
-Actions use the official GitHub REST API with a hard request limit of \`20 + 12 * pulls\` per run; no automatic retries of uncertain writes. An interrupted run may leave a private repo, a branch, an open PR or an issue. Check those objects before retrying with the same plan. GH Aura does not delete the repo automatically or weaken branch protection. The target repository is always private, and token credentials never appear in saved plans or logs.
+Actions use the official GitHub REST API with a hard request limit of \`20 + 12 * pulls\` per run; no automatic retries of uncertain writes. An interrupted run may leave a private repo, a branch, an open PR or an issue. Check those objects before retrying with the same plan. GH Aura does not delete the repo automatically or weaken branch protection. The target repository is always private, and token credentials never appear in saved plans or logs. Do **not** automatically delete a shared workspace after a badge attempt; it may contain activity history, and GitHub has not documented guaranteed retention of awards after deletion.
 
 [Achievement registry](ACHIEVEMENTS.md) · [Security boundary](../SECURITY.md)
