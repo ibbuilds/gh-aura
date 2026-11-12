@@ -45,9 +45,15 @@ test('legacy project-contributor collector is not in the current tree', () => {
 
 test('packaged surface is restricted to the runtime and essential documentation', () => {
   const manifest = JSON.parse(readFileSync(file('package.json'), 'utf8'));
-  assert.deepEqual(manifest.files, ['src/', 'README.md', 'LICENSE', 'CHANGELOG.md', 'SECURITY.md']);
+  assert.deepEqual(manifest.files, ['src/', 'README.md', 'LICENSE', 'CHANGELOG.md', 'SECURITY.md',
+    'AGENTS.md', 'llms.txt', 'skills/']);
   assert.deepEqual(Object.keys(manifest.bin), ['gh-aura']);
   assert.deepEqual(Object.keys(manifest.dependencies || {}), []);
+  assert.ok(existsSync(file('AGENTS.md')));
+  assert.ok(existsSync(file('llms.txt')));
+  const skill=readFileSync(file('skills/gh-aura-profile/SKILL.md'),'utf8');
+  assert.match(skill,/^---\\nname: gh-aura-profile\\ndescription:/);
+  assert.match(skill,/agent's tools never publish|No agent tool can publish/);
 });
 
 test('published version and product plan remain in sync', () => {
