@@ -1,6 +1,6 @@
 # Activity: honest history, any year or date interval
 
-GH Aura reads what GitHub says about a developer's activity. It does **not** manufacture contributions, alter commit timestamps or change account settings.
+The default `contributions` commands read actual GitHub activity and never change it. The separate, explicitly approved [Calendar Studio](CALENDAR.md) can generate **synthetic practice commits** on a new private repository. Generated activity is not historical professional work; GitHub controls what the contribution graph counts.
 
 ## Use
 
@@ -21,7 +21,9 @@ A year shorthand expands to January 1/December 31. The report uses **UTC** and s
 
 `--private` adds privacy guidance; it does not unlock private repositories or change the user's contribution visibility. On GitHub, visit **Your profile → Contribution settings → Private contributions** to opt into anonymized private counts. The report never exports private repository names.
 
-`--plan` adds a **future-only** set of candidate improvements to up to three existing public owned repos. These are conditional ideas based on real repo metadata; GH Aura does not invent an open issue, a missing test or a calendar date. The user confirms a substantive need, writes and tests the change, and follows the normal repository process. It makes no additional API calls.\n\n`--recover` produces a checklist for **actual** historical work: inspect original commit author emails locally, associate eligible old emails with the account, check qualifying default/gh-pages branches, forks, and private visibility. GH Aura makes **zero** history edits. GitHub can rebuild a contribution graph after a legitimately used old author email is associated with the account.
+`--plan` adds a **future-only** set of candidate improvements to up to three existing public owned repos. These are conditional ideas based on real repo metadata; GH Aura does not invent an open issue, a missing test or a calendar date. The user confirms a substantive need, writes and tests the change, and follows the normal repository process. It makes no additional API calls.
+
+`--recover` produces a checklist for **actual** historical work: inspect original commit author emails locally, associate eligible old emails with the account, check qualifying default/gh-pages branches, forks, and private visibility. GH Aura makes **zero** history edits. GitHub can rebuild a contribution graph after a legitimately used old author email is associated with the account.
 
 When authentication is missing, daily and annual GraphQL contribution counts remain **unknown**, not zero. A valid token supplies read access; it is never written into the report.
 

@@ -4,7 +4,7 @@ GH Aura requires a local Node.js installation and a GitHub account, not a paid p
 
 ## Authentication is not billing
 
-Public REST data can be read without a token. An optional GitHub personal access token authenticates requests and raises the usual public REST allowance. It does not require GitHub Pro. Use a token restricted to the profile repository for publishing; Contents write access is sufficient for direct updates, and PR mode additionally needs Pull requests write access. Annual GraphQL history requires authenticated read access.
+Public REST data can be read without a token. An optional GitHub personal access token authenticates requests and raises the usual public REST allowance. It does not require GitHub Pro. Use a token restricted to the profile repository for publishing; Contents write access is sufficient for direct updates, and PR mode additionally needs Pull requests write access. Annual GraphQL history requires authenticated read access. Creating an owned private Calendar Studio or badge sandbox needs free GitHub repository creation permission and scoped write access; GitHub may reject token permissions or enforce additional usage limits.
 
 If you independently choose an external AI provider, that provider's terms and costs are separate. Deterministic templates and manual editing work without it. `brief` only writes JSON locally. Paid badge/program entries are disabled by preference and informational, never a required product feature.
 

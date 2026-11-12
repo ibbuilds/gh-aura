@@ -34,7 +34,7 @@ The CLI caches explicitly public GET responses for five minutes; credential-deri
 
 Profile preview/direct publication, documentation work preview and both PR publishing paths bypass all cached state. Corrupt or unwritable cache files fall back to normal online requests, not stale authorization. Cache files are not credentials or approval artifacts.
 
-In PR mode, partial failures may leave a branch. The CLI never overwrites a conflicting review branch and never merges, deletes branches or weakens protections automatically.
+In the ordinary profile or `work` PR mode, partial failures may leave a branch. Those workflows never merge a PR, overwrite a conflicting review branch, delete branches or weaken protections. The separate explicitly approved `badge-run apply` is allowed to merge **only** generated exercises in an owned marked private sandbox, and GitHub enforces existing branch protections.
 
 ## Private badge sandbox
 
