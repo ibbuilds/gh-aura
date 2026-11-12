@@ -404,12 +404,8 @@ export function nextBadgePlanFromWorkspace(status,tree,options={}) {
     ...(options.role===undefined?{}:{role:options.role}),
     quickdraw:!options['no-quickdraw'],
   });
-  // Metadata is informational only; the reviewed plan's tier, count, start,
-  // events and SHA-bound fingerprint determine exactly what apply can write.
-  if(goal)return {...plan,
-    goal:overallTier,checkpoint:stage,
-    awardCaveat:'Check your actual GitHub badge at each milestone before authorizing additional batches. No tier is inferred from workspace events.',
-  };
+  // The reviewed SHA-bound plan records this checkpoint tier and exact actions,
+  // never an unverified claim that the user's full goal has been awarded.
   return plan;
 }
 
