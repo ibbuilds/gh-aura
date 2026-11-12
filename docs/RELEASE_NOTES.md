@@ -1,46 +1,43 @@
-# GH Aura 1.7.0
+# GH Aura 1.7.1
 
-**Simple, explicit GitHub profile CLI with a 200-account ordinary-visibility engineering reference.** Node.js 22+, no paid API, runtime dependency, hosted dashboard, compulsory AI or background process.
+Repository cleanup and packaging maintenance. No CLI behavior or command names change.
 
 ## Install
 
-Download the attached `gh-aura-1.7.0.tgz` and `SHA256SUMS.txt` from this GitHub Release. Verify the checksum, then run:
+Requires Node.js 22+. Download `gh-aura-1.7.1.tgz` and `SHA256SUMS.txt` from this GitHub Release:
 
 ```bash
-npm install --global ./gh-aura-1.7.0.tgz
+npm install --global ./gh-aura-1.7.1.tgz
 gh-aura init YOUR_USERNAME
 ```
 
-The tarball is published through GitHub Releases, not the public npm registry.
+The package is distributed through GitHub Releases, **not** the npm registry.
 
-## What's new
+## Changes
 
-- **200 public ordinary-visibility professional profile references.** A dated, manually executed research run examined 1,040 accounts and selected 200 from 35 company organizations. Selection required publicly visible company-organization membership plus matching self-described employer and engineering role, with a 2,000-follower cap to reduce celebrity-heavy sampling. These signals do **not** certify current employment, competence or hiring outcomes.
-- **Bounded, sourced research.** The study used 145 GitHub HTTP requests, kept public links and profile-structure observations rather than copied biographies, and lives outside the installable package. Runtime generation makes **zero research-profile API calls**.
-- **Four simple optional command aliases.** `activity`, `badges`, `readme`, and `pins` preserve every existing advanced command. Their simplified usage is documented and tested.
-- **Updated editorial context.** `brief` uses aggregate presentation patterns from the 200-person sample and a separate 16-person employer-owned author source, without copying profiles or automatically declaring jobs, skills, achievements or historical experience.
+- Root README reduced to the actual start/review flow and four core commands.
+- Command reference, architecture notes and product scope reorganized around **shipped** behavior instead of old proposals.
+- Installable package now contains `src/`, the README, license, security policy, changelog and package metadata. Developer research, internal scripts and detailed documentation stay on GitHub, reducing downloaded bytes.
+- Retired original project-contributor dataset/collector removed from the current tree; previous Git history retains it. The current 200-engineer cohort, 100-account provenance baseline and 16 employer-source observations are preserved.
+- Added regression checks for package allowlisting and local Markdown links.
+- One-time branch pruning is designed to run only on this explicitly named cleanup merge, using an allowlist with expected branch SHAs, without touching `main`.
 
-## Simple workflow
+## The supported workflow
 
 ```bash
-gh-aura init YOUR_USERNAME
 gh-aura activity 2022
-gh-aura activity 2020..2024
 gh-aura badges free
 gh-aura readme minimal --output draft.md
 gh-aura pins --goal "backend engineer"
-
-# Publish a profile change only when the complete diff is approved:
 gh-aura preview --file draft.md --save review.json
+# Only after inspecting and approving:
 gh-aura apply --review review.json --pr
 ```
 
-These are shortcuts for existing `contributions`, `achievements`, `profile` and `showcase`. They do not add extra API requests, create automatic contributions or award badges. GitHub controls its contribution calendar, achievements and pinned repository UI.
+Existing advanced commands are unchanged. GH Aura does not autonomously update a profile, generate artificial history, grant GitHub achievements or merge a review PR.
 
-## Verified behavior
+## Validation
 
-The release is gated on syntax checks, offline tests, package installation, and live read-only GitHub integration across Node.js 22/24 and Linux/macOS/Windows. No person's GitHub profile or contribution history is modified during tests.
+Syntax and offline tests; installed package smoke test; and real **read-only** GitHub integration on Node.js 22/24, Linux, macOS and Windows.
 
-The research sample is **not** an interview experiment. It is a transparent presentation study, and source membership/company fields can be outdated. The owner selected this approach in preference to a human hiring-manager study; GH Aura does not claim recruitment outcome improvements.
-
-[Primary study method](https://github.com/ibbuilds/gh-aura/blob/main/research/ORDINARY_STUDY.md) · [Security](https://github.com/ibbuilds/gh-aura/blob/main/SECURITY.md) · [CLI reference](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md)
+[Repository](https://github.com/ibbuilds/gh-aura) · [Commands](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md) · [Research](https://github.com/ibbuilds/gh-aura/tree/main/research)
