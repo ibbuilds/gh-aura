@@ -32,6 +32,8 @@ All four commands are read-only. The original `contributions`, `achievements`, `
 
 Plan account-owned sandbox actions offline with `gh-aura badges auto --repo USER/aura-achievements --output badges.json`; after inspecting the plan, `badges auto apply --review badges.json --confirm FINGERPRINT` can create a private repo and run bounded PR/issue exercises. GH Aura reports attempted operations, **not guaranteed badges**, and never interacts with third-party repositories automatically. [Details](docs/BADGE_RUN.md).
 
+Calendar Studio is a separate **synthetic practice** sandbox, not historical professional work. Plan offline with `gh-aura calendar plan 2022 --density 70 --output calendar.json`; the separately approved `calendar apply` creates a new private repository only after verifying account ownership and author identity. [Calendar guide](docs/CALENDAR.md).
+
 ## Review before publishing
 
 ```bash
