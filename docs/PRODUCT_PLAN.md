@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.10.0 (achievement coverage and bounded verification); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.11.0 (progress-aware read-only badge batch planning); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
@@ -23,7 +23,7 @@ Public analysis, profile reference browsing and drafting are read-only. Only the
 
 - `apply --review FILE`: update the public `USERNAME/USERNAME` profile README; optionally `--pr` for an unmerged PR.
 - `activity apply --review FILE --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create **or reuse** one marked owned private workspace, append dated synthetic practice without force pushing or overwriting paths. Optional `--repo OWNER/REPO` overrides the configured workspace. [Activity guide](CALENDAR.md).
-- `badges auto apply --review FILE --confirm FINGERPRINT`: reuse that same marked owned private workspace for bounded PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. `badges auto status` is read-only and reports only observed events. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
+- `badges auto apply --review FILE --confirm FINGERPRINT`: reuse that same marked owned private workspace for bounded PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. `badges auto status` and `badges auto next --tier ...` are read-only; the latter checks complete PR/tree evidence before planning another approved batch. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
 - `work apply --review FILE`: open an unmerged PR with one user-authored `README.md` or `docs/**/*.md` documentation change. A scoped token is required; private repos require explicit consent.
 
 No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project protections. Private-owned sandbox PR merges are an explicitly reviewed exception to the general never-auto-merge documentation PR workflow. Generated practice is labeled synthetic, not historical employment evidence.

@@ -34,7 +34,7 @@ The CLI caches explicitly public GET responses for five minutes; credential-deri
 
 Profile preview/direct publication, documentation work preview and both PR publishing paths bypass all cached state. Corrupt or unwritable cache files fall back to normal online requests, not stale authorization. Cache files are not credentials or approval artifacts.
 
-In the ordinary profile or `work` PR mode, partial failures may leave a branch. Those workflows never merge a PR, overwrite a conflicting review branch, delete branches or weaken protections. The separate explicitly approved `badge-run apply` is allowed to merge **only** generated exercises in an owned marked private sandbox, and GitHub enforces existing branch protections. New plans bind catalog version, operations, exclusions, target tier and budget to a SHA-256 fingerprint; older validated plans still load. `badges auto status` uses read-only access and never confirms an awarded badge.
+In the ordinary profile or `work` PR mode, partial failures may leave a branch. Those workflows never merge a PR, overwrite a conflicting review branch, delete branches or weaken protections. The separate explicitly approved `badge-run apply` is allowed to merge **only** generated exercises in an owned marked private sandbox, and GitHub enforces existing branch protections. New plans bind catalog version, operations, exclusions, target tier and budget to a SHA-256 fingerprint; older validated plans still load. `badges auto status` and `badges auto next` use read-only remote access, never confirm an award, and fail closed on incomplete or inconsistent workspace history. `next` writes only a locally approved plan after checking no interrupted exercise branches.
 
 ## Private badge sandbox
 

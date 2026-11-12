@@ -49,7 +49,18 @@ Apply requires a token able to create a private repo if needed, then use Content
 - Searches issue-history pages before opening Quickdraw's labeled issue; uncertain or truncated history fails closed instead of blindly creating duplicates.
 - Never force-pushes, edits other repos, deletes a repo or retries uncertain writes automatically.
 
-For higher tiers, check the status and manually plan the **next** batch with the correct `--start`. Existing exercise paths are skipped, and merged PRs do not imply that GitHub has attributed an achievement.
+For higher tiers, ask GH Aura to derive the next batch from the actual private workspace rather than manually guessing `--start`:
+
+```bash
+# Read-only private GitHub API checks; requires GH_TOKEN / GITHUB_TOKEN
+gh-aura badges auto next --tier silver --output next.json
+# Review the new SHA-256 plan first; then separately authorize:
+gh-aura badges auto apply --review next.json --confirm FINGERPRINT
+```
+
+`auto next` verifies the exact workspace marker and ownership, reads completed GH Aura PRs and a non-truncated Git tree, checks that exercise files correspond to a gap-free sequence of merged PRs, then refuses pending exercise branches. It never creates a repository or performs GitHub writes. If the workspace already meets the **reported** target by observed exercise events, it reports a local target reached and creates no plan; this is **not a GitHub-awarded tier**. If evidence is incomplete or inconsistent, it stops rather than guessing.
+
+Existing exercise paths are skipped on replay, and merged PRs do not imply that GitHub has attributed an achievement.
 
 ## Read observed events, not alleged badges
 
@@ -59,7 +70,7 @@ gh-aura badges auto status
 gh-aura badges auto status --repo YOUR_USERNAME/my-gh-aura-private
 ```
 
-This **read-only** command checks the exact marked private workspace, paging through up to twelve pages each of closed PRs and issues. It counts merges made by the authenticated owner from GH Aura's exercise branches and closed labeled QA issues. If a result list is truncated, it marks completeness false. A local Pull Shark tier candidate is only a workspace event count; **it is not confirmation of a badge**. Check `https://github.com/YOUR_USERNAME?tab=achievements` with the appropriate visibility settings.
+This **read-only** command checks the exact marked private workspace, paging through up to twelve pages each of closed PRs and issues. It counts merges made by the authenticated owner from GH Aura's exercise branches and closed labeled QA issues; Quickdraw timing candidates require a verified close within 300 seconds. If a result list is truncated, it marks completeness false. A local Pull Shark tier candidate is only a workspace event count; **it is not confirmation of a badge**. Check `https://github.com/YOUR_USERNAME?tab=achievements` with the appropriate visibility settings.
 
 ## Deliberate exclusions and limits
 

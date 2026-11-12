@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.11.0 — 2026-11-12
+
+- Added `badges auto next --tier ...` to determine the next approved 1–16 PR exercise batch from the **same existing private workspace** without performing any remote writes.
+- Cross-checks a complete, ownership-filtered merged PR history against a complete Git tree, rejects gaps, duplicate indices, unverified exercise files, partially scanned records and pending exercise branches; does not guess progress or create new repos.
+- Recognizes locally reached reported tier thresholds without claiming GitHub granted an achievement or preparing unnecessary actions.
+- Improved Quickdraw status reporting to distinguish QA issues closed within five minutes from later closures; timestamps remain observations rather than GitHub award confirmation.
+- Added fail-closed regression tests and updated packaged CLI documentation. Actual award validation still requires an authorized private GitHub test account.
+
+
 ## 1.10.0 — 2026-11-12
 
 - Added a source-ranked, versioned 19-entry GitHub achievement/highlight matrix: seven active, two historical, two disabled, three internal and five profile/program entries. Only Pull Shark, YOLO and Quickdraw have private-solo event candidates.
