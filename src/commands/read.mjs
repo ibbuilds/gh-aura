@@ -40,7 +40,9 @@ export async function run(command, options) {
     }
     if (command === 'contributions') {
       const { contributionsReport, renderContributions } = await import('../contributions.mjs');
-      const report = await contributionsReport(snapshot, { ...api, details: options.details, all: options.all, year: options.year === undefined ? undefined : Number(options.year) });
+      const report = await contributionsReport(snapshot, { ...api, details: options.details,
+        all: options.all, year: options.year === undefined ? undefined : Number(options.year),
+        from: options.from, to: options.to, days: options.days, private: options.private, recover: options.recover });
       emit(options.format === 'json' ? report : renderContributions(report), options); return;
     }
     if (command === 'brief') {

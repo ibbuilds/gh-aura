@@ -71,6 +71,10 @@ Use `gh-aura references` or `gh-aura references --company Microsoft` to browse s
 
 [Industry research and limitations](research/INDUSTRY_STUDY.md) · [Writing workflow](docs/AI_WORKFLOW.md)
 
+## Real contribution history and privacy
+
+Use `gh-aura contributions --from 2020 --to 2026 --days` to inspect the dates that GitHub actually recognizes, or add `--private --recover` for anonymized-private-visibility guidance and a local checklist for genuinely missing old attribution. GH Aura never creates fake commits or rewrites dates. [Read the activity guide](docs/ACTIVITY.md).
+
 ## Resource use
 
 Public reads reuse a short local cache and ETags. Plain draft generation skips the existing README; preservation and review do not. Read commands default to at most 60 requests, 2 MiB per JSON response and 32 MiB of response data per invocation. Use `--stats`, `--fresh` and an explicit `--budget N` when needed. These are application budgets, not extra GitHub quota.
