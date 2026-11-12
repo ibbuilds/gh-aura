@@ -60,7 +60,7 @@ export function planCalendar(options={},history=null) {
   if(span>MAX_DAYS||new Date(requestedTo).getUTCFullYear()-new Date(from).getUTCFullYear()+1>MAX_YEARS)
     throw Error('Calendar blueprint is limited to 20 years per operation.');
   const density=integer(options.density??65,'--density',0,100);
-  const growth=integer(options.growth??50,'--growth',0,100);
+  const growth=integer(options.growth??0,'--growth',0,100);
   const weekends=integer(options.weekends??25,'--weekends',0,100);
   const intensity=integer(options.intensity??2,'--intensity',1,6);
   const seed=integer(options.seed??2026,'--seed',0,2147483647);
@@ -107,8 +107,8 @@ export function planCalendar(options={},history=null) {
     const empty=dates.filter(c=>c.existing===0);
     empty.sort((a,b)=>b.weight-a.weight||a.date.localeCompare(b.date));
     for(const item of empty.slice(0,toAdd)) {
-      // Suppress weekend candidates completely when weekends=0 and mode=workweek.
-      if(mode==='workweek'&&weekends===0&&new Date(item.date+'T00:00:00Z').getUTCDay()%6===0)continue;
+      // Density is a hard target when enough empty dates exist. Weekend weighting
+      // shapes the ranking, but cannot secretly defeat --density 100.
       days.push({date:item.date,count:item.count,kind:'synthetic-practice'});
       group.selectedDays++;group.newCommits+=item.count;
     }

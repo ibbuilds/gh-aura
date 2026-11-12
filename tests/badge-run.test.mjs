@@ -31,6 +31,7 @@ function mockAPI(options={}) {
     }
     if(path===base+'/contents/README.md?ref=main'){
       const text=options.existing ? options.existingMarker===false?'# Regular private repo':
+        options.existingMarker==='shared'?'# Private GH Aura\nGH-AURA-PRIVATE-WORKSPACE-V1':
         '# Private GH Aura\nGH-AURA-PRIVATE-BADGE-SANDBOX-V1' : '# Initial project\n';
       return response({type:'file',path:'README.md',sha:'a'.repeat(40),
         encoding:'base64',size:Buffer.byteLength(text),content:Buffer.from(text).toString('base64')});
@@ -135,7 +136,7 @@ test('public and unmarked existing repositories are rejected before any write',a
   for(const opts of [{existing:true,privateRepo:false},{existing:true,existingMarker:false}]) {
     const api=mockAPI(opts);
     await assert.rejects(applyBadgeRun(p,{confirm:p.fingerprint,token:'test-only',
-      fetch:api.fetch,sleep:async()=>{}}),/Only an active|not an explicit/);
+      fetch:api.fetch,sleep:async()=>{}}),/Only an active|not a GH Aura-marked/);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   }
 });
@@ -158,4 +159,15 @@ test('CLI plan/apply are separate with required explicit review',()=>{
   assert.throws(()=>validateOptions('badge-run',parseArgs(['apply','--review','p.json'])),/confirm/);
   assert.throws(()=>validateOptions('badge-run',parseArgs(['plan','--repo',repo,'--pulls','999'])),/pulls/);
   assert.throws(()=>validateOptions('badge-run',parseArgs(['apply','--review','p.json','--confirm','f'.repeat(64),'--repo',repo])),/confirm/);
+});
+
+test('badge runner reuses a private workspace created by activity without creating a new repository',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:1,quickdraw:false});
+  const result=await applyBadgeRun(p,{confirm:p.fingerprint,
+    token:'test-only',fetch:api.fetch,sleep:async()=>{}});
+  assert.equal(api.created,false);
+  assert.equal(result.workspaceReused,true);
+  assert.equal(result.mergedPulls.length,1);
+  assert.equal(api.requests.some(x=>x.path==='/user/repos'),false);
 });

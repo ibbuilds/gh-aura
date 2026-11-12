@@ -1,6 +1,6 @@
-# Activity: honest history, any year or date interval
+# Activity: observed contributions and optional private practice
 
-The default `contributions` commands read actual GitHub activity and never change it. The separate, explicitly approved [Calendar Studio](CALENDAR.md) can generate **synthetic practice commits** on a new private repository. Generated activity is not historical professional work; GitHub controls what the contribution graph counts.
+The `activity YEAR` and `contributions` commands inspect observed GitHub activity without modifying it. The same `activity` command also supports [offline practice planning and reviewed apply](CALENDAR.md), using one reusable private workspace for synthetic commits. Generated activity is not historical professional work; GitHub controls what the contribution graph counts.
 
 ## Use
 
@@ -37,6 +37,16 @@ gh-aura contributions --local . --emails-file verified-emails.txt
 ```
 
 Unlike GitHub GraphQL reports, these commands inspect *only a repository you name*, using local Git. No tokens, GitHub API requests, raw emails, commit messages, private source files or remote URLs are included in the output. The CLI compares up to 5,000 original author email values against your local `git config user.email` or an optional local-only identity file, reporting counts without printing identities. **A match is not proof that the email is verified on GitHub or that a commit qualifies for the graph.** Shallow or capped history is explicitly identified. It neither modifies Git nor supplies fabricated calendar dates.
+
+## Create or reuse one private workspace
+
+```bash
+gh-aura init USERNAME
+gh-aura activity plan 2022 --density 70 --output plan.json
+gh-aura activity apply --review plan.json --confirm FINGERPRINT --author-name NAME --author-email VERIFIED_EMAIL
+```
+
+The first approved apply creates the workspace (default `USERNAME/gh-aura-workspace`) and future plans append without changing the existing history. `badges auto` reuses this same workspace by default. The old `calendar` command remains a compatibility alias. See [activity workspace](CALENDAR.md) for the exact safety rules and caveats.
 
 ## Limitations
 

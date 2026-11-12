@@ -4,6 +4,7 @@ import { httpsUrl, plain } from './text.mjs';
 
 export const DEFAULT_CONFIG = {
   user: '',
+  workspace: { repo: '' },
   scan: { maxRepos: 200, inspectRepos: 0, deepRepos: 0, maxRequests: 60 },
   profile: {
     style: 'minimal', visual: -1, name: '', headline: '', about: '', location: '',
@@ -53,6 +54,10 @@ export function validateConfig(config) {
   // Re-run key/type checking for callers that mutate configuration programmatically.
   mergeKnown(DEFAULT_CONFIG, config);
   string(config.user, 'user');
+  string(config.workspace.repo, 'workspace.repo');
+  if (config.workspace.repo && (!/^[a-z\d](?:[a-z\d-]*[a-z\d])?\/[a-z\d][\w.-]{0,79}$/i.test(config.workspace.repo) ||
+      config.workspace.repo.includes('..') || config.workspace.repo.endsWith('.git')))
+    throw new Error('workspace.repo must be OWNER/PRIVATE_REPO.');
   if (config.user && (!/^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(config.user) || config.user.includes('--'))) throw new Error('user must be a GitHub username.');
   const p = config.profile;
   if (!['minimal', 'regular', 'flashy'].includes(p.style)) throw new Error('profile.style must be minimal, regular, or flashy.');

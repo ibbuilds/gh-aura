@@ -80,6 +80,8 @@ test('short CLI aliases stay offline and preserve original command help', () => 
   assert.ok(top.stdout.split('\n').length < 30);
   for (const [args, expected] of [
     [['activity', '2022', '--help'], /contributions/],
+    [['activity', 'plan', '--help'], /activity plan/],
+    [['activity', 'apply', '--help'], /activity plan/],
     [['activity', '2020..2024', '--help'], /contributions/],
     [['readme', 'minimal', '--help'], /profile/],
     [['readme', '80', '--help'], /profile/],

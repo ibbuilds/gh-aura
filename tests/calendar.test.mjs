@@ -1,12 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { calendarDigest, planCalendar, loadCalendarPlan } from '../src/calendar.mjs';
 import { fastImportCalendar, applyCalendar } from '../src/calendar-apply.mjs';
 import { parseArgs, validateOptions } from '../src/cli-options.mjs';
+import { WORKSPACE_README, WORKSPACE_MARKER } from '../src/workspace.mjs';
 
 const now=new Date('2026-11-11T00:00:00.000Z');
 const plan=(options={})=>planCalendar({
@@ -43,6 +44,16 @@ test('explicit historical observations preserve existing days and only fill targ
   assert.ok(!a.days.some(x=>x.date==='2022-01-03'));
   assert.equal(a.settings.existingHistory,'supplied-verified-counts');
   assert.throws(()=>planCalendar({from:'2022-01-01',to:'2022-01-31',now},new Map()),/incomplete/);
+});
+test('100 percent density means every date even with weekends preference zero',()=>{
+  const a=planCalendar({from:'2022-01-01',to:'2022-01-31',
+    mode:'workweek',weekends:0,density:100,intensity:1,seed:7,now});
+  assert.equal(a.days.length,31);
+  assert.equal(a.summary.selectedDays,31);
+  assert.equal(a.summary.syntheticCommits,31);
+  const years=planCalendar({from:'2020',to:'2021',density:100,
+    mode:'workweek',weekends:0,intensity:1,now});
+  assert.equal(years.summary.selectedDays,731);
 });
 test('zero density has zero generated work; invalid ranges and oversized plans fail',()=>{
   const p=plan({density:0});
@@ -115,6 +126,7 @@ test('calendar application requires private new repository; push occurs once wit
     assert.deepEqual(methods,['GET','GET','GET','POST']);
     assert.equal(result.status,'pushed-unverified-graph');
     assert.equal(Number(git(['--git-dir',bare,'rev-list','--count','main'])),p.summary.syntheticCommits);
+    assert.match(git(['--git-dir',bare,'show','main:README.md']),new RegExp(WORKSPACE_MARKER));
     assert.ok(urls.every(u=>u.startsWith('https://api.github.com/')));
   }finally{rmSync(folder,{recursive:true,force:true});}
 });
@@ -132,7 +144,7 @@ test('wrong confirmation and existing repo fail without any creation/push',async
       if(url.endsWith('/user'))return Response.json({login:'example',created_at:'2019-01-01'});
       if(url.includes('/user/emails'))return Response.json([{email:'example@users.noreply.github.com',verified:true}]);
       return Response.json({full_name:'example/existing',private:true});
-    }}),/already exists/);
+    }}),/Refusing non-owned|private workspace/);
   assert.equal(calls,3);
 });
 test('calendar CLI accepts separate plan/apply but rejects unreviewed writes',()=>{
@@ -182,7 +194,7 @@ test('ID-based noreply from authenticated account needs no email scope',async()=
   };
   await assert.rejects(applyCalendar(p,{repo:'example/existing',confirm:p.fingerprint,
     authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
-    token:'test-token',fetch}),/already exists/);
+    token:'test-token',fetch}),/Refusing non-owned|private workspace/);
   assert.equal(urls.length,2);
   assert.ok(!urls.some(url=>url.includes('/user/emails')));
 });
@@ -198,4 +210,92 @@ test('missing account creation timestamp fails closed before repository creation
     authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
     token:'test-token',fetch}),/creation date/);
   assert.equal(urls.length,1);
+});
+
+test('second activity plan fast-forwards an existing marked private repo without rewriting badge work',async()=>{
+  const folder=mkdtempSync(join(tmpdir(),'aura-reuse-'));
+  try {
+    const bare=join(folder,'remote.git'),seed=join(folder,'seed');
+    git(['init','--bare','--quiet',bare]);
+    mkdirSync(seed);
+    git(['init','--quiet','--initial-branch=main'],{cwd:seed});
+    writeFileSync(join(seed,'README.md'),WORKSPACE_README);
+    git(['add','README.md'],{cwd:seed});
+    git(['-c','user.name=Example','-c','user.email=example@example.com',
+      'commit','--quiet','-m','initialize shared GH Aura workspace'],{cwd:seed});
+    git(['push','--quiet',bare,'refs/heads/main:refs/heads/main'],{cwd:seed});
+    const initialSha=git(['--git-dir',bare,'rev-parse','main']);
+    const p=planCalendar({from:'2022-02-01',to:'2022-02-12',
+      density:50,weekends:100,intensity:1,now});
+    const urls=[];
+    const fetch=async(url,params={})=>{
+      urls.push([url,params.method||'GET']);
+      if(url.endsWith('/user'))return Response.json({
+        login:'example',id:42,created_at:'2019-01-01T00:00:00Z'});
+      if(url.endsWith('/repos/example/shared'))return Response.json({
+        full_name:'example/shared',private:true,fork:false,archived:false,default_branch:'main'});
+      if(url.includes('/contents/README.md?ref=main'))return Response.json({
+        type:'file',size:WORKSPACE_README.length,encoding:'base64',
+        content:Buffer.from(WORKSPACE_README).toString('base64')});
+      if(url.endsWith('/git/ref/heads/main'))return Response.json({object:{sha:initialSha}});
+      if(url.endsWith('/git/trees/main?recursive=1'))return Response.json({
+        truncated:false,tree:[{path:'README.md',type:'blob'}]});
+      throw Error('Unexpected private workspace API request: '+url);
+    };
+    let pushes=0,fetches=0;
+    const runner=(args,opts)=>{
+      if(args[0]==='fetch') {
+        fetches++;const redirected=[...args];redirected[3]=bare;
+        return git(redirected,opts);
+      }
+      if(args[0]==='push') {
+        pushes++;const redirected=[...args];redirected[2]=bare;
+        return git(redirected,opts);
+      }
+      return git(args,opts);
+    };
+    const result=await applyCalendar(p,{
+      repo:'example/shared',confirm:p.fingerprint,
+      authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
+      token:'test-token',fetch,gitRunner:runner
+    });
+    assert.equal(result.workspaceReused,true);
+    assert.equal(pushes,1);
+    assert.equal(fetches,1);
+    assert.equal(urls.filter(([,method])=>method!=='GET').length,0);
+    assert.equal(Number(git(['--git-dir',bare,'rev-list','--count','main'])),p.summary.syntheticCommits+1);
+    assert.equal(git(['--git-dir',bare,'merge-base','--is-ancestor',initialSha,'main']), '');
+    assert.match(git(['--git-dir',bare,'show','main:README.md']),new RegExp(WORKSPACE_MARKER));
+  }finally{rmSync(folder,{recursive:true,force:true});}
+});
+
+test('existing workspace rejects date collisions and truncated trees before local Git or writes',async()=>{
+  const p=planCalendar({from:'2022-02-01',to:'2022-02-10',
+    density:50,weekends:100,intensity:1,now});
+  const first=p.days[0];
+  const collision='practice/'+first.date.slice(0,4)+'/'+first.date.slice(5,7)+'/'+first.date.slice(8)+'-1.md';
+  for(const tree of [
+    {truncated:false,tree:[{path:'README.md'},{path:collision}]},
+    {truncated:true,tree:[{path:'README.md'}]}
+  ]) {
+    let writes=0;
+    const fetch=async(url,params={})=>{
+      if((params.method||'GET')!=='GET')writes++;
+      if(url.endsWith('/user'))return Response.json({
+        login:'example',id:42,created_at:'2019-01-01'});
+      if(url.endsWith('/repos/example/shared'))return Response.json({
+        full_name:'example/shared',private:true,fork:false,archived:false,default_branch:'main'});
+      if(url.includes('/contents/README.md?ref=main'))return Response.json({
+        type:'file',size:WORKSPACE_README.length,encoding:'base64',
+        content:Buffer.from(WORKSPACE_README).toString('base64')});
+      if(url.endsWith('/git/ref/heads/main'))return Response.json({object:{sha:'a'.repeat(40)}});
+      if(url.endsWith('/git/trees/main?recursive=1'))return Response.json(tree);
+      throw Error('Unexpected remote request: '+url);
+    };
+    await assert.rejects(applyCalendar(p,{repo:'example/shared',
+      confirm:p.fingerprint,authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
+      token:'test-token',fetch,gitRunner:()=>{throw Error('Git should not run');}}),
+      /Practice dates already exist|complete private workspace tree/);
+    assert.equal(writes,0);
+  }
 });

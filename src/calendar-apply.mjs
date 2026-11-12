@@ -2,7 +2,8 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { requestJSON, getJSON, tokenFor, validateLogin } from './github.mjs';
+import { requestJSON, getJSON, decodeReadme, tokenFor, validateLogin } from './github.mjs';
+import { workspaceRepo, managedWorkspaceReadme, WORKSPACE_README } from './workspace.mjs';
 import { loadCalendarPlan } from './calendar.mjs';
 
 const LIMIT=2500;
@@ -43,8 +44,13 @@ export async function verifyAuthorEmail(email,identity,opts={}) {
   throw Error('--author-email is not verified for the authenticated GitHub account. No repository was created.');
 }
 
-export function fastImportCalendar(plan,authorName,authorEmail) {
+export function fastImportCalendar(plan,authorName,authorEmail,options={}) {
   validIdentity(authorName,authorEmail);
+  const branch=options.branch||'main';
+  if(!/^[a-z\d][a-z\d._-]{0,79}$/i.test(branch) || branch.includes('..') || branch.endsWith('.lock'))
+    throw Error('Unsupported private workspace default branch.');
+  if(options.baseSha && !/^[a-f0-9]{40}$/i.test(options.baseSha))
+    throw Error('Invalid workspace base commit.');
   const entries=plan.days.flatMap(d=>Array.from({length:d.count},(_,i)=>({date:d.date,index:i+1})));
   if(entries.length>LIMIT||!entries.length)throw Error('Calendar plan must have between 1 and 2500 commits.');
   const name=authorName.trim();
@@ -63,10 +69,14 @@ export function fastImportCalendar(plan,authorName,authorEmail) {
       'This is synthetic practice activity created by GH Aura. '+
       'It is not independently verified historical software work.\n';
     n++;
-    payload+='commit refs/heads/main\nmark :'+n+'\nauthor '+name+' <'+authorEmail+'> '+tz+
+    payload+='commit refs/heads/'+branch+'\nmark :'+n+'\nauthor '+name+' <'+authorEmail+'> '+tz+
       '\ncommitter '+name+' <'+authorEmail+'> '+tz+'\n'+section(message);
     if(previous!==null)payload+='from :'+previous+'\n';
-    payload+='M 100644 inline '+file+'\n'+section(text)+'\n';
+    else if(options.baseSha)payload+='from '+options.baseSha+'\n';
+    payload+='M 100644 inline '+file+'\n'+section(text);
+    if(n===1 && options.initializeWorkspace)
+      payload+='M 100644 inline README.md\n'+section(WORKSPACE_README);
+    payload+='\n';
     previous=n;
   }
   return Buffer.from(payload,'utf8');
@@ -85,20 +95,19 @@ function git(args,opts={}) {
 }
 export async function applyCalendar(plan,opts={}) {
   if(!plan||plan.format!=='gh-aura-synthetic-calendar-v1'||!plan.fingerprint)
-    throw Error('Invalid approved calendar plan.');
+    throw Error('Invalid approved activity plan.');
   if(!/^[a-f0-9]{64}$/.test(opts.confirm||'')||opts.confirm!==plan.fingerprint)
-    throw Error('Calendar fingerprint mismatch. Review the JSON plan and pass --confirm FINGERPRINT.');
+    throw Error('Activity plan fingerprint mismatch. Review the JSON plan and pass --confirm FINGERPRINT.');
   validIdentity(opts.authorName,opts.authorEmail);
-  if(typeof opts.repo!=='string'||!/^[a-z\d](?:[a-z\d-]*[a-z\d])?\/[a-z\d][\w.-]{0,79}$/i.test(opts.repo)
-     ||opts.repo.includes('..')||opts.repo.endsWith('.git'))
-    throw Error('--repo must be OWNER/NEW_PRIVATE_REPO.');
+  const selected=workspaceRepo(opts.repo);
   const token=tokenFor(opts);
-  if(!token)throw Error('A GH_TOKEN/GITHUB_TOKEN with private repository creation permission is required.');
-  const identity=await getJSON('/user',{...opts,publicRead:false,cache:undefined});
+  if(!token)throw Error('A GH_TOKEN/GITHUB_TOKEN with private repository creation/Contents write permission is required.');
+  const auth={...opts,publicRead:false,cache:undefined};
+  const identity=await getJSON('/user',auth);
   const owner=validateLogin(identity?.login);
-  const [givenOwner,name]=opts.repo.split('/');
+  const [givenOwner,name]=selected.split('/');
   if(givenOwner.toLowerCase()!==owner.toLowerCase())
-    throw Error('Calendar generation may create only a new private repository owned by the authenticated account.');
+    throw Error('Activity may only use a private repository owned by the authenticated account.');
   await verifyAuthorEmail(opts.authorEmail,identity,opts);
   const start=Date.parse(plan.settings.from+'T00:00:00Z');
   const joined=Date.parse(identity.created_at||'');
@@ -106,40 +115,82 @@ export async function applyCalendar(plan,opts={}) {
     throw Error('Could not verify the GitHub account creation date. No repository was created.');
   if(start<joined-86400000)
     throw Error('The selected dates precede this GitHub account. Choose an account-lifetime interval.');
+
   const base='/repos/'+encodeURIComponent(owner)+'/'+encodeURIComponent(name);
-  const existing=await getJSON(base,{...opts,publicRead:false,cache:undefined});
-  if(existing)throw Error('Repository already exists. Use a fresh name; GH Aura never overwrites existing history.');
-  // Build and verify the full local series before creating anything on GitHub.
-  const temp=mkdtempSync(join(tmpdir(),'gh-aura-calendar-'));
+  const remote='https://github.com/'+owner+'/'+name+'.git';
+  const existing=await getJSON(base,auth);
+  let targetBranch='main',remoteSha=null;
+  if(existing) {
+    if(existing.private!==true||existing.fork===true||existing.archived===true||
+       existing.full_name?.toLowerCase()!==selected.toLowerCase()||
+       typeof existing.default_branch!=='string')
+      throw Error('Refusing non-owned, public, archived or forked workspace. No writes performed.');
+    targetBranch=existing.default_branch;
+    if(!/^[a-z\d][a-z\d._-]{0,79}$/i.test(targetBranch)||targetBranch.includes('..')||targetBranch.endsWith('.lock'))
+      throw Error('Unsupported private workspace branch. No writes performed.');
+    const readme=await getJSON(base+'/contents/README.md?ref='+encodeURIComponent(targetBranch),auth);
+    if(!readme||readme.type!=='file'||!managedWorkspaceReadme(decodeReadme(readme)))
+      throw Error('Existing repository lacks the GH Aura private workspace marker; refusing to modify it.');
+    const ref=await getJSON(base+'/git/ref/heads/'+encodeURIComponent(targetBranch),auth);
+    if(!/^[a-f0-9]{40}$/i.test(ref?.object?.sha||''))
+      throw Error('Could not verify current private workspace revision.');
+    remoteSha=ref.object.sha;
+    const tree=await getJSON(base+'/git/trees/'+encodeURIComponent(targetBranch)+'?recursive=1',auth);
+    if(!tree||tree.truncated!==false||!Array.isArray(tree.tree))
+      throw Error('Cannot inspect the complete private workspace tree; no writes performed.');
+    const paths=new Set(tree.tree.map(item=>item.path));
+    const collisions=plan.days.flatMap(d=>Array.from({length:d.count},(_,i)=>
+      'practice/'+d.date.slice(0,4)+'/'+d.date.slice(5,7)+'/'+d.date.slice(8)+'-'+(i+1)+'.md'))
+      .filter(path=>paths.has(path));
+    if(collisions.length)
+      throw Error('Practice dates already exist in this workspace ('+collisions.length+' paths). Use a non-overlapping plan; no files were overwritten.');
+  }
+
+  // Build and verify all new commits before writing to GitHub. Existing work
+  // is fetched and used as an immutable parent; the final push never forces.
+  const temp=mkdtempSync(join(tmpdir(),'gh-aura-activity-'));
   const runGit=opts.gitRunner||git;
   let created=false;
   try {
-    const stream=fastImportCalendar(plan,opts.authorName,opts.authorEmail);
-    runGit(['init','--quiet','--initial-branch=main'],{cwd:temp});
-    runGit(['fast-import','--quiet'],{cwd:temp,input:stream});
-    const count=Number(runGit(['rev-list','--count','main'],{cwd:temp}));
-    if(count!==plan.summary.syntheticCommits)throw Error('Generated commit count did not match the approved plan.');
-    const repository=await requestJSON('/user/repos',{
-      ...opts,method:'POST',cache:undefined,publicRead:false,
-      body:{name,description:'GH Aura generated practice timeline (synthetic)',private:true,
-        auto_init:false,has_issues:false,has_wiki:false,has_projects:false}
-    });
-    if(repository?.private!==true||repository?.full_name?.toLowerCase()!==opts.repo.toLowerCase())
-      throw Error('GitHub did not confirm the expected private repository. Inspect before retrying.');
-    created=true;
     const authorization='AUTHORIZATION: basic '+Buffer.from('x-access-token:'+token).toString('base64');
     const env={...process.env,GIT_TERMINAL_PROMPT:'0',GIT_CONFIG_NOSYSTEM:'1',
       GIT_CONFIG_COUNT:'2',GIT_CONFIG_KEY_0:'http.https://github.com/.extraheader',
       GIT_CONFIG_VALUE_0:authorization,GIT_CONFIG_KEY_1:'credential.helper',
       GIT_CONFIG_VALUE_1:''};
-    // No token is added to command-line arguments, Git config, remote URL or saved files.
-    runGit(['push','--quiet','https://github.com/'+owner+'/'+name+'.git',
-      'refs/heads/main:refs/heads/main'],{cwd:temp,env});
+    runGit(['init','--quiet','--initial-branch=main'],{cwd:temp});
+    let parent=null;
+    if(existing) {
+      runGit(['fetch','--quiet','--no-tags',remote,'refs/heads/'+targetBranch],{cwd:temp,env});
+      parent=runGit(['rev-parse','FETCH_HEAD'],{cwd:temp});
+      if(parent!==remoteSha)
+        throw Error('Workspace changed while loading its history. No push attempted; regenerate the plan.');
+    }
+    const stream=fastImportCalendar(plan,opts.authorName,opts.authorEmail,{
+      baseSha:parent,branch:targetBranch,initializeWorkspace:!existing
+    });
+    runGit(['fast-import','--quiet'],{cwd:temp,input:stream});
+    const count=Number(runGit(['rev-list','--count',...(parent?[parent+'..'+targetBranch]:[targetBranch])],{cwd:temp}));
+    if(count!==plan.summary.syntheticCommits)
+      throw Error('Generated commits did not match the approved activity plan.');
+    if(!existing) {
+      const repository=await requestJSON('/user/repos',{
+        ...auth,method:'POST',
+        body:{name,description:'GH Aura managed private workspace (synthetic practice)',
+          private:true,auto_init:false,has_issues:true,has_wiki:false,has_projects:false}
+      });
+      if(repository?.private!==true||repository?.full_name?.toLowerCase()!==selected.toLowerCase())
+        throw Error('GitHub did not confirm the expected private workspace. Inspect before retrying.');
+      created=true;
+    }
+    runGit(['push','--quiet',remote,
+      'refs/heads/'+targetBranch+':refs/heads/'+targetBranch],{cwd:temp,env});
     return {status:'pushed-unverified-graph',repository:'https://github.com/'+owner+'/'+name,
-      private:true,requestedCommits:count,period:plan.settings.from+'..'+plan.settings.to,
-      note:'Synthetic practice commits pushed. GitHub alone decides attribution; check the profile after indexing. Enable Private contributions in GitHub profile settings.'};
+      private:true,workspaceReused:!!existing,requestedCommits:count,
+      period:plan.settings.from+'..'+plan.settings.to,
+      note:'Synthetic practice only. No existing work was rewritten; GitHub decides contribution attribution and private visibility.'};
   } catch(error) {
-    if(created)throw Error(error.message+' A private repository may now exist; inspect it before retrying. Never force-push.');
+    if(created)
+      throw Error(error.message+' A private workspace may now exist; inspect before retrying. Never force-push.');
     throw error;
   } finally {rmSync(temp,{recursive:true,force:true});}
 }

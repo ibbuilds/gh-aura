@@ -3,7 +3,7 @@ const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
   'badge-run': { usage: 'badge-run plan --repo OWNER/PRIVATE_REPO [--pulls 2] [--start 0] [--no-quickdraw] --output badges.json | badge-run apply --review badges.json --confirm FINGERPRINT', flags: ['repo','pulls','start','no-quickdraw','role','output','force','review','confirm'], max: 1 },
-  calendar: { usage: 'calendar plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | calendar apply --review plan.json --repo OWNER/NEW_PRIVATE_REPO --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
+  calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
@@ -27,12 +27,12 @@ export const HELP = [
   'One-time setup:',
   '  gh-aura init USER', '',
   'Four primary actions:',
-  '  gh-aura activity 2022       View actual contributions for a year',
+  '  gh-aura activity 2022       Inspect observed activity for a year',
   '  gh-aura badges free         Explore no-cost achievement opportunities',
-  '  gh-aura badges auto --repo USER/PRIVATE_SANDBOX --output badges.json',
+  '  gh-aura badges auto        Plan private workspace exercises',
   '  gh-aura readme minimal      Generate a profile README draft',
   '  gh-aura pins                Recommend projects to feature',
-  '  gh-aura calendar plan 2022 --density 65 --output plan.json', '',
+  '  gh-aura activity plan 2022 --density 65 --output plan.json', '',
   'Review and publish a README:',
   '  gh-aura readme minimal --output draft.md',
   '  gh-aura preview --file draft.md --save review.json',
@@ -97,8 +97,8 @@ export function validateOptions(command, options) {
     const action = options.positional[0];
     const planKeys = ['repo','pulls','start','no-quickdraw','role','output','force'];
     if (action === 'plan') {
-      if (!options.repo || options.review || options.confirm) {
-        throw Error('badge-run plan requires --repo OWNER/PRIVATE_REPO, optionally --pulls, --start and --output.');
+      if (options.review || options.confirm) {
+        throw Error('badges auto plan accepts --repo OWNER/PRIVATE_REPO, optionally --pulls, --start and --output.');
       }
       for(const [key,min,max] of [['pulls',0,16],['start',0,1024]]) {
         if(options[key]!==undefined&&(!/^\d+$/.test(options[key])||Number(options[key])<min||Number(options[key])>max)){
@@ -118,19 +118,20 @@ export function validateOptions(command, options) {
     const [action, shorthand] = options.positional;
     const planning = ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force'];
     const applying = ['review','repo','confirm','author-name','author-email'];
-    if (!['plan','apply'].includes(action)) throw Error('Use calendar plan [YEAR] or calendar apply --review FILE.');
+    if (!['plan','apply'].includes(action)) throw Error('Use activity plan [YEAR] or activity apply --review FILE.');
     if (action === 'plan') {
       if (shorthand && (!/^\d{4}$/.test(shorthand) || options.year || options.from || options.to)) {
-        throw Error('Use one year (calendar plan 2022), or --from/--to, not both.');
+        throw Error('Use one year (activity plan 2022), or --from/--to, not both.');
       }
       if (shorthand) options.year = shorthand;
       if ((options.year && (options.from || options.to)) || applying.some(k=>options[k]!==undefined)) {
-        throw Error('calendar plan accepts date/density options only, not remote write arguments.');
+        throw Error('activity plan accepts date/density options only, not remote write arguments.');
       }
       if (options.year && !/^\d{4}$/.test(String(options.year))) throw Error('--year must be YYYY.');
-    } else if (options.positional.length !== 1 || !applying.every(k=>options[k]) ||
+    } else if (options.positional.length !== 1 ||
+        !['review','confirm','author-name','author-email'].every(k=>options[k]) ||
         planning.some(k=>options[k]!==undefined)) {
-      throw Error('calendar apply requires --review FILE --repo OWNER/NEW_PRIVATE_REPO --confirm FINGERPRINT --author-name NAME --author-email VERIFIED_EMAIL.');
+      throw Error('activity apply requires --review FILE --confirm FINGERPRINT --author-name NAME --author-email VERIFIED_EMAIL (optional --repo OWNER/PRIVATE_WORKSPACE).');
     }
   }
   if (command === 'story') {
