@@ -192,6 +192,10 @@ Allow users to exclude/force-include/reorder candidates, identify why a repo is 
 - Local project-story management: `story set/list/remove` replaces manual JSON editing for user-supplied problem, contribution and evidence notes.
 - **Human 60-second evaluation remains unperformed**: [protocol](HUMAN_VALIDATION.md) is documented, but reviewers and profile-owner consent are necessary. Issue #21 must remain open pending actual evaluation.
 
+## Reference cohort update (2026-11-12)
+
+A one-time GitHub API research workflow examined 1,040 accounts and selected 200 public engineering profiles across 35 company organizations, excluding accounts with more than 2,000 visible followers to reduce celebrity bias. The three signals remain public organization membership, self-listed employer and self-described role. This is **not** certified employment, technical evaluation or measured hiring success. The runtime uses compact aggregate structure, not the full research corpus or a live people crawler. See [research/ORDINARY_STUDY.md](../research/ORDINARY_STUDY.md).
+
 ## Tracked implementation work
 
 - [#22 — A1: real historical contributions and private visibility](https://github.com/ibbuilds/gh-aura/issues/22)

@@ -21,22 +21,20 @@ export const SPECS = {
 const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks']);
 export const HELP = [
-  'GH Aura — a GitHub profile toolkit. You choose every change.', '',
-  'Start:', '  gh-aura init USER', '  gh-aura audit',
-  '  gh-aura profile --output draft.md',
+  'GH Aura — simple GitHub profile CLI. You choose every change.', '',
+  'One-time setup:',
+  '  gh-aura init USER', '',
+  'Four primary actions:',
+  '  gh-aura activity 2022       View actual contributions for a year',
+  '  gh-aura badges free         Explore no-cost achievement opportunities',
+  '  gh-aura readme minimal      Generate a profile README draft',
+  '  gh-aura pins                Recommend projects to feature', '',
+  'Review and publish a README:',
+  '  gh-aura readme minimal --output draft.md',
   '  gh-aura preview --file draft.md --save review.json',
-  '  gh-aura apply --review review.json', '',
-  'Explore:', '  showcase       Recommend projects to pin',
-  '  achievements   Explore badges and relevant public evidence',
-  '  work           Preview and open reviewed documentation PRs',
-  '  story          Manage your own project contributions locally',
-  '  contributions  Inspect annual activity and visibility checks',
-  '  brief --prompt Export grounded instructions for any writer',
-  '  check          Check a draft locally before reviewing it',
-  '  references     Browse sourced working-engineer profile examples (offline)',
-  '  config         Read or change local preferences', '',
-  'Use gh-aura COMMAND --help for options. No command runs in the background.',
-  'Only apply and work apply can write to GitHub, after explicit review. Read commands support --stats.',
+  '  gh-aura apply --review review.json --pr', '',
+  'More: audit, work, story, check, brief, config, references.',
+  'Details: gh-aura COMMAND --help. No background jobs or automatic profile writes.',
 ].join('\n') + '\n';
 
 export function parseArgs(tokens) {

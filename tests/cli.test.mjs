@@ -69,3 +69,37 @@ test('CI/release checks are opt-in and require an explicit deep repository scan'
   assert.notEqual(forbidden.status, 0);
   assert.match(forbidden.stderr, /not supported/);
 });
+
+
+test('short CLI aliases stay offline and preserve original command help', () => {
+  const top = command(['--help']);
+  assert.equal(top.status, 0);
+  for (const name of ['activity', 'badges', 'readme', 'pins']) {
+    assert.match(top.stdout, new RegExp('gh-aura ' + name));
+  }
+  assert.ok(top.stdout.split('\n').length < 30);
+  for (const [args, expected] of [
+    [['activity', '2022', '--help'], /contributions/],
+    [['activity', '2020..2024', '--help'], /contributions/],
+    [['readme', 'minimal', '--help'], /profile/],
+    [['readme', '80', '--help'], /profile/],
+    [['pins', '--help'], /showcase/],
+  ]) {
+    const r = command(args);
+    assert.equal(r.status, 0, args.join(' ') + ' ' + r.stderr);
+    assert.match(r.stdout, expected);
+  }
+});
+
+test('badges shortcut produces free planning and one badge without authentication', () => {
+  const free = command(['badges', 'free', '--json']);
+  assert.equal(free.status, 0, free.stderr);
+  const report = JSON.parse(free.stdout);
+  assert.equal(report.scope, 'free');
+  assert.ok(report.catalog.length > 0);
+  assert.ok(Array.isArray(report.plan));
+  assert.ok(report.catalog.every((item) => !item.requiresPayment));
+  const targeted = command(['badges', 'pull-shark', '--json']);
+  assert.equal(targeted.status, 0, targeted.stderr);
+  assert.deepEqual(JSON.parse(targeted.stdout).catalog.map((x) => x.id), ['pull-shark']);
+});

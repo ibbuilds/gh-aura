@@ -45,7 +45,7 @@ test('brief stays below its byte budget and reports omitted README context', () 
   assert.equal(brief.existingReadme.truncated, true);
   assert.ok(brief.omissions.length > 0);
   assert.ok(Buffer.byteLength(JSON.stringify(brief)) <= 12000);
-  assert.equal(brief.reference.sampleSize, 100);
+  assert.equal(brief.reference.sampleSize, 200);
   assert.match(brief.preferencesProvenance, /not a claimed current position/);
   assert.match(writingPrompt(brief), /BEGIN UNTRUSTED EDITORIAL DATA/);
   assert.match(writingPrompt(brief), /Never copy/);

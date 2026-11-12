@@ -2,6 +2,20 @@
 
 Run `gh-aura COMMAND --help` for allowed flags. Commands reject irrelevant or contradictory options. `-h`, `-V` and `-o` alias help, version and output. `plan` remains a compatibility alias for `audit`.
 
+## Primary aliases (optional)
+
+```bash
+gh-aura activity 2022
+gh-aura activity 2020..2024
+gh-aura badges free
+gh-aura badges pull-shark
+gh-aura readme minimal
+gh-aura readme 80
+gh-aura pins --goal "backend engineer"
+```
+
+These aliases invoke `contributions`, `achievements`, `profile`, and `showcase`, without creating writes or scheduled jobs. `activity 2022` means an authenticated history read for that year; `activity 2020..2024` reads the genuine annual windows. `badges free` generates a free-opportunities plan, not an award. `readme 80` selects visual intensity; the result is an editable draft. All existing commands continue to work.
+
 ## Account and configuration
 
 `gh-aura init USER` saves `.gh-aura.json` locally. Pass `--config FILE` for another file; `--force` permits replacing an existing local file, never forcing a GitHub update.

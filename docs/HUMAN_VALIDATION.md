@@ -4,6 +4,8 @@
 
 GH Aura can audit public evidence and generate profile drafts, but it cannot know whether a hiring manager actually understands the result or whether it increases interviews. That requires voluntary, consent-based human evaluation. Do not substitute engineer profile fame, follower counts or repository stars for these observations.
 
+The [200-account ordinary-visibility study](../research/ORDINARY_STUDY.md) measures **GitHub profile structure**, not reviewer comprehension or hiring outcomes. The study cannot substitute for actual consenting people following the protocol below.
+
 ## Participants and consent
 
 Target 6–12 participants with real technical recruiting, engineering interviewing or hiring-manager experience. Record self-reported role category and broad experience band, not names, emails, employer identities or individual contacts. Include a mix of developers (early career, career transition, experienced with private work) whose original and proposed profiles have been reviewed for confidentiality.

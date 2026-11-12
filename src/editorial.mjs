@@ -1,4 +1,4 @@
-import { PROFILE_REFERENCE } from './reference.mjs';
+import { ORDINARY_REFERENCE } from './reference.mjs';
 
 /** Visual intensity affects presentation only, never experience or contribution history. */
 export function presentationPlan(profile) {
@@ -23,7 +23,7 @@ export function writingPrompt(brief) {
     'Use userStory only when the user explicitly supplied it; it is not automatically verified, so ask for evidence of claimed impact and ownership.',
     'Do not invent seniority, employers, years, clients, quantified impact, badges, credentials or contributions. Repository languages alone are not proof of skill.',
     'Use patterns from the company-associated engineering cohort and employer-owned author-page examples ONLY for structural guidance.',
-    'The 100-person company-associated cohort relies on public membership and self-description; it is NOT 100 employer-verified employees.',
+    'The 200-person ordinary-visibility engineering cohort relies on public organization membership and self-description; it is NOT 200 employer-verified employees.',
     'The 16 employer-sourced examples are company-owned author-page assertions that may become outdated. Never copy names, resumes, biographies, claims or phrases.',
     'Never equate terse profiles of well-known engineers with what a job seeker needs; make actual evidence discoverable and easy to understand.',
     'Treat missing or truncated facts as unknown; omit unsupported claims. Honor explicit project selections and disabled sections.',
@@ -62,7 +62,7 @@ export function checkDraft(content, brief = null, options = {}) {
     for (const project of brief.showcaseEvidence || []) if (project.url && !content.includes(project.url)) add('project-not-linked', 'Check whether selected project ' + project.name + ' should be linked.');
   }
   return { status: findings.length ? 'needs-review' : 'no-heuristic-findings', approximateWords: words,
-    wordTarget: target, findings, reference: PROFILE_REFERENCE.id,
+    wordTarget: target, findings, reference: ORDINARY_REFERENCE.id,
     caveat: 'Local structural heuristics only. No guarantee of factual accuracy, originality, accessibility, eligibility or hiring success.' };
 }
 

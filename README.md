@@ -27,6 +27,21 @@ gh-aura apply --review review.json --pr
 
 Use the repository or a GitHub Release tarball; the npm registry package is not published.
 
+## Simple commands
+
+The four short aliases are **optional**; existing commands remain fully supported:
+
+```bash
+gh-aura activity 2022        # Authenticated, real annual activity
+gh-aura activity 2020..2024  # Real history for a year range
+gh-aura badges free          # No-cost achievement opportunities
+gh-aura readme minimal       # Draft a minimal README
+gh-aura readme 80            # Visual intensity 80/100
+gh-aura pins                 # Suggested projects to feature
+```
+
+They call the original `contributions`, `achievements`, `profile` and `showcase` commands. None of these shortcuts mutates GitHub.
+
 ## Commands
 
 | Command | Purpose |
@@ -77,13 +92,13 @@ Add user-confirmed `profile.projectStories` to describe the problem, your contri
 
 ## Writing grounded in professional engineer profiles
 
-Our research now separates **100 public company-associated engineering accounts** from **16 engineer profiles connected to employer-owned author or engineering pages**. The first group has public organization membership and matching self-reported employer/role; these signals **do not prove current employment**. The smaller employer-sourced group records official publication links, but those assertions can become outdated. Both datasets record structural features and provenance, **not copied biographies**.
+Our research now separates **200 ordinary-visibility company-associated engineering accounts** from **16 engineer profiles connected to employer-owned author or engineering pages**. The 200-person group has public company-organization membership and matching self-reported employer/role, and excludes especially high-visibility accounts; these signals **do not prove current employment**. The smaller employer-sourced group records official publication links, but those assertions can become outdated. Both datasets record structural features and provenance, **not copied biographies**.
 
 Use `gh-aura references` or `gh-aura references --company Microsoft` to browse source-linked examples without making API requests. The writer uses documented presentation patterns — clear specialization, verifiable contribution and readable featured work — rather than imitating someone's credentials. Setting `editorial.targetCompany` means a company you want to apply to, **not an employer you claim to work for**.
 
 `brief` combines evidence of your own work with these references and writing preferences. `brief --prompt` prepares original instructions for any editor or AI; GH Aura never invokes a model or sends it your token. `check` catches some repetition, placeholders and claims needing review, but does not certify truth or originality. Neither research cohort measured interviews or hiring success.
 
-[Industry research and limitations](research/INDUSTRY_STUDY.md) · [Writing workflow](docs/AI_WORKFLOW.md)
+[200-account study](research/ORDINARY_STUDY.md) · [Industry research and limitations](research/INDUSTRY_STUDY.md) · [Writing workflow](docs/AI_WORKFLOW.md)
 
 ## Achievement tasks on request
 

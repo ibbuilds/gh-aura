@@ -1,7 +1,7 @@
 import { selectFeatured } from './engine.mjs';
 import { repoUrl } from './text.mjs';
 import { presentationPlan } from './editorial.mjs';
-import { PROFILE_REFERENCE, PROFESSIONAL_EXAMPLES } from './reference.mjs';
+import { ORDINARY_REFERENCE, PROFILE_REFERENCE, PROFESSIONAL_EXAMPLES } from './reference.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
 export function editorialBrief(snapshot, config) {
@@ -36,10 +36,10 @@ export function editorialBrief(snapshot, config) {
       maxWords: config.editorial?.maxWords ?? 220,
       voice: 'specific, restrained, evidence-backed; avoid generic hype and role inflation' },
     reference: {
-      id: PROFILE_REFERENCE.id, sampleSize: PROFILE_REFERENCE.sampleSize,
-      companyCount: PROFILE_REFERENCE.companyCount, observedAt: PROFILE_REFERENCE.observedAt,
-      affiliationEvidence: PROFILE_REFERENCE.criteria,
-      aggregate: PROFILE_REFERENCE.observations,
+      id: ORDINARY_REFERENCE.id, sampleSize: ORDINARY_REFERENCE.sampleSize,
+      companyCount: ORDINARY_REFERENCE.companyCount, observedAt: ORDINARY_REFERENCE.observedAt,
+      affiliationEvidence: ORDINARY_REFERENCE.criteria,
+      aggregate: ORDINARY_REFERENCE.observations,
       employerSourced: {
         sampleSize: PROFILE_REFERENCE.employerSourced.sampleSize,
         companyCount: PROFILE_REFERENCE.employerSourced.companyCount,
@@ -52,8 +52,8 @@ export function editorialBrief(snapshot, config) {
         .slice(0, 4).map((person) => ({
           profile: person.profileUrl, employerSource: person.companySource, company: person.company,
         })),
-      sources: [PROFILE_REFERENCE.source, PROFILE_REFERENCE.employerSourced.source],
-      limitations: PROFILE_REFERENCE.limitations,
+      sources: [ORDINARY_REFERENCE.source, PROFILE_REFERENCE.employerSourced.source],
+      limitations: ORDINARY_REFERENCE.limitations,
       designDecision: 'Select readable, specific work evidence, not another professional’s identity, employers, seniority or phrasing. No hiring-outcome effect was measured.',
     },
     existingReadme: { content: clip(current, 1200, 'existing README'), truncated: current.length > 1200,

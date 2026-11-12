@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.0 — 2026-11-12
+
+- Added short aliases `activity`, `badges`, `readme`, and `pins`, retaining original commands and read-only/review-only boundaries.
+- Replaced the primary editorial reference with a dated 200-person ordinary-visibility professional profile study across 35 company orgs; the historical 100-person sample and separate 16 employer-sourced examples remain documented. No biographies are copied or fetched at runtime.
+
 ## 1.6.0 — 2026-11-11
 
 - Added `story list/set/remove` for command-driven, local-only project contribution narratives with `--dry-run`, validation and no API cost.

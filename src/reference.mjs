@@ -39,6 +39,75 @@ export const PROFESSIONAL_EXAMPLES = Object.freeze(examples.map(([login,company,
     notes: 'Employment assertion may be historical; source is not payroll verification.',
   })));
 
+/** Primary structural reference; 100-person legacy and employer-source cohorts remain separately documented. */
+export const ORDINARY_REFERENCE = Object.freeze({
+  "id": "ordinary-visibility-company-engineers-200-2026-11-12",
+  "observedAt": "2026-11-12T05:56:50.023Z",
+  "sampleSize": 200,
+  "companyCount": 35,
+  "completeRunRequests": 145,
+  "criteria": "200 public company-org members with matching self-reported employer and engineering role; <=2000 visible followers; not certified employment or a representative engineering sample.",
+  "observations": {
+    "withBio": 200,
+    "withWebsite": 120,
+    "withPins": 157,
+    "medianPins": 4,
+    "rootReadmesObserved": 69,
+    "readmeWords": {
+      "median": 54
+    },
+    "readmesWithoutImages": 33,
+    "readmesWithStatCards": 7,
+    "readmesWithLinks": 57
+  },
+  "followerBands": {
+    "0-99": 133,
+    "100-499": 46,
+    "500-2000": 21
+  },
+  "companyCounts": {
+    "Shopify": 7,
+    "Netflix": 9,
+    "Datadog": 6,
+    "Uber": 11,
+    "Atlassian": 8,
+    "Salesforce": 5,
+    "Canonical": 9,
+    "Grafana": 15,
+    "DigitalOcean": 5,
+    "MongoDB": 7,
+    "Vercel": 9,
+    "Stripe": 4,
+    "Supabase": 5,
+    "NVIDIA": 6,
+    "JetBrains": 6,
+    "Databricks": 4,
+    "Postman": 11,
+    "Gitpod": 1,
+    "Gradle": 6,
+    "GitHub": 2,
+    "Google": 9,
+    "Docker": 4,
+    "Dropbox": 1,
+    "Microsoft": 7,
+    "Elastic": 4,
+    "Twilio": 2,
+    "Airbnb": 1,
+    "Netlify": 1,
+    "HashiCorp": 14,
+    "GitLab": 1,
+    "Amazon": 4,
+    "Sourcegraph": 1,
+    "Tailscale": 5,
+    "Mozilla": 5,
+    "Cloudflare": 5
+  },
+  "source": "https://github.com/ibbuilds/gh-aura/blob/main/research/ordinary-engineers-200.json",
+  "sourceBlob": "6bd0775f29d05b7c57515b147cd64bd80e046cc1",
+  "method": "https://github.com/ibbuilds/gh-aura/blob/main/research/ORDINARY_STUDY.md",
+  "limitations": "A purposive sample, not an employment-verification or hiring-outcome study. Public company-org memberships may include external collaborators; employer and role are self-listed and potentially stale. Followers <=2000 is an arbitrary visibility filter, not an engineering ranking. Only root HEAD:README.md was inspected. No biographies copied."
+});
+
 export const PROFILE_REFERENCE = Object.freeze({
   id: 'company-associated-engineering-profiles-2026-11-11',
   observedAt: '2026-11-11T22:32:00.683Z',
@@ -85,32 +154,33 @@ export function referenceReport(company = '') {
   if (typeof company !== 'string' || company.length > 100) throw new Error('Company filter must be short text.');
   const filter = company.trim().toLowerCase();
   const selected = PROFESSIONAL_EXAMPLES.filter((x) => !filter || x.company.toLowerCase().includes(filter));
-  const affiliated = Object.entries(PROFILE_REFERENCE.companyCounts)
+  const affiliated = Object.entries(ORDINARY_REFERENCE.companyCounts)
     .filter(([name]) => !filter || name.toLowerCase().includes(filter))
     .map(([companyName,count]) => ({ company: companyName, count, classification: 'dual public signal; employment unverified' }));
   return {
     title: 'GH Aura — professional profile references',
-    asOf: PROFILE_REFERENCE.observedAt,
-    cohort: { sampleSize: PROFILE_REFERENCE.sampleSize,
-      companyCount: PROFILE_REFERENCE.companyCount,
-      criteria: PROFILE_REFERENCE.criteria,
-      structure: PROFILE_REFERENCE.observations, affiliated },
+    asOf: ORDINARY_REFERENCE.observedAt,
+    cohort: { sampleSize: ORDINARY_REFERENCE.sampleSize,
+      companyCount: ORDINARY_REFERENCE.companyCount,
+      criteria: ORDINARY_REFERENCE.criteria,
+      structure: ORDINARY_REFERENCE.observations, affiliated,
+      followerBands: ORDINARY_REFERENCE.followerBands, source: ORDINARY_REFERENCE.source },
     employerSourced: {
       sampleSize: PROFILE_REFERENCE.employerSourced.sampleSize,
       criteria: PROFILE_REFERENCE.employerSourced.criteria,
       structure: PROFILE_REFERENCE.employerSourced.observations,
       examples: selected,
     },
-    methodology: PROFILE_REFERENCE.method,
-    limitations: PROFILE_REFERENCE.limitations,
+    methodology: ORDINARY_REFERENCE.method,
+    limitations: ORDINARY_REFERENCE.limitations,
   };
 }
 
 export function renderReferenceReport(data) {
   const lines = [
     '# GH Aura — professional profile references', '',
-    '100 structurally examined company-associated engineering accounts from 21 organizations.',
-    '16 additional employer-sourced engineering author profiles. Neither cohort predicts hiring.',
+    String(data.cohort.sampleSize) + ' ordinary-visibility company-associated engineering accounts from ' + data.cohort.companyCount + ' organizations.',
+    String(data.employerSourced.sampleSize) + ' additional employer-sourced author profiles. Neither cohort predicts hiring.',
     '',
     '## Employer-sourced profile examples', '',
   ];

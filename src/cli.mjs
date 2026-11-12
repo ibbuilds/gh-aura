@@ -11,6 +11,38 @@ export async function main(argv = process.argv.slice(2)) {
   let [command = 'help', ...tokens] = argv;
   if (['--help', '-h', 'help'].includes(command)) { process.stdout.write(HELP); return; }
   if (['--version', '-V', 'version'].includes(command)) { process.stdout.write(version() + '\n'); return; }
+  // Friendly aliases preserve the existing explicit commands.
+  // No alias changes files or starts GitHub activity by itself.
+  if (command === 'activity') {
+    const first = tokens[0];
+    if (/^\d{4}$/.test(first || '')) {
+      tokens = ['--year', first, ...tokens.slice(1)];
+    } else if (/^\d{4}\.\.\d{4}$/.test(first || '')) {
+      const [from, to] = first.split('..');
+      tokens = ['--from', from, '--to', to, ...tokens.slice(1)];
+    }
+    command = 'contributions';
+  } else if (command === 'badges') {
+    const first = tokens[0];
+    if (first === 'free' || first === 'all' || first === 'attainable') {
+      tokens = ['--scope', first === 'all' ? 'all' : first, '--plan', ...tokens.slice(1)];
+    } else if (first && !first.startsWith('-')) {
+      tokens = ['--badge', first, '--plan', ...tokens.slice(1)];
+    } else if (!first) {
+      tokens = ['--scope', 'free', '--plan'];
+    }
+    command = 'achievements';
+  } else if (command === 'readme') {
+    const first = tokens[0];
+    if (['minimal', 'regular', 'flashy'].includes(first)) {
+      tokens = ['--style', first, ...tokens.slice(1)];
+    } else if (/^\d{1,3}$/.test(first || '') && Number(first) <= 100) {
+      tokens = ['--visual', first, ...tokens.slice(1)];
+    }
+    command = 'profile';
+  } else if (command === 'pins') {
+    command = 'showcase';
+  }
   if (command === 'plan') command = 'audit';
   const spec = SPECS[command];
   if (!spec) throw new Error('Unknown command: ' + command + '. Run gh-aura --help.');
