@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.1 — 2026-11-12
+
+- Verify synthetic calendar author-email ownership against the authenticated account's ID-based noreply address or GitHub's verified email API before any remote write. Denied/missing email proof and unknown account creation dates fail closed.
+- Synchronize release and security documentation, separate genuine portfolio evidence from optional synthetic sandbox activity, and track external readiness gates.
+- Add regression tests for author-email spoofing, email-read permissions and incomplete account metadata. Guard cleanup of three already-merged branches with fixed SHA checks after a successful CI gate.
+
+
 ## 1.8.0 — 2026-11-12
 
 - Added `badges auto` / `badge-run` plan/apply workflow: opt-in, fingerprint-bound private owned sandbox with bounded PR merges and a QA issue, excluding third-party-dependent and paid achievements. GitHub alone controls badges.
