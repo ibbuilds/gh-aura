@@ -44,7 +44,7 @@ export function editorialBrief(snapshot, config) {
       format:agentSpec.format,direction:agentSpec.direction,
       goal:agentSpec.goal,maxWords:agentSpec.maxWords,
       sections:agentSpec.sections,maxProjects:agentSpec.maxProjects,
-      sourceIds:agentSpec.sourceIds,
+      links:agentSpec.links,sourceIds:agentSpec.sourceIds,
       note:'Editable composition intent, not a README template; source IDs are reading references only.'
     },
     sourceSuggestions,
