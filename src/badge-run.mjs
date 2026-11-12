@@ -268,40 +268,79 @@ async function applyBadgeRun(doc,opts={}) {
       // A close inside five minutes is an event candidate, not a confirmed badge.
     }
   }
+  const batchMode=doc.format===BATCH_PLAN_FORMAT&&doc.strategy==='git-batch';
+  let preparedHeads=new Map();
+  if(batchMode&&doc.pulls) {
+    // Preflight all target paths before making any branch changes.
+    // Previously merged exercises remain untouched on the default branch.
+    const pending=[];
+    for(let i=0;i<doc.pulls;i++){
+      const index=doc.start+i+1;
+      const id=String(index).padStart(4,'0');
+      const filepath='docs/gh-aura/exercise-'+id+'.md';
+      const encoded=filepath.split('/').map(encodeURIComponent).join('/');
+      const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
+      if(committed){results.skippedAlreadyMerged.push(index);continue;}
+      pending.push({index,text:exerciseText(doc,index)});
+    }
+    if(pending.length){
+      const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
+      if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
+        throw Error('Cannot verify the default branch before Git batch staging.');
+      const stage=await stageBadgeBranches({
+        baseSha:baseRef.object.sha,branch,repo:doc.repo,token,
+        entries:pending,gitRunner:opts.gitRunner,testRemote:opts.testRemote,
+        reservePush:async count=>{
+          if(!verifiedOwner)throw Error('Atomic push requires verified ownership.');
+          const elapsed=Date.now()-lastWriteAt;
+          if(lastWriteAt>0&&elapsed<gap)await pause(gap-elapsed);
+          // Account for each new branch conservatively, despite one Git push.
+          // GitHub may charge branch creation differently from API requests.
+          latestLocalBudget=await reserve(verifiedOwner,count);
+          contentWrites+=count;
+          lastWriteAt=Date.now();
+        },
+      });
+      preparedHeads=stage.shaByIndex;
+      results.gitPushes=stage.gitPushes;
+      results.stagedBranches=stage.prepared;
+    }
+  }
   let lastMergedBaseSha=null;
   for(let i=0;i<doc.pulls;i++){
     const index=doc.start+i+1;
     const id=String(index).padStart(4,'0');
-    const filepath='docs/gh-aura/exercise-'+id+'.md';
-    const encoded=filepath.split('/').map(encodeURIComponent).join('/');
-    // The default branch document is the idempotent proof of a completed merge.
-    const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
-    if(committed){
-      results.skippedAlreadyMerged.push(index);
-      // A previous process may have merged these PRs. Re-read the base before
-      // any subsequent branch creation; never assume a stale head.
-      lastMergedBaseSha=null;
-      continue;
-    }
     const head='gh-aura/badge-'+id;
-    const prior=await call(base+'/git/ref/heads/'+head);
-    if(prior)throw Error('Review branch '+head+' already exists without a merged document. Inspect GitHub; no overwrite.');
-    let baseSha=lastMergedBaseSha;
-    if(!baseSha){
-      const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
-      if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
-        throw Error('Could not verify latest default branch revision.');
-      baseSha=baseRef.object.sha;
+    let exactHead;
+    if(batchMode){
+      // Already-completed entries were checked during the batch preflight.
+      if(!preparedHeads.has(index))continue;
+      exactHead=preparedHeads.get(index);
+    }else{
+      const filepath='docs/gh-aura/exercise-'+id+'.md';
+      const encoded=filepath.split('/').map(encodeURIComponent).join('/');
+      const committed=await call(base+'/contents/'+encoded+'?ref='+encodeURIComponent(branch));
+      if(committed){
+        results.skippedAlreadyMerged.push(index);
+        lastMergedBaseSha=null;
+        continue;
+      }
+      const prior=await call(base+'/git/ref/heads/'+head);
+      if(prior)throw Error('Review branch '+head+' already exists without a merged document. Inspect GitHub; no overwrite.');
+      let baseSha=lastMergedBaseSha;
+      if(!baseSha){
+        const baseRef=await call(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'));
+        if(!/^[a-f0-9]{40}$/i.test(baseRef?.object?.sha||''))
+          throw Error('Could not verify latest default branch revision.');
+        baseSha=baseRef.object.sha;
+      }
+      await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseSha});
+      const written=await call(base+'/contents/'+encoded,'PUT',{
+        message:'docs(sandbox): add generated exercise '+id,
+        branch:head,content:Buffer.from(exerciseText(doc,index)).toString('base64'),
+      });
+      exactHead=written?.commit?.sha;
     }
-    // The prior successful squash merge returns the exact new base SHA.
-    // Reusing it eliminates one default-branch GET for every later PR in
-    // this batch, without force updates or guessing a commit.
-    await call(base+'/git/refs','POST',{ref:'refs/heads/'+head,sha:baseSha});
-    const written=await call(base+'/contents/'+encoded,'PUT',{
-      message:'docs(sandbox): add generated exercise '+id,
-      branch:head,content:Buffer.from(exerciseText(doc,index)).toString('base64'),
-    });
-    const exactHead=written?.commit?.sha;
     if(!/^[a-f0-9]{40}$/i.test(exactHead||''))
       throw Error('Cannot verify the exact generated commit SHA. No PR was opened; inspect the branch.');
     const pr=await call(base+'/pulls','POST',{
@@ -311,6 +350,8 @@ async function applyBadgeRun(doc,opts={}) {
     });
     if(!Number.isInteger(pr?.number)||!pr?.html_url)
       throw Error('PR creation outcome unknown; inspect GitHub before retrying.');
+    if(batchMode&&!pr?.head?.sha)
+      throw Error('GitHub did not return a verified PR head SHA for the atomic batch. No merge attempted.');
     if(pr?.head?.sha&&pr.head.sha!==exactHead)
       throw Error('The PR head differs from the reviewed generated commit. No merge attempted.');
     // GitHub's YOLO criterion is "merged without a review": check actual
