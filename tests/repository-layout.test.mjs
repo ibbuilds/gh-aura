@@ -39,3 +39,13 @@ test('packaged surface is restricted to the runtime and essential documentation'
   assert.deepEqual(Object.keys(manifest.bin), ['gh-aura']);
   assert.deepEqual(Object.keys(manifest.dependencies || {}), []);
 });
+
+test('published version and product plan remain in sync', () => {
+  const manifest = JSON.parse(readFileSync(file('package.json'), 'utf8'));
+  const plan = readFileSync(file('docs/PRODUCT_PLAN.md'), 'utf8');
+  const release = readFileSync(file('docs/RELEASE_NOTES.md'), 'utf8');
+  const changelog = readFileSync(file('CHANGELOG.md'), 'utf8');
+  assert.ok(plan.includes('**Current release:** v' + manifest.version), 'stale product plan release');
+  assert.ok(release.startsWith('# GH Aura v' + manifest.version), 'stale GitHub release notes');
+  assert.ok(changelog.includes('## ' + manifest.version + ' —'), 'missing changelog release');
+});
