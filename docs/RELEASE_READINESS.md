@@ -1,6 +1,6 @@
 # GH Aura — release readiness and external validation
 
-**Status: v1.9.0, 2026-11-12.** This is an operator checklist, not a declaration of completed production validation. GitHub CI checks syntax, unit tests, package tests, six platform combinations and live **read-only** integration; it does not create or delete private GitHub repositories.
+**Status: v1.10.0, 2026-11-12.** This is an operator checklist, not a declaration of completed production validation. GitHub CI checks syntax, unit tests, package tests, six platform combinations and live **read-only** integration; it does not create or delete private GitHub repositories.
 
 ## 1. Repository governance — account administrator required
 
@@ -20,8 +20,8 @@ Use **a dedicated disposable GitHub test account with its own restricted token**
 1. Verify `gh-aura activity plan` makes no network requests. Produce a small plan dated within the disposable account's lifetime, with `--density 1`, and inspect its fingerprint before applying.
 2. Apply to one **new** private workspace with the account's ID-based noreply email. Confirm the planned commits, the `GH-AURA-PRIVATE-WORKSPACE-V1` README marker and one push. **Do not infer graph attribution from successful pushes.**
 3. Verify wrong fingerprints, unrelated owners, unverified author emails, unavailable email permissions and existing repositories refuse writes. If a push errors after creation, manually inspect its state before any retry; never force-push.
-4. In that **same private workspace**, plan `gh-aura badges auto --pulls 1 --output badges.json`, apply the reviewed fingerprint and inspect the single generated PR merge and optional issue close.
-5. Apply a second non-overlapping `activity` date plan to the **same** workspace. Verify fast-forward ancestry, retained badge files and one additional push; reject repeated paths and changed remote revisions. Reapply the badge plan: completed exercises should not be duplicated. Confirm public and unmarked repositories refuse modification.
+4. In that **same private workspace**, plan `gh-aura badges auto --tier base --pulls 1 --output badges.json`, apply the reviewed fingerprint and inspect the single generated PR merge and optional issue close. Run `badges auto status` (read-only); it must report an observed event rather than an automatically awarded achievement.
+5. Exercise a separate `--tier bronze` badge batch with correct `--start`, validate request budgets, rerun safety, bounded issue history and collision handling. Compare observed events to manually visible profile achievements after GitHub processing; no guaranteed award. Apply a second non-overlapping `activity` date plan to the **same** workspace. Verify fast-forward ancestry, retained badge files and one additional push; reject repeated paths and changed remote revisions. Reapply the badge plan: completed exercises should not be duplicated. Confirm public and unmarked repositories refuse modification.
 6. **Only after reviewing all results**, remove disposable repositories manually using the test account. Do not publish sensitive account data or private URLs.
 
 Current tests in `tests/calendar.test.mjs` and `tests/badge-run.test.mjs` use a local Git bare repository and simulated GitHub API endpoints. Until real tests are performed with explicit account authorization, remote write results remain **unverified**.

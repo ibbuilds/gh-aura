@@ -30,7 +30,7 @@ All four commands are read-only. The original `contributions`, `achievements`, `
 
 ## Private achievement workflow (optional)
 
-Plan account-owned sandbox actions offline with `gh-aura badges auto --repo USER/aura-achievements --output badges.json`; after inspecting the plan, `badges auto apply --review badges.json --confirm FINGERPRINT` can create a private repo and run bounded PR/issue exercises. GH Aura reports attempted operations, **not guaranteed badges**, and never interacts with third-party repositories automatically. [Details](docs/BADGE_RUN.md).
+GH Aura maps **19 achievement/highlight entries** into active, historical, disabled, internal and program categories. Three active badge event types are candidates for a single owned private workspace: Pull Shark, YOLO and Quickdraw. Plan a bounded tier batch offline with `gh-aura badges auto --tier bronze --output badges.json`, approve it via `badges auto apply --review badges.json --confirm FINGERPRINT`, then inspect observed events with `gh-aura badges auto status`. **No automatic award is guaranteed.** [Full catalog](docs/ACHIEVEMENTS.md) · [Runner guide](docs/BADGE_RUN.md).
 
 **Activity** also plans dated, explicitly synthetic practice with `gh-aura activity plan 2022 --density 70 --output plan.json`. After approving its fingerprint, `activity apply` creates or safely reuses the same owned private workspace as `badges auto`. GitHub alone decides what appears in your contribution graph. [Activity guide](docs/CALENDAR.md).
 

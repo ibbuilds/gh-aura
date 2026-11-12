@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.10.0 — 2026-11-12
+
+- Added a source-ranked, versioned 19-entry GitHub achievement/highlight matrix: seven active, two historical, two disabled, three internal and five profile/program entries. Only Pull Shark, YOLO and Quickdraw have private-solo event candidates.
+- Added explicit `badges auto --tier base|bronze|silver|gold` planning targets (reported 2/16/128/1024 Pull Shark milestones), with independent, at-most-16-PR approved batches and bounded start indices.
+- Upgraded new SHA-256 review files to v2, binding the catalog version, complete attempts/exclusions and operational options while preserving verified legacy v1 plans.
+- Added `badges auto status`, a strictly read-only paginated observation of merged own GH Aura PRs and closed QA issues in the marked private workspace, clearly not an award or account-wide eligibility confirmation.
+- Strengthened Quickdraw replay checks beyond the first page, refusing incomplete issue histories instead of generating potentially duplicated issues.
+- Added catalog, tier, plan-integrity and private status regression tests; no new repository or account mutations in CI.
+
+
 ## 1.9.0 — 2026-11-12
 
 - Unified observed activity and synthetic private date planning under `gh-aura activity` (`activity plan` / `activity apply`); legacy `calendar` remains an alias.

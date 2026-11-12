@@ -2,9 +2,14 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync, writeFileSync } from 'node:fs';
 import { requestJSON, getJSON, decodeReadme, tokenFor, validateLogin } from './github.mjs';
 import { workspaceRepo, managedWorkspaceReadme, WORKSPACE_README } from './workspace.mjs';
+import { ACHIEVEMENT_MATRIX, PRIVATE_AUTOMATABLE, PULL_SHARK_TIERS,
+  MATRIX_VERSION, achievementMatrixSummary } from './achievement-matrix.mjs';
 
 const MARKER='GH-AURA-PRIVATE-BADGE-SANDBOX-V1';
 const MAX_PULLS=16;
+const MAX_EXERCISE_INDEX=1024;
+const PLAN_FORMAT='gh-aura-private-badges-v2';
+const LEGACY_PLAN_FORMAT='gh-aura-private-badges-v1';
 const maxFile=65536;
 const DOCS=[
   ['Testing contracts','Define expected inputs, edge cases, error outcomes and validation checks. A runnable test is stronger evidence than a title or badge.'],
@@ -27,8 +32,14 @@ function int(value,label,min,max){
   return n;
 }
 function planPayload(doc){
-  return {format:doc.format,repo:doc.repo,private:doc.private,
+  const base={format:doc.format,repo:doc.repo,private:doc.private,
     pulls:doc.pulls,start:doc.start,quickdraw:doc.quickdraw,role:doc.role};
+  if(doc.format===LEGACY_PLAN_FORMAT)return base;
+  return {...base,tier:doc.tier??null,targetThreshold:doc.targetThreshold??null,
+    catalogVersion:doc.catalogVersion,attempts:doc.attempts,excluded:doc.excluded,
+    note:doc.note,verification:doc.verification,
+    estimatedRequestUpperBound:doc.estimatedRequestUpperBound,
+    nextStart:doc.nextStart,remainingToTier:doc.remainingToTier};
 }
 export function badgeDigest(doc) {
   return createHash('sha256').update(JSON.stringify(planPayload(doc))).digest('hex');
@@ -39,27 +50,43 @@ export function badgeDigest(doc) {
  */
 export function planBadgeRun(options={}) {
   const repo=validRepo(workspaceRepo(options.repo));
-  const pulls=int(options.pulls??2,'--pulls',0,MAX_PULLS);
-  const start=int(options.start??0,'--start',0,1024);
-  const quickdraw=options.quickdraw!==false;
+  const start=int(options.start??0,'--start',0,MAX_EXERCISE_INDEX-1);
+  const tier=options.tier||null;
+  if(tier && !Object.hasOwn(PULL_SHARK_TIERS,tier))
+    throw Error('--tier must be base, bronze, silver or gold.');
+  const targetThreshold=tier?PULL_SHARK_TIERS[tier]:null;
+  if(tier && start>=targetThreshold)
+    throw Error('--start has reached the selected tier threshold. Select a higher tier or a lower start.');
+  const suggested=targetThreshold===null?2:Math.min(MAX_PULLS,targetThreshold-start);
+  const pulls=int(options.pulls??suggested,'--pulls',0,MAX_PULLS);
+  if(start+pulls>MAX_EXERCISE_INDEX || (tier && start+pulls>targetThreshold))
+    throw Error('Planned PR exercise indices exceed the selected tier or 1024 limit.');
+  const quickdraw=options.quickdraw!==false && !(tier && start>0);
   const role=String(options.role||'general engineering').trim();
-  if(!role||role.length>100||/[\x00-\x1f]/.test(role))throw Error('--role must be 1-100 printable characters.');
-  if(!pulls&&!quickdraw)throw Error('Select at least one real API action: --pulls > 0 and/or --quickdraw.');
+  if(!role||role.length>100||/[\\x00-\\x1f]/.test(role))
+    throw Error('--role must be 1-100 printable characters.');
+  if(!pulls&&!quickdraw)
+    throw Error('Select at least one GitHub event: --pulls > 0 and/or Quickdraw.');
+  const available=new Map(PRIVATE_AUTOMATABLE.map(x=>[x.id,x]));
+  const attempts=[
+    ...(pulls?[{badge:'pull-shark',action:'Open and merge '+pulls+' labeled exercise PR(s)',event:'merged-own-pr'}]:[]),
+    ...(pulls?[{badge:'yolo',action:'Merge an owned exercise PR without formal review where allowed',event:'unreviewed-merge'}]:[]),
+    ...(quickdraw?[{badge:'quickdraw',action:'Open and promptly close a labeled private QA issue',event:'quick-issue-close'}]:[]),
+  ].map(x=>({...x,name:available.get(x.badge).name,
+    awardStatus:'planned-unverified',ruleConfidence:available.get(x.badge).criteriaConfidence,
+    source:available.get(x.badge).sourceUrls[0]}));
+  const excluded=ACHIEVEMENT_MATRIX.filter(x=>!x.automatable).map(x=>({
+    badge:x.id,name:x.name,category:x.category,reason:x.reason,route:x.route,
+  }));
   const doc={
-    format:'gh-aura-private-badges-v1',repo,private:true,pulls,start,quickdraw,role,
-    attempts:[
-      ...(pulls?[{badge:'pull-shark',action:'Propose and merge '+pulls+' generated private repository PR(s)',source:'community-reported'}]:[]),
-      ...(pulls?[{badge:'yolo',action:'Merge a private pull request without a formal review where the repository permits it',source:'community-reported'}]:[]),
-      ...(quickdraw?[{badge:'quickdraw',action:'Open and promptly close one private sandbox QA issue',source:'community-reported'}]:[]),
-    ],
-    excluded:[
-      {badge:'pair-extraordinaire',reason:'Genuine collaboration requires a second consenting author.'},
-      {badge:'galaxy-brain',reason:'Accepted answers are controlled by discussion rules and may require another participant.'},
-      {badge:'starstruck',reason:'Independent stars cannot be supplied by the account itself.'},
-      {badge:'arctic-code-vault',reason:'Historical, not newly obtainable.'},
-      {badge:'public-sponsor',reason:'A paid sponsorship is excluded from the free private-repo workflow.'},
-    ],
-    note:'Best-effort sandbox actions, NOT guaranteed GitHub Achievements. Private event eligibility and account settings can prevent an award. Generated exercises are not evidence of historical professional work.',
+    format:PLAN_FORMAT,catalogVersion:MATRIX_VERSION,repo,private:true,
+    pulls,start,quickdraw,role,tier,targetThreshold,
+    attempts,excluded,
+    note:'Only PR/issue events are attempted in one marked private workspace. GitHub decides if an award/tier is granted. No third-party activity.',
+    verification:'Check the authenticated account on GitHub manually; completed API operations are not earned badges.',
+    estimatedRequestUpperBound:20+pulls*12,
+    nextStart:start+pulls,
+    remainingToTier:targetThreshold===null?null:targetThreshold-start-pulls,
   };
   doc.fingerprint=badgeDigest(doc);
   return doc;
@@ -67,14 +94,23 @@ export function planBadgeRun(options={}) {
 export function loadBadgePlan(path) {
   if(typeof path!=='string'||!path.trim())throw Error('Supply --review FILE.');
   const stat=statSync(path);
-  if(!stat.isFile()||stat.size>maxFile)throw Error('Badge review must be a regular JSON file under 64 KiB.');
-  let p;try{p=JSON.parse(readFileSync(path,'utf8'));}catch{throw Error('Invalid badge plan JSON.');}
-  if(p?.format!=='gh-aura-private-badges-v1'||p.private!==true||
+  if(!stat.isFile()||stat.size>maxFile)
+    throw Error('Badge review must be a regular JSON file under 64 KiB.');
+  let p;
+  try{p=JSON.parse(readFileSync(path,'utf8'));}
+  catch{throw Error('Invalid badge plan JSON.');}
+  if(![PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(p?.format)||p.private!==true||
     !/^[a-f0-9]{64}$/.test(p.fingerprint||'')||badgeDigest(p)!==p.fingerprint)
     throw Error('Badge plan fingerprint mismatch or unsupported format.');
-  // Enforce current limits, not arbitrary values copied from a tampered JSON.
-  const canonical=planBadgeRun(p);
-  if(badgeDigest(canonical)!==p.fingerprint)throw Error('Badge plan does not match current verified options.');
+  const canonical=planBadgeRun({...p,tier:p.format===LEGACY_PLAN_FORMAT?null:p.tier});
+  if(p.format===LEGACY_PLAN_FORMAT){
+    const previous={...canonical,format:LEGACY_PLAN_FORMAT};
+    if(badgeDigest(previous)!==p.fingerprint)
+      throw Error('Legacy plan does not match current validated action limits.');
+    return {...previous,fingerprint:p.fingerprint};
+  }
+  if(badgeDigest(canonical)!==p.fingerprint)
+    throw Error('Badge plan does not match current verified options or catalog. Re-plan before applying.');
   return canonical;
 }
 export function writeBadgePlan(options={}) {
@@ -98,7 +134,9 @@ const sandboxReadme=WORKSPACE_README;
 async function applyBadgeRun(doc,opts={}) {
   const token=tokenFor(opts);
   if(!token)throw Error('GH_TOKEN/GITHUB_TOKEN with repository creation and private Contents/Pull requests/Issues permissions is required.');
-  if(doc.private!==true||doc.format!=='gh-aura-private-badges-v1')throw Error('Invalid private sandbox plan.');
+  if(doc.private!==true||![PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(doc.format)||
+    badgeDigest(doc)!==doc.fingerprint)
+    throw Error('Invalid or altered private sandbox plan.');
   if(typeof opts.confirm!=='string'||opts.confirm!==doc.fingerprint||
     !/^[a-f0-9]{64}$/.test(opts.confirm))throw Error('Badge plan confirmation mismatch. Review the plan before applying.');
   const maxCalls=20+doc.pulls*12;
@@ -156,10 +194,22 @@ async function applyBadgeRun(doc,opts={}) {
   const eventIndex=String(doc.start+1).padStart(4,'0');
   if(doc.quickdraw){
     const issueMarker='[GH-AURA-QA-'+eventIndex+']';
-    // Avoid duplicating a closed "quickdraw" exercise on review replay.
-    const oldIssues=await call(base+'/issues?state=all&per_page=100');
-    const exists=Array.isArray(oldIssues)&&oldIssues.some(x=>
-      x.title?.includes(issueMarker)&&!x.pull_request);
+    // GitHub's issues endpoint also returns PRs; scan bounded pages until the
+    // exact unique marker is seen or exhaustion is proven. Never assume a
+    // single first page proves absence on a long-lived workspace.
+    let exists=false,exhausted=false;
+    for(let page=1;page<=12;page++){
+      const suffix=page===1?'':'&page='+page;
+      const listed=await call(base+'/issues?state=all&per_page=100'+suffix);
+      if(!Array.isArray(listed))
+        throw Error('Cannot verify existing QA issues. No new issue created.');
+      if(listed.some(x=>x.title?.includes(issueMarker)&&!x.pull_request)){
+        exists=true;break;
+      }
+      if(listed.length<100){exhausted=true;break;}
+    }
+    if(!exists&&!exhausted)
+      throw Error('QA issue history exceeds the bounded scan. Inspect GitHub before retrying.');
     if(!exists){
       const issue=await call(base+'/issues','POST',{
         title:issueMarker+' Validate private sandbox setup',
@@ -211,9 +261,88 @@ async function applyBadgeRun(doc,opts={}) {
   results.verify='https://github.com/'+owner+'?tab=achievements';
   return results;
 }
+/**
+ * Read-only, bounded verification of operations in the same marked workspace.
+ * PR/issue observations are never interpreted as a GitHub-awarded achievement.
+ */
+export async function inspectBadgeWorkspace(opts={}) {
+  const repo=validRepo(workspaceRepo(opts.repo));
+  const token=tokenFor(opts);
+  if(!token)throw Error('A GH_TOKEN/GITHUB_TOKEN with read permission to the private workspace is required.');
+  const auth={...opts,publicRead:false,cache:undefined};
+  const who=await getJSON('/user',auth);
+  const owner=validateLogin(who?.login);
+  const [givenOwner,name]=repo.split('/');
+  if(givenOwner.toLowerCase()!==owner.toLowerCase())
+    throw Error('Read-only badge status supports only the authenticated user\'s owned workspace.');
+  const base='/repos/'+encodeURIComponent(owner)+'/'+encodeURIComponent(name);
+  const repository=await getJSON(base,auth);
+  if(repository?.private!==true||repository?.archived===true||repository?.fork===true||
+    repository?.full_name?.toLowerCase()!==repo.toLowerCase()||
+    typeof repository?.default_branch!=='string')
+    throw Error('Workspace is missing, non-private, archived, forked or not owned.');
+  const branch=repository.default_branch;
+  const readme=await getJSON(base+'/contents/README.md?ref='+encodeURIComponent(branch),auth);
+  if(!readme||!managedWorkspaceReadme(decodeReadme(readme)))
+    throw Error('Workspace marker missing; no unrelated repository may be inspected.');
+  let calls=3;
+  const merged=[],issues=[];
+  let pullsComplete=false,issuesComplete=false;
+  for(let page=1;page<=12;page++){
+    const batch=await getJSON(base+'/pulls?state=closed&per_page=100&page='+page,auth);
+    calls++;
+    if(!Array.isArray(batch))throw Error('Cannot verify private pull requests.');
+    for(const pr of batch){
+      if(pr.merged_at&&pr.user?.login?.toLowerCase()===owner.toLowerCase()&&
+        /^gh-aura\/badge-\d{4}$/.test(pr.head?.ref||'')&&pr.base?.ref===branch){
+        merged.push({number:pr.number,url:pr.html_url,mergedAt:pr.merged_at});
+      }
+    }
+    if(batch.length<100){pullsComplete=true;break;}
+  }
+  for(let page=1;page<=12;page++){
+    const batch=await getJSON(base+'/issues?state=all&per_page=100&page='+page,auth);
+    calls++;
+    if(!Array.isArray(batch))throw Error('Cannot verify private QA issues.');
+    for(const issue of batch){
+      if(!issue.pull_request&&issue.state==='closed'&&
+        issue.user?.login?.toLowerCase()===owner.toLowerCase()&&
+        /^\[GH-AURA-QA-\d{4}\]/.test(issue.title||'')){
+        issues.push({number:issue.number,url:issue.html_url,
+          createdAt:issue.created_at,closedAt:issue.closed_at});
+      }
+    }
+    if(batch.length<100){issuesComplete=true;break;}
+  }
+  const thresholds=PULL_SHARK_TIERS;
+  const observedTierCandidate=pullsComplete
+    ?Object.entries(thresholds).filter(([,n])=>merged.length>=n).at(-1)?.[0]||null
+    :null;
+  return {
+    repository:'https://github.com/'+repo,private:true,readOnly:true,
+    status:'observed-workspace-events-awards-unverified',
+    observed:{
+      mergedOwnedExercisePullRequests:merged.length,
+      closedOwnedExerciseIssues:issues.length,
+      pullsComplete,issuesComplete,
+      pullSharkLocalTierCandidate:observedTierCandidate,
+      caveat:'Counts are only observed events in this private workspace, not total qualifying account events or awarded badges.',
+    },
+    events:{mergedPullRequests:merged,closedQAIssues:issues},
+    requests:calls,
+    verify:'https://github.com/'+owner+'?tab=achievements',
+    note:'Check GitHub profile achievements manually after processing. No official award-grant API is used.',
+  };
+}
+
 export async function runBadgeAutomation(command,opts={}) {
   if(command==='plan')return writeBadgePlan({...opts,quickdraw:!opts['no-quickdraw']});
-  if(command!=='apply')throw Error('Use badge-run plan or badge-run apply.');
+  if(command==='status'){
+    const observed=await inspectBadgeWorkspace(opts);
+    process.stdout.write(JSON.stringify(observed,null,2)+'\n');
+    return observed;
+  }
+  if(command!=='apply')throw Error('Use badges auto plan, apply or status.');
   const plan=loadBadgePlan(opts.review);
   const result=await applyBadgeRun(plan,{confirm:opts.confirm});
   process.stdout.write(JSON.stringify(result,null,2)+'\n');

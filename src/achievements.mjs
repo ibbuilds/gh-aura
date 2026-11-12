@@ -1,11 +1,12 @@
 import { getJSON } from './github.mjs';
 import { md } from './text.mjs';
+import { ACHIEVEMENT_MATRIX, matrixEntry, achievementMatrixSummary, MATRIX_REVIEWED_AT } from './achievement-matrix.mjs';
 
 const OFFICIAL = 'https://docs.github.com/en/account-and-profile/reference/profile-reference';
 const INTRO = 'https://github.blog/news-insights/product-news/introducing-achievements-recognizing-the-many-stages-of-a-developers-coding-journey/';
 const PRIVATE = 'https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements';
 const COMMUNITY = 'https://github.com/christianalberto/github-profile-achievements';
-const REVIEW_DATE = '2026-11-11';
+const REVIEW_DATE = MATRIX_REVIEWED_AT;
 
 /**
  * This is a read-only capability catalog, NOT an award engine. Award thresholds
@@ -119,17 +120,42 @@ const other = [
     source: OFFICIAL, privateEligibility: 'not-applicable',
   },
   {
-    id: 'proxima-staff', name: 'GitHub staff-only internal achievements', kind: 'internal',
-    how: 'Community-reported internal GitHub staff initiatives; not ordinary user Achievements.',
-    nextAction: 'Not publicly attainable; excluded from achievement goals.',
+    id: 'proxima-pioneer', name: 'Proxima Pioneer', kind: 'internal',
+    how: 'GitHub-internal Proxima development initiative milestone.',
+    nextAction: 'Staff-only, not available from a personal repository.',
+    source: COMMUNITY, privateEligibility: 'not-applicable',
+  },
+  {
+    id: 'proxima-staffshipper', name: 'Proxima Staffshipper', kind: 'internal',
+    how: 'GitHub-internal Proxima shipping milestone.',
+    nextAction: 'Staff-only, not available from a personal repository.',
+    source: COMMUNITY, privateEligibility: 'not-applicable',
+  },
+  {
+    id: 'proxima-staffuser', name: 'Proxima Staffuser', kind: 'internal',
+    how: 'GitHub-internal Proxima onboarding milestone.',
+    nextAction: 'Staff-only, not available from a personal repository.',
     source: COMMUNITY, privateEligibility: 'not-applicable',
   },
 ];
 
 export const ACHIEVEMENTS = Object.freeze([...collectible.map((x) => ({
   ...x, kind: 'achievement',
-})), ...other].map((x) => Object.freeze({
-  ...x, category: x.kind === 'achievement' ? x.requiresPayment ? 'paid' : 'activity' : x.kind,
+})), ...other].map((x) => {
+  const matrix = matrixEntry(x.id);
+  if (!matrix) throw Error('Unmapped GitHub achievement: ' + x.id);
+  return Object.freeze({
+  ...x,
+  matrixCategory: matrix.category,
+  matrixRoute: matrix.route,
+  matrixReason: matrix.reason,
+  matrixReviewedAt: matrix.sourceReviewedAt,
+  matrixVersion: achievementMatrixSummary().version,
+  sourceUrls: matrix.sourceUrls,
+  criteriaConfidence: matrix.criteriaConfidence,
+  automatableInPrivateWorkspace: matrix.automatable,
+  tierThresholds: matrix.tierThresholds,
+  category: x.kind === 'achievement' ? x.requiresPayment ? 'paid' : 'activity' : x.kind,
   sourceReviewedAt: REVIEW_DATE, sourcesReviewedAt: REVIEW_DATE,
   ruleConfidence: x.source === COMMUNITY ? 'community-reported-not-guaranteed'
     : 'official-program-description-award-not-guaranteed',
@@ -144,9 +170,13 @@ export const ACHIEVEMENTS = Object.freeze([...collectible.map((x) => ({
   requiresPayment: Boolean(x.requiresPayment),
   verification: 'Open your GitHub profile and check whether GitHub displays the achievement. A configured earned ID is only self-reported.',
   caveat: 'GitHub controls awards, tiers and private-event eligibility. Nothing in this tool guarantees a badge.',
-})));
+  });
+}));
 
-export const ACHIEVEMENT_SOURCES = Object.freeze([OFFICIAL, INTRO, PRIVATE, COMMUNITY]);
+export const ACHIEVEMENT_SOURCES = Object.freeze([OFFICIAL, INTRO, PRIVATE, COMMUNITY,
+  'https://conroy1988.github.io/Achievements/official-achievement-fragments/',
+  'https://github.com/SharmARohitt/Github-Achievement']);
+const LEGACY_IDS = new Set(['proxima-staff']);
 const IDS = new Set(ACHIEVEMENTS.map((x) => x.id));
 
 const statusFor = (item, settings) => settings.earned.includes(item.id) ? 'self-reported-earned'
@@ -169,7 +199,7 @@ function scopeEligible(item, scope, privateOnly, allowPaid) {
 export async function achievementReport(snapshot, config, options = {}) {
   const settings = config.achievements;
   for (const id of [...settings.earned, ...settings.excluded]) {
-    if (!IDS.has(id)) throw new Error('Unknown achievement id: ' + id + '. Run gh-aura achievements to list valid IDs.');
+    if (!IDS.has(id) && !LEGACY_IDS.has(id)) throw new Error('Unknown achievement id: ' + id + '. Run gh-aura achievements to list valid IDs.');
   }
   const scope = options.scope || 'all';
   if (!['all', 'free', 'attainable'].includes(scope)) throw new Error('--scope must be all, free, or attainable.');
@@ -200,6 +230,7 @@ export async function achievementReport(snapshot, config, options = {}) {
   return {
     user: snapshot?.username || null,
     status: 'opportunities-only; awards unverified',
+    matrix: achievementMatrixSummary(),
     scope, privateOnly: Boolean(options.private), readOnly: true,
     catalog: entries,
     plan: options.plan ? entries.map((x) => ({
@@ -207,7 +238,13 @@ export async function achievementReport(snapshot, config, options = {}) {
       eligibleForPlanning: x.kind === 'achievement' && x.automation !== 'not-supported' && !x.requiresPayment,
       action: x.nextAction, privateEligibility: x.privateEligibility,
       whoControlsResult: x.whoControlsResult || 'external-program-or-github',
-      canGrantAutomatically: false, source: x.source,
+      canGrantAutomatically: false,
+      canAttemptInOnePrivateWorkspace: x.automatableInPrivateWorkspace,
+      executionRoute: x.matrixRoute,
+      exclusionReason: x.automatableInPrivateWorkspace ? null : x.matrixReason,
+      ruleConfidence: x.criteriaConfidence,
+      tierThresholds: x.tierThresholds,
+      source: x.source,
     })) : undefined,
     guidance: options.private
       ? 'Private repository events may contribute after the user opts in, but per-achievement private eligibility is not guaranteed. This command neither changes visibility nor performs badge actions.'
@@ -224,6 +261,7 @@ export function renderAchievementsMarkdown(report) {
     lines.push('## ' + md(item.name) + ' (' + item.id + ')', '',
       '**Kind:** ' + item.kind + ' · **Status:** ' + item.status, '',
       '**Private events:** ' + item.privateEligibility + ' · **Automation:** ' + item.automation, '',
+      '**Workspace route:** ' + item.matrixRoute + ' · **Criteria confidence:** ' + item.criteriaConfidence, '',
       md(item.how), '', '**Next:** ' + md(item.nextAction), '',
       'Source: ' + item.source + ' (reviewed ' + item.sourceReviewedAt + ')', '');
     if (item.evidence) lines.push('Observed evidence: ' + md(JSON.stringify(item.evidence)), '');

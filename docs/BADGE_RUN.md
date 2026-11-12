@@ -1,58 +1,72 @@
-# Badges: approved private workflow exercises
+# Badges — approved private achievement exercises
 
-GH Aura can run **bounded GitHub workflow exercises** in the same GH Aura-marked private workspace as `activity apply`, without third-party collaboration. GitHub controls what constitutes an Achievement, and may ignore self-generated or private events; **this is a best-effort action runner, not an achievement-granting API**.
+GH Aura can perform the **three controllable categories of GitHub events** that may qualify for achievements in one authenticated account's marked private workspace: merged self-owned PRs (Pull Shark), unreviewed self-merge (YOLO) and promptly closed QA issues (Quickdraw).
 
-## One-command plan, then explicit apply
+These are **attempts, not awards**. GitHub's private-event eligibility and anti-abuse/rule logic are not completely documented. The tool never modifies unrelated existing repos, bypasses branch protection, creates accounts, requests stars, fakes coauthors or makes payments.
 
-\`\`\`bash
-gh-aura badges auto --repo YOUR_USERNAME/aura-achievements --pulls 2 --output badges.json
+## Setup once
 
-# Read badges.json, including its 64-character fingerprint.
-gh-aura badges auto apply --review badges.json --confirm FINGERPRINT
-\`\`\`
+```bash
+gh-aura init YOUR_USERNAME
+# Default private workspace: YOUR_USERNAME/gh-aura-workspace
+# Optional persistent override:
+gh-aura config set workspace.repo YOUR_USERNAME/my-gh-aura-private
+```
 
-The first command is **completely offline**. The second command requires a free GitHub access token with repository creation, Contents write, Pull requests write, and Issues write for a private repository. GitHub's permission settings may also require approval by your account/organization.
+Setup does not create the repo. The first explicitly confirmed apply creates it if absent; subsequent operations reuse the **same** private, owned, GH Aura-marked workspace, including one already created by `activity apply`. Public, forked, archived, unmarked or other-user repos are refused.
 
-A successful first run may create a **marked private GH Aura workspace owned by the authenticated user**, or reuse an already marked one created by `activity apply`. Configure `workspace.repo` once or use the `USERNAME/gh-aura-workspace` default after `init`. It attempts:
+## Choose the Pull Shark target and review
 
-- **Pull Shark:** generate 2 individually reviewable exercise documents, open two PRs and merge them with GitHub's standard merge endpoint if repository rules permit.
-- **YOLO:** those PR merges may be unreviewed in this user-owned sandbox; whether GitHub awards the badge depends on its current conditions.
-- **Quickdraw:** open and promptly close one clearly labeled private sandbox QA issue.
+```bash
+# Base (reported 2 PRs), plus YOLO and Quickdraw exercise attempts
+gh-aura badges auto --tier base --output base.json
 
-You can change \`--pulls\` from **0 to 16 per execution**, \`--start\` from 0 to 1024 (for later batches), and disable the QA issue with \`--no-quickdraw\`. Each batch is independently fingerprinted and requires a new explicit apply.
+# Or plan up to 16 PR exercises in one batch (reported Bronze milestone)
+gh-aura badges auto --tier bronze --output bronze.json
 
-\`\`\`bash
-# Example: repeat with a new, nonoverlapping sequence after checking GitHub
-gh-aura badges auto --repo YOUR_USERNAME/aura-achievements --pulls 16 --start 2 --no-quickdraw --output second.json
-gh-aura badges auto apply --review second.json --confirm SECOND_FINGERPRINT
-\`\`\`
+# Later non-overlapping Silver progression, 16 PRs at a time
+gh-aura badges auto --tier silver --start 16 --output silver-16.json
 
-The runner checks already merged exercise paths and skips completed ones, while preserving dated activity files in the same repository. It refuses a public, archived, forked or unmarked existing repo; it never attempts to use another account or organization's project. Branch conflicts stop the run without a force push. It does not create fake coauthors, star networks, discussions with fabricated answers, or external pull requests.
+# Gold reported threshold 1,024; batches are still limited to 16
+gh-aura badges auto --tier gold --start 128 --output gold-128.json
+```
 
-## Explicit exclusions
+`--tier base|bronze|silver|gold` chooses a **community/product-observed threshold** of 2/16/128/1,024. `--start` is the **index of exercises in the selected workspace**, not a count of earned badges or all of your account's merged PRs.
 
-| Achievement | Why not fully controlled by one account in a private repo |
-| --- | --- |
-| Pair Extraordinaire | Crediting a real consenting co-author requires another person |
-| Galaxy Brain | Accepted Q&A answers depend on Discussions roles/rules and may need another participant |
-| Starstruck | Independent people must voluntarily star a public project |
-| Arctic Code Vault | Historical event, not newly obtainable |
-| Public Sponsor | Involves payment; excluded from the free workflow |
-| Pro, Campus Expert, security programs | Require plan/program eligibility or external review |
+Plans are fully offline and include the exact repo, the requested operations, all sixteen excluded categories, bounds, estimated maximum request count, next batch position, and a SHA-256 fingerprint. Default/no-tier behavior remains compatible with earlier `--pulls 0..16 --start 0..1023` plans. A batch can only include exercises 1..1,024; there is no unattended loop.
 
-Other experimental or retired badges are not advertised as automatable.
+## Apply only after approval
 
-## Status and privacy
+```bash
+# Read the full JSON and fingerprint first:
+gh-aura badges auto apply --review bronze.json --confirm THE_64_CHARACTER_FINGERPRINT
+```
 
-- \`badge-run apply\` returns the issue/PR URLs and reports **requested operations**, not an awarded achievement. Verify your account at \`https://github.com/YOUR_USERNAME?tab=achievements\` after GitHub processes the events.
-- [Private contribution and achievement visibility](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements) is a manual GitHub account setting, not something this tool changes.
-- GitHub can withhold or retract awards, apply additional heuristics, or change rules. Private/self-owned actions are **not guaranteed** to count.
-- Generated files explicitly identify themselves as automation exercises, not historical professional work.
-- **Never run this against a production repository:** only an owned repo marked by this tool. The user explicitly approves each batch before any write.
-- No paid API, hosted backend, background process, third-party automation or mandatory AI provider.
+Apply requires a token able to create a private repo if needed, then use Contents, Pull requests and Issues permissions in that workspace. Every batch:
+- Verifies authenticated ownership, private visibility, non-fork status and the GH Aura workspace README marker (existing unmarked repos are never adopted).
+- Checks the default-branch exercise file before opening a PR; already merged exercises are skipped on replay.
+- Opens bounded synthetic exercise PRs and merges them with GitHub's standard endpoint **only if repository rules permit**.
+- Searches issue-history pages before opening Quickdraw's labeled issue; uncertain or truncated history fails closed instead of blindly creating duplicates.
+- Never force-pushes, edits other repos, deletes a repo or retries uncertain writes automatically.
 
-## Request budget and failure handling
+For higher tiers, check the status and manually plan the **next** batch with the correct `--start`. Existing exercise paths are skipped, and merged PRs do not imply that GitHub has attributed an achievement.
 
-Actions use the official GitHub REST API with a hard request limit of \`20 + 12 * pulls\` per run; no automatic retries of uncertain writes. An interrupted run may leave a private repo, a branch, an open PR or an issue. Check those objects before retrying with the same plan. GH Aura does not delete the repo automatically or weaken branch protection. The target repository is always private, and token credentials never appear in saved plans or logs. Do **not** automatically delete a shared workspace after a badge attempt; it may contain activity history, and GitHub has not documented guaranteed retention of awards after deletion.
+## Read observed events, not alleged badges
 
-[Achievement registry](ACHIEVEMENTS.md) · [Security boundary](../SECURITY.md)
+```bash
+gh-aura badges auto status
+# Or explicitly:
+gh-aura badges auto status --repo YOUR_USERNAME/my-gh-aura-private
+```
+
+This **read-only** command checks the exact marked private workspace, paging through up to twelve pages each of closed PRs and issues. It counts merges made by the authenticated owner from GH Aura's exercise branches and closed labeled QA issues. If a result list is truncated, it marks completeness false. A local Pull Shark tier candidate is only a workspace event count; **it is not confirmation of a badge**. Check `https://github.com/YOUR_USERNAME?tab=achievements` with the appropriate visibility settings.
+
+## Deliberate exclusions and limits
+
+- Pair Extraordinaire needs a real consenting collaborator; Galaxy Brain needs somebody else to accept authentic answers; Starstruck needs independent public stars.
+- Public Sponsor requires payment; disabled/historical/staff/program badges are not obtainable through this sandbox.
+- Deleting a shared workspace risks losing history and potentially contribution evidence; **no automatic deletion is available**.
+- GitHub can withhold, defer or change award eligibility without notifying this tool.
+- Remote write operations are mocked in CI and must be verified against an **authorized disposable test account** before claiming production success.
+
+[Full mapped catalog](ACHIEVEMENTS.md) · [Privacy and security](../SECURITY.md) · [Validation checklist](RELEASE_READINESS.md)

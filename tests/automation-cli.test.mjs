@@ -27,7 +27,7 @@ test('GH Aura activity plan and badge-run plan are entirely offline CLI entrypoi
     r=run(['badges','auto','--repo','example/aura-private','--pulls','2','--output',badgeFile],root);
     assert.equal(r.status,0,r.stderr);
     const badges=JSON.parse(readFileSync(badgeFile,'utf8'));
-    assert.equal(badges.format,'gh-aura-private-badges-v1');
+    assert.equal(badges.format,'gh-aura-private-badges-v2');
     assert.equal(badges.private,true);
     assert.equal(badges.pulls,2);
     const init=run(['init','example'],root);
@@ -57,4 +57,16 @@ test('GH Aura activity refuses an unapproved push before reading a plan',()=>{
     assert.notEqual(y.status,0);
     assert.match(y.stderr,/requires --review/);
   }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+test('private badge status does not attempt a network read without a token',()=>{
+  const dir=mkdtempSync(join(tmpdir(),'aura-read-only-status-'));
+  try{
+    const status=run(['badges','auto','status','--repo','example/gh-aura-workspace'],dir);
+    assert.notEqual(status.status,0);
+    assert.match(status.stderr,/GH_TOKEN|GITHUB_TOKEN/);
+    const invalid=run(['badges','auto','status','--pulls','2'],dir);
+    assert.notEqual(invalid.status,0);
+    assert.match(invalid.stderr,/accepts only optional --repo/);
+  }finally{rmSync(dir,{recursive:true,force:true});}
 });
