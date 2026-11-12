@@ -26,18 +26,18 @@ gh-aura readme minimal --output draft.md
 | `gh-aura readme 80` | Choose visual intensity (0–100) |
 | `gh-aura pins --goal "backend engineer"` | Recommend relevant public projects to feature |
 
-These are shortcuts for the existing `contributions`, `achievements`, `profile` and `showcase` commands. **They do not write to GitHub.**
+These shortcuts read or draft locally. Only explicit `activity apply`, `badges auto apply`, `apply` and `work apply` may write remotely after reviewing an exact plan or diff.
 
-## Calendar Studio (optional synthetic practice)
+## Activity: read, plan, and apply private practice
 
 ```bash
-gh-aura calendar plan 2022 --density 75 --output plan.json
-gh-aura calendar plan --from 2020 --to 2025 --density 75 --growth 65 --weekends 20 --output years.json
+gh-aura activity plan 2022 --density 75 --output plan.json
+gh-aura activity plan --from 2020 --to 2025 --density 75 --growth 65 --weekends 20 --output years.json
 # After reviewing the exact plan and SHA-256 fingerprint:
-gh-aura calendar apply --review plan.json --repo OWNER/NEW_PRIVATE_REPO --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT
+gh-aura activity apply --review plan.json --repo OWNER/NEW_PRIVATE_REPO --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT
 ```
 
-The planner is completely offline. Apply creates a new owned **private repository** and pushes the generated practice history, without touching existing repos. Dates and event credit are ultimately GitHub-controlled, and generated commits are explicitly synthetic. See [Calendar Studio](CALENDAR.md).
+Planning is completely offline. The first approved apply creates a marked, owned private workspace; later activity and badge runs reuse it, with collision checks and non-force fast-forward pushes. The legacy `calendar` alias remains supported. Generated practice is synthetic and GitHub controls what counts. See [Activity workspace](CALENDAR.md).
 
 ## Activity and achievements
 
@@ -64,7 +64,7 @@ gh-aura badges auto --repo OWNER/aura-achievements --pulls 2 --output badges.jso
 gh-aura badges auto apply --review badges.json --confirm FINGERPRINT
 ```
 
-Creates or resumes an **owned, private GH Aura sandbox** only. The tool can open/merge generated exercise PRs and close a clearly labeled QA issue. Public/third-party repos are never touched; other achievements require real collaborators, independent stars, accepted answers, payments or program eligibility. GitHub decides whether private/self-generated events count. See [private badge automation](BADGE_RUN.md).
+Creates or resumes the **same marked private GH Aura workspace** used by `activity apply` (configure once with `gh-aura config set workspace.repo OWNER/REPO` or default to `USER/gh-aura-workspace` after `gh-aura init USER`). The tool can open/merge generated exercise PRs and close a clearly labeled QA issue. Public/third-party repos are never touched; other achievements require real collaborators, independent stars, accepted answers, payments or program eligibility. GitHub decides whether private/self-generated events count. See [private badge automation](BADGE_RUN.md).
 
 ## Audit, project relevance and evidence
 
@@ -125,4 +125,4 @@ gh-aura work apply --review work.json
 
 Public reads use a five-minute cache and ETag revalidation. `--fresh` bypasses the cache; `--budget N` limits HTTP requests; `--stats` reports usage. Draft creation does not need to fetch the existing profile README; preview/publishing always read live state. [Free operation](FREE.md) · [Performance notes](PERFORMANCE.md).
 
-**GitHub controls contribution counting, achievements and pins.** No command manufactures historical activity, guarantees hiring, or silently writes to a repository.
+**GitHub controls contribution counting, achievements and pins.** Generated dated practice is synthetic, not proof of past professional work. No command guarantees a badge or silently writes to a repository.
