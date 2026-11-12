@@ -46,9 +46,9 @@ const tools=[
   ['gh_aura_profile_refine','Revise an existing profile intent without losing unrelated preferences.',
     properties({spec:{type:'object'},changes:{type:'object'}},['spec','changes'])],
   ['gh_aura_profile_context','Read verified public GitHub profile/repository context for evidence-aware writing.',
-    properties({...optUser,...art})],
+    properties({...optUser,...art,includeExternal:{type:'boolean'}})],
   ['gh_aura_profile_prompt','Produce an original writing brief usable by any AI model. No AI service is called.',
-    properties({...optUser,...art})],
+    properties({...optUser,...art,includeExternal:{type:'boolean'}})],
   ['gh_aura_profile_validate','Run local heuristic checks on a Markdown draft; not a factuality certificate.',
     properties({markdown:str('Proposed original Markdown',100000),spec:{type:'object'}},['markdown'])],
   ['gh_aura_profile_diff','Compare two Markdown drafts locally; produces no approval token.',
@@ -167,6 +167,7 @@ export async function runAgentTool(name,args={}){
   if(name==='gh_aura_profile_context'||name==='gh_aura_profile_prompt'){
     const tokens=['brief',actualUser(args.user),
       ...(args.direction?['--direction',args.direction]:[]),
+      ...(args.includeExternal?['--external']:[]),
       ...(name==='gh_aura_profile_prompt'?['--prompt']:['--json'])];
     return runCliJson(tokens,{text:name==='gh_aura_profile_prompt'});
   }

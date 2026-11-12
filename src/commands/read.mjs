@@ -72,7 +72,7 @@ export async function run(command, options) {
     }
     if (command === 'brief') {
       const { editorialBrief } = await import('../brief.mjs');
-      const brief = editorialBrief(snapshot, config);
+      const brief = editorialBrief(snapshot, config,{includeExternal:options.external===true});
       const value = options.prompt ? (await import('../editorial.mjs')).writingPrompt(brief) : brief;
       emit(value, options); return;
     }

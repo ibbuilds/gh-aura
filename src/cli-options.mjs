@@ -19,7 +19,7 @@ export const SPECS = {
   showcase: { usage: 'showcase [USER] [--goal TEXT] [--limit 6] [--inspect 3] [--deep 2]', flags: [...DATA, 'goal', 'limit', 'checks'], max: 1 },
   achievements: { usage: 'achievements [USER] [--scope all|free|attainable] [--plan] [--badge ID] [--private] [--prepare ID --repo OWNER/NAME]', flags: [...READ, 'format', 'output', 'force', 'scope', 'plan', 'badge', 'private', 'prepare', 'repo'], max: 1 },
   contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--local PATH --emails-file FILE] [--days] [--recover] [--plan]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'plan', 'local', 'emails-file', 'format', 'output', 'force', 'details'], max: 1 },
-  brief: { usage: 'brief [USER] [--prompt] [--direction barebones|minimal|technical|expressive] [--visual 0..100] [-o prompt.md]', flags: [...DATA, 'style', 'visual', 'direction', 'language', 'prompt', 'checks'], max: 1 },
+  brief: { usage: 'brief [USER] [--prompt] [--direction barebones|minimal|technical|expressive] [--external] [-o prompt.md]', flags: [...DATA, 'style', 'visual', 'direction', 'language', 'prompt', 'checks', 'external'], max: 1 },
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };

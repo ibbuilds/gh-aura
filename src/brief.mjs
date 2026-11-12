@@ -9,7 +9,7 @@ import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
-export function editorialBrief(snapshot, config) {
+export function editorialBrief(snapshot, config, options={}) {
   const omissions = [];
   const clip = (value, limit, label) => {
     const text = String(value || '');
@@ -18,7 +18,7 @@ export function editorialBrief(snapshot, config) {
   };
   const p = config.profile;
   const presentation = presentationPlan(p);
-  const agentSpec=makeProfileSpec({},config);
+  const agentSpec=makeProfileSpec({includeExternal:options.includeExternal===true},config);
   const sourceSuggestions=agentSpec.sourceIds.slice(0,4).map(id=>{
     const source=getProfileSource(id);
     return {id,url:source.url,trust:source.trust,
