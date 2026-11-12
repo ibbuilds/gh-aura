@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.13.0 (efficient and rate-bounded achievement workflow); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.14.0 (optional atomic Git batching for badges); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
