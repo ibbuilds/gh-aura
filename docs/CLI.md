@@ -106,6 +106,16 @@ This lists source-linked GitHub profiles from employer-controlled engineering au
 
 Target-company preferences may guide external writing only: `gh-aura config set editorial.targetCompany "Google"`. A desired employer is not a current employer claim.
 
+## Achievement capability planning
+
+```bash
+gh-aura achievements --plan --scope free
+gh-aura achievements --badge pull-shark --plan
+gh-aura achievements --scope free --private --plan --json
+```
+
+Each item now identifies its collectible/paid/program/historical class, source date, reported tiers, private-activity uncertainty, and which actions need GitHub or other people. `--plan` **never creates PRs, issues or payments**. Award status is never inferred from an API count. See [Achievement registry](ACHIEVEMENTS.md).
+
 ## Achievements
 
 `achievements` is an offline guide with no configured account; otherwise it adds bounded public PR/star evidence. No count guarantees eligibility or ownership. `achievements.earned` is explicitly self-reported; `achievements.excluded` controls omissions; `achievements.allowPaid` defaults false. Historical, program, paid and community-reported entries remain distinguished. The tool does not award badges or manufacture private-repository interactions.
