@@ -210,7 +210,7 @@ export function validateOptions(command, options) {
       throw Error('Use sources list, sources show ID or sources recommend [--query TEXT].');
     if(options.direction&&!['barebones','minimal','technical','expressive'].includes(options.direction))
       throw Error('Invalid source art direction.');
-    if(options.limit!==undefined&&(!/^\\d+$/.test(options.limit)||
+    if(options.limit!==undefined&&(!/^\d+$/.test(options.limit)||
         Number(options.limit)<1||Number(options.limit)>25))
       throw Error('--limit must be 1..25.');
   }
@@ -222,7 +222,7 @@ export function validateOptions(command, options) {
       ['direction','goal','language','max-words','max-projects','notes','external'].some(k=>options[k]!==undefined))
       throw Error('agent capabilities takes no profile design arguments.');
     for(const [name,min,max] of [['max-words',30,1000],['max-projects',0,6]]) {
-      if(options[name]!==undefined&&(!/^\\d+$/.test(options[name])||
+      if(options[name]!==undefined&&(!/^\d+$/.test(options[name])||
           Number(options[name])<min||Number(options[name])>max))
         throw Error('--'+name+' must be '+min+'..'+max+'.');
     }
