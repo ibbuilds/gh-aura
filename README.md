@@ -28,6 +28,10 @@ gh-aura pins --goal "backend"   # Project recommendations
 
 All four commands are read-only. The original `contributions`, `achievements`, `profile`, and `showcase` commands remain supported.
 
+## Private achievement workflow (optional)
+
+Plan account-owned sandbox actions offline with `gh-aura badges auto --repo USER/aura-achievements --output badges.json`; after inspecting the plan, `badges auto apply --review badges.json --confirm FINGERPRINT` can create a private repo and run bounded PR/issue exercises. GH Aura reports attempted operations, **not guaranteed badges**, and never interacts with third-party repositories automatically. [Details](docs/BADGE_RUN.md).
+
 ## Review before publishing
 
 ```bash

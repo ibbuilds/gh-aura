@@ -24,6 +24,11 @@ export async function main(argv = process.argv.slice(2)) {
     command = 'contributions';
   } else if (command === 'badges') {
     const first = tokens[0];
+    if (first === 'auto' || first === 'automate') {
+      command = 'badge-run';
+      tokens = tokens.slice(1);
+      if (tokens[0] !== 'plan' && tokens[0] !== 'apply') tokens = ['plan', ...tokens];
+    } else {
     if (first === 'free' || first === 'all' || first === 'attainable') {
       tokens = ['--scope', first === 'all' ? 'all' : first, '--plan', ...tokens.slice(1)];
     } else if (first && !first.startsWith('-')) {
@@ -32,6 +37,7 @@ export async function main(argv = process.argv.slice(2)) {
       tokens = ['--scope', 'free', '--plan'];
     }
     command = 'achievements';
+    }
   } else if (command === 'readme') {
     const first = tokens[0];
     if (['minimal', 'regular', 'flashy'].includes(first)) {
@@ -51,6 +57,10 @@ export async function main(argv = process.argv.slice(2)) {
     process.stdout.write('Usage: gh-aura ' + spec.usage + '\nOptions: ' + spec.flags.map((flag) => '--' + flag).join(', ') + '\n'); return;
   }
   validateOptions(command, options);
+  if (command === 'badge-run') {
+    await (await import('./badge-run.mjs')).runBadgeAutomation(options.positional[0],options);
+    return;
+  }
   if (command === 'calendar') {
     await (await import('./calendar-apply.mjs')).runCalendar(options.positional[0], options);
     return;

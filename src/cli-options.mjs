@@ -2,6 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
+  'badge-run': { usage: 'badge-run plan --repo OWNER/PRIVATE_REPO [--pulls 2] [--start 0] [--no-quickdraw] --output badges.json | badge-run apply --review badges.json --confirm FINGERPRINT', flags: ['repo','pulls','start','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'calendar plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | calendar apply --review plan.json --repo OWNER/NEW_PRIVATE_REPO --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
@@ -19,8 +20,8 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email']);
-const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start']);
+const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
   'One-time setup:',
@@ -28,6 +29,7 @@ export const HELP = [
   'Four primary actions:',
   '  gh-aura activity 2022       View actual contributions for a year',
   '  gh-aura badges free         Explore no-cost achievement opportunities',
+  '  gh-aura badges auto --repo USER/PRIVATE_SANDBOX --output badges.json',
   '  gh-aura readme minimal      Generate a profile README draft',
   '  gh-aura pins                Recommend projects to feature',
   '  gh-aura calendar plan 2022 --density 65 --output plan.json', '',
@@ -91,6 +93,27 @@ export function validateOptions(command, options) {
   if (command === 'achievements' && options.repo && !options.prepare) throw new Error('--repo requires --prepare BADGE_ID.');
 
 
+  if (command === 'badge-run') {
+    const action = options.positional[0];
+    const planKeys = ['repo','pulls','start','no-quickdraw','role','output','force'];
+    if (action === 'plan') {
+      if (!options.repo || options.review || options.confirm) {
+        throw Error('badge-run plan requires --repo OWNER/PRIVATE_REPO, optionally --pulls, --start and --output.');
+      }
+      for(const [key,min,max] of [['pulls',0,16],['start',0,1024]]) {
+        if(options[key]!==undefined&&(!/^\d+$/.test(options[key])||Number(options[key])<min||Number(options[key])>max)){
+          throw Error('--'+key+' must be an integer '+min+'..'+max+'.');
+        }
+      }
+    } else if (action === 'apply') {
+      if (!options.review || !/^[a-f0-9]{64}$/i.test(options.confirm||'') ||
+          planKeys.some(key=>options[key]!==undefined)) {
+        throw Error('badge-run apply requires --review FILE and --confirm FINGERPRINT only.');
+      }
+    } else {
+      throw Error('Use badge-run plan or badge-run apply.');
+    }
+  }
   if (command === 'calendar') {
     const [action, shorthand] = options.positional;
     const planning = ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force'];
