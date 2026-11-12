@@ -63,7 +63,8 @@ function mockAPI(options={}) {
       ]:[]);
     if(path===base+'/issues?state=all&per_page=100&page=1')return response(
       options.statusMixed?[{number:11,title:'[GH-AURA-QA-0001] Example',
-        created_at:'2026-11-12T01:00:00Z',closed_at:'2026-11-12T01:00:08Z',
+        created_at:'2026-11-12T01:00:00Z',
+        closed_at:options.slowQuickdraw?'2026-11-12T01:08:00Z':'2026-11-12T01:00:08Z',
         state:'closed',html_url:'https://github.com/'+repo+'/issues/11',
         user:{login:'example'}}]:[]);
     if(path===base+'/issues' && method==='POST'){
@@ -253,6 +254,7 @@ test('status reads only GH Aura-owned private workspace and distinguishes events
   assert.equal(status.status,'observed-workspace-events-awards-unverified');
   assert.equal(status.observed.mergedOwnedExercisePullRequests,1);
   assert.equal(status.observed.closedOwnedExerciseIssues,1);
+  assert.equal(status.observed.quickdrawTimingCandidates,1);
   assert.equal(status.observed.pullSharkLocalTierCandidate,null);
   assert.ok(status.verify.includes('?tab=achievements'));
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
@@ -363,4 +365,15 @@ test('next refuses incomplete, conflicting and gapped workspace evidence',()=>{
   assert.throws(()=>nextBadgePlanFromWorkspace(
     {...result,events:{mergedPullRequests:[{index:2}]}},withTwo,args),
     /Unverified exercise file|Gaps/);
+});
+
+test('status does not mistake a slow QA issue closure for Quickdraw eligibility',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared',statusMixed:true,
+    slowQuickdraw:true});
+  const report=await inspectBadgeWorkspace({repo,token:'test-only',fetch:api.fetch});
+  assert.equal(report.observed.closedOwnedExerciseIssues,1);
+  assert.equal(report.observed.quickdrawTimingCandidates,0);
+  assert.equal(report.events.closedQAIssues[0].elapsedSeconds,480);
+  assert.equal(report.events.closedQAIssues[0].quickdrawTimingCandidate,false);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
 });
