@@ -8,7 +8,7 @@ import { plain } from './text.mjs';
 export const PROFILE_SPEC_FORMAT='gh-aura-profile-spec-v1';
 const DIRECTION_NAMES=['barebones','minimal','technical','expressive'];
 const SECTION_NAMES=['about','projects','technologies','links','stats','extras'];
-const slug=/^[a-z\d_.-]+\/[a-z\d_.-]+$/i;
+const slug=/^[a-z\d_.-]+(?:\/[a-z\d_.-]+)?$/i;
 const safeText=(v,n,label)=>{
   if(typeof v!=='string'||v.length>n||plain(v)!==v)
     throw Error(label+' must be plain text under '+n+' characters.');
