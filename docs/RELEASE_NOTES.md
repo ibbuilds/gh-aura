@@ -1,47 +1,46 @@
-# GH Aura 1.4.0
+# GH Aura 1.5.0
 
-**Focus: make a GitHub portfolio easier to assess for a specific engineering role.**
+**A user-directed CLI for a credible, explainable GitHub portfolio.** No hosted service, mandatory AI, npm-registry subscription or runtime dependencies.
 
-The existing \`gh-aura audit\` command now includes an evidence-based *first-minute hiring-manager review*. It does **not** assign a person's value, predict interviews or call the profile “hireable” with a fabricated percentage.
+## Installation
 
-## Install
+Requires Node.js 22+. Download the `gh-aura-1.5.0.tgz` attachment from this GitHub Release, verify it with `SHA256SUMS.txt`, then run:
 
-Requires Node.js 22+. Download \`gh-aura-1.4.0.tgz\` from this GitHub Release, verify its \`SHA256SUMS.txt\`, then install:
-
-\`\`\`bash
-npm install --global ./gh-aura-1.4.0.tgz
+```bash
+npm install --global ./gh-aura-1.5.0.tgz
 gh-aura init YOUR_USERNAME
-\`\`\`
+```
 
-This is a GitHub Release, not an npm registry publication.
+The install package is released on GitHub, not the npm registry.
 
-## New: role-oriented audit
+## Delivered since v1.4.0
 
-\`\`\`bash
-gh-aura config set editorial.targetRole "Backend Engineer"
-gh-aura audit --inspect 3
+- **Real activity windows:** `contributions --from 2020 --to 2026 --days` reads calendar data in bounded, batched GraphQL windows. `--recover` provides manual attribution checks for actual historical work. No artificial green-square commits or timestamp rewriting.
+- **Achievements capability guide:** `achievements --plan --scope free` distinguishes reported collectible achievements, unavailable historical badges and paid/program conditions. `achievements --prepare BADGE --repo USER/PROJECT` drafts a plan for meaningful work, optionally referencing existing public issues; **does not create code, PRs, badges or third-party engagement**.
+- **Selected project evidence:** `audit --deep 2` or `showcase --deep 2` inspects public Git tree path structure for test, CI, manifest, architecture and example files without executing untrusted code. These are file-presence signals, not test/quality certification.
+- **Personal contributions and portfolio presentation:** `profile.projectStories` can hold user-confirmed project descriptions, work, trade-offs, outcomes and proof links; minimal/regular/flashy output respects selected repos and section switches.
+- **Two deterministic README languages:** `profile --language es` emits Spanish headings and section labels, while preserving user claims and code references verbatim. English is default; no translation API.
+- **Private, local job-description mapping:** `audit --job vacancy.txt --deep 2` parses a local UTF-8 file (at most 64 KiB), checks recognized terms against selected public repo metadata and user-supplied project stories, and reports what is observable or unknown. The entire posting stays on your machine, is not copied into reports and is not sent to GitHub or an AI service.
 
-# Or target a different role for one read-only command
-gh-aura audit --goal "Platform Engineer" --inspect 3 --json
-\`\`\`
+## Recommended workflow
 
-The review examines:
-- Explicit target role **as an aspiration**, never a current title claim.
-- Public bio, a readable profile README, short selected projects and contact links.
-- Conservative keyword alignment of public repository metadata to the target role.
-- Optional README presence/setup/usage heading clues for a few projects.
-- Missing and **unknown** project signals, including unverified code correctness, testing, CI and individual ownership.
+```bash
+gh-aura contributions --from 2020 --to 2026 --recover
+gh-aura achievements --plan --scope free
+gh-aura audit --goal "Backend Engineer" --job vacancy.txt --inspect 3 --deep 2
+gh-aura profile --language es --style minimal --output draft.md
+gh-aura check --file draft.md
+gh-aura preview --file draft.md --save review.json
+# Only if you approve the complete diff and have a scoped token:
+gh-aura apply --review review.json --pr
+```
 
-Every check explains its evidence, state and next action. **No code quality, experience level or hiring result is inferred from stars, repo size, contribution density or other vanity metrics.** Unavailable private work is not penalized as inactivity.
+### Security and honesty
 
-## Editorial/research context
+- No claim that text matches prove qualifications or improve interview probability.
+- No automatic achievement granting, fake PRs, synthetic stars or contribution farming.
+- Private work is not exposed automatically; private repository eligibility varies by GitHub event and badge.
+- Pins are recommended but still selected through GitHub's supported interface.
+- Only an explicit `apply` command can change the profile README or open a review PR. User review and revision checks remain mandatory.
 
-The separate industry-profile research remains a **presentation reference**, not a copywriting database or hiring success model. Its employer-affiliated cohort does not establish verified current employment. GH Aura continues to support \`minimal\`, \`regular\`, \`flashy\` and \`--visual 0..100\`.
-
-## Boundaries
-
-The audit is read-only, retains existing API request/response budgets and cache behavior and needs no paid service or AI model. Personal profile publication still requires separate preview and explicit approval. GH Aura cannot grant achievements, fabricate a contribution timeline, change GitHub profile pins through an unsupported API or guarantee employment.
-
-Read [the hiring-readiness methodology](https://github.com/ibbuilds/gh-aura/blob/main/docs/HIRING_READINESS.md).
-
-Release gate: cross-platform Node 22/24 tests, packed CLI smoke test, real **read-only** GitHub integration and a guarded GitHub Release with checksums.
+CI verifies unit/integration tests, packaging and real **read-only** public GitHub access across Node 22/24 on Linux/macOS/Windows. Remote publication operations are tested through isolated fixtures, never by changing a user's actual profile.
