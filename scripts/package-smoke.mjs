@@ -22,6 +22,7 @@ try {
   assert.ok(packed.files.every((file) => ['src', 'README.md', 'LICENSE',
     'CHANGELOG.md', 'SECURITY.md', 'package.json'].includes(file.path.split('/')[0])));
   assert.ok(packed.files.some((file) => file.path === 'src/reference.mjs'));
+  assert.ok(packed.files.some((file) => file.path === 'src/achievement-matrix.mjs'));
   const install = join(directory, 'install');
   run(['install', '--prefix', install, '--offline', '--ignore-scripts', '--no-audit', '--no-fund', resolve(directory, packed.filename)]);
   const cli = join(install, 'node_modules', 'gh-aura', 'src', 'cli.mjs');
@@ -32,7 +33,7 @@ try {
   assert.equal(catalog.status, 0, catalog.stderr); assert.ok(JSON.parse(catalog.stdout).catalog.length > 0);
   for (const [args, format] of [
     [['calendar','plan','2022','--density','0'],'gh-aura-synthetic-calendar-v1'],
-    [['badge-run','plan','--repo','example/aura-badges','--pulls','0'],'gh-aura-private-badges-v1'],
+    [['badge-run','plan','--repo','example/aura-badges','--pulls','0'],'gh-aura-private-badges-v2'],
   ]) {
     const command = spawnSync(process.execPath,[cli,...args], {
       encoding: 'utf8',cwd: directory,timeout: 10000,
