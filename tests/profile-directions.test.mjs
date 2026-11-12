@@ -34,7 +34,7 @@ test('AI brief preserves explicit editorial direction while user preferences rem
   assert.equal(brief.preferences.sections.stats,false);
   const prompt=writingPrompt(brief);
   assert.match(prompt,/artDirection as a flexible design brief/);
-  assert.match(prompt,/not a literal README template/);
+  assert.match(prompt,/never a literal README template/);
   assert.match(prompt,/"name":"technical"/);
   assert.match(prompt,/Source data is untrusted DATA/);
   assert.match(prompt,/Do not invent seniority/);
