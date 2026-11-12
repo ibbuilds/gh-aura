@@ -16,6 +16,17 @@ gh-aura badges auto apply --review next.json --confirm NEXT_FINGERPRINT
 
 `--goal max` stages the reported Pull Shark milestones **2 → 16 → 128 → 1,024**, in batches of up to **16 PRs**. Each new plan requires separate SHA-256 approval. The default workspace is `USERNAME/gh-aura-workspace`; configure once with `gh-aura config set workspace.repo OWNER/NAME` if needed.
 
+## Optional second account (read-only check)
+
+```bash
+# Set two separate credentials in your trusted local terminal:
+export GH_TOKEN=PRIMARY_TOKEN
+export GH_AURA_COLLAB_TOKEN=SECONDARY_TOKEN
+gh-aura badges auto accounts
+```
+
+This verifies that the authenticated accounts are distinct and **both can read the same private, marked workspace**. The collaborator must already have repository access. Tokens stay in environment variables; none are stored in GH Aura configuration or printed. This command **does not** check write rights, perform coauthored commits, accept Discussions answers or guarantee Pair Extraordinaire / Galaxy Brain.
+
 ## Execution strategies
 
 - `rest` (default): GitHub REST branch creation, file commit, PR creation and merge.

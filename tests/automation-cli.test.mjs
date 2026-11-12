@@ -143,3 +143,16 @@ test('atomic Git strategy is opt-in, SHA-bound and rejected on unreviewed apply'
     assert.match(status.stderr,/status accepts only/);
   }finally{rmSync(root,{recursive:true,force:true});}
 });
+
+test('optional second account is a read-only preflight and never requires tokens in CLI flags',()=>{
+  const dir=mkdtempSync(join(tmpdir(),'aura-account-pair-cli-'));
+  try{
+    const missing=run(['badges','auto','accounts','--repo','example/gh-aura-workspace'],dir);
+    assert.notEqual(missing.status,0);
+    assert.match(missing.stderr,/GH_AURA_COLLAB_TOKEN|GH_TOKEN/);
+    const invalid=run(['badges','auto','accounts','--repo','example/gh-aura-workspace',
+      '--pulls','2'],dir);
+    assert.notEqual(invalid.status,0);
+    assert.match(invalid.stderr,/accepts only optional --repo/);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});

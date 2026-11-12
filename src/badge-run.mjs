@@ -589,8 +589,14 @@ export async function runBadgeAutomation(command,opts={}) {
     process.stdout.write(JSON.stringify(observed,null,2)+'\n');
     return observed;
   }
+  if(command==='accounts'){
+    const {inspectBadgeAccounts}=await import('./badge-accounts.mjs');
+    const result=await inspectBadgeAccounts(opts);
+    process.stdout.write(JSON.stringify(result,null,2)+'\n');
+    return result;
+  }
   if(command==='next')return planNextBadgeRun(opts);
-  if(command!=='apply')throw Error('Use badges auto plan, next, apply or status.');
+  if(command!=='apply')throw Error('Use badges auto plan, next, apply, status or accounts.');
   const plan=loadBadgePlan(opts.review);
   const result=await applyBadgeRun(plan,{confirm:opts.confirm});
   process.stdout.write(JSON.stringify(result,null,2)+'\n');

@@ -24,6 +24,8 @@ try {
   assert.ok(packed.files.some((file) => file.path === 'src/reference.mjs'));
   assert.ok(packed.files.some((file) => file.path === 'src/achievement-matrix.mjs'));
   assert.ok(packed.files.some((file) => file.path === 'src/badge-write-budget.mjs'));
+  assert.ok(packed.files.some((file) => file.path === 'src/profile-directions.mjs'));
+  assert.ok(packed.files.some((file) => file.path === 'src/badge-accounts.mjs'));
   assert.ok(packed.files.some((file) => file.path === 'src/badge-bulk-git.mjs'));
   const install = join(directory, 'install');
   run(['install', '--prefix', install, '--offline', '--ignore-scripts', '--no-audit', '--no-fund', resolve(directory, packed.filename)]);
