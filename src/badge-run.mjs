@@ -352,6 +352,29 @@ export async function inspectBadgeWorkspace(opts={}) {
     }
     if(batch.length<100){issuesComplete=true;break;}
   }
+  // YOLO has no tier: inspect at most three authored/merged exercise PRs.
+  // An actual GitHub response must identify the owner as both author and
+  // merger and contain zero submitted reviews. This remains an event
+  // candidate, NOT proof that GitHub granted the YOLO achievement.
+  const yoloEvidence=[];
+  let yoloCandidate=null;
+  for(const candidate of merged.slice(0,3)){
+    const detail=await getJSON(base+'/pulls/'+candidate.number,auth);
+    calls++;
+    const reviews=await getJSON(base+'/pulls/'+candidate.number+'/reviews?per_page=100',auth);
+    calls++;
+    if(!detail||!Array.isArray(reviews))
+      throw Error('Incomplete private YOLO review evidence; cannot report a confirmed event candidate.');
+    const selfAuthored=detail.user?.login?.toLowerCase()===owner.toLowerCase();
+    const selfMerged=detail.merged_by?.login?.toLowerCase()===owner.toLowerCase();
+    const noReviews=reviews.length===0;
+    const qualifiesAsEvent=Boolean(detail.merged_at&&selfAuthored&&selfMerged&&
+      noReviews&&detail.base?.ref===branch);
+    const observation={number:candidate.number,reviewCount:reviews.length,
+      selfAuthored,selfMerged,qualifiesAsEvent};
+    yoloEvidence.push(observation);
+    if(qualifiesAsEvent){yoloCandidate=observation;break;}
+  }
   const thresholds=PULL_SHARK_TIERS;
   const observedTierCandidate=pullsComplete
     ?Object.entries(thresholds).filter(([,n])=>merged.length>=n).at(-1)?.[0]||null
@@ -364,11 +387,15 @@ export async function inspectBadgeWorkspace(opts={}) {
       mergedOwnedExercisePullRequests:merged.length,
       closedOwnedExerciseIssues:issues.length,
       quickdrawTimingCandidates:issues.filter(x=>x.quickdrawTimingCandidate).length,
+      yoloSelfMergeNoReviewCandidate:yoloCandidate?.number||null,
+      yoloInspectedMergedPRs:yoloEvidence.length,
+      yoloEvidenceComplete:Boolean(yoloCandidate||merged.length<=yoloEvidence.length),
       pullsComplete,issuesComplete,
       pullSharkLocalTierCandidate:observedTierCandidate,
       caveat:'Counts are only observed events in this private workspace, not total qualifying account events or awarded badges.',
     },
-    events:{mergedPullRequests:merged,closedQAIssues:issues},
+    events:{mergedPullRequests:merged,closedQAIssues:issues,
+      yoloReviewEvidence:yoloEvidence},
     requests:calls,
     verify:'https://github.com/'+owner+'?tab=achievements',
     note:'Check GitHub profile achievements manually after processing. No official award-grant API is used.',
