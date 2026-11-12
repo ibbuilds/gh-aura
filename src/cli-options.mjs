@@ -27,7 +27,7 @@ export const HELP = [
   '  gh-aura apply --review review.json', '',
   'Explore:', '  showcase       Recommend projects to pin',
   '  achievements   Explore badges and relevant public evidence',
-  '  work           Preview and open reviewed documentation PRs'
+  '  work           Preview and open reviewed documentation PRs',
   '  contributions  Inspect annual activity and visibility checks',
   '  brief --prompt Export grounded instructions for any writer',
   '  check          Check a draft locally before reviewing it',
