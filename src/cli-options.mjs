@@ -32,7 +32,7 @@ export const HELP = [
   '  gh-aura badges auto        Plan private workspace exercises',
   '  gh-aura readme minimal      Generate a profile README draft',
   '  gh-aura pins                Recommend projects to feature',
-  '  gh-aura activity plan 2022 --density 65 --output plan.json', ''
+  '  gh-aura activity plan 2022 --density 65 --output plan.json', '',
   'Review and publish a README:',
   '  gh-aura readme minimal --output draft.md',
   '  gh-aura preview --file draft.md --save review.json',
