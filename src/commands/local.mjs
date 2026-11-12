@@ -21,6 +21,11 @@ export async function run(command, options) {
     emit(options.format === 'json' ? data : renderReferenceReport(data), options);
     return;
   }
+  if (command === 'story') {
+    const { storyCommand } = await import('../story-cli.mjs');
+    emit(storyCommand(options.positional[0], options.positional[1], options));
+    return;
+  }
   if (!options.file) throw new Error('Specify a Markdown draft with --file.');
   if (statSync(options.file).size > 256 * 1024) throw new Error('Draft exceeds 256 KiB.');
   const draft = readFileSync(options.file, 'utf8');

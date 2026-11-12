@@ -23,7 +23,7 @@ export async function main(argv = process.argv.slice(2)) {
     await (await import('./work.mjs')).runWork(options.positional[0], options);
     return;
   }
-  const handler = ['init', 'config', 'check', 'references'].includes(command) ? './commands/local.mjs'
+  const handler = ['init', 'config', 'check', 'references', 'story'].includes(command) ? './commands/local.mjs'
     : ['preview', 'apply'].includes(command) ? './commands/publish.mjs' : './commands/read.mjs';
   await (await import(handler)).run(command, options);
 }

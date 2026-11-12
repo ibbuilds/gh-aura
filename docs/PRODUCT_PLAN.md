@@ -180,6 +180,10 @@ Allow users to exclude/force-include/reorder candidates, identify why a repo is 
 - **Remaining verification:** independent recruiter/engineer usability study, actual test/CI status evidence, more nuanced job-domain matching, and review of GitHub private attribution boundary cases.
 - Previously proposed nested commands are **concept sketches**. The actual shipped CLI uses concise flags such as `contributions --recover`, `achievements --plan` and `achievements --prepare`. Use `gh-aura COMMAND --help` for authoritative syntax.
 
+### Project narrative UX
+
+`story set/list/remove` manages user-supplied, source-linked descriptions of individual work entirely locally. The CLI never upgrades such claims to verified engineering achievements; `profile` and `audit --job` can reuse the configured stories. No AI/paid provider or GitHub write is involved until a separately approved profile review.
+
 ## Tracked implementation work
 
 - [#22 — A1: real historical contributions and private visibility](https://github.com/ibbuilds/gh-aura/issues/22)

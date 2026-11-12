@@ -75,6 +75,6 @@ export function configCommand(action, path, value, options = {}) {
     return 'Local configuration preview for ' + filename + '\n' +
       diffText(JSON.stringify(current, null, 2), JSON.stringify(updated, null, 2));
   }
-  writeFileSync(filename, JSON.stringify(updated, null, 2) + '\n', { flag: 'w' });
+  writeFileSync(filename, JSON.stringify(updated, null, 2) + '\n', { flag: 'w', mode: 0o600 });
   return 'Updated local config: ' + filename + ' (' + keys.join('.') + ')\n';
 }
