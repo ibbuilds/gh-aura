@@ -7,6 +7,6 @@ GH Aura uses a versioned, **offline** structural reference to inform profile pre
 
 Company membership and self-described roles are public affiliation signals, **not independent confirmation of employment**. The research did not measure interview outcomes.
 
-The initial contributor-to-popular-projects baseline (not an employment cohort) was removed from the current tree during cleanup. Its history remains available in earlier Git commits and releases, if needed for provenance.
+The initial contributor-to-popular-projects baseline (not an employment cohort) was removed from the current tree during cleanup. Its history remains available through older Git tags and commits; old downloadable releases are intentionally pruned.
 
 The developer-only collector scripts live in `scripts/research-*.mjs`. They must be run intentionally with a GitHub read token and bounded quotas; the installed CLI does not include them or run them in the background.

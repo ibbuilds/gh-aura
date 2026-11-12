@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,10 +9,20 @@ const file = (name) => resolve(root, name);
 
 test('the first-run docs stay short and reference actual maintained files', () => {
   const limits = {
-    'README.md': 6000,
-    'docs/CLI.md': 8500,
-    'docs/PRODUCT_PLAN.md': 6500,
-    'docs/ARCHITECTURE.md': 5000,
+    'README.md': 3000,
+    'CONTRIBUTING.md': 1000,
+    'CHANGELOG.md': 1200,
+    'SECURITY.md': 2700,
+    'docs/CLI.md': 4000,
+    'docs/ACTIVITY.md': 2500,
+    'docs/ACHIEVEMENTS.md': 2500,
+    'docs/BADGE_RUN.md': 2800,
+    'docs/PRODUCT_PLAN.md': 2700,
+    'docs/ARCHITECTURE.md': 2000,
+    'docs/RELEASE_READINESS.md': 2200,
+    'docs/RELEASE_NOTES.md': 1200,
+    'docs/WORK.md': 1300,
+    'docs/HUMAN_VALIDATION.md': 1400,
   };
   for (const [path, maxLength] of Object.entries(limits)) {
     const body = readFileSync(file(path), 'utf8');
@@ -48,4 +58,35 @@ test('published version and product plan remain in sync', () => {
   assert.ok(plan.includes('**Current release:** v' + manifest.version), 'stale product plan release');
   assert.ok(release.startsWith('# GH Aura v' + manifest.version), 'stale GitHub release notes');
   assert.ok(changelog.includes('## ' + manifest.version + ' —'), 'missing changelog release');
+});
+
+test('documentation is consolidated into ten short, linked product guides', () => {
+  const docs = readdirSync(file('docs')).filter((name) => name.endsWith('.md'));
+  assert.deepEqual(docs.sort(), [
+    'ACHIEVEMENTS.md', 'ACTIVITY.md', 'ARCHITECTURE.md',
+    'BADGE_RUN.md', 'CLI.md', 'HUMAN_VALIDATION.md',
+    'PRODUCT_PLAN.md', 'RELEASE_NOTES.md', 'RELEASE_READINESS.md',
+    'WORK.md',
+  ]);
+  const kept = ['README.md', 'SECURITY.md', 'CONTRIBUTING.md', 'CHANGELOG.md',
+    ...docs.map(name => 'docs/' + name), 'research/README.md'];
+  for (const path of kept) {
+    const body = readFileSync(file(path), 'utf8');
+    for (const match of body.matchAll(/\]\(([^)#]+)(?:#[^)]*)?\)/g)) {
+      const target = match[1];
+      if (/^(https?:|mailto:|#)/i.test(target)) continue;
+      assert.ok(existsSync(resolve(dirname(file(path)), decodeURI(target))),
+        path + ' links to a deleted file: ' + target);
+    }
+  }
+});
+
+test('release workflow retains only latest release objects without deleting tags', () => {
+  const script = readFileSync(file('.github/workflows/ci.yml'), 'utf8');
+  assert.match(script, /gh release create "\$TAG"/);
+  assert.match(script, /Keep only the current published GitHub Release/);
+  assert.match(script, /gh release delete "\$old" --yes/);
+  assert.match(script, /SHA256SUMS\.txt/);
+  assert.doesNotMatch(script, /--cleanup-tag/);
+  assert.doesNotMatch(script, /One-time, lease-guarded deletion of obsolete heads/);
 });
