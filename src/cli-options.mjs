@@ -2,6 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
+  calendar: { usage: 'calendar plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | calendar apply --review plan.json --repo OWNER/NEW_PRIVATE_REPO --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
@@ -18,7 +19,7 @@ export const SPECS = {
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof']);
+const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
@@ -28,7 +29,8 @@ export const HELP = [
   '  gh-aura activity 2022       View actual contributions for a year',
   '  gh-aura badges free         Explore no-cost achievement opportunities',
   '  gh-aura readme minimal      Generate a profile README draft',
-  '  gh-aura pins                Recommend projects to feature', '',
+  '  gh-aura pins                Recommend projects to feature',
+  '  gh-aura calendar plan 2022 --density 65 --output plan.json', '',
   'Review and publish a README:',
   '  gh-aura readme minimal --output draft.md',
   '  gh-aura preview --file draft.md --save review.json',
@@ -89,6 +91,25 @@ export function validateOptions(command, options) {
   if (command === 'achievements' && options.repo && !options.prepare) throw new Error('--repo requires --prepare BADGE_ID.');
 
 
+  if (command === 'calendar') {
+    const [action, shorthand] = options.positional;
+    const planning = ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force'];
+    const applying = ['review','repo','confirm','author-name','author-email'];
+    if (!['plan','apply'].includes(action)) throw Error('Use calendar plan [YEAR] or calendar apply --review FILE.');
+    if (action === 'plan') {
+      if (shorthand && (!/^\d{4}$/.test(shorthand) || options.year || options.from || options.to)) {
+        throw Error('Use one year (calendar plan 2022), or --from/--to, not both.');
+      }
+      if (shorthand) options.year = shorthand;
+      if ((options.year && (options.from || options.to)) || applying.some(k=>options[k]!==undefined)) {
+        throw Error('calendar plan accepts date/density options only, not remote write arguments.');
+      }
+      if (options.year && !/^\d{4}$/.test(String(options.year))) throw Error('--year must be YYYY.');
+    } else if (options.positional.length !== 1 || !applying.every(k=>options[k]) ||
+        planning.some(k=>options[k]!==undefined)) {
+      throw Error('calendar apply requires --review FILE --repo OWNER/NEW_PRIVATE_REPO --confirm FINGERPRINT --author-name NAME --author-email VERIFIED_EMAIL.');
+    }
+  }
   if (command === 'story') {
     const [action] = options.positional;
     const editable = ['problem', 'contribution', 'tradeoffs', 'outcome', 'proof'];

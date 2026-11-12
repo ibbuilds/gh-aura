@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added opt-in Calendar Studio: deterministic synthetic practice blueprint, UTC date ranges, percentage density, year-to-year growth, weekend preferences, observed-history gap preservation and reproducible seeds.
+- Added explicit, fingerprint-bound `calendar apply` to create a NEW private owned repository and upload generated practice commits in one Git push; existing repository history is never rewritten.
+
+
 ## 1.7.1 — 2026-11-12
 
 - Streamlined the root README and command reference to prioritize four direct commands, reviewed publishing, and clear limitations.

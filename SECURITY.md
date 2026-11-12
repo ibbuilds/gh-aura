@@ -1,6 +1,6 @@
 # Security
 
-Only two explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), and `work apply` for **one user-authored Markdown file** (`README.md` or `docs/**/*.md`) in an explicitly named, authorized repository. `work apply` creates an unmerged PR only. Neither operation changes account settings, pins, badges, or Git history.
+Only three explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), and `work apply` for **one user-authored Markdown file** (`README.md` or `docs/**/*.md`) in an explicitly named, authorized repository. `work apply` creates an unmerged PR only. Calendar Studio adds a separate, explicit `calendar apply` that creates a NEW owned private repository and a dated synthetic practice history. Existing repositories and account settings are never rewritten.
 
 ## Credentials
 
@@ -35,3 +35,7 @@ The CLI caches explicitly public GET responses for five minutes; credential-deri
 Profile preview/direct publication, documentation work preview and both PR publishing paths bypass all cached state. Corrupt or unwritable cache files fall back to normal online requests, not stale authorization. Cache files are not credentials or approval artifacts.
 
 In PR mode, partial failures may leave a branch. The CLI never overwrites a conflicting review branch and never merges, deletes branches or weakens protections automatically.
+
+## Calendar Studio synthetic private history
+
+`calendar plan` is offline and produces a SHA-256-bound date blueprint. `calendar apply` requires explicit fingerprint approval, a new private repo owned by the authenticated account and a supplied GitHub-linked author email. It prepares deterministic Git history locally, then makes one Git push. It never force-pushes or mutates existing repositories. Tokens are not persisted to Git arguments or config. Synthetic commits are not independently verified historical professional work and GitHub may not count them. See [Calendar Studio](docs/CALENDAR.md).

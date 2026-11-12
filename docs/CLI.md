@@ -28,6 +28,17 @@ gh-aura readme minimal --output draft.md
 
 These are shortcuts for the existing `contributions`, `achievements`, `profile` and `showcase` commands. **They do not write to GitHub.**
 
+## Calendar Studio (optional synthetic practice)
+
+```bash
+gh-aura calendar plan 2022 --density 75 --output plan.json
+gh-aura calendar plan --from 2020 --to 2025 --density 75 --growth 65 --weekends 20 --output years.json
+# After reviewing the exact plan and SHA-256 fingerprint:
+gh-aura calendar apply --review plan.json --repo OWNER/NEW_PRIVATE_REPO --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT
+```
+
+The planner is completely offline. Apply creates a new owned **private repository** and pushes the generated practice history, without touching existing repos. Dates and event credit are ultimately GitHub-controlled, and generated commits are explicitly synthetic. See [Calendar Studio](CALENDAR.md).
+
 ## Activity and achievements
 
 ```bash
