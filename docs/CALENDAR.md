@@ -1,69 +1,67 @@
-# Calendar Studio (explicit synthetic practice)
+# Activity — private contribution practice
 
-GH Aura can build a **configurable synthetic practice timeline** for a user-owned **new private repository**. It is a sequence of real Git commits with explicit dates, but it is **not a record of work performed in those years**. GitHub decides how, or whether, these events appear on the contribution calendar.
+GH Aura can plan **synthetic, explicitly labeled** Git commits for selected UTC dates and upload them into **one user-owned private workspace**. This can affect the contribution graph when GitHub's eligibility rules are satisfied, but does **not** establish real historical professional work and cannot guarantee a particular graph color or total.
 
-## Preview first — zero API requests
+There is no separate product called "Calendar Studio". The public CLI commands are `gh-aura activity plan` and `gh-aura activity apply`. The older `gh-aura calendar` alias remains available to avoid breaking existing scripts.
 
-Use the new \`calendar\` command without changing any GitHub account:
+## Set up a reusable workspace
 
-\`\`\`bash
-# One year: target 70% active days
-gh-aura calendar plan 2022 --density 70 --output 2022.json
+```bash
+gh-aura init YOUR_USERNAME
+# Implicit default: YOUR_USERNAME/gh-aura-workspace
+# Optional: use a different private workspace for BOTH activity and badges.
+gh-aura config set workspace.repo YOUR_USERNAME/my-aura-private
+```
 
-# Multi-year growth, moderate weekends and 1-3 commits per selected day
-gh-aura calendar plan --from 2020 --to 2025 --density 75 --growth 65 \
-  --weekends 20 --intensity 3 --mode workweek --seed 42 --role "backend" --output progression.json
+Neither configuration command creates a GitHub repository. The **first explicitly approved apply** creates it if missing; later activity and badge operations reuse the same marked private repository. An existing unmarked repository is never silently adopted or modified.
 
-# Preserve existing calendar activity; only fill gaps when observed history permits
-gh-aura contributions --all --days --json --output history.json
-gh-aura calendar plan 2022 --density 80 --existing history.json --output gaps.json
-\`\`\`
+## Plan (offline)
 
-The JSON blueprint reports dates, count per date, requested density, existing observed activity and a **SHA-256 fingerprint**. It does not create a repository or a commit. Inputs are limited to 20 years and at most **2,500 new commits** per blueprint. When existing data is supplied, every date must actually be present in the export; unknown days are never silently assumed empty.
+```bash
+# Year: target activity on 70% of dates
+gh-aura activity plan 2022 --density 70 --output plan.json
 
-### Settings
+# One month: target all dates; weekend preferences will not block 100%
+gh-aura activity plan --from 2022-07-01 --to 2022-07-31 \
+  --density 100 --intensity 1 --output month.json
 
-| Option | Meaning |
-| --- | --- |
-| \`--year YYYY\` or \`calendar plan YYYY\` | Select one UTC calendar year |
-| \`--from YYYY[-MM-DD] --to YYYY[-MM-DD]\` | Select a period (up to today and at most 20 calendar years) |
-| \`--density 0..100\` | Target percentage of active dates per calendar year |
-| \`--growth 0..100\` | How strongly target density increases from the earliest to the latest year |
-| \`--weekends 0..100\` | Relative weekend activity preference |
-| \`--intensity 1..6\` | Maximum number of practice commits per selected date |
-| \`--mode workweek|uniform|seasonal\` | Preferred work/rest day distribution |
-| \`--seed N\` | Makes planning deterministic for identical options |
-| \`--role TEXT\` | Label for practice exercises; **not** a professional credential |
-| \`--existing FILE\` | Use GH Aura's actual \`contributions --days --json\` export to avoid dates with observed activity |
+# Multiple years with weighted distribution and a stable seed
+gh-aura activity plan --from 2020 --to 2025 --density 75 --growth 65 \
+  --weekends 20 --intensity 3 --mode workweek --seed 42 --output years.json
 
-To approximate an existing pattern, start with actual date observations and choose \`--existing\`. The tool will never invent private/unknown observations.
+# Preserve actually observed GitHub activity when supplying a complete daily export
+gh-aura contributions --all --days --json --output actual.json
+gh-aura activity plan 2022 --density 80 --existing actual.json --output gaps.json
+```
 
-## Execute only on a new private repository
+`--density` is a target percentage of active **dates**, not a guaranteed GitHub color shade. `--intensity 1..6` controls generated commits per selected day. `--weekends 0..100` shapes date preference, and `--mode workweek|uniform|seasonal` determines distribution. `--seed` makes planning reproducible. Plans are limited to 20 calendar years and 2,500 commits each.
 
-After reviewing the blueprint and its printed fingerprint:
+The plan contains its selected dates, counts, synthetic labels and a SHA-256 fingerprint. No network access or remote changes occur in this step.
 
-\`\`\`bash
-# Requires a free personal GitHub token with permission to create a private repository.
-# Author email must belong to the authenticated GitHub account.
-gh-aura calendar apply --review 2022.json --repo YOUR_USERNAME/aura-practice-2022 \
-  --author-name "Your Display Name" --author-email YOUR_VERIFIED_EMAIL \
-  --confirm THE_64_CHARACTER_FINGERPRINT
-\`\`\`
+## Apply (explicit GitHub write)
 
-Only \`calendar apply\` can create a new private repo and push. It refuses existing repositories, non-owned targets, mismatched fingerprints, years before the user's account creation and invalid identities. It creates the complete deterministic local Git history first, then makes **one Git push** (rather than sending one REST request per commit). Credentials are provided only through ephemeral Git environment variables, never command arguments, local Git config or saved plan files.
+```bash
+gh-aura activity apply --review plan.json --confirm THE_64_CHARACTER_FINGERPRINT \
+  --author-name "Display Name" --author-email YOUR_VERIFIED_EMAIL
+```
 
-Generated documentation in each practice commit is explicitly marked **synthetic**. GitHub profile contributions may not update immediately; ensure [Private contributions](https://docs.github.com/en/account-and-profile/how-tos/contribution-settings/manage-visibility-settings-for-private-contributions-and-achievements) is enabled and that the authored email is verified. **Do not infer employment, years of experience or badge eligibility from this activity.**
+A private GitHub token is required. The author email must be verified as belonging to the authenticated account, or be its matching ID-based GitHub `noreply` address. The selected dates must be within the authenticated account's lifetime. See [Security](../SECURITY.md).
 
-### Verified author identity (v1.8.1)
+The first apply creates `YOUR_USERNAME/gh-aura-workspace` (or the configured name), with a GH Aura workspace marker in its README and a single Git push. Subsequent applies:
 
-Before any repository creation, GH Aura verifies the author identity. The ID-based `ID+USERNAME@users.noreply.github.com` address derived from the authenticated account works without extra email scope. For other addresses, the token requires the GitHub **Email addresses (read)** user permission or `user:email` (classic personal access token), and the address must appear as **verified**. A missing permission, unverified email or unavailable account creation timestamp fails closed. The list of private account emails is never logged, cached or saved to a plan.
+1. Verify ownership, private visibility, non-fork status and the workspace marker.
+2. Read the complete repository tree and reject any generated path collisions; truncated inspection fails closed.
+3. Fetch the existing default branch and verify its exact revision.
+4. Append generated commits as **descendants** of that revision and push **without force**. If GitHub has moved the branch, the push refuses to overwrite it.
 
-### Resource and safety limits
+Badge exercises are preserved on the same default branch. Old, unmarked standalone repositories are **not** automatically adopted; manually inspect them before selecting a new workspace.
 
-- No automatic background process, repeated requests, force-push, history edits or writes to existing repositories.
-- Every plan can be reviewed and reproduced offline with a seed.
-- A private repository creation may succeed even if Git push later fails; inspect GitHub before retrying with a new repo name.
-- The actual repository creation and commit attribution are only testable against an authorized account. CI uses isolated temporary local Git repositories and mocked API creation — no real private repo is created in tests.
-- GitHub can reject the repository creation, Git credentials or commit attribution under its own rules.
+## Verification and limits
 
-[Contribution rules](https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference) · [Main CLI](CLI.md)
+The CLI can verify the exact planned commit count and a successful Git push, but only GitHub determines whether those contributions appear on the account's graph. Private contributions must be enabled in GitHub account settings if the user wants their anonymized counts to be visible. GitHub attribution and indexing can take time. Never describe generated practice as verified historical employment or engineering output.
+
+Repeating the same date plan cannot overwrite an existing practice file. To add more, plan a non-overlapping range or inspect the existing workspace. If GitHub operations fail halfway through, inspect the repository before trying again.
+
+**Do not delete the shared workspace just to clean up badges.** It may contain synthetic activity history or other exercise work; GitHub does not guarantee how deletion will affect contribution counts or historical achievement evidence. Any future cleanup must be separate, deliberate and confirm the exact target.
+
+[Activity reference](ACTIVITY.md) · [Badge exercises](BADGE_RUN.md) · [GitHub contribution criteria](https://docs.github.com/en/account-and-profile/reference/profile-contributions-reference)
