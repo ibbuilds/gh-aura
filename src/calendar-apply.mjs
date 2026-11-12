@@ -14,6 +14,35 @@ function validIdentity(name,email) {
       !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)||/[\x00-\x1f]/.test(email))
     throw Error('--author-email must be an actual email associated with your GitHub account.');
 }
+/**
+ * Refuse attribution to an unrelated or unverified identity before remote writes.
+ * Private email lists are never logged, cached or saved in review artifacts.
+ */
+export async function verifyAuthorEmail(email,identity,opts={}) {
+  const login=validateLogin(identity?.login);
+  const target=email.toLowerCase();
+  const id=identity?.id;
+  if(Number.isSafeInteger(id)&&id>0&&
+     target===(id+'+'+login+'@users.noreply.github.com').toLowerCase())return;
+  for(let page=1;page<=5;page++) {
+    let emails;
+    try {
+      emails=await getJSON('/user/emails?per_page=100&page='+page,{
+        ...opts,publicRead:false,cache:undefined,allowMissing:false
+      });
+    } catch(error) {
+      if([401,403,404].includes(error?.status))
+        throw Error('Cannot verify --author-email. Grant Email addresses (read) / user:email on the token, or use your ID-based GitHub noreply address.');
+      throw error;
+    }
+    if(!Array.isArray(emails))throw Error('GitHub did not return a verifiable author email list.');
+    if(emails.some(item=>item?.verified===true&&typeof item.email==='string'&&
+       item.email.toLowerCase()===target))return;
+    if(emails.length<100)break;
+  }
+  throw Error('--author-email is not verified for the authenticated GitHub account. No repository was created.');
+}
+
 export function fastImportCalendar(plan,authorName,authorEmail) {
   validIdentity(authorName,authorEmail);
   const entries=plan.days.flatMap(d=>Array.from({length:d.count},(_,i)=>({date:d.date,index:i+1})));
@@ -70,9 +99,12 @@ export async function applyCalendar(plan,opts={}) {
   const [givenOwner,name]=opts.repo.split('/');
   if(givenOwner.toLowerCase()!==owner.toLowerCase())
     throw Error('Calendar generation may create only a new private repository owned by the authenticated account.');
+  await verifyAuthorEmail(opts.authorEmail,identity,opts);
   const start=Date.parse(plan.settings.from+'T00:00:00Z');
   const joined=Date.parse(identity.created_at||'');
-  if(Number.isFinite(joined)&&start<joined-86400000)
+  if(!Number.isFinite(joined))
+    throw Error('Could not verify the GitHub account creation date. No repository was created.');
+  if(start<joined-86400000)
     throw Error('The selected dates precede this GitHub account. Choose an account-lifetime interval.');
   const base='/repos/'+encodeURIComponent(owner)+'/'+encodeURIComponent(name);
   const existing=await getJSON(base,{...opts,publicRead:false,cache:undefined});

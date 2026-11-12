@@ -92,6 +92,7 @@ test('calendar application requires private new repository; push occurs once wit
     const fetch=async(url,params={})=>{
       urls.push(url);methods.push(params.method||'GET');
       if(url.endsWith('/user'))return Response.json({login:'example',created_at:'2019-01-01T00:00:00Z'});
+      if(url.includes('/user/emails'))return Response.json([{email:'example@users.noreply.github.com',verified:true}]);
       if(url.endsWith('/repos/example/activity-test'))return new Response('{}',{status:404});
       if(url.endsWith('/user/repos'))return Response.json({full_name:'example/activity-test',private:true},{status:201});
       throw Error('Unexpected URL: '+url);
@@ -111,7 +112,7 @@ test('calendar application requires private new repository; push occurs once wit
       authorName:'Example Developer',authorEmail:'example@users.noreply.github.com',
       token:'test-token',fetch,gitRunner:runner});
     assert.equal(pushes,1);
-    assert.deepEqual(methods,['GET','GET','POST']);
+    assert.deepEqual(methods,['GET','GET','GET','POST']);
     assert.equal(result.status,'pushed-unverified-graph');
     assert.equal(Number(git(['--git-dir',bare,'rev-list','--count','main'])),p.summary.syntheticCommits);
     assert.ok(urls.every(u=>u.startsWith('https://api.github.com/')));
@@ -128,10 +129,11 @@ test('wrong confirmation and existing repo fail without any creation/push',async
     authorName:'Example Developer',authorEmail:'example@users.noreply.github.com',
     token:'token',fetch:async(url)=>{
       calls++;
-      return Response.json(url.endsWith('/user')?{login:'example',created_at:'2019-01-01'}:
-        {full_name:'example/existing',private:true});
+      if(url.endsWith('/user'))return Response.json({login:'example',created_at:'2019-01-01'});
+      if(url.includes('/user/emails'))return Response.json([{email:'example@users.noreply.github.com',verified:true}]);
+      return Response.json({full_name:'example/existing',private:true});
     }}),/already exists/);
-  assert.equal(calls,2);
+  assert.equal(calls,3);
 });
 test('calendar CLI accepts separate plan/apply but rejects unreviewed writes',()=>{
   validateOptions('calendar',parseArgs(['plan','2022','--density','80','--output','calendar.json']));
@@ -141,4 +143,59 @@ test('calendar CLI accepts separate plan/apply but rejects unreviewed writes',()
     '--author-name','Example','--author-email','example@users.noreply.github.com']));
   assert.throws(()=>validateOptions('calendar',parseArgs(['apply','--repo','example/private-test'])),/requires/);
   assert.throws(()=>validateOptions('calendar',parseArgs(['plan','2022','--repo','example/private-test'])),/date\/density/);
+});
+
+test('unverified and unrelated author emails fail before any repository read or mutation',async()=>{
+  const p=plan(),urls=[];
+  const fetch=async(url,opts={})=>{
+    urls.push([url,opts.method||'GET']);
+    if(url.endsWith('/user'))return Response.json({login:'example',id:42,created_at:'2019-01-01T00:00:00Z'});
+    if(url.includes('/user/emails'))return Response.json([{email:'unverified@example.com',verified:false}]);
+    throw Error('Unexpected request after failed author verification: '+url);
+  };
+  await assert.rejects(applyCalendar(p,{repo:'example/new-private',confirm:p.fingerprint,
+    authorName:'Example',authorEmail:'unverified@example.com',token:'test-token',fetch}),/not verified/);
+  assert.equal(urls.length,2);
+  assert.ok(urls.every(([,method])=>method==='GET'));
+});
+
+test('missing email permission fails closed with no repository created',async()=>{
+  const p=plan(),urls=[];
+  const fetch=async(url,opts={})=>{
+    urls.push([url,opts.method||'GET']);
+    if(url.endsWith('/user'))return Response.json({login:'example',id:42,created_at:'2019-01-01'});
+    if(url.includes('/user/emails'))return new Response('{}',{status:403});
+    throw Error('Unexpected repository request: '+url);
+  };
+  await assert.rejects(applyCalendar(p,{repo:'example/new-private',confirm:p.fingerprint,
+    authorName:'Example',authorEmail:'someone@example.com',token:'test-token',fetch}),/Email addresses \(read\)/);
+  assert.equal(urls.length,2);
+});
+
+test('ID-based noreply from authenticated account needs no email scope',async()=>{
+  const p=plan(),urls=[];
+  const fetch=async(url)=>{
+    urls.push(url);
+    if(url.endsWith('/user'))return Response.json({login:'example',id:42,created_at:'2019-01-01'});
+    if(url.endsWith('/repos/example/existing'))return Response.json({full_name:'example/existing',private:true});
+    throw Error('Unexpected request: '+url);
+  };
+  await assert.rejects(applyCalendar(p,{repo:'example/existing',confirm:p.fingerprint,
+    authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
+    token:'test-token',fetch}),/already exists/);
+  assert.equal(urls.length,2);
+  assert.ok(!urls.some(url=>url.includes('/user/emails')));
+});
+
+test('missing account creation timestamp fails closed before repository creation',async()=>{
+  const p=plan(),urls=[];
+  const fetch=async(url)=>{
+    urls.push(url);
+    if(url.endsWith('/user'))return Response.json({login:'example',id:42});
+    throw Error('Unexpected request: '+url);
+  };
+  await assert.rejects(applyCalendar(p,{repo:'example/new-private',confirm:p.fingerprint,
+    authorName:'Example',authorEmail:'42+example@users.noreply.github.com',
+    token:'test-token',fetch}),/creation date/);
+  assert.equal(urls.length,1);
 });

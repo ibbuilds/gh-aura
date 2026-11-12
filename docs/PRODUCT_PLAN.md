@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.7.1 cleanup; Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.8.1 (1.8.0 workflow hardening); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
@@ -14,6 +14,8 @@ GH Aura helps developers show **real, inspectable work** clearly on GitHub. It h
 | Showcase | `pins` / `showcase` | Rank up to six public projects for the intended role and inspect documented project evidence |
 
 Supporting commands: `audit`, `config`, `story`, `brief`, `check`, `references`, `preview`, `apply`, `work`.
+
+The four modules above analyze authentic profile and project evidence. **Calendar Studio and private achievement exercises are optional, separate, clearly labeled synthetic sandbox tools**, not a substitute for genuine portfolio work.
 
 ## Write boundary
 
@@ -42,6 +44,6 @@ The primary offline reference is a dated structural study of [200 company-associ
 
 GitHub decides whether events contribute to the graph, which achievements are awarded, and which repositories are actually pinned. A profile cannot guarantee hiring. A 60-second recruiter study has **not** been carried out; [an optional protocol](HUMAN_VALIDATION.md) exists but is not a release prerequisite or evidence of success.
 
-Active work is tracked in [GitHub Issues](https://github.com/ibbuilds/gh-aura/issues). The current shipped command syntax is documented in [CLI.md](CLI.md); **do not treat old proposals as released features**.
+Open external release and validation gates are documented in [release readiness](RELEASE_READINESS.md). Active work is tracked in [GitHub Issues](https://github.com/ibbuilds/gh-aura/issues). The current shipped command syntax is documented in [CLI.md](CLI.md); **do not treat old proposals as released features**.
 
 [Architecture](ARCHITECTURE.md) · [Security](../SECURITY.md) · [Contribution guide](../CONTRIBUTING.md)
