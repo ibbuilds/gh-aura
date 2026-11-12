@@ -356,8 +356,11 @@ export function nextBadgePlanFromWorkspace(status,tree,options={}) {
     throw Error('Cannot plan next batch: workspace event history is incomplete.');
   if(tree?.truncated!==false||!Array.isArray(tree.tree))
     throw Error('Cannot plan next batch: workspace tree inspection is incomplete.');
-  if(!options.tier||!Object.hasOwn(PULL_SHARK_TIERS,options.tier))
-    throw Error('badges auto next requires --tier base, bronze, silver or gold.');
+  const goal=options.goal==='max'?'gold':options.goal;
+  if(Boolean(goal)===Boolean(options.tier)||
+     (goal&&!Object.hasOwn(PULL_SHARK_TIERS,goal))||
+     (options.tier&&!Object.hasOwn(PULL_SHARK_TIERS,options.tier)))
+    throw Error('badges auto next requires either --tier or --goal (base, bronze, silver, gold, max).');
   const repo=validRepo(workspaceRepo(options.repo));
   if(status.repository!=='https://github.com/'+repo)
     throw Error('Workspace status and selected repository do not match.');
@@ -384,18 +387,30 @@ export function nextBadgePlanFromWorkspace(status,tree,options={}) {
   while(seen.has(start+1))start++;
   if(seen.size!==start)
     throw Error('Gaps in merged PR sequence; resolve the partial history before planning another batch.');
-  const target=PULL_SHARK_TIERS[options.tier];
+  const overallTier=goal||options.tier;
+  const target=PULL_SHARK_TIERS[overallTier];
   if(start>=target)
     return {status:'target-reached-in-workspace-events-award-unverified',
-      repository:status.repository,tier:options.tier,observedMergedExercises:start,
-      note:'The workspace reached this reported event threshold; GitHub alone determines earned achievements and tiers.',
+      repository:status.repository,tier:overallTier,observedMergedExercises:start,
+      note:'Local workspace has reached the reported event threshold; independently check GitHub achievements. This does not confirm an award.',
       verify:status.verify};
-  return planBadgeRun({
-    repo,tier:options.tier,start,
+  // A maximum-level goal progresses through actual observed milestones.
+  // Do not attempt 1,024 PRs before the 2/16/128 event checkpoints.
+  const stage=goal?Object.keys(PULL_SHARK_TIERS).find(tier=>
+    PULL_SHARK_TIERS[tier]>start && PULL_SHARK_TIERS[tier]<=target):options.tier;
+  const plan=planBadgeRun({
+    repo,tier:stage,start,
     ...(options.pulls===undefined?{}:{pulls:options.pulls}),
     ...(options.role===undefined?{}:{role:options.role}),
     quickdraw:!options['no-quickdraw'],
   });
+  // Metadata is informational only; the reviewed plan's tier, count, start,
+  // events and SHA-bound fingerprint determine exactly what apply can write.
+  if(goal)return {...plan,
+    goal:overallTier,checkpoint:stage,
+    awardCaveat:'Check your actual GitHub badge at each milestone before authorizing additional batches. No tier is inferred from workspace events.',
+  };
+  return plan;
 }
 
 /** Read only: never creates repositories, issues, branches or PRs. */
