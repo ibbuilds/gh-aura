@@ -530,3 +530,45 @@ test('an insufficient two-write quota refuses Quickdraw before the issue exists'
   }),/budget is too low/);
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
 });
+
+test('atomic-batch v3 plan is separately SHA-bound and does not alter v1/v2 compatibility',()=>{
+  const folder=mkdtempSync(join(tmpdir(),'aura-bulk-strategy-review-'));
+  try{
+    const p=plan({strategy:'git-batch',pulls:3,quickdraw:false});
+    assert.equal(p.format,'gh-aura-private-badges-v3');
+    assert.equal(p.strategy,'git-batch');
+    const file=join(folder,'plan.json');
+    writeFileSync(file,JSON.stringify(p,null,2));
+    assert.equal(loadBadgePlan(file).fingerprint,p.fingerprint);
+    const tampered={...p,strategy:'rest'};
+    writeFileSync(file,JSON.stringify(tampered,null,2));
+    assert.throws(()=>loadBadgePlan(file),/fingerprint/);
+    const old=plan({strategy:'rest',pulls:2});
+    assert.equal(old.format,'gh-aura-private-badges-v2');
+    writeFileSync(file,JSON.stringify(old,null,2));
+    assert.equal(loadBadgePlan(file).format,'gh-aura-private-badges-v2');
+  } finally {rmSync(folder,{recursive:true,force:true});}
+});
+
+test('read-only next stage can preserve reviewed atomic Git strategy',()=>{
+  const status={
+    status:'observed-workspace-events-awards-unverified',
+    repository:'https://github.com/'+repo,
+    verify:'https://github.com/example?tab=achievements',
+    observed:{pullsComplete:true,issuesComplete:true},
+    events:{mergedPullRequests:[{index:1},{index:2}]}
+  };
+  const tree={truncated:false,tree:[
+    {path:'README.md'},{path:'docs/gh-aura/exercise-0001.md'},
+    {path:'docs/gh-aura/exercise-0002.md'}
+  ]};
+  const doc=nextBadgePlanFromWorkspace(status,tree,{
+    repo,goal:'max',strategy:'git-batch'
+  });
+  assert.equal(doc.format,'gh-aura-private-badges-v3');
+  assert.equal(doc.tier,'bronze');
+  assert.equal(doc.start,2);
+  assert.equal(doc.pulls,14);
+  assert.equal(doc.strategy,'git-batch');
+  assert.equal(badgeDigest(doc),doc.fingerprint);
+});
