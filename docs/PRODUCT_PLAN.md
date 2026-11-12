@@ -17,12 +17,13 @@ Supporting commands: `audit`, `config`, `story`, `brief`, `check`, `references`,
 
 ## Write boundary
 
-Public analysis, profile reference browsing and drafting are read-only. Only these commands can write remotely, **after reviewing an exact diff and approving a live revision**:
+Public analysis, profile reference browsing and drafting are read-only. Only these commands can write remotely, **after reviewing an exact diff or dated plan and approving it explicitly**:
 
 - `apply --review FILE`: update the public `USERNAME/USERNAME` profile README; optionally `--pr` for an unmerged PR.
+- `calendar apply --review FILE --repo OWNER/NEW_REPO --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create one NEW private repo with dated, explicitly synthetic practice work. No existing repo is rewritten or GitHub contribution credit guaranteed. [Calendar Studio](CALENDAR.md).
 - `work apply --review FILE`: open an unmerged PR with one user-authored `README.md` or `docs/**/*.md` documentation change. A scoped token is required; private repos require explicit consent.
 
-No background commits, Git history rewrites, fabricated contribution events, automatic profile pins, automatic badge awards, or bypass of normal repository reviews.
+No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project review rules. Generated practice is labeled synthetic, not historical employment evidence.
 
 ## Research
 

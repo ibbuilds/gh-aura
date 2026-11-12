@@ -64,7 +64,7 @@ This creates an unmerged PR, never a guaranteed achievement. Profile styles are 
 
 GH Aura's editorial reference uses [200 public, ordinary-visibility engineering profiles](research/ORDINARY_STUDY.md) from 35 company GitHub organizations. Company membership and self-described work are **signals, not independently verified employment**. Their structure is summarized offline; no biographies are copied or profiles fetched during normal CLI use.
 
-GitHub decides which events count toward contributions and achievements. GH Aura cannot guarantee badges, historical activity, job offers or code quality; public repo pins are selected through GitHub's interface. No background jobs, fabricated past work, or unattended profile changes.
+GitHub decides which events count toward contributions and achievements. GH Aura cannot guarantee badges, historical activity, job offers or code quality; public repo pins are selected through GitHub's interface. No background jobs or unattended profile changes. Calendar Studio creates an explicitly labeled synthetic practice series only after a separate approval.
 
 Public reads use a five-minute cache, explicit API budgets and optional `--stats` reporting. Publishing never uses cached revisions. No subscription or paid API is necessary.
 

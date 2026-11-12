@@ -51,6 +51,10 @@ export async function main(argv = process.argv.slice(2)) {
     process.stdout.write('Usage: gh-aura ' + spec.usage + '\nOptions: ' + spec.flags.map((flag) => '--' + flag).join(', ') + '\n'); return;
   }
   validateOptions(command, options);
+  if (command === 'calendar') {
+    await (await import('./calendar-apply.mjs')).runCalendar(options.positional[0], options);
+    return;
+  }
   if (command === 'work') {
     await (await import('./work.mjs')).runWork(options.positional[0], options);
     return;

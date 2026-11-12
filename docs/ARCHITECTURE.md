@@ -13,6 +13,7 @@ src/work.mjs                       explicit reviewed single-file documentation P
 src/github.mjs + cache.mjs          REST/GraphQL adapter and public-only ETag cache
 src/session.mjs                    HTTP request/response-size budgets and stats
 src/contributions.mjs              real GitHub contribution periods
+src/calendar.mjs + calendar-apply.mjs  synthetic practice planner + approved new-private-repo Git push
 src/local-attribution.mjs          offline Git author metadata counts
 src/achievements.mjs               source-linked achievement capability catalog
 src/project-evidence.mjs           optional public source-file and CI observations
@@ -21,7 +22,7 @@ src/render.mjs + editorial.mjs      deterministic layouts, bounded optional edit
 src/reference.mjs                  small dated offline reference aggregate
 ```
 
-No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply` and `work apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither automatically merges a PR, changes history, grants achievements or edits pins.
+No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply` and `calendar apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Calendar apply creates a new private repository containing explicitly generated practice commits; it cannot grant achievements or edit pins.
 
 ## Resources, privacy and data integrity
 
