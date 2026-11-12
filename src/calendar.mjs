@@ -107,8 +107,8 @@ export function planCalendar(options={},history=null) {
     const empty=dates.filter(c=>c.existing===0);
     empty.sort((a,b)=>b.weight-a.weight||a.date.localeCompare(b.date));
     for(const item of empty.slice(0,toAdd)) {
-      // Suppress weekend candidates completely when weekends=0 and mode=workweek.
-      if(mode==='workweek'&&weekends===0&&new Date(item.date+'T00:00:00Z').getUTCDay()%6===0)continue;
+      // Density is a hard target when enough empty dates exist. Weekend weighting
+      // shapes the ranking, but cannot secretly defeat --density 100.
       days.push({date:item.date,count:item.count,kind:'synthetic-practice'});
       group.selectedDays++;group.newCommits+=item.count;
     }
