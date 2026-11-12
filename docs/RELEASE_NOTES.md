@@ -1,19 +1,25 @@
-# GH Aura v1.8.0
+# GH Aura v1.8.1
 
 **Calendar Studio + private Achievement workflow automation.** GH Aura remains a local CLI on Node.js 22+, with no runtime dependencies, hosted backend, paid API or mandatory AI model.
 
 ## Install
 
-Download `gh-aura-1.8.0.tgz` and `SHA256SUMS.txt` from this GitHub Release, verify the checksum and install:
+Download `gh-aura-1.8.1.tgz` and `SHA256SUMS.txt` from this GitHub Release, verify the checksum and install:
 
 ```bash
-npm install --global ./gh-aura-1.8.0.tgz
+npm install --global ./gh-aura-1.8.1.tgz
 gh-aura init YOUR_USERNAME
 ```
 
 This package is distributed on GitHub Releases, **not the public npm registry**.
 
-## New: Calendar Studio
+## Patch hardening in v1.8.1
+
+Calendar Studio now verifies author email ownership **before creating any GitHub repository**. It accepts the ID-based noreply address from the authenticated account; other addresses require token permission to read the account's verified email list. Unverified addresses, denied permissions and missing account creation timestamps fail closed.
+
+Authentic portfolio analysis is documented separately from optional synthetic practice, and the [release readiness checklist](https://github.com/ibbuilds/gh-aura/blob/main/docs/RELEASE_READINESS.md) tracks independent tests and repository-governance tasks. These external gates are not represented as passed.
+
+## Included: Calendar Studio (v1.8.0)
 
 ```bash
 # One year with 70% target active dates
@@ -37,7 +43,7 @@ The deterministic planner works **offline**. Remote apply creates a **new, owned
 
 **Generated commits are clearly labeled synthetic practice, not verified past professional work.** GitHub decides contribution attribution based on author identity, eligible branches, dates and private-visibility settings. No historical activity is guaranteed to appear.
 
-## New: private owned achievement workflow runner
+## Included: private achievement workflow runner (v1.8.0)
 
 ```bash
 # Plan without a token, then explicitly authorize the operation
