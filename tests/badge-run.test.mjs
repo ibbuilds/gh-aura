@@ -503,3 +503,30 @@ test('an incomplete replay never relies on stale cached default-branch SHA',asyn
   assert.equal(baseReads.length,1);
   assert.equal(api.requests.filter(x=>x.method!=='GET'&&x.path==='/user/repos').length,0);
 });
+
+test('Quickdraw reserves open and close as an inseparable pair before opening a QA issue',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:0,quickdraw:true});
+  const reservations=[];
+  const result=await applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:(owner,count)=>{reservations.push(count);return {remaining:10};},
+    sleep:async()=>{}
+  });
+  assert.deepEqual(reservations,[2]);
+  assert.ok(result.quickdrawIssue);
+  assert.equal(result.quickdrawTimingCandidate,true);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,2);
+});
+
+test('an insufficient two-write quota refuses Quickdraw before the issue exists',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:0,quickdraw:true});
+  await assert.rejects(applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:(owner,count)=>{
+      assert.equal(count,2);throw Error('Local remaining content budget is too low');
+    },sleep:async()=>{}
+  }),/budget is too low/);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+});
