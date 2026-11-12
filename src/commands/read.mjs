@@ -21,6 +21,13 @@ export async function run(command, options) {
   const cache = options.fresh || process.env.GH_AURA_NO_CACHE === '1' ? null : new ReadCache();
   const api = { fetch: session.fetch, ...(cache ? { cache } : {}) };
   try {
+    if (command === 'achievements' && options.prepare) {
+      const { prepareAchievementTask, renderAchievementTask } = await import('../achievement-actions.mjs');
+      const plan = await prepareAchievementTask(options.prepare, options.repo,
+        { ...api, private: options.private });
+      emit(options.format === 'json' ? plan : renderAchievementTask(plan), options);
+      return;
+    }
     if (command === 'achievements' && !options.user && !options.positional[0] && !config.user) {
       const { achievementReport, renderAchievementsMarkdown } = await import('../achievements.mjs');
       const report = await achievementReport(null, config, { badge: options.badge, scope: options.scope, plan: options.plan, private: options.private });

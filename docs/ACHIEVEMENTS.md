@@ -20,6 +20,10 @@ gh-aura achievements --scope free --private --plan --json
 
 If a GitHub account is configured, the read-only report can add selected public merged-PR/star evidence. This evidence is **not** a complete badge-eligibility count or proof that GitHub awarded a badge. With no account, the guide uses no API calls.
 
+## Genuine repository-specific task preparation
+
+`gh-aura achievements --prepare pull-shark --repo OWNER/PROJECT` returns a local work plan, optionally informed by existing public issues. It never opens a PR or awards a badge. Use `--private` to prepare without reading a private repository. Only safe tasks (Pull Shark, Pair Extraordinaire, Galaxy Brain, Starstruck) are supported; others are refused. See [Preparation details](ACHIEVEMENT_ACTIONS.md).
+
 ## Classes
 
 | Class | Meaning | Examples |
