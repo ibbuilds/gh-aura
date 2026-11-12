@@ -18,6 +18,8 @@ export async function run(command, options) {
   if (options.inspect !== undefined) config.scan.inspectRepos = Number(options.inspect);
   if (options.deep !== undefined) config.scan.deepRepos = Number(options.deep);
   validateConfig(config);
+  // Parse the local job posting BEFORE any GitHub request. Never send its text to GitHub.
+  const jobPosting = options.job ? (await import('../job-match.mjs')).readJobPosting(options.job) : null;
   const session = new ReadSession({ maxRequests: options.budget === undefined ? config.scan.maxRequests : Number(options.budget) });
   const cache = options.fresh || process.env.GH_AURA_NO_CACHE === '1' ? null : new ReadCache();
   const api = { fetch: session.fetch, ...(cache ? { cache } : {}) };
@@ -84,6 +86,7 @@ export async function run(command, options) {
     if (command === 'audit') {
       const { hiringReview } = await import('../readiness.mjs');
       report.hiringReview = hiringReview(snapshot, config);
+      if (jobPosting) report.jobMatch = (await import('../job-match.mjs')).matchJobPosting(jobPosting, snapshot, config);
     }
     emit(options.format === 'json' ? report : renderAuditMarkdown(report), options);
   } catch (error) {

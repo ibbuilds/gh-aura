@@ -46,6 +46,10 @@ Inspection adds sampled public README reads. Conventional headings are heuristic
 
 `profile --language es` (or `config set editorial.language es`) localizes **only the deterministic template headings**, project-story labels, and related metadata labels. English is the default. User-provided biography, projects, links, and descriptions remain unchanged; no AI or translation API is invoked. `brief --language es --prompt` passes the editorial-language preference to an external writer, which remains optional. 
 
+### Compare a local job posting
+
+`gh-aura audit --job vacancy.txt --deep 2 --json` analyzes locally stored plain-text job requirements and maps recognized technology/domain terms to **explicitly selected public projects**. The job text is parsed before any network requests, stays on the user's machine, is never included verbatim in reports, and is not sent to GitHub or an AI model. Result states are `mentioned-in-public-metadata`, `user-claimed`, or `not-observed-in-selected-projects`; none proves skill or a hiring probability. See [job description matching](JOB_MATCH.md).
+
 ### Your project contributions
 
 Set `profile.projectStories` with a JSON array of the projects you actually worked on. Each record can include `repo`, `problem`, `contribution`, `tradeoffs`, `outcome` and an optional HTTPS `proof` link. Stories are displayed **only** for showcased projects and are marked as user-supplied, not externally verified. See [Project stories](PROJECT_STORIES.md) for a copyable example and the minimal/regular/flashy differences.
