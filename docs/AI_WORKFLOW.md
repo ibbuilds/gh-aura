@@ -27,6 +27,8 @@ The compact JSON context is limited to **12,000 bytes**. Existing README excerpt
 
 The reference contains 100 public company-associated engineering profiles and 16 company-author-source examples. The 100 rely on self-reported company/role plus public organization membership; they are not 100 employer-verified employees. The smaller employer-sourced set has dated company-owned pages, not HR certification. Neither study measured hiring results. The writer may learn structure, never borrow another person's identity, seniority, employment or achievements. See [industry research and evidence tiers](../research/INDUSTRY_STUDY.md).
 
+A configured `profile.projectStories` array can supply explicit personal contribution, design trade-offs, outcome and evidence links. These are **user-provided claims**, not GitHub-verified facts; an editor must not create unprovided impact or job titles. See [Project stories](PROJECT_STORIES.md).
+
 ## Check, edit and review
 
 Save the proposed Markdown to `draft.md`:

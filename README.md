@@ -61,6 +61,10 @@ gh-aura config set editorial.language en
 
 Visual intensity is 0–100: compact below 35, structured at 35–69, visual at 70–100. It changes layout and decorative density, not skills, seniority, history or credibility. Explicit section switches and project selections win. Reset `profile.visual` to inherit a style preset.
 
+## Show what you personally built
+
+Add user-confirmed `profile.projectStories` to describe the problem, your contribution, engineering trade-offs, outcome and evidence links for selected repositories. **Minimal** keeps the story compact, **regular** organizes it for recruiters and **flashy** expands it. These are user-supplied claims, not facts GH Aura invents or independently certifies. [Configure project stories](docs/PROJECT_STORIES.md).
+
 ## Writing grounded in professional engineer profiles
 
 Our research now separates **100 public company-associated engineering accounts** from **16 engineer profiles connected to employer-owned author or engineering pages**. The first group has public organization membership and matching self-reported employer/role; these signals **do not prove current employment**. The smaller employer-sourced group records official publication links, but those assertions can become outdated. Both datasets record structural features and provenance, **not copied biographies**.

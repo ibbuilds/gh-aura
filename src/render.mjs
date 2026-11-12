@@ -10,6 +10,9 @@ export function renderProfile(snapshot, config, chosenStyle) {
   const p = config.profile;
   const sections = plan.sections;
   const projects = sections.projects ? selectFeatured(snapshot, config) : [];
+  const storyFor = (repo) => p.projectStories.find((entry) =>
+    [repo.full_name.toLowerCase(), repo.name.toLowerCase()].includes(entry.repo.toLowerCase()));
+
   const technologies = [...new Set(p.technologies.length ? p.technologies : snapshot.repos.map((repo) => repo.language).filter(Boolean))].slice(0, p.technologies.length ? 12 : plan.maxTechnologyLabels);
   const techLabel = p.technologies.length ? 'Technologies' : 'Languages in public repositories';
   const name = p.name || snapshot.user.name || snapshot.username;
@@ -34,12 +37,43 @@ export function renderProfile(snapshot, config, chosenStyle) {
   if (sections.projects && projects.length) {
     lines.push('## ' + (style === 'minimal' ? 'Selected work' : 'Featured work'), '');
     if (style === 'regular') {
-      lines.push('| Project | Description |', '| --- | --- |');
-      for (const repo of projects) lines.push('| [' + md(repo.name) + '](' + repoUrl(repo) + ') | ' + md(repo.description || 'Source repository') + ' |');
+      const hasStories = projects.some((repo) => Boolean(storyFor(repo)));
+      lines.push(hasStories ? '| Project | Description | My contribution |' : '| Project | Description |',
+        hasStories ? '| --- | --- | --- |' : '| --- | --- |');
+      for (const repo of projects) {
+        const story = storyFor(repo);
+        const contribution = story?.contribution ? md(story.contribution) : '—';
+        lines.push('| [' + md(repo.name) + '](' + repoUrl(repo) + ') | ' +
+          md(story?.problem || repo.description || 'Source repository') +
+          (hasStories ? ' | ' + contribution : '') + ' |');
+      }
+      if (hasStories) for (const repo of projects) {
+        const story = storyFor(repo);
+        if (!story) continue;
+        const extras = [
+          story.tradeoffs ? 'Trade-offs: ' + md(story.tradeoffs) : null,
+          story.outcome ? 'Outcome (user-provided): ' + md(story.outcome) : null,
+          story.proof ? '[Evidence](' + httpsUrl(story.proof) + ')' : null,
+        ].filter(Boolean);
+        if (extras.length) lines.push('', '**' + md(repo.name) + '** — ' + extras.join(' · '));
+      }
     } else {
       for (const repo of projects) {
+        const story = storyFor(repo);
         lines.push((style === 'flashy' ? '### ' : '- **') + '[' + md(repo.name) + '](' + repoUrl(repo) + ')' + (style === 'minimal' ? '**' : '') +
           (repo.description ? (style === 'flashy' ? '\n\n' : ' — ') + md(repo.description) : ''));
+        if (story) {
+          if (style === 'minimal') {
+            if (story.contribution) lines[lines.length - 1] += ' · My work: ' + md(story.contribution);
+            if (story.proof) lines[lines.length - 1] += ' · [Evidence](' + httpsUrl(story.proof) + ')';
+          } else {
+            if (story.problem) lines.push('', '**Problem:** ' + md(story.problem));
+            if (story.contribution) lines.push('', '**My contribution:** ' + md(story.contribution));
+            if (story.tradeoffs) lines.push('', '**Engineering trade-offs:** ' + md(story.tradeoffs));
+            if (story.outcome) lines.push('', '**Outcome (user-provided):** ' + md(story.outcome));
+            if (story.proof) lines.push('', '[Inspect evidence](' + httpsUrl(story.proof) + ')');
+          }
+        }
         if (style === 'flashy') lines.push('');
       }
     }
