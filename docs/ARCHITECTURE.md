@@ -6,7 +6,8 @@ Local-first Node.js ES modules, no runtime dependencies. The command line is the
 cli.mjs / cli-options.mjs     parse and validate; cheap help path
   commands/local.mjs         settings and offline draft checks
   commands/read.mjs          one bounded/cache-aware read lifecycle
-  commands/publish.mjs       explicit reviewed publication only
+  commands/publish.mjs       explicit reviewed profile publication
+  work.mjs                   approved one-file documentation PR workflow
 
   github.mjs + cache.mjs     official APIs, public visibility, ETags
   session.mjs                request/stream-byte budgets and measurements
@@ -35,7 +36,7 @@ Public cache entries retain short-lived observations, isolated by credential-der
 
 ## Publication
 
-`preview` reads a live public profile repository and binds the exact draft, repository, branch, path and current content/revision into a review digest. `apply` either updates that reviewed root README or opens an unmerged PR. It rejects stale or conflicting state, unrelated PR changes and mismatched approval. Writes are never automatically retried. Account settings, pins, achievements and Git history are not mutation surfaces.
+`preview` reads a live public profile repository and binds the exact draft, repository, branch, path and current content/revision into a review digest. `apply` either updates that reviewed root README or opens an unmerged PR. It rejects stale or conflicting state, unrelated PR changes and mismatched approval. Writes are never automatically retried. `work preview`/`work apply` separately authorize a single user-authored Markdown change under `README.md` or `docs/`, verify the exact diff/remote revision, and create a PR only. Private repositories require explicit opt-in and scoped permissions; no historical contribution or badge is guaranteed. Account settings, pins, achievements and Git history are not mutation surfaces.
 
 ## Tests and maintenance
 

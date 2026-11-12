@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added `work preview/apply` for a narrowly scoped, user-authored Markdown PR. It requires full diff review, exact revision approval and a scoped token; PRs are never merged automatically.
+
+
 - Added offline `contributions --local PATH [--emails-file FILE]` for bounded Git author identity attribution without printing emails or making GitHub requests. Preserves original timestamps and never modifies history.
 
 ## 1.5.1 — 2026-11-11
