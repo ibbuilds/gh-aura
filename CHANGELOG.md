@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.9.0 — 2026-11-12
+
+- Unified observed activity and synthetic private date planning under `gh-aura activity` (`activity plan` / `activity apply`); legacy `calendar` remains an alias.
+- Added a configured, default-reusable private workspace (`workspace.repo`, default `USER/gh-aura-workspace` after `init USER`) shared by activity practice and private badge exercises.
+- Generated workspaces have an explicit marker; existing unmarked, forked, public or archived repositories are refused. Reused activity histories are fetched, revision-checked and extended by non-force Git push, with complete tree and file-collision checks.
+- Fixed `--density 100` to select all available dates even if weekends have zero preference. Added regression coverage for workspace reuse, legacy markers, no history rewrite and collision fail-closed behavior.
+- Kept badge award verification and workspace deletion outside automatic actions: GitHub alone decides graph/badge eligibility, and deleting a shared repo could remove useful history. Remote-write behavior still needs a controlled real-account test.
+
+
 ## 1.8.1 — 2026-11-12
 
 - Verify synthetic calendar author-email ownership against the authenticated account's ID-based noreply address or GitHub's verified email API before any remote write. Denied/missing email proof and unknown account creation dates fail closed.
