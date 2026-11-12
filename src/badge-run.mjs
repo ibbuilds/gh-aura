@@ -141,7 +141,7 @@ async function applyBadgeRun(doc,opts={}) {
   if(typeof opts.confirm!=='string'||opts.confirm!==doc.fingerprint||
     !/^[a-f0-9]{64}$/.test(opts.confirm))throw Error('Badge plan confirmation mismatch. Review the plan before applying.');
   const maxCalls=20+doc.pulls*12;
-  let requests=0,contentWrites=0,lastWriteAt=0,verifiedOwner=null;
+  let requests=0,contentWrites=0,lastWriteAt=0,verifiedOwner=null,latestLocalBudget=null;
   const reserve=opts.reserveWrite||((owner)=>reserveBadgeWrite(owner,{
     directory:opts.budgetDirectory,
   }));
@@ -160,7 +160,7 @@ async function applyBadgeRun(doc,opts={}) {
       if(lastWriteAt>0&&elapsed<gap)await pause(gap-elapsed);
       // Reserve before any uncertain remote mutation. Even failed/unknown
       // requests consume a conservative slot; no automatic write retry.
-      await reserve(verifiedOwner);
+      latestLocalBudget=await reserve(verifiedOwner);
       lastWriteAt=Date.now();
       contentWrites++;
     }
@@ -314,6 +314,8 @@ async function applyBadgeRun(doc,opts={}) {
   results.contentWrites=contentWrites;
   results.pacing={minimumWriteGapMs:gap,
     locallyReservedHourlyWrites:BADGE_WRITE_HOURLY_BUDGET,
+    localRemainingWrites:latestLocalBudget?.remaining??null,
+    localBudgetWindowAfter:latestLocalBudget?.nextWindowAfter??null,
     note:'Individual writes are serial and a local per-account hourly ledger is applied. GitHub and other clients can impose stricter real limits. No uncertain mutation is retried automatically.'};
   results.verify='https://github.com/'+owner+'?tab=achievements';
   return results;
