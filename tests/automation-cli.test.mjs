@@ -58,3 +58,15 @@ test('GH Aura activity refuses an unapproved push before reading a plan',()=>{
     assert.match(y.stderr,/requires --review/);
   }finally{rmSync(root,{recursive:true,force:true});}
 });
+
+test('private badge status does not attempt a network read without a token',()=>{
+  const dir=mkdtempSync(join(tmpdir(),'aura-read-only-status-'));
+  try{
+    const status=run(['badges','auto','status','--repo','example/gh-aura-workspace'],dir);
+    assert.notEqual(status.status,0);
+    assert.match(status.stderr,/GH_TOKEN|GITHUB_TOKEN/);
+    const invalid=run(['badges','auto','status','--pulls','2'],dir);
+    assert.notEqual(invalid.status,0);
+    assert.match(invalid.stderr,/accepts only optional --repo/);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});

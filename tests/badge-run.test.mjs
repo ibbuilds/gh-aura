@@ -43,6 +43,14 @@ function mockAPI(options={}) {
       assert.match(Buffer.from(body.content,'base64').toString('utf8'),/GH-AURA-PRIVATE-BADGE-SANDBOX-V1/);
       return response({commit:{sha:'b'.repeat(40)}});
     }
+    if(options.issueOnSecondPage&&path===base+'/issues?state=all&per_page=100')
+      return response(Array.from({length:100},(_,i)=>({number:i+1,
+        title:'Other activity '+i,pull_request:{}})));
+    if(options.issueOnSecondPage&&path===base+'/issues?state=all&per_page=100&page=2')
+      return response([{title:'[GH-AURA-QA-0001] Validate private sandbox setup',
+        state:'closed',number:1001}]);
+    if(options.issueHistoryTooLarge&&path.startsWith(base+'/issues?state=all&per_page=100'))
+      return response(Array.from({length:100},(_,i)=>({number:i+1,title:'Other activity '+i})));
     if(path===base+'/issues?state=all&per_page=100')return response(
       options.alreadyDone?[{title:'[GH-AURA-QA-0001] Validate private sandbox setup',
         state:'closed'}]:[]);
@@ -206,6 +214,7 @@ test('tier planning is bounded and does not imply a GitHub-awarded tier',()=>{
   assert.throws(()=>plan({tier:'silver',start:128}),/tier threshold/);
   assert.throws(()=>plan({tier:'gold',start:1020,pulls:16}),/exceed/);
   assert.throws(()=>plan({tier:'unobtainium'}),/--tier/);
+  assert.throws(()=>plan({start:1024,pulls:0,quickdraw:true}),/--start/);
 });
 
 test('v2 plan binds descriptions and excluded list, and safe legacy plans still load',()=>{
@@ -243,4 +252,23 @@ test('status reads only GH Aura-owned private workspace and distinguishes events
   await assert.rejects(inspectBadgeWorkspace({repo,token:'test-only',fetch:bad.fetch}),
     /marker missing/);
   assert.equal(bad.requests.filter(x=>x.method!=='GET').length,0);
+});
+
+test('Quickdraw replay checks beyond first 100 issue/PR records before writing',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared',issueOnSecondPage:true});
+  const p=plan({pulls:0,quickdraw:true});
+  const result=await applyBadgeRun(p,{confirm:p.fingerprint,
+    token:'test-only',fetch:api.fetch,sleep:async()=>{}});
+  assert.equal(result.quickdrawIssue,null);
+  assert.equal(result.mergedPulls.length,0);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+  assert.ok(api.requests.some(x=>x.path.endsWith('per_page=100&page=2')));
+});
+test('Quickdraw refuses unknown full issue history rather than duplicating action',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared',issueHistoryTooLarge:true});
+  const p=plan({pulls:0,quickdraw:true});
+  await assert.rejects(applyBadgeRun(p,{confirm:p.fingerprint,
+    token:'test-only',fetch:api.fetch,sleep:async()=>{}}),/history exceeds/);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+  assert.ok(api.requests.some(x=>x.path.endsWith('per_page=100&page=12')));
 });

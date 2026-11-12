@@ -50,7 +50,7 @@ export function badgeDigest(doc) {
  */
 export function planBadgeRun(options={}) {
   const repo=validRepo(workspaceRepo(options.repo));
-  const start=int(options.start??0,'--start',0,MAX_EXERCISE_INDEX);
+  const start=int(options.start??0,'--start',0,MAX_EXERCISE_INDEX-1);
   const tier=options.tier||null;
   if(tier && !Object.hasOwn(PULL_SHARK_TIERS,tier))
     throw Error('--tier must be base, bronze, silver or gold.');

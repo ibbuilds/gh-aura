@@ -33,7 +33,7 @@ gh-aura badges auto --tier gold --start 128 --output gold-128.json
 
 `--tier base|bronze|silver|gold` chooses a **community/product-observed threshold** of 2/16/128/1,024. `--start` is the **index of exercises in the selected workspace**, not a count of earned badges or all of your account's merged PRs.
 
-Plans are fully offline and include the exact repo, the requested operations, all sixteen excluded categories, bounds, estimated maximum request count, next batch position, and a SHA-256 fingerprint. Default/no-tier behavior remains compatible with earlier `--pulls 0..16 --start 0..1024` plans. A batch can only include exercises 1..1,024; there is no unattended loop.
+Plans are fully offline and include the exact repo, the requested operations, all sixteen excluded categories, bounds, estimated maximum request count, next batch position, and a SHA-256 fingerprint. Default/no-tier behavior remains compatible with earlier `--pulls 0..16 --start 0..1023` plans. A batch can only include exercises 1..1,024; there is no unattended loop.
 
 ## Apply only after approval
 

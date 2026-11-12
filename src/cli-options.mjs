@@ -2,7 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--start 0..1024] [--no-quickdraw] [--output badges.json] | badges auto apply --review badges.json --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','no-quickdraw','role','output','force','review','confirm'], max: 1 },
+  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--start 0..1023] [--no-quickdraw] [--output badges.json] | badges auto apply --review badges.json --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
@@ -103,7 +103,7 @@ export function validateOptions(command, options) {
       }
       if(options.tier && !['base','bronze','silver','gold'].includes(options.tier))
         throw Error('--tier must be base, bronze, silver or gold.');
-      for(const [key,min,max] of [['pulls',0,16],['start',0,1024]]) {
+      for(const [key,min,max] of [['pulls',0,16],['start',0,1023]]) {
         if(options[key]!==undefined&&(!/^\d+$/.test(options[key])||Number(options[key])<min||Number(options[key])>max)){
           throw Error('--'+key+' must be an integer '+min+'..'+max+'.');
         }

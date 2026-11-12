@@ -40,7 +40,7 @@ gh-aura badges auto status               # Read-only workspace event observation
 
 The `badges auto` plan command is offline. It only ever selects **Pull Shark, YOLO, and Quickdraw**, explicitly excludes the other sixteen entries, and binds its decisions to a SHA-256 review fingerprint. The approved `badges auto apply` can create or reuse one owned, GH Aura-marked private workspace for bounded PR/issue exercises.
 
-**Tiers are planning targets, not achievements granted.** Bronze suggests up to sixteen exercise PRs, while silver/gold require separately approved non-overlapping batches. `--start` is a workspace exercise index, not a verified account-wide qualifying count; an already-earned achievement must still be checked on GitHub.
+**Tiers are planning targets, not achievements granted.** Bronze suggests up to sixteen exercise PRs, while silver/gold require separately approved non-overlapping batches. `--start` (0..1023) is a workspace exercise index, not a verified account-wide qualifying count; an already-earned achievement must still be checked on GitHub.
 
 `badges auto status` reads merged exercises and closed QA issues in that exact private workspace, returning `observed-workspace-events-awards-unverified` and a manual verification link. It cannot confirm a GitHub-issued badge or account-wide tier. No HTML scraping, secondary accounts, fake coauthors, public reaction spam or sponsor payments are used.
 
