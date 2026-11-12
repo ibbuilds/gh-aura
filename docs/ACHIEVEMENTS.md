@@ -36,6 +36,10 @@ If a GitHub account is configured, the read-only report can add selected public 
 
 Some entries have overlapping concepts (Public Sponsor is a collectible achievement requiring voluntary payment). GH Aura includes that distinction in each record.
 
+## Optional private sandbox executor
+
+`gh-aura badges auto --repo OWNER/aura-achievements --pulls 2 --output badges.json` creates a fully offline reviewed plan. `gh-aura badges auto apply --review badges.json --confirm FINGERPRINT` can create an **owned, marked private repository** and run bounded generated PR/issue exercises. These are attempts at GitHub activity, not guaranteed awards. Pair Extraordinaire, Galaxy Brain and Starstruck remain excluded because they depend on others or external controls. See [badge sandbox automation](BADGE_RUN.md).
+
 ## Private repository compatibility
 
 GitHub documents that achievements can use qualifying private activity when the account chooses to show eligible private contributions. It does **not** publish a complete authoritative matrix for every badge and every trigger. Thus the registry uses:

@@ -16,13 +16,14 @@ src/contributions.mjs              real GitHub contribution periods
 src/calendar.mjs + calendar-apply.mjs  synthetic practice planner + approved new-private-repo Git push
 src/local-attribution.mjs          offline Git author metadata counts
 src/achievements.mjs               source-linked achievement capability catalog
+src/badge-run.mjs                  optional fingerprint-approved private sandbox PR/issue runner
 src/project-evidence.mjs           optional public source-file and CI observations
 src/engine.mjs + readiness.mjs      explainable repo ranking and first-minute review
 src/render.mjs + editorial.mjs      deterministic layouts, bounded optional editor brief
 src/reference.mjs                  small dated offline reference aggregate
 ```
 
-No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply` and `calendar apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Calendar apply creates a new private repository containing explicitly generated practice commits; it cannot grant achievements or edit pins.
+No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `calendar apply` and `badge-run apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Calendar apply creates a new private repository containing explicitly generated practice commits; it cannot grant achievements or edit pins. Badge automation uses private-owned marked sandbox repositories only and never asserts a GitHub award.
 
 ## Resources, privacy and data integrity
 

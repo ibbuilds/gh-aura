@@ -56,6 +56,16 @@ Real annual activity requires authenticated GraphQL reads. The `--local` mode in
 
 Details: [Activity](ACTIVITY.md) · [Achievements](ACHIEVEMENTS.md) · [Genuine task preparation](ACHIEVEMENT_ACTIONS.md).
 
+## Private badge automation (explicit)
+
+```bash
+gh-aura badges auto --repo OWNER/aura-achievements --pulls 2 --output badges.json
+# Review the output and its fingerprint before any remote action:
+gh-aura badges auto apply --review badges.json --confirm FINGERPRINT
+```
+
+Creates or resumes an **owned, private GH Aura sandbox** only. The tool can open/merge generated exercise PRs and close a clearly labeled QA issue. Public/third-party repos are never touched; other achievements require real collaborators, independent stars, accepted answers, payments or program eligibility. GitHub decides whether private/self-generated events count. See [private badge automation](BADGE_RUN.md).
+
 ## Audit, project relevance and evidence
 
 ```bash

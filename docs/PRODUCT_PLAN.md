@@ -21,9 +21,10 @@ Public analysis, profile reference browsing and drafting are read-only. Only the
 
 - `apply --review FILE`: update the public `USERNAME/USERNAME` profile README; optionally `--pr` for an unmerged PR.
 - `calendar apply --review FILE --repo OWNER/NEW_REPO --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create one NEW private repo with dated, explicitly synthetic practice work. No existing repo is rewritten or GitHub contribution credit guaranteed. [Calendar Studio](CALENDAR.md).
+- `badges auto apply --review FILE --confirm FINGERPRINT`: use one owned, marker-identified private sandbox repo for bounded generated PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
 - `work apply --review FILE`: open an unmerged PR with one user-authored `README.md` or `docs/**/*.md` documentation change. A scoped token is required; private repos require explicit consent.
 
-No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project review rules. Generated practice is labeled synthetic, not historical employment evidence.
+No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project protections. Private-owned sandbox PR merges are an explicitly reviewed exception to the general never-auto-merge documentation PR workflow. Generated practice is labeled synthetic, not historical employment evidence.
 
 ## Research
 

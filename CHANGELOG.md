@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added `badges auto` / `badge-run` plan/apply workflow: opt-in, fingerprint-bound private owned sandbox with bounded PR merges and a QA issue, excluding third-party-dependent and paid achievements. GitHub alone controls badges.
+
+
 - Added opt-in Calendar Studio: deterministic synthetic practice blueprint, UTC date ranges, percentage density, year-to-year growth, weekend preferences, observed-history gap preservation and reproducible seeds.
 - Added explicit, fingerprint-bound `calendar apply` to create a NEW private owned repository and upload generated practice commits in one Git push; existing repository history is never rewritten.
 

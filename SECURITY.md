@@ -1,6 +1,6 @@
 # Security
 
-Only three explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), and `work apply` for **one user-authored Markdown file** (`README.md` or `docs/**/*.md`) in an explicitly named, authorized repository. `work apply` creates an unmerged PR only. Calendar Studio adds a separate, explicit `calendar apply` that creates a NEW owned private repository and a dated synthetic practice history. Existing repositories and account settings are never rewritten.
+Four explicitly reviewed CLI operations can write to GitHub: `apply` for the user's public `USER/USER` profile README (directly or via an unmerged PR), and `work apply` for **one user-authored Markdown file** (`README.md` or `docs/**/*.md`) in an explicitly named, authorized repository. `work apply` creates an unmerged PR only. Calendar Studio adds a separate, explicit `calendar apply` that creates a NEW owned private repository and a dated synthetic practice history. Existing repositories and account settings are never rewritten.
 
 ## Credentials
 
@@ -35,6 +35,10 @@ The CLI caches explicitly public GET responses for five minutes; credential-deri
 Profile preview/direct publication, documentation work preview and both PR publishing paths bypass all cached state. Corrupt or unwritable cache files fall back to normal online requests, not stale authorization. Cache files are not credentials or approval artifacts.
 
 In PR mode, partial failures may leave a branch. The CLI never overwrites a conflicting review branch and never merges, deletes branches or weakens protections automatically.
+
+## Private badge sandbox
+
+`badge-run plan` / `badges auto` plans offline. `badge-run apply` requires an approved fingerprint and only creates or uses a **private, owned GH Aura-marked sandbox repository**. It can open and merge exercise PRs and close a QA issue. Existing unmarked repos, public repos, other users' repos and unexpected branches are rejected. No force-push, bypass of branch protection, public automation, third-party action or hidden scheduling. An interrupted run may leave partial private state; inspect it before retrying. GitHub can deny badge awards for sandbox/self-created events. See [badge sandbox guide](docs/BADGE_RUN.md).
 
 ## Calendar Studio synthetic private history
 

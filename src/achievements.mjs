@@ -18,7 +18,7 @@ const collectible = [
     nextAction: 'Contribute a useful change with tests/docs to a repository you maintain or collaborate on. Open a reviewed pull request and merge only when the change is ready.',
     whoControlsResult: 'maintainers-and-github', privateEligibility: 'possible-unverified-per-award',
     tierThresholdsCommunityReported: [2,16,128,1024], source: INTRO,
-    automation: 'prepare-only',
+    automation: 'private-sandbox-best-effort',
   },
   {
     id: 'pair-extraordinaire', name: 'Pair Extraordinaire',
@@ -47,16 +47,16 @@ const collectible = [
   {
     id: 'quickdraw', name: 'Quickdraw',
     how: 'Reportedly related to closing an issue or pull request shortly after opening it.',
-    nextAction: 'Close genuine duplicates or accidentally opened issues promptly; do not create throwaway tasks solely for a badge.',
+    nextAction: 'An opt-in private sandbox can open and close a clearly labeled QA issue; whether GitHub counts the event is unknown.',
     whoControlsResult: 'user-and-github', privateEligibility: 'unknown-per-award',
-    source: COMMUNITY, automation: 'not-supported',
+    source: COMMUNITY, automation: 'private-sandbox-best-effort',
   },
   {
     id: 'yolo', name: 'YOLO',
     how: 'Reportedly related to merging a pull request without code review.',
-    nextAction: 'Do not weaken a project review policy or bypass safeguards for a badge. Follow the repository’s normal review process.',
+    nextAction: 'Opt-in private self-owned sandbox merges can be requested where branch protections permit; GitHub may not award YOLO for them.',
     whoControlsResult: 'repo-policy-and-github', privateEligibility: 'unknown-per-award',
-    source: INTRO, automation: 'not-supported',
+    source: INTRO, automation: 'private-sandbox-best-effort',
   },
   {
     id: 'public-sponsor', name: 'Public Sponsor',
@@ -229,7 +229,7 @@ export function renderAchievementsMarkdown(report) {
     if (item.evidence) lines.push('Observed evidence: ' + md(JSON.stringify(item.evidence)), '');
     if (report.plan) lines.push('Awarding: GitHub only; no guaranteed trigger.', '');
   }
-  lines.push('## Important', '', report.guidance, '', 'Do not create throwaway accounts, artificial self-interactions or filler PRs to game achievements.', '',
+  lines.push('## Important', '', report.guidance, '', 'Automated private sandbox events may not earn awards; do not create fake accounts, impersonate other developers or spam public projects.', '',
     'Official profile reference: ' + OFFICIAL, '');
   return lines.join('\n');
 }
