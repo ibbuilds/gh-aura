@@ -3,6 +3,8 @@ import { repoUrl } from './text.mjs';
 import { presentationPlan } from './editorial.mjs';
 import { ORDINARY_REFERENCE, PROFILE_REFERENCE, PROFESSIONAL_EXAMPLES } from './reference.mjs';
 import { resolveProfileDirection } from './profile-directions.mjs';
+import { makeProfileSpec } from './agent-profile.mjs';
+import { getProfileSource } from './profile-sources.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
 export function editorialBrief(snapshot, config) {
@@ -14,6 +16,12 @@ export function editorialBrief(snapshot, config) {
   };
   const p = config.profile;
   const presentation = presentationPlan(p);
+  const agentSpec=makeProfileSpec({},config);
+  const sourceSuggestions=agentSpec.sourceIds.slice(0,4).map(id=>{
+    const source=getProfileSource(id);
+    return {id,url:source.url,trust:source.trust,
+      limitations:clip(source.limitations,170,'source limitation: '+id)};
+  });
   const projects = presentation.sections.projects ? selectFeatured(snapshot, config) : [];
   const storyFor = (repo) => p.projectStories.find((story) =>
     [repo.full_name.toLowerCase(), repo.name.toLowerCase()].includes(story.repo.toLowerCase()));
@@ -32,6 +40,14 @@ export function editorialBrief(snapshot, config) {
       links: p.links.slice(0, 5), extras: p.extras.slice(0, 3).map((x) => ({ title: clip(x.title, 70, 'section title'), body: clip(x.body, 300, 'extra section') })) },
     preferencesProvenance: 'User-supplied choices, not verified credentials. A target role is not a claimed current position.',
     artDirection: resolveProfileDirection(config.editorial?.direction || 'minimal'),
+    profileSpec: {
+      format:agentSpec.format,direction:agentSpec.direction,
+      goal:agentSpec.goal,maxWords:agentSpec.maxWords,
+      sections:agentSpec.sections,maxProjects:agentSpec.maxProjects,
+      links:agentSpec.links,sourceIds:agentSpec.sourceIds,
+      note:'Editable composition intent, not a README template; source IDs are reading references only.'
+    },
+    sourceSuggestions,
     editorial: { language: config.editorial?.language || 'en',
       targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
       targetCompany: clip(config.editorial?.targetCompany || '', 100, 'target company'),

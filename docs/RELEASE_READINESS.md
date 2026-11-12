@@ -1,6 +1,6 @@
 # Release and external validation
 
-**v1.16.0** — CI validates syntax, unit tests, packaged CLI and six Node/OS combinations. Live GitHub integration is **read-only**. No private remote write has been independently verified.
+**v1.17.0** — CI validates syntax, unit tests, packaged CLI and six Node/OS combinations. Live GitHub integration is **read-only**. No private remote write has been independently verified.
 
 ## External requirements
 
@@ -10,6 +10,10 @@
 4. **Actual outcomes:** verify profile contribution counts and Pull Shark, YOLO and Quickdraw on GitHub after propagation. If missing, **stop** before advancing to 1,024 PRs; [#53](https://github.com/ibbuilds/gh-aura/issues/53).
 5. **Users:** independent, consent-based first-use study; [#49](https://github.com/ibbuilds/gh-aura/issues/49).
 6. **Optional:** workspace cleanup must not delete shared activity; registry distribution and extra integrations are not release prerequisites.
+
+## AI-first validation
+
+MCP modern/legacy protocol, source discovery, ProfileSpec, Skill packaging and local read-only tools are tested. Cross-client compatibility with at least three real agents and independent first-use study remain **unverified**. No AI tool can publish.
 
 ## Current release rules
 

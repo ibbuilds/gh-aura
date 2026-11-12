@@ -15,12 +15,17 @@ function run(args, cwd = process.cwd()) {
 try {
   const [packed] = JSON.parse(run(['pack', '--json', '--ignore-scripts', '--pack-destination', directory]));
   assert.ok(packed.files.some((file) => file.path === 'src/cli.mjs'));
+  for(const path of ['AGENTS.md','llms.txt','skills/gh-aura-profile/SKILL.md',
+    'src/mcp-server.mjs','src/agent-tools.mjs','src/agent-profile.mjs',
+    'src/profile-sources.mjs','src/agent-command.mjs']) {
+    assert.ok(packed.files.some(file=>file.path===path),'Missing packaged '+path);
+  }
   assert.ok(packed.files.every((file) => !file.path.startsWith('tests/') &&
     !file.path.startsWith('.github/') && !file.path.startsWith('research/') &&
     !file.path.startsWith('scripts/') && !file.path.startsWith('docs/') &&
     file.path !== '.gh-aura.json'));
   assert.ok(packed.files.every((file) => ['src', 'README.md', 'LICENSE',
-    'CHANGELOG.md', 'SECURITY.md', 'package.json'].includes(file.path.split('/')[0])));
+    'CHANGELOG.md', 'SECURITY.md', 'AGENTS.md', 'llms.txt', 'skills', 'package.json'].includes(file.path.split('/')[0])));
   assert.ok(packed.files.some((file) => file.path === 'src/reference.mjs'));
   assert.ok(packed.files.some((file) => file.path === 'src/achievement-matrix.mjs'));
   assert.ok(packed.files.some((file) => file.path === 'src/badge-write-budget.mjs'));
@@ -46,5 +51,16 @@ try {
     assert.equal(command.status,0,command.stderr);
     assert.equal(JSON.parse(command.stdout).format,format);
   }
-  console.log('Packed CLI installed and executed successfully without registry access.');
+  const commands=[
+    [['agent','capabilities','--json'],value=>value.writesExposed===false],
+    [['sources','list','--json'],value=>value.count>=10],
+    [['agent','spec','--direction','technical'],value=>value.format==='gh-aura-profile-spec-v1'],
+  ];
+  for(const [args,verify] of commands){
+    const output=spawnSync(process.execPath,[cli,...args],{
+      encoding:'utf8',cwd:directory,timeout:10000});
+    assert.equal(output.status,0,output.stderr);
+    assert.ok(verify(JSON.parse(output.stdout)),args.join(' '));
+  }
+  console.log('Packed AI-first CLI and Skill validated without registry access.');
 } finally { rmSync(directory, { recursive: true, force: true }); }

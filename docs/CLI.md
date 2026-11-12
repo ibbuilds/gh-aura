@@ -34,6 +34,18 @@ gh-aura badges auto next --goal max --strategy git-batch --output next.json
 
 Every batch requires its own reviewed fingerprint. Up to 16 PRs per batch, one marked private workspace, never a guaranteed award. Optional `badges auto accounts` verifies two distinct tokens can read that workspace, without writing. [Badge rules](ACHIEVEMENTS.md) · [Runner](BADGE_RUN.md).
 
+## Agents: MCP, Skill and curated sources
+
+```bash
+gh-aura agent capabilities --json
+gh-aura sources list --json
+gh-aura sources recommend --query "icons" --external --direction expressive --json
+gh-aura agent spec --direction technical --goal "backend" --output spec.json
+gh-aura mcp
+```
+
+MCP is local stdio (modern `2026-07-28` / legacy `2025-11-25`), with read-only profile, source, diff, Pins, Activity and Badges tools. **No agent publish/approval.** Configure a compatible client with `{"mcpServers":{"gh-aura":{"command":"gh-aura","args":["mcp"]}}}`, or use the [Agent Skill](../skills/gh-aura-profile/SKILL.md). Third-party images require opt-in.
+
 ## AI-assisted art direction (not fixed templates)
 
 ```bash

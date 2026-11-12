@@ -62,6 +62,14 @@ export async function main(argv = process.argv.slice(2)) {
     process.stdout.write('Usage: gh-aura ' + spec.usage + '\nOptions: ' + spec.flags.map((flag) => '--' + flag).join(', ') + '\n'); return;
   }
   validateOptions(command, options);
+  if(command==='mcp') {
+    (await import('./mcp-server.mjs')).startMcpStdio();
+    return;
+  }
+  if(command==='agent'||command==='sources') {
+    (await import('./agent-command.mjs')).runAgentCommand(command,options);
+    return;
+  }
   if (command === 'badge-run') {
     await (await import('./badge-run.mjs')).runBadgeAutomation(options.positional[0],options);
     return;

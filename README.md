@@ -1,6 +1,6 @@
 # GH Aura
 
-Local GitHub CLI: inspect activity, explore achievements, draft a profile README and recommend projects to pin.
+**AI-first GitHub profile toolkit.** Your AI creates original, professional READMEs using GH Aura's source library and tools. CLI mode also works without AI.
 
 **Node.js 22+ · Free · No runtime dependencies**
 
@@ -35,14 +35,30 @@ gh-aura badges auto --tier base --strategy git-batch --output badges.json
 
 Review each JSON plan before applying it. Activity needs a verified author email; badges need a token with private repo/PR/issue access. GitHub decides whether synthetic practice appears on the graph or earns an achievement. **No badges are guaranteed.**
 
-For an original README assisted by any AI (without rigid templates or an AI subscription):
+## Connect an AI agent
+
+MCP-compatible clients can use local `gh-aura mcp`:
+
+```json
+{"mcpServers":{"gh-aura":{"command":"gh-aura","args":["mcp"]}}}
+```
+
+Or use the [portable Agent Skill](skills/gh-aura-profile/SKILL.md) and CLI:
+
+```bash
+gh-aura agent capabilities --json
+gh-aura sources recommend --query "markdown" --direction technical --json
+gh-aura agent spec --direction technical --goal "backend engineer"
+```
+
+For a writing prompt usable with any AI:
 
 ```bash
 gh-aura brief --prompt --direction technical --output prompt.md
 # Directions: barebones, minimal, technical, expressive
 ```
 
-You control sections, projects, links and visuals through `gh-aura config`. The AI only drafts text; GH Aura never sends your token to an AI provider.
+You control sections, projects, links and visuals through `gh-aura config`. The AI drafts and revises; MCP only reads, validates and previews. **No AI tool publishes or approves.**
 
 To publish a real profile draft:
 
