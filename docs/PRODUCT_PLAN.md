@@ -1,49 +1,29 @@
-# GH Aura — product scope and status
+# Product scope and acceptance
 
-**Current release:** v1.14.0 (optional atomic Git batching for badges); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.15.0
 
-## The product
+The four primary modules are implemented. A passed CI test does **not** establish an actual GitHub award or production-write success.
 
-GH Aura helps developers show **real, inspectable work** clearly on GitHub. It has four independent modules:
+| Module | Shipped behavior | Evidence | Remaining gate |
+| --- | --- | --- | --- |
+| Activity | Read contribution history; offline date plans; apply synthetic practice to one private workspace | Unit/local Git + live **read-only** checks | Real private write and contribution attribution |
+| Badges | Eligibility catalog; Pull Shark/YOLO/Quickdraw event attempts; tiers and atomic Git batching | Mock API + local bare Git checks | Verify awards and private GitHub push on disposable account |
+| README | Draft styles, en/es, review diff, direct/PR publication | E2E mocked GitHub publishing | Independent first-use study |
+| Pins | Rank public repos with evidence and role preferences | Unit + read-only integration | User pins manually on GitHub |
 
-| Module | Shipped CLI | What it does |
-| --- | --- | --- |
-| Activity | `activity` / `contributions` | Inspect actual activity, plan labeled synthetic date ranges and explicitly apply to a reusable private workspace without rewriting existing history |
-| Achievements | `badges` / `achievements` | Map 19 known achievements/highlights, stage Pull Shark progression through base/Bronze/Silver/Gold, verify review-free PR merges and quick closures in the shared private workspace; never promise awards |
-| Profile | `readme` / `profile` | Minimal, regular or flashy README drafts; 0–100 visual intensity, en/es labels, section/project/story overrides, optional external writing |
-| Showcase | `pins` / `showcase` | Rank up to six public projects for the intended role and inspect documented project evidence |
+Additional commands: `audit`, `work`, `config`, `story`, `brief`, `references`.
 
-Supporting commands: `audit`, `config`, `story`, `brief`, `check`, `references`, `preview`, `apply`, `work`.
+## Release policy
 
-The four commands share one GH Aura CLI and optional marked private workspace. Observed contribution history and genuine portfolio evidence remain distinct from explicitly labeled synthetic practice; the latter is not evidence of employment.
+Only the **latest published GitHub Release** has downloadable assets. On successful release publication, CI removes older published release objects **without deleting their Git tags or Git history**. No npm registry publication is configured.
 
-## Write boundary
+## Open gates
 
-Public analysis, profile reference browsing and drafting are read-only. Only these commands can write remotely, **after reviewing an exact diff or dated plan and approving it explicitly**:
+- **P0:** Repository administrator must enable `main` branch protection and required checks — [#47](https://github.com/ibbuilds/gh-aura/issues/47).
+- **P1:** Validate real Activity/Badges private writes — [#48](https://github.com/ibbuilds/gh-aura/issues/48), including actual achievements — [#53](https://github.com/ibbuilds/gh-aura/issues/53).
+- **P2:** Independent usability study — [#49](https://github.com/ibbuilds/gh-aura/issues/49).
+- **Optional:** Safe workspace deletion [#52](https://github.com/ibbuilds/gh-aura/issues/52); npm distribution [#50](https://github.com/ibbuilds/gh-aura/issues/50).
 
-- `apply --review FILE`: update the public `USERNAME/USERNAME` profile README; optionally `--pr` for an unmerged PR.
-- `activity apply --review FILE --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create **or reuse** one marked owned private workspace, append dated synthetic practice without force pushing or overwriting paths. Optional `--repo OWNER/REPO` overrides the configured workspace. [Activity guide](CALENDAR.md).
-- `badges auto apply --review FILE --confirm FINGERPRINT`: reuse that same marked owned private workspace for bounded PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. `badges auto status` and `badges auto next --tier ...` are read-only; the latter checks complete PR/tree evidence before planning another approved batch. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
-- `work apply --review FILE`: open an unmerged PR with one user-authored `README.md` or `docs/**/*.md` documentation change. A scoped token is required; private repos require explicit consent.
+No production private repositories, additional accounts, official achievement API or automatic profile pins are assumed. Generated exercises are explicitly synthetic.
 
-No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project protections. Private-owned sandbox PR merges are an explicitly reviewed exception to the general never-auto-merge documentation PR workflow. Generated practice is labeled synthetic, not historical employment evidence.
-
-## Research
-
-The primary offline reference is a dated structural study of [200 company-associated, ordinary-visibility engineering accounts](../research/ORDINARY_STUDY.md) from 35 organizations. A smaller employer-source cohort is documented separately. Research does **not** establish employment or hiring outcomes. GH Aura does not download reference accounts while generating a README.
-
-## Operating rules
-
-- Use GitHub's documented REST/GraphQL API, request/byte budgets, conditional ETags, a persisted per-account badge write ledger and a bounded local public cache. Historical/ambiguous data stays `unknown`; private content never leaks through public reports.
-- Favor one straightforward command over another abstraction or mandatory configuration step.
-- Require a source link and honest confidence label for achievement and project evidence; a README heading or CI config is not passing tests.
-- Versioned GitHub releases only after syntax, unit, offline package and live **read-only** integration checks pass on the supported OS/Node matrix.
-- Keep generated documentation local until the user intentionally reviews and authorizes publication.
-
-## Limits and future validation
-
-GitHub decides whether events contribute to the graph, which achievements are awarded, and which repositories are actually pinned. A profile cannot guarantee hiring. A 60-second recruiter study has **not** been carried out; [an optional protocol](HUMAN_VALIDATION.md) exists but is not a release prerequisite or evidence of success.
-
-Open external release and validation gates are documented in [release readiness](RELEASE_READINESS.md). Active work is tracked in [GitHub Issues](https://github.com/ibbuilds/gh-aura/issues). The current shipped command syntax is documented in [CLI.md](CLI.md); **do not treat old proposals as released features**.
-
-[Architecture](ARCHITECTURE.md) · [Security](../SECURITY.md) · [Contribution guide](../CONTRIBUTING.md)
+[Validation checklist](RELEASE_READINESS.md)

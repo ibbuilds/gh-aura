@@ -1,44 +1,19 @@
 # Architecture
 
-A small **Node.js 22+**, ES-module, zero-runtime-dependency CLI. No hosted component, daemon, browser interface, mandatory AI provider or telemetry.
+Node.js 22+ CLI; ES modules; no runtime dependencies, server or background worker.
 
-## Main paths
+| Area | Runtime |
+| --- | --- |
+| CLI and configuration | `src/cli.mjs`, `src/config.mjs` |
+| GitHub reads and cache | `src/github.mjs`, `src/cache.mjs` |
+| Activity | `src/contributions.mjs`, `src/calendar*.mjs` |
+| Achievements | `src/achievement-matrix.mjs`, `src/badge-run.mjs` |
+| Fast badge staging and write budget | `src/badge-bulk-git.mjs`, `src/badge-write-budget.mjs` |
+| README and review | `src/render.mjs`, `src/workflow.mjs` |
+| Pins and evidence | `src/engine.mjs`, `src/project-evidence.mjs` |
 
-```text
-src/cli.mjs + cli-options.mjs       small command parser/help + lazy routing
-src/commands/local.mjs             local config, project stories and draft checks
-src/commands/read.mjs              bounded read-only GitHub snapshot lifecycle
-src/commands/publish.mjs           explicit reviewed profile README writes
-src/work.mjs                       explicit reviewed single-file documentation PR
-src/github.mjs + cache.mjs          REST/GraphQL adapter and public-only ETag cache
-src/session.mjs                    HTTP request/response-size budgets and stats
-src/contributions.mjs              real GitHub contribution periods
-src/calendar.mjs + calendar-apply.mjs  date planner + reviewed fast-forward private workspace push
-src/local-attribution.mjs          offline Git author metadata counts
-src/achievements.mjs + achievement-matrix.mjs  sourced catalog and eligible private routes
-src/badge-run.mjs + workspace.mjs  reviewed PR/issue exercises + shared workspace identity
-src/badge-bulk-git.mjs              optional atomic create-only PR-source Git push
-src/badge-write-budget.mjs          atomic local per-account rolling write quota
-src/project-evidence.mjs           optional public source-file and CI observations
-src/engine.mjs + readiness.mjs      explainable repo ranking and first-minute review
-src/render.mjs + editorial.mjs      deterministic layouts, bounded optional editor brief
-src/reference.mjs                  small dated offline reference aggregate
-```
+Reads and plans never write remotely. Only explicitly reviewed `apply` commands can publish, with bounded targets and fresh revision checks. Badge practice and dated activity share one marked private workspace. Synthetic activity is not genuine employment evidence.
 
-No read, plan, draft, or profile-reference command is allowed to mutate GitHub. Only explicit `apply`, `work apply`, `activity apply` (legacy `calendar apply`) and `badges auto apply` cross the remote write boundary, after SHA-bound review and fresh revision checks. Neither profile nor work writes alter existing Git history. Activity and badge operations can share one marked, private, owned repository. Activity appends commits by fast-forward only after checking the marker, remote head and planned path collisions; it cannot grant achievements or edit pins. Badge batches are individually SHA-bound and capped at sixteen PRs; the runner paces content writes, reserves hourly quota across local invocations, reuses verified merge SHA for the next PR branch and binds each merge to the generated PR head. An optional v3 reviewed strategy stages up to sixteen new source branch refs in one atomic Git push, with fresh parent SHA and per-ref absence leases, never directly touching the default branch. Read-only `badges auto status` checks bounded pages of workspace PR/issue events and sampled submitted-review/merger evidence. `badges auto next --goal max` progresses through reported 2, 16, 128 and 1,024 PR checkpoints, never claims a GitHub-awarded badge. Deletion is not automated.
+CI tests Node 22/24 across Linux, macOS and Windows, package installation, and **read-only** live GitHub access. Private remote writes are mocked or tested against local Git repositories—not proven in a real private GitHub account.
 
-## Resources, privacy and data integrity
-
-- Public snapshot reads use a five-minute local cache and ETags; the publishing path bypasses cache.
-- Every read has a request and response-byte budget. Optional deep/README/CI checks are **opt-in** and report unknown data honestly.
-- Authenticated reads confirm public visibility before exporting previously listed repository content. User-provided job postings and local author email identities are never uploaded.
-- No untrusted project code is executed, no raw reference biographies are stored, and GitHub tokens are not embedded in writing briefs.
-- GitHub decides contribution attribution and badge awarding; observed metadata and user-supplied stories are classified separately.
-
-## Verification and maintenance
-
-`npm run check`, `npm test`, `npm run test:package` and `npm run test:live` are the main gates. CI runs Node 22/24 on Linux, macOS and Windows, with a strictly read-only public GitHub integration. Remote write cases are covered with isolated test transports.
-
-The normal package ships only `src/`, the top-level README, license, security policy and changelog. Developer research datasets, scripts, CI and detailed documentation remain in the GitHub source repository.
-
-[CLI reference](CLI.md) · [Security](../SECURITY.md) · [Product scope](PRODUCT_PLAN.md) · [Research](../research/README.md)
+[Commands](CLI.md) · [Security](../SECURITY.md)
