@@ -73,9 +73,10 @@ export function fastImportCalendar(plan,authorName,authorEmail,options={}) {
       '\ncommitter '+name+' <'+authorEmail+'> '+tz+'\n'+section(message);
     if(previous!==null)payload+='from :'+previous+'\n';
     else if(options.baseSha)payload+='from '+options.baseSha+'\n';
-    payload+='M 100644 inline '+file+'\n'+section(text)+'\n';
+    payload+='M 100644 inline '+file+'\n'+section(text);
     if(n===1 && options.initializeWorkspace)
-      payload+='M 100644 inline README.md\n'+section(WORKSPACE_README)+'\n';
+      payload+='M 100644 inline README.md\n'+section(WORKSPACE_README);
+    payload+='\n';
     previous=n;
   }
   return Buffer.from(payload,'utf8');
