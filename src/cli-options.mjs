@@ -115,7 +115,7 @@ export function validateOptions(command, options) {
           Object.keys(options).some(key=>!allowed.includes(key))) {
         throw Error('badges auto next requires --tier base|bronze|silver|gold; optional --repo, --pulls, --role, --no-quickdraw, --output.');
       }
-      if(options.pulls!==undefined&&(!/^\\d+$/.test(options.pulls)||
+      if(options.pulls!==undefined&&(!/^\d+$/.test(options.pulls)||
           Number(options.pulls)<1||Number(options.pulls)>16))
         throw Error('--pulls must be an integer 1..16 for badges auto next.');
     } else if (action === 'apply') {
