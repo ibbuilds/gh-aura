@@ -11,13 +11,13 @@ export const SPECS = {
   apply: { usage: 'apply --review review.json [--pr] | apply [USER] --file draft.md --approve CODE [--pr]', flags: [...COMMON, 'file', 'approve', 'review', 'format', 'pr'], max: 1 },
   showcase: { usage: 'showcase [USER] [--goal TEXT] [--limit 6] [--inspect 6]', flags: [...DATA, 'goal', 'limit'], max: 1 },
   achievements: { usage: 'achievements [USER] [--scope all|free|attainable] [--plan] [--badge ID] [--private] [--json]', flags: [...READ, 'format', 'output', 'force', 'scope', 'plan', 'badge', 'private'], max: 1 },
-  contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--days] [--private] [--recover] [--details]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'plan', 'format', 'output', 'force', 'details'], max: 1 },
+  contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--days] [--private] [--recover] [--details]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'format', 'output', 'force', 'details'], max: 1 },
   brief: { usage: 'brief [USER] [--prompt] [--style minimal|regular|flashy | --visual 0..100] [-o brief.json]', flags: [...DATA, 'style', 'visual', 'prompt'], max: 1 },
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
 const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge']);
-const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover']);
+const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan']);
 export const HELP = [
   'GH Aura — a GitHub profile toolkit. You choose every change.', '',
   'Start:', '  gh-aura init USER', '  gh-aura audit',
