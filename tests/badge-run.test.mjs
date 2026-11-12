@@ -82,7 +82,9 @@ function mockAPI(options={}) {
         closed_at:options.patchSlowClose?'2026-11-12T01:08:00Z':'2026-11-12T01:00:05Z'});
     }
     if(path.startsWith(base+'/contents/docs/gh-aura/exercise-')&&method==='GET') {
-      return options.alreadyDone?response({sha:'c'.repeat(40),type:'file'}):response({},404);
+      const number=Number(/exercise-(\\d{4})\\.md/.exec(path)?.[1]);
+      const done=options.alreadyDone||options.doneIndices?.includes(number);
+      return done?response({sha:'c'.repeat(40),type:'file'}):response({},404);
     }
     if(path.startsWith(base+'/git/ref/heads/gh-aura/badge-')&&method==='GET'){
       if(options.pendingBranch&&path.endsWith('/'+options.pendingBranch))
@@ -473,4 +475,31 @@ test('status refuses to count reviewed or third-party merged PRs as YOLO candida
     assert.equal(result.events.yoloReviewEvidence[0].qualifiesAsEvent,false);
     assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   }
+});
+
+test('an exhausted persistent write budget stops before any GitHub mutation',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared'});
+  const p=plan({pulls:1,quickdraw:false});
+  let checks=0;
+  await assert.rejects(applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:()=>{checks++;throw Error('Local hourly content budget exhausted');},
+    sleep:async()=>{}
+  }),/budget exhausted/);
+  assert.equal(checks,1);
+  assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+});
+
+test('an incomplete replay never relies on stale cached default-branch SHA',async()=>{
+  const api=mockAPI({existing:true,existingMarker:'shared',doneIndices:[1]});
+  const p=plan({pulls:2,quickdraw:false});
+  const result=await applyBadgeRun(p,{
+    confirm:p.fingerprint,token:'test-only',fetch:api.fetch,
+    reserveWrite:()=>{},sleep:async()=>{}
+  });
+  assert.deepEqual(result.skippedAlreadyMerged,[1]);
+  assert.equal(result.mergedPulls.length,1);
+  const baseReads=api.requests.filter(x=>x.path===('/repos/'+repo+'/git/ref/heads/main'));
+  assert.equal(baseReads.length,1);
+  assert.equal(api.requests.filter(x=>x.method!=='GET'&&x.path==='/user/repos').length,0);
 });
