@@ -36,6 +36,12 @@ export async function run(command, options) {
       const report = await achievementReport(null, config, { badge: options.badge, scope: options.scope, plan: options.plan, private: options.private });
       emit(options.format === 'json' ? report : renderAchievementsMarkdown(report), options); return;
     }
+    if (command === 'contributions' && options.local) {
+      const { inspectLocalGit, renderLocalAttribution } = await import('../local-attribution.mjs');
+      const result = inspectLocalGit(options.local, { from: options.from, to: options.to, emailsFile: options['emails-file'] });
+      emit(options.format === 'json' ? result : renderLocalAttribution(result), options);
+      return;
+    }
     const login = loginFor(options, config);
     const includeProfile = ['audit', 'brief', 'diff'].includes(command) || (command === 'profile' && Boolean(options.keep));
     const snapshot = await getSnapshot(login, { ...api, maxRepos: config.scan.maxRepos, includeProfile });

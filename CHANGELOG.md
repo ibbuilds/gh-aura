@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added offline `contributions --local PATH [--emails-file FILE]` for bounded Git author identity attribution without printing emails or making GitHub requests. Preserves original timestamps and never modifies history.
+
 ## 1.5.1 — 2026-11-11
 
 - Added `contributions --plan` with conditional, future-only task ideas for actual owned repositories; zero extra network requests and no calendar or commit scheduling.
