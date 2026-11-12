@@ -17,7 +17,10 @@ try {
   assert.ok(packed.files.some((file) => file.path === 'src/cli.mjs'));
   for(const path of ['AGENTS.md','llms.txt','skills/gh-aura-profile/SKILL.md',
     'src/mcp-server.mjs','src/agent-tools.mjs','src/agent-profile.mjs',
-    'src/profile-sources.mjs','src/agent-command.mjs']) {
+    'src/profile-sources.mjs','src/agent-command.mjs',
+    'src/profile-query.mjs','src/profile-source-extra.mjs',
+    'src/profile-custom-sources.mjs','src/profile-techniques.mjs',
+    'src/profile-biography.mjs']) {
     assert.ok(packed.files.some(file=>file.path===path),'Missing packaged '+path);
   }
   assert.ok(packed.files.every((file) => !file.path.startsWith('tests/') &&
@@ -62,5 +65,16 @@ try {
     assert.equal(output.status,0,output.stderr);
     assert.ok(verify(JSON.parse(output.stdout)),args.join(' '));
   }
-  console.log('Packed AI-first CLI and Skill validated without registry access.');
+  for(const [args,verify] of [
+    [['sources','design','--query','terminal','--json'],
+      data=>data.techniques.some(x=>x.id==='code-portrait')],
+    [['agent','bio','--voice','technical','--bio-words','75','--json'],
+      data=>data.format==='gh-aura-bio-guide-v1'&&data.biography.maxWords===75],
+  ]){
+    const output=spawnSync(process.execPath,[cli,...args],{
+      encoding:'utf8',cwd:directory,timeout:10000});
+    assert.equal(output.status,0,output.stderr);
+    assert.ok(verify(JSON.parse(output.stdout)),args.join(' '));
+  }
+  console.log('Packed AI-first CLI, source library, biography and Skill validated offline.');
 } finally { rmSync(directory, { recursive: true, force: true }); }
