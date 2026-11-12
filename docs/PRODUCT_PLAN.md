@@ -1,6 +1,6 @@
 # GH Aura — product scope and status
 
-**Current release:** v1.8.1 (1.8.0 workflow hardening); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
+**Current release:** v1.9.0 (unified activity and private workspace); Node.js 22+, CLI-only, zero runtime dependencies. GH Aura is user-directed, free to run, and does not require an AI provider, server, browser dashboard or subscription.
 
 ## The product
 
@@ -8,22 +8,22 @@ GH Aura helps developers show **real, inspectable work** clearly on GitHub. It h
 
 | Module | Shipped CLI | What it does |
 | --- | --- | --- |
-| Activity | `activity` / `contributions` | Read actual years/date ranges, explain private visibility and missing attribution, inspect local Git author data, suggest future genuine work |
-| Achievements | `badges` / `achievements` | Source-linked badge opportunity registry, eligibility caveats, selected evidence and genuine-task preparation |
+| Activity | `activity` / `contributions` | Inspect actual activity, plan labeled synthetic date ranges and explicitly apply to a reusable private workspace without rewriting existing history |
+| Achievements | `badges` / `achievements` | Explore eligibility and attempt bounded private PR/issue exercises in the same workspace; report operations, never promise awards |
 | Profile | `readme` / `profile` | Minimal, regular or flashy README drafts; 0–100 visual intensity, en/es labels, section/project/story overrides, optional external writing |
 | Showcase | `pins` / `showcase` | Rank up to six public projects for the intended role and inspect documented project evidence |
 
 Supporting commands: `audit`, `config`, `story`, `brief`, `check`, `references`, `preview`, `apply`, `work`.
 
-The four modules above analyze authentic profile and project evidence. **Calendar Studio and private achievement exercises are optional, separate, clearly labeled synthetic sandbox tools**, not a substitute for genuine portfolio work.
+The four commands share one GH Aura CLI and optional marked private workspace. Observed contribution history and genuine portfolio evidence remain distinct from explicitly labeled synthetic practice; the latter is not evidence of employment.
 
 ## Write boundary
 
 Public analysis, profile reference browsing and drafting are read-only. Only these commands can write remotely, **after reviewing an exact diff or dated plan and approving it explicitly**:
 
 - `apply --review FILE`: update the public `USERNAME/USERNAME` profile README; optionally `--pr` for an unmerged PR.
-- `calendar apply --review FILE --repo OWNER/NEW_REPO --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create one NEW private repo with dated, explicitly synthetic practice work. No existing repo is rewritten or GitHub contribution credit guaranteed. [Calendar Studio](CALENDAR.md).
-- `badges auto apply --review FILE --confirm FINGERPRINT`: use one owned, marker-identified private sandbox repo for bounded generated PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
+- `activity apply --review FILE --confirm FINGERPRINT --author-name NAME --author-email EMAIL`: create **or reuse** one marked owned private workspace, append dated synthetic practice without force pushing or overwriting paths. Optional `--repo OWNER/REPO` overrides the configured workspace. [Activity guide](CALENDAR.md).
+- `badges auto apply --review FILE --confirm FINGERPRINT`: reuse that same marked owned private workspace for bounded PR/issue exercises; may merge sandbox PRs, but **cannot guarantee GitHub awards**. No other repos or participants are touched. [Automation guide](BADGE_RUN.md).
 - `work apply --review FILE`: open an unmerged PR with one user-authored `README.md` or `docs/**/*.md` documentation change. A scoped token is required; private repos require explicit consent.
 
 No background activity, no rewriting existing Git history, no automatic profile pins or guaranteed badge awards, and no bypass of project protections. Private-owned sandbox PR merges are an explicitly reviewed exception to the general never-auto-merge documentation PR workflow. Generated practice is labeled synthetic, not historical employment evidence.
