@@ -1,22 +1,20 @@
-# Release and external validation
+# Release and independent validation
 
-**v1.17.0** — CI validates syntax, unit tests, packaged CLI and six Node/OS combinations. Live GitHub integration is **read-only**. No private remote write has been independently verified.
+**v1.18.0** — Tests cover Node 22/24 on Linux, Windows and macOS, offline installed CLI, local MCP, real bare Git/mocked GitHub and **read-only** public GitHub integration.
 
-## External requirements
+## Product gates
 
-1. **GitHub admin:** protect `main`, require PRs and passing CI checks; [issue #47](https://github.com/ibbuilds/gh-aura/issues/47).
-2. **Disposable GitHub account:** create one private GH Aura workspace; apply a tiny `activity` plan and a two-PR `badges auto --tier base` plan. Verify marker, ownership, privacy, retained files, idempotency and branch history; [#48](https://github.com/ibbuilds/gh-aura/issues/48).
-3. **Second account:** if using `badges auto accounts`, confirm two distinct consenting accounts can read the exact same private marked repo, no token appears in logs, and no changes were made. This is only an authorization preflight.
-4. **Actual outcomes:** verify profile contribution counts and Pull Shark, YOLO and Quickdraw on GitHub after propagation. If missing, **stop** before advancing to 1,024 PRs; [#53](https://github.com/ibbuilds/gh-aura/issues/53).
-5. **Users:** independent, consent-based first-use study; [#49](https://github.com/ibbuilds/gh-aura/issues/49).
-6. **Optional:** workspace cleanup must not delete shared activity; registry distribution and extra integrations are not release prerequisites.
+- [x] Source library, bilingual search and an explicitly opt-in, bounded user catalog.
+- [x] Composable techniques with GitHub rendering, licensing and accessibility notes.
+- [x] Original biography voice, perspective, focus, owner claims and verified-evidence caveats.
+- [x] ProfileSpec refinements, portable AI briefs, MCP read-only tools and user-gated publishing.
+- [ ] Test complete tasks in three actual MCP/Skill agent clients and five independent users — [#61](https://github.com/ibbuilds/gh-aura/issues/61), [#49](https://github.com/ibbuilds/gh-aura/issues/49).
+- [ ] Test a rendered README for each design direction against GitHub desktop/mobile themes and verify external URLs/licenses.
 
-## AI-first validation
+## GitHub gates
 
-MCP modern/legacy protocol, source discovery, ProfileSpec, Skill packaging and local read-only tools are tested. Cross-client compatibility with at least three real agents and independent first-use study remain **unverified**. No AI tool can publish.
+- [ ] Protect `main` with required CI/PR checks — [#47](https://github.com/ibbuilds/gh-aura/issues/47).
+- [ ] Validate one real, marked private Activity/Badges workspace — [#48](https://github.com/ibbuilds/gh-aura/issues/48).
+- [ ] Verify actual awarded achievements — [#53](https://github.com/ibbuilds/gh-aura/issues/53).
 
-## Current release rules
-
-CI creates a tagged tarball and `SHA256SUMS.txt` only on a green `main` run with a new version. After verifying the new release assets, it deletes previous **published release objects**, preserving all historical Git tags and commits. If cleanup fails, CI fails; it never deletes tags or source history.
-
-No automatic deletion of private workspaces, force pushes, paid APIs or synthetic badge claims.
+The release job publishes a verified tarball/checksum only after green CI, then deletes older published release *objects*, preserving Git tags and commits. No npm registry publication or paid AI service.

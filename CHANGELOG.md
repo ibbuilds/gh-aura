@@ -1,12 +1,12 @@
 # Changelog
 
-## 1.17.0 — 2026-11-12
+## 1.18.0 — 2026-11-12
 
-- Added curated, attributable profile sources with maintenance, license and privacy metadata.
-- Added editable AI profile intents and CLI discovery without fixed README templates.
-- Added Agent Skill, AGENTS.md, llms.txt and local modern/legacy stdio MCP server.
-- Made README evidence, preview/diff, sources, Pins, Activity and Badges available as **read-only agent tools**; publishing stays human-controlled.
-- Added source, profile intent, protocol, CLI and package regression tests.
-- External multi-agent validation and actual badge awards remain unverified.
+- Expanded AI profile sources to 30 curated references and user-selected local catalogs.
+- Added bilingual intent discovery and 25 composable GitHub Markdown/visual techniques.
+- Added original biography voice, perspective, narrative focus, user claims and grounded writing guidance.
+- Extended editable ProfileSpec with custom visual briefs and licensed image references.
+- Exposed techniques and biography guides through CLI, MCP and portable AI prompts.
+- Preserved human review, zero runtime dependencies and the latest-only GitHub Release policy.
 
-History: [Git tags](https://github.com/ibbuilds/gh-aura/tags).
+[Historical tags](https://github.com/ibbuilds/gh-aura/tags).

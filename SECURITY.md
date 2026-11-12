@@ -1,22 +1,19 @@
 # Security
 
-GH Aura is local-first. MCP and Agent Skills expose **read-only** discovery, context, specs, validation and diff; no publish, approval, arbitrary shell or remote write tool. Reads and plans do not write to GitHub. The only remote write commands are `apply`, `work apply`, `activity apply` and `badges auto apply`; each needs an explicit reviewed plan or diff.
+GH Aura is local-first. The MCP and Agent Skill are **read-only** for GitHub: they inspect, recommend, validate Markdown and compare drafts. They cannot run shell commands, approve, merge, publish or modify accounts.
 
-## Scope
+## AI and user sources
 
-- `apply` targets the authenticated user's profile README, with optional unmerged `--pr`.
-- `work apply` opens an unmerged PR changing one user-authored Markdown document.
-- `activity apply` appends labeled synthetic commits to one **owned, marked private workspace**, without force pushing existing history.
-- `badges auto apply` reuses that workspace for bounded PR/issue exercises; it may merge **only** its own synthetic sandbox PRs.
+- Curated entries contain URLs and license/maintenance caveats. **No remote asset is fetched, embedded or executed automatically**.
+- Optional custom sources are loaded only from a user-configured local `GH_AURA_SOURCES_FILE` or explicit CLI `--catalog` file, limited to a bounded regular JSON file. MCP tools cannot select arbitrary file paths.
+- User sources are labeled unverified. Third-party images/services require opt-in, rights checks and accessible text fallbacks.
+- Profile facts and biography claims are labeled as public observations, user-supplied assertions or unknowns. A URL alone is not proof of employment or authorship.
+- Never send `GH_TOKEN`, `GITHUB_TOKEN` or collaborator tokens to an AI model. A connected AI client may separately process returned profile data under its own privacy terms.
 
-Public, foreign, forked, archived or unmarked existing workspace repos are rejected. No automatic workspace deletion, force push, other users, private-account scraping or guaranteed achievement award.
+## Human-controlled publication
 
-## Permissions and approvals
+The owner **independently** saves and reviews Markdown, runs `gh-aura preview --file draft.md --save review.json` and confirms `gh-aura apply --review review.json --pr`. No agent tool creates approval codes or a publish review file. Publishing checks the current remote revision and stops on unexpected changes.
 
-Use `GH_TOKEN` or `GITHUB_TOKEN` with the least required access. Optional `GH_AURA_COLLAB_TOKEN` authenticates a distinct second account for the **read-only** `badges auto accounts` preflight only. It must already be authorized to view the private workspace. Neither token is stored by GH Aura. Contents write is needed for publishing; PRs and Issues permissions are needed for badge events. Never commit tokens or put them in review files. Private repository reads require explicit consent. Publish paths bypass stale public caches, validate branch/file revisions and reject changed approvals.
+Other explicit writes: `work apply` proposes one unmerged documentation PR; `activity apply` and `badges auto apply` reuse one **owned, marked private workspace** with separately reviewed plans. No unrelated repository takeover, force push, unapproved deletion or automatic achievement guarantees.
 
-The opt-in `git-batch` mode creates up to sixteen source refs with one atomic, create-only Git push; it never pushes the default branch or overwrites an existing ref. It requires local Git and a distinct reviewed plan. A local write ledger limits GH Aura to 480 reserved writes per hour/account on one machine, **not** GitHub's actual global quota. Unknown outcomes are not automatically retried.
-
-MCP runs over bounded local stdio. Third-party sources are reference data, opt-in for external images, and never copied or fetched automatically. Agent tools do not mint approval codes; users review Markdown and publish through independent CLI actions. The connected AI application may process returned profile data under its own privacy policy.
-
-Check GitHub directly after ambiguous operations. Report vulnerabilities through a private channel, never a public issue containing secrets.
+MCP runs on local stdio with bounded JSON-RPC messages. GitHub rate limits apply; uncertain writes are never retried automatically. Report vulnerabilities privately, without sharing credentials.
