@@ -10,6 +10,7 @@ export async function run(command, options) {
   if (options.style) { config.profile.style = options.style; config.profile.visual = -1; }
   if (options.visual !== undefined) config.profile.visual = Number(options.visual);
   if (options.language) config.editorial.language = options.language;
+  if (options.direction) config.editorial.direction = options.direction;
   if (options.goal !== undefined) {
     config.showcase.goal = options.goal;
     if (command === 'audit') config.editorial.targetRole = options.goal;

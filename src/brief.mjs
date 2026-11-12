@@ -2,6 +2,7 @@ import { selectFeatured } from './engine.mjs';
 import { repoUrl } from './text.mjs';
 import { presentationPlan } from './editorial.mjs';
 import { ORDINARY_REFERENCE, PROFILE_REFERENCE, PROFESSIONAL_EXAMPLES } from './reference.mjs';
+import { resolveProfileDirection } from './profile-directions.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
 export function editorialBrief(snapshot, config) {
@@ -30,6 +31,7 @@ export function editorialBrief(snapshot, config) {
       featured: projects.map((x) => x.full_name), sections: presentation.sections,
       links: p.links.slice(0, 5), extras: p.extras.slice(0, 3).map((x) => ({ title: clip(x.title, 70, 'section title'), body: clip(x.body, 300, 'extra section') })) },
     preferencesProvenance: 'User-supplied choices, not verified credentials. A target role is not a claimed current position.',
+    artDirection: resolveProfileDirection(config.editorial?.direction || 'minimal'),
     editorial: { language: config.editorial?.language || 'en',
       targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
       targetCompany: clip(config.editorial?.targetCompany || '', 100, 'target company'),

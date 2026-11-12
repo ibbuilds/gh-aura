@@ -2,7 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--pulls 0..16] [--output badges.json] | badges auto next --goal max [--strategy git-batch] [--output next.json] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
+  'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
   calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
@@ -16,11 +16,11 @@ export const SPECS = {
   showcase: { usage: 'showcase [USER] [--goal TEXT] [--limit 6] [--inspect 3] [--deep 2]', flags: [...DATA, 'goal', 'limit', 'checks'], max: 1 },
   achievements: { usage: 'achievements [USER] [--scope all|free|attainable] [--plan] [--badge ID] [--private] [--prepare ID --repo OWNER/NAME]', flags: [...READ, 'format', 'output', 'force', 'scope', 'plan', 'badge', 'private', 'prepare', 'repo'], max: 1 },
   contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--local PATH --emails-file FILE] [--days] [--recover] [--plan]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'plan', 'local', 'emails-file', 'format', 'output', 'force', 'details'], max: 1 },
-  brief: { usage: 'brief [USER] [--prompt] [--style minimal|regular|flashy | --visual 0..100] [-o brief.json]', flags: [...DATA, 'style', 'visual', 'language', 'prompt', 'checks'], max: 1 },
+  brief: { usage: 'brief [USER] [--prompt] [--direction barebones|minimal|technical|expressive] [--visual 0..100] [-o prompt.md]', flags: [...DATA, 'style', 'visual', 'direction', 'language', 'prompt', 'checks'], max: 1 },
   check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
+const VALUES = new Set(['direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
 const FLAGS = new Set(['help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
@@ -80,6 +80,7 @@ export function validateOptions(command, options) {
   if (options.format && !['json', 'markdown'].includes(options.format)) throw new Error('--format must be json or markdown.');
   if (options.force && !options.output && !options.save && command !== 'init') throw new Error('--force requires a local output file; it never overrides GitHub revisions.');
   if (options.language && !['en', 'es'].includes(options.language)) throw new Error('--language must be en or es.');
+  if (options.direction && !['barebones','minimal','technical','expressive'].includes(options.direction)) throw new Error('--direction must be barebones, minimal, technical or expressive.');
   if (options.visual !== undefined && options.style) throw new Error('Choose --visual or --style, not both.');
   if (options.visual !== undefined && (!/^\d+$/.test(options.visual) || Number(options.visual) > 100)) throw new Error('--visual must be an integer from 0 to 100.');
   if (options.budget !== undefined && (!/^\d+$/.test(options.budget) || Number(options.budget) < 1 || Number(options.budget) > 500)) throw new Error('--budget must be an integer from 1 to 500.');
@@ -131,13 +132,13 @@ export function validateOptions(command, options) {
           planKeys.some(key=>options[key]!==undefined)) {
         throw Error('badge-run apply requires --review FILE and --confirm FINGERPRINT only.');
       }
-    } else if (action === 'status') {
+    } else if (action === 'status' || action === 'accounts') {
       if (options.positional.length !== 1 ||
           Object.keys(options).some(key=>!['positional','repo'].includes(key))) {
-        throw Error('badges auto status accepts only optional --repo OWNER/PRIVATE_WORKSPACE.');
+        throw Error('badges auto '+action+' accepts only optional --repo OWNER/PRIVATE_WORKSPACE.');
       }
     } else {
-      throw Error('Use badges auto plan, next, apply or status.');
+      throw Error('Use badges auto plan, next, apply, status or accounts.');
     }
   }
   if (command === 'calendar') {

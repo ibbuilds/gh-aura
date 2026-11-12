@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { httpsUrl, plain } from './text.mjs';
+import { resolveProfileDirection } from './profile-directions.mjs';
 
 export const DEFAULT_CONFIG = {
   user: '',
@@ -16,7 +17,7 @@ export const DEFAULT_CONFIG = {
     weights: { relevance: 30, substance: 25, presentation: 20, maintenance: 15, popularity: 10 },
   },
   achievements: { earned: [], excluded: [], allowPaid: false },
-  editorial: { language: 'en', targetRole: '', targetCompany: '', maxWords: 220 },
+  editorial: { language: 'en', targetRole: '', targetCompany: '', direction: 'minimal', maxWords: 220 },
 };
 
 export const SECTIONS = new Set(['about', 'projects', 'technologies', 'links', 'stats', 'extras']);
@@ -101,6 +102,7 @@ export function validateConfig(config) {
   integer(p.visual, -1, 100, 'profile.visual');
   string(config.editorial.targetRole, 'editorial.targetRole');
   string(config.editorial.targetCompany, 'editorial.targetCompany');
+  resolveProfileDirection(config.editorial.direction);
   if (!['en', 'es'].includes(config.editorial.language)) throw new Error('editorial.language must be en or es.');
   integer(config.editorial.maxWords, 30, 1000, 'editorial.maxWords');
   integer(config.scan.maxRepos, 1, 500, 'scan.maxRepos');

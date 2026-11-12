@@ -32,7 +32,7 @@ export async function main(argv = process.argv.slice(2)) {
     if (first === 'auto' || first === 'automate') {
       command = 'badge-run';
       tokens = tokens.slice(1);
-      if (!['plan', 'next', 'apply', 'status'].includes(tokens[0])) tokens = ['plan', ...tokens];
+      if (!['plan', 'next', 'apply', 'status', 'accounts'].includes(tokens[0])) tokens = ['plan', ...tokens];
     } else {
     if (first === 'free' || first === 'all' || first === 'attainable') {
       tokens = ['--scope', first === 'all' ? 'all' : first, '--plan', ...tokens.slice(1)];
