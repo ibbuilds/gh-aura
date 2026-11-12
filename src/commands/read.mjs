@@ -18,6 +18,9 @@ export async function run(command, options) {
   if (options.inspect !== undefined) config.scan.inspectRepos = Number(options.inspect);
   if (options.deep !== undefined) config.scan.deepRepos = Number(options.deep);
   validateConfig(config);
+  if (options.checks && !config.scan.deepRepos) {
+    throw new Error('--checks needs --deep 1..5 (or scan.deepRepos configured).');
+  }
   // Parse the local job posting BEFORE any GitHub request. Never send its text to GitHub.
   const jobPosting = options.job ? (await import('../job-match.mjs')).readJobPosting(options.job) : null;
   const session = new ReadSession({ maxRequests: options.budget === undefined ? config.scan.maxRequests : Number(options.budget) });
@@ -51,7 +54,7 @@ export async function run(command, options) {
     }
     if (['audit', 'showcase', 'brief'].includes(command) && config.scan.deepRepos) {
       const { inspectProjectEvidence } = await import('../project-evidence.mjs');
-      await inspectProjectEvidence(snapshot, config, config.scan.deepRepos, api);
+      await inspectProjectEvidence(snapshot, config, config.scan.deepRepos, { ...api, verifyChecks: options.checks });
     }
     if (cache?.hits) process.stderr.write('Using recent public data (up to 5 minutes old). Use --fresh to reload.\n');
     if (command === 'achievements') {

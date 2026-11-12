@@ -47,6 +47,8 @@ Use the repository or a GitHub Release tarball; the npm registry package is not 
 | `check --file draft.md` | Check a draft locally; no API or AI calls |
 | `config show` | Inspect or change local preferences |
 
+For extra evidence on selected repositories, `gh-aura audit --deep 2 --checks` optionally reads the latest GitHub Actions run and published release, with explicit API costs. A passing past run is not proof of engineering quality.
+
 To compare a job description saved locally against your **selected projects**, run `gh-aura audit --job vacancy.txt --deep 2`. GH Aura never sends the vacancy to GitHub or calls a writing provider; keyword matches are evidence clues, not verified skills or hiring odds. See [local job matching](docs/JOB_MATCH.md).
 
 The audit now includes an evidence-based **first-minute hiring-manager review**, with visible facts, missing presentation work and unknown technical quality. It never produces a fake employment probability or hireability percentage. See [Hiring readiness and next steps](docs/HIRING_READINESS.md).

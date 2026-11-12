@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { classifyRepositoryTree, inspectProjectEvidence } from '../src/project-evidence.mjs';
 import { rankRepositories } from '../src/engine.mjs';
+import { getJSON } from '../src/github.mjs';
 import { DEFAULT_CONFIG } from '../src/config.mjs';
 import { snapshotForTest } from './fixtures.mjs';
 
@@ -85,4 +86,70 @@ test('deep inspection validates budget and preserves privacy when metadata is in
   });
   assert.equal(calls, 0);
   assert.equal(snapshot.repos[0].evidence.state, 'unknown');
+});
+
+
+test('optional --checks reads the latest Actions result and release with two extra public requests', async () => {
+  const snapshot = snapshotForTest();
+  const cfg = config();
+  cfg.profile.featured = ['backend-toolkit'];
+  snapshot.repos[0].default_branch = 'main';
+  const urls = [];
+  const fetch = async (url) => {
+    urls.push(url);
+    if (url.includes('/git/trees/')) return Response.json(tree);
+    if (url.includes('/actions/runs?')) return Response.json({ total_count: 1, workflow_runs: [{
+      status: 'completed', conclusion: 'success', head_sha: 'a'.repeat(40),
+      created_at: '2026-11-10T00:00:00Z',
+      html_url: 'https://github.com/example/backend-toolkit/actions/runs/123',
+    }] });
+    if (url.includes('/releases?')) return Response.json([{
+      draft: false, tag_name: 'v1.0.0', published_at: '2026-11-09T00:00:00Z',
+      html_url: 'https://github.com/example/backend-toolkit/releases/tag/v1.0.0',
+    }]);
+    throw Error('Unexpected URL: ' + url);
+  };
+  await inspectProjectEvidence(snapshot, cfg, 1, {
+    token: '', verifyChecks: true, fetch,
+  });
+  assert.equal(urls.length, 3);
+  const evidence = snapshot.repos[0].evidence;
+  assert.equal(evidence.verifiedSignals.latestActionsRun.status, 'success');
+  assert.equal(evidence.verifiedSignals.latestPublishedRelease.status, 'observed');
+  assert.match(evidence.verifiedSignals.note, /not proof/i);
+  assert.match(evidence.verifiedSignals.latestActionsRun.source, /actions\/runs\/123/);
+  assert.match(evidence.verifiedSignals.latestPublishedRelease.source, /releases\/tag\/v1\.0\.0/);
+});
+
+test('missing GitHub Actions/release records do not imply failed tests or no deploys', async () => {
+  const snapshot = snapshotForTest(), cfg = config();
+  cfg.profile.featured = ['backend-toolkit'];
+  snapshot.repos[0].default_branch = 'main';
+  const fetch = async (url) => {
+    if (url.includes('/git/trees/')) return Response.json(tree);
+    if (url.includes('/actions/runs?')) return Response.json({ total_count: 0, workflow_runs: [] });
+    if (url.includes('/releases?')) return Response.json([]);
+    throw Error('Unexpected URL');
+  };
+  await inspectProjectEvidence(snapshot, cfg, 1, { token: '', verifyChecks: true, fetch });
+  const observed = snapshot.repos[0].evidence.verifiedSignals;
+  assert.equal(observed.latestActionsRun.status, 'no-actions-run-observed');
+  assert.equal(observed.latestPublishedRelease.status, 'not-observed');
+  assert.equal(snapshot.repos[0].evidence.state, 'available');
+});
+
+
+test('authenticated public Actions inspection rejects a repository that became private', async () => {
+  const calls = [];
+  await assert.rejects(getJSON('/repos/example/backend-toolkit/actions/runs?branch=main&per_page=1', {
+    token: 'restricted-test-token', publicRead: true,
+    fetch: async (url) => {
+      calls.push(url);
+      return Response.json({
+        full_name: 'example/backend-toolkit', private: true, default_branch: 'main',
+      });
+    },
+  }), /not publicly readable/);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0], 'https://api.github.com/repos/example/backend-toolkit');
 });

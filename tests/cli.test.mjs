@@ -59,3 +59,13 @@ test('argument parser handles quoted values, aliases and duplicate detection', (
   assert.throws(() => parseArgs(['--force=true']), /takes no value/);
   assert.throws(() => parseArgs(['--output']), /Missing value/);
 });
+
+
+test('CI/release checks are opt-in and require an explicit deep repository scan', () => {
+  const result = command(['audit', 'octocat', '--checks']);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /--checks needs --deep/);
+  const forbidden = command(['profile', 'octocat', '--checks']);
+  assert.notEqual(forbidden.status, 0);
+  assert.match(forbidden.stderr, /not supported/);
+});

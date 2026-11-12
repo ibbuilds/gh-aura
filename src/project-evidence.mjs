@@ -41,6 +41,38 @@ export function classifyRepositoryTree(repo, tree, observedAt = new Date().toISO
 }
 
 /**
+ * Latest public GitHub Actions observation and published release, not proof
+ * that tests passed on the current default branch or that the code works.
+ */
+export function describeVerifiedSignals(repo, runs, releases) {
+  const root = 'https://github.com/' + repo.full_name;
+  const observed = Array.isArray(runs?.workflow_runs) ? runs.workflow_runs[0] : null;
+  const url = String(observed?.html_url || '');
+  const status = observed
+    ? observed.status === 'completed'
+      ? String(observed.conclusion || 'unknown')
+      : String(observed.status || 'unknown')
+    : Array.isArray(runs?.workflow_runs) ? 'no-actions-run-observed' : 'unknown';
+  const latest = Array.isArray(releases) ? releases.find((x) => x && !x.draft) : null;
+  const releaseUrl = String(latest?.html_url || '');
+  return {
+    state: 'observations-only',
+    latestActionsRun: {
+      status, headSha: /^[a-f0-9]{40}$/i.test(observed?.head_sha || '') ? observed.head_sha : null,
+      observedAt: observed?.created_at || null,
+      source: url.startsWith(root + '/actions/runs/') ? url : null,
+    },
+    latestPublishedRelease: {
+      status: latest ? 'observed' : Array.isArray(releases) ? 'not-observed' : 'unknown',
+      tag: typeof latest?.tag_name === 'string' ? latest.tag_name.slice(0, 80) : null,
+      publishedAt: latest?.published_at || null,
+      source: releaseUrl.startsWith(root + '/releases/') ? releaseUrl : null,
+    },
+    note: 'GitHub Actions may use different branches/events or external CI. A previous successful run is not proof that the latest commit passes, and a published release does not prove code correctness.',
+  };
+}
+
+/**
  * Bounded to 0–5 explicitly chosen or otherwise recommended public projects.
  * One Git tree request per repo, excluding an authenticated metadata visibility
  * verification that may be required to prevent private-data leakage.
@@ -66,6 +98,19 @@ export async function inspectProjectEvidence(snapshot, config, count, options = 
     } catch (error) {
       if ([401, 403, 429].includes(error.status) || /budget|exceeds|GitHub request/i.test(error.message)) throw error;
       repo.evidence = { state: 'unknown', categories: {}, note: 'Git tree could not be inspected; no missing code quality signals inferred.' };
+    }
+    if (options.verifyChecks === true) {
+      const base = '/repos/' + encodeURIComponent(owner) + '/' + encodeURIComponent(name);
+      const optional = async (url) => {
+        try { return await getJSON(url, { ...options, publicRead: true }); }
+        catch (error) {
+          if ([401, 403, 429].includes(error.status) || /budget|exceeds|GitHub request/i.test(error.message)) throw error;
+          return null;
+        }
+      };
+      const runs = await optional(base + '/actions/runs?branch=' + branch + '&per_page=1');
+      const releases = await optional(base + '/releases?per_page=1');
+      repo.evidence.verifiedSignals = describeVerifiedSignals(repo, runs, releases);
     }
   }
   return snapshot;
