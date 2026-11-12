@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { planBadgeRun, badgeDigest, loadBadgePlan, applyBadgeRun,
-  inspectBadgeWorkspace } from '../src/badge-run.mjs';
+  inspectBadgeWorkspace, planNextBadgeRun, nextBadgePlanFromWorkspace } from '../src/badge-run.mjs';
 import { parseArgs, validateOptions } from '../src/cli-options.mjs';
 
 const repo='example/aura-achievements';
@@ -75,7 +75,15 @@ function mockAPI(options={}) {
     if(path.startsWith(base+'/contents/docs/gh-aura/exercise-')&&method==='GET') {
       return options.alreadyDone?response({sha:'c'.repeat(40),type:'file'}):response({},404);
     }
-    if(path.startsWith(base+'/git/ref/heads/gh-aura/badge-')&&method==='GET')return response({},404);
+    if(path.startsWith(base+'/git/ref/heads/gh-aura/badge-')&&method==='GET'){
+      if(options.pendingBranch&&path.endsWith('/'+options.pendingBranch))
+        return response({object:{sha:'a'.repeat(40)}});
+      return response({},404);
+    }
+    if(path===base+'/git/trees/main?recursive=1'&&method==='GET')
+      return response(options.tree??{
+        truncated:false,tree:[{path:'README.md'},{path:'docs/gh-aura/exercise-0001.md'}]
+      });
     if(path===base+'/git/ref/heads/main'&&method==='GET')
       return response({object:{sha:'a'.repeat(40)}});
     if(path===base+'/git/refs'&&method==='POST'){
@@ -271,4 +279,88 @@ test('Quickdraw refuses unknown full issue history rather than duplicating actio
     token:'test-only',fetch:api.fetch,sleep:async()=>{}}),/history exceeds/);
   assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
   assert.ok(api.requests.some(x=>x.path.endsWith('per_page=100&page=12')));
+});
+
+test('next plans only uncompleted private-workspace tier exercises without a GitHub write',async()=>{
+  const folder=mkdtempSync(join(tmpdir(),'aura-next-batch-'));
+  try{
+    const file=join(folder,'next.json');
+    const api=mockAPI({existing:true,existingMarker:'shared',statusMixed:true});
+    const planned=await planNextBadgeRun({repo,tier:'bronze',output:file,
+      token:'test-only',fetch:api.fetch});
+    assert.equal(planned.format,'gh-aura-private-badges-v2');
+    assert.equal(planned.tier,'bronze');
+    assert.equal(planned.start,1);
+    assert.equal(planned.pulls,15);
+    assert.equal(planned.quickdraw,false);
+    assert.equal(planned.nextStart,16);
+    assert.equal(loadBadgePlan(file).fingerprint,planned.fingerprint);
+    assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+    assert.ok(api.requests.every(x=>
+      x.path==='/user'||x.path.startsWith('/repos/'+repo)));
+    assert.equal(api.created,false);
+  }finally{rmSync(folder,{recursive:true,force:true});}
+});
+
+test('next refuses interrupted exercise branches before writing an approval file',async()=>{
+  const folder=mkdtempSync(join(tmpdir(),'aura-next-interrupted-'));
+  try{
+    const file=join(folder,'unwritten.json');
+    const api=mockAPI({existing:true,existingMarker:'shared',statusMixed:true,
+      pendingBranch:'gh-aura/badge-0002'});
+    await assert.rejects(planNextBadgeRun({repo,tier:'bronze',output:file,
+      token:'test-only',fetch:api.fetch}),/Review branch/);
+    assert.equal(existsSync(file),false);
+    assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+  }finally{rmSync(folder,{recursive:true,force:true});}
+});
+
+test('next fails closed for unmarked or public workspaces without creating a repo',async()=>{
+  for(const options of [
+    {existing:true,existingMarker:false},
+    {existing:true,privateRepo:false},
+  ]) {
+    const api=mockAPI(options);
+    await assert.rejects(planNextBadgeRun({repo,tier:'bronze',
+      token:'test-only',fetch:api.fetch}),/marker missing|non-private/);
+    assert.equal(api.requests.filter(x=>x.method!=='GET').length,0);
+    assert.equal(api.created,false);
+  }
+});
+
+test('next refuses incomplete, conflicting and gapped workspace evidence',()=>{
+  const result={
+    status:'observed-workspace-events-awards-unverified',
+    repository:'https://github.com/'+repo,
+    verify:'https://github.com/example?tab=achievements',
+    observed:{pullsComplete:true,issuesComplete:true},
+    events:{mergedPullRequests:[{index:1}]},
+  };
+  const tree={truncated:false,tree:[
+    {path:'README.md'}, {path:'docs/gh-aura/exercise-0001.md'},
+  ]};
+  const args={repo,tier:'bronze'};
+  assert.equal(nextBadgePlanFromWorkspace(result,tree,args).start,1);
+  const reached={...result,events:{mergedPullRequests:[{index:1},{index:2}]}};
+  const withTwo={truncated:false,tree:[
+    ...tree.tree,{path:'docs/gh-aura/exercise-0002.md'}]};
+  const noMore=nextBadgePlanFromWorkspace(reached,withTwo,{repo,tier:'base'});
+  assert.equal(noMore.status,'target-reached-in-workspace-events-award-unverified');
+  assert.equal(noMore.observedMergedExercises,2);
+  assert.throws(()=>nextBadgePlanFromWorkspace(
+    {...result,observed:{...result.observed,pullsComplete:false}},tree,args),
+    /incomplete/);
+  assert.throws(()=>nextBadgePlanFromWorkspace(result,{...tree,truncated:true},args),
+    /tree inspection/);
+  assert.throws(()=>nextBadgePlanFromWorkspace(result,{...tree,tree:[]},args),
+    /lacks its default-branch document/);
+  assert.throws(()=>nextBadgePlanFromWorkspace(result,
+    {...tree,tree:[...tree.tree,{path:'docs/gh-aura/exercise-0002.md'}]},args),
+    /Unverified exercise file/);
+  assert.throws(()=>nextBadgePlanFromWorkspace(
+    {...result,events:{mergedPullRequests:[{index:1},{index:1}]}},tree,args),
+    /duplicate/);
+  assert.throws(()=>nextBadgePlanFromWorkspace(
+    {...result,events:{mergedPullRequests:[{index:2}]}},withTwo,args),
+    /Unverified exercise file|Gaps/);
 });
