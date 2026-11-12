@@ -48,7 +48,7 @@ GitHub documents that achievements can use qualifying private activity when the 
 - `requires-public-discovery` — other people must see/star a public repo; private stars are not a credible substitute.
 - `not-applicable` — paid, program, historical or otherwise not repository-specific.
 
-The CLI can prepare real project improvements and track user-reported achievements in a future phase, but **does not** automate mass reactions, create puppet collaborators, self-star repositories, disable code review or manufacture PRs.
+`achievements --prepare` is read-only. The separate reviewed `badges auto` runner can create and merge **generated exercise PRs** in an owned, marked private sandbox and close a QA issue. It does not create puppet collaborators, self-star repositories, spam public discussions or bypass existing branch protections. Private and self-owned events may not count toward awards.
 
 ## Evidence levels
 

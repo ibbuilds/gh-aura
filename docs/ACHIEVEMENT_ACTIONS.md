@@ -48,6 +48,10 @@ This is a **general user-directed documentation contribution** and may naturally
 
 See [reviewed work PRs](WORK.md).
 
+## Separate account-owned private sandbox automation
+
+The optional [badge runner](BADGE_RUN.md) is a distinct explicitly approved mode. `badges auto plan` / `badges auto apply` can create a **private, owned, marked sandbox** and run up to 16 generated exercise PR merges plus a QA issue close; those events may not produce GitHub badges. Ordinary `achievements --prepare` stays **read-only** and never opens PRs, merges anything or invents real tasks.
+
 ## Security
 
 A token is optional for public preparation; no token is needed for private **local-only** preparation. The ordinary bounded read cache and request/byte budget apply when reading public projects. The source of a quoted issue title is untrusted and must not be executed as a shell instruction. Review any task before deciding to work on it.

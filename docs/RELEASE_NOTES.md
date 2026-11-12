@@ -1,43 +1,61 @@
-# GH Aura 1.7.1
+# GH Aura v1.8.0
 
-Repository cleanup and packaging maintenance. No CLI behavior or command names change.
+**Calendar Studio + private Achievement workflow automation.** GH Aura remains a local CLI on Node.js 22+, with no runtime dependencies, hosted backend, paid API or mandatory AI model.
 
 ## Install
 
-Requires Node.js 22+. Download `gh-aura-1.7.1.tgz` and `SHA256SUMS.txt` from this GitHub Release:
+Download `gh-aura-1.8.0.tgz` and `SHA256SUMS.txt` from this GitHub Release, verify the checksum and install:
 
 ```bash
-npm install --global ./gh-aura-1.7.1.tgz
+npm install --global ./gh-aura-1.8.0.tgz
 gh-aura init YOUR_USERNAME
 ```
 
-The package is distributed through GitHub Releases, **not** the npm registry.
+This package is distributed on GitHub Releases, **not the public npm registry**.
 
-## Changes
-
-- Root README reduced to the actual start/review flow and four core commands.
-- Command reference, architecture notes and product scope reorganized around **shipped** behavior instead of old proposals.
-- Installable package now contains `src/`, the README, license, security policy, changelog and package metadata. Developer research, internal scripts and detailed documentation stay on GitHub, reducing downloaded bytes.
-- Retired original project-contributor dataset/collector removed from the current tree; previous Git history retains it. The current 200-engineer cohort, 100-account provenance baseline and 16 employer-source observations are preserved.
-- Added regression checks for package allowlisting and local Markdown links.
-- One-time branch pruning is designed to run only on this explicitly named cleanup merge, using an allowlist with expected branch SHAs, without touching `main`.
-
-## The supported workflow
+## New: Calendar Studio
 
 ```bash
-gh-aura activity 2022
-gh-aura badges free
-gh-aura readme minimal --output draft.md
-gh-aura pins --goal "backend engineer"
-gh-aura preview --file draft.md --save review.json
-# Only after inspecting and approving:
-gh-aura apply --review review.json --pr
+# One year with 70% target active dates
+gh-aura calendar plan 2022 --density 70 --output calendar.json
+
+# Multi-year gradually rising activity, fewer weekend sessions
+gh-aura calendar plan --from 2020 --to 2025 --density 75 --growth 65 \
+  --weekends 20 --intensity 3 --mode workweek --seed 42 --output years.json
+
+# Preserve dates already observed on your public GitHub contribution graph
+gh-aura contributions --all --days --json --output history.json
+gh-aura calendar plan 2022 --density 80 --existing history.json --output gaps.json
+
+# ONLY after reviewing exact plan and SHA-256 fingerprint:
+gh-aura calendar apply --review calendar.json --repo YOUR_USERNAME/NEW_PRIVATE_REPO \
+  --author-name "Your Display Name" --author-email YOUR_GITHUB_EMAIL \
+  --confirm FINGERPRINT
 ```
 
-Existing advanced commands are unchanged. GH Aura does not autonomously update a profile, generate artificial history, grant GitHub achievements or merge a review PR.
+The deterministic planner works **offline**. Remote apply creates a **new, owned private repository** only (never an existing one), builds the generated history using local Git fast-import and performs one Git push. Dates must be within the GitHub account lifetime; at most 20 calendar years/2,500 commits are allowed per plan.
 
-## Validation
+**Generated commits are clearly labeled synthetic practice, not verified past professional work.** GitHub decides contribution attribution based on author identity, eligible branches, dates and private-visibility settings. No historical activity is guaranteed to appear.
 
-Syntax and offline tests; installed package smoke test; and real **read-only** GitHub integration on Node.js 22/24, Linux, macOS and Windows.
+## New: private owned achievement workflow runner
 
-[Repository](https://github.com/ibbuilds/gh-aura) · [Commands](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md) · [Research](https://github.com/ibbuilds/gh-aura/tree/main/research)
+```bash
+# Plan without a token, then explicitly authorize the operation
+gh-aura badges auto --repo YOUR_USERNAME/aura-achievements --pulls 2 --output badges.json
+gh-aura badges auto apply --review badges.json --confirm FINGERPRINT
+```
+
+The runner creates (or resumes) one **owned, marked private sandbox** and can merge generated technical exercise PRs (events associated with Pull Shark and potentially YOLO) and open/close one labeled QA issue (Quickdraw attempt). The operations are bounded to 0–16 PRs per command, idempotent when previously merged, and subject to GitHub permissions/protections. No public repo, third-party account or unmarked repository is touched.
+
+**GitHub alone awards Achievements; private or self-owned events may not qualify.** Pair Extraordinaire, Galaxy Brain, Starstruck and paid/historical achievements are excluded because the required results are not fully under one private account's control.
+
+## Security / tests
+
+- All read-only CLI commands remain backward compatible: `activity`, `badges free`, `readme`, `pins`, `audit`, `story`, `work`.
+- New plan commands do not access GitHub or write to a repository. Apply requires a fingerprint, an appropriate free GitHub token and exact private ownership checks.
+- No token is embedded in Git URLs or command arguments, local plans or profile README drafts.
+- No force pushes, existing-history rewrites, account settings modifications, hidden scheduling or automatic third-party engagement.
+- Unit/integration tests verify date curves, historical gap preservation, Git fast-import/local bare-repo push, mock GitHub private repository creation, automatic PR/issue operations, replay protection and permission boundaries.
+- CI runs Node 22/24 on Linux, macOS and Windows, packed CLI smoke tests, and live strictly **read-only** GitHub integration. CI does not create a real private repo or award a badge.
+
+[Calendar Studio guide](https://github.com/ibbuilds/gh-aura/blob/main/docs/CALENDAR.md) · [Badge runner guide](https://github.com/ibbuilds/gh-aura/blob/main/docs/BADGE_RUN.md) · [Security](https://github.com/ibbuilds/gh-aura/blob/main/SECURITY.md)

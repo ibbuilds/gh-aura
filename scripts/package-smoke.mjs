@@ -30,5 +30,16 @@ try {
   assert.equal(help.status, 0, help.stderr); assert.match(help.stdout, /GH Aura/);
   const catalog = spawnSync(process.execPath, [cli, 'achievements', '--json'], { encoding: 'utf8', cwd: directory });
   assert.equal(catalog.status, 0, catalog.stderr); assert.ok(JSON.parse(catalog.stdout).catalog.length > 0);
+  for (const [args, format] of [
+    [['calendar','plan','2022','--density','0'],'gh-aura-synthetic-calendar-v1'],
+    [['badge-run','plan','--repo','example/aura-badges','--pulls','0'],'gh-aura-private-badges-v1'],
+  ]) {
+    const command = spawnSync(process.execPath,[cli,...args], {
+      encoding: 'utf8',cwd: directory,timeout: 10000,
+      env: {...process.env,GH_TOKEN:'',GITHUB_TOKEN:''},
+    });
+    assert.equal(command.status,0,command.stderr);
+    assert.equal(JSON.parse(command.stdout).format,format);
+  }
   console.log('Packed CLI installed and executed successfully without registry access.');
 } finally { rmSync(directory, { recursive: true, force: true }); }

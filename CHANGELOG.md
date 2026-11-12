@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.8.0 — 2026-11-12
 
 - Added `badges auto` / `badge-run` plan/apply workflow: opt-in, fingerprint-bound private owned sandbox with bounded PR merges and a QA issue, excluding third-party-dependent and paid achievements. GitHub alone controls badges.
 
