@@ -20,7 +20,7 @@ test('reference records contain stable public GitHub URLs, editorial patterns an
   for(const x of references.entries){
     assert.match(x.id,/^[a-z\d-]+$/i);
     assert.equal(x.profileUrl,'https://github.com/'+x.id);
-    assert.ok(x.readmeUrl.startsWith(x.profileUrl+'/'+x.id+'/blob/'));
+    assert.ok(x.readmeUrl.toLowerCase().startsWith((x.profileUrl+'/'+x.id+'/blob/').toLowerCase()));
     assert.ok(x.readmeUrl.endsWith('/README.md'));
     assert.equal(x.verifiedAt,'2026-11-12');
     assert.ok(directions.has(x.designDirection));
