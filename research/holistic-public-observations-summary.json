@@ -1,0 +1,129 @@
+{
+  "schema": "gh-aura-observed-public-profiles-summary-v1",
+  "source": "authenticated public GitHub GraphQL through GitHub Actions with read-only token",
+  "stage": "600 API observation records collected, not 600 complete visual/editorial audits",
+  "observedAtRange": [
+    "2026-11-13T02:49:39.024Z",
+    "2026-11-13T03:00:56.140Z"
+  ],
+  "counts": {
+    "candidates": 600,
+    "records": 600,
+    "graphql-public-metadata": 561,
+    "not-returned-by-github": 39,
+    "available": 561,
+    "readmes": 402,
+    "avatarURL": 561,
+    "withBiography": 513,
+    "withWebsite": 365,
+    "withPinned": 469,
+    "totalPinLinks": 2224,
+    "contributionCalendars": 561,
+    "achievementsVisuallyVerified": 0,
+    "renderedReadmeReviewed": 0,
+    "wholeProfilesReviewed": 0,
+    "categoryWinners": 0
+  },
+  "reviewStyleHypotheses": {
+    "project-showcase": 416,
+    "native-no-readme": 108,
+    "minimal-text": 72,
+    "technical-editorial": 137,
+    "visual-illustrated": 274,
+    "data-dashboard": 178
+  },
+  "limitations": [
+    "Hypotheses are overlapping category leads, not style assignments or rankings",
+    "Avatar URLs were found but the artwork was not visually judged",
+    "No verified achievement titles or badges were retrieved",
+    "Public API contribution totals do not certify engineering expertise",
+    "README is raw markdown structure, not rendered desktop/mobile GitHub validation",
+    "Missing private data stays unknown and is never inferred"
+  ],
+  "sourceBatches": [
+    {
+      "start": 0,
+      "source": 0,
+      "requests": 10,
+      "returned": 50,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 50,
+      "source": 50,
+      "requests": 10,
+      "returned": 50,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 100,
+      "source": 100,
+      "requests": 10,
+      "returned": 50,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 150,
+      "source": 150,
+      "requests": 10,
+      "returned": 50,
+      "workflowRun": 43355623277
+    },
+    {
+      "start": 200,
+      "source": 200,
+      "requests": 12,
+      "returned": 50,
+      "workflowRun": 43356044193
+    },
+    {
+      "start": 250,
+      "source": 250,
+      "requests": 10,
+      "returned": 46,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 300,
+      "source": 300,
+      "requests": 10,
+      "returned": 46,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 350,
+      "source": 350,
+      "requests": 10,
+      "returned": 42,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 400,
+      "source": 400,
+      "requests": 10,
+      "returned": 43,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 450,
+      "source": 450,
+      "requests": 10,
+      "returned": 46,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 500,
+      "source": 500,
+      "requests": 10,
+      "returned": 42,
+      "workflowRun": 43354810322
+    },
+    {
+      "start": 550,
+      "source": 550,
+      "requests": 10,
+      "returned": 46,
+      "workflowRun": 43354810322
+    }
+  ]
+}
