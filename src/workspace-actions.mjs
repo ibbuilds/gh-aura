@@ -16,7 +16,7 @@ function workspace(value,user){
 const allowed=(x,keys)=>{if(!x||typeof x!=='object'||Array.isArray(x)||Object.keys(x).some(k=>!keys.includes(k)))throw Error('Unknown workspace intent fields.');};
 export function compileWorkspaceActions(user,{activity,badges}){
   validateLogin(user);let a=null,b=null;
-  if(activity){allowed(activity,['repo','year','from','to','density','growth','weekends','intensity','seed','mode','dailyTargets','observedCounts']);
+  if(activity){allowed(activity,['repo','year','from','to','density','growth','weekends','intensity','seed','mode','role','dailyTargets','observedCounts']);
     const {repo,observedCounts,...settings}=activity;
     const history=observedCounts?new Map(Object.entries(observedCounts)):null;
     a={repo:workspace(repo,user),plan:planCalendar(settings,history)};
@@ -31,11 +31,18 @@ export function compileWorkspaceActions(user,{activity,badges}){
   return {activity:a,badges:b};
 }
 export async function prepareWorkspaceActions(user,intent,options={}){
-  let actions=compileWorkspaceActions(user,intent);
+  let prepared=intent;
   if(intent.activity&&!intent.activity.observedCounts){
-    const days=await observeCalendarDays(user,actions.activity.plan.settings,options);
-    actions=compileWorkspaceActions(user,{...intent,activity:{...intent.activity,observedCounts:Object.fromEntries(days)}});
+    // Validate intent before reads, but do not enforce the *new commit* cap on
+    // a fictitious zero baseline. Existing contributions may make this a no-op.
+    compileWorkspaceActions(user,{...intent,activity:null});
+    allowed(intent.activity,['repo','year','from','to','density','growth','weekends','intensity','seed','mode','role','dailyTargets','observedCounts']);
+    workspace(intent.activity.repo,user);
+    const range=planCalendar({...intent.activity,density:0,dailyTargets:{}});
+    const days=await observeCalendarDays(user,range.settings,options);
+    prepared={...intent,activity:{...intent.activity,observedCounts:Object.fromEntries(days)}};
   }
+  const actions=compileWorkspaceActions(user,prepared);
   const activity=actions.activity;
   if(activity?.plan.days.length){
     const base='/repos/'+activity.repo.split('/').map(encodeURIComponent).join('/'),api={...options,cache:undefined,publicRead:false};

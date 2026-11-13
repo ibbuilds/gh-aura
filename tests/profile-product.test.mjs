@@ -90,6 +90,20 @@ test('a Gold campaign stops after the pilot when the actual award is not visible
   assert.equal(batches.length,1);assert.equal(batches[0].pulls,2);
   await assert.rejects(executeBadgeCampaign(plan,'0'.repeat(64),{}, {applyBatch:async()=>assert.fail('unauthorized effect')}),/approval/);
 });
+test('an existing Pull Shark tier does not certify missing Quickdraw or YOLO campaign awards',async()=>{
+  const plan=planBadgeCampaign({repo:'example/workspace',tier:'gold'});let applied=0;
+  const report={items:[{id:'pull-shark',tier:'gold',state:'visible-award-observed'}],state:'visible-section-observed'};
+  const result=await executeBadgeCampaign(plan,plan.fingerprint,{}, {observeAwards:async()=>report,applyBatch:async()=>{applied++;return {};}});
+  assert.equal(applied,1);assert.equal(result.state,'needs-award-verification');assert.deepEqual(result.missingAwards,['yolo','quickdraw']);
+  const resumed=await executeBadgeCampaign(plan,plan.fingerprint,result,{observeAwards:async()=>report,applyBatch:async()=>{throw Error('must not scale');}});
+  assert.equal(resumed.state,'needs-award-verification');
+});
+test('a campaign with all requested awards already visible performs no exercise writes',async()=>{
+  const plan=planBadgeCampaign({repo:'example/workspace',tier:'gold'});
+  const report={state:'visible-section-observed',items:[{id:'pull-shark',tier:'gold',state:'visible-award-observed'},{id:'quickdraw',state:'visible-award-observed'},{id:'yolo',state:'visible-award-observed'}]};
+  const result=await executeBadgeCampaign(plan,plan.fingerprint,{}, {observeAwards:async()=>report,applyBatch:async()=>assert.fail('unnecessary write')});
+  assert.equal(result.state,'award-observed');assert.equal(result.nextBatch,0);
+});
 test('forged campaign progress cannot bypass earlier award milestones',async()=>{
   const plan=planBadgeCampaign({repo:'example/gh-aura-workspace',tier:'gold'});
   const result=await executeBadgeCampaign(plan,plan.fingerprint,{fingerprint:plan.fingerprint,nextBatch:4,state:'events-observed'},

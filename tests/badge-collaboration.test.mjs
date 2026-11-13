@@ -74,6 +74,11 @@ test('wrong second identity, same account, read-only collaborator, public worksp
   }
   assert.throws(()=>planBadgeCollaboration({repo:'owner/workspace',collaborator:'helper',content:'x'}),/consent/);
 });
+test('an invalid coauthor identity is rejected before creating any Git objects or public changes',async()=>{
+  const f=fixture(),plan=coauthor();
+  await assert.rejects(executeBadgeCollaboration(plan,plan.fingerprint,{...f.options,collaboratorName:'Helper\u0000Injected'}),/collaborator name/);
+  assert.equal(f.state.writes.length,0);
+});
 test('discussion exercise uses the reviewed second account to ask and accept the primary answer; replay creates no duplicates',async()=>{
   const f=fixture(),plan=discussion();await executeBadgeCollaboration(plan,plan.fingerprint,f.options);
   assert.deepEqual(f.state.writes.map(x=>x.actor),['helper','owner','helper']);

@@ -85,6 +85,33 @@ test('whole-profile intent keeps sidebar bio, README voice, pins and refinements
   assert.throws(() => makeWholeProfileSpec({ account: { email: 'private@example.org' } }), /account/);
   assert.throws(() => makeWholeProfileSpec({ account: { blog: 'javascript:alert(1)' } }), /blog/);
 });
+test('a partial composition refinement preserves selected projects, sections, biography and account fields',()=>{
+  const initial=makeWholeProfileSpec({account:{bio:'Backend tools'}});
+  initial.composition.featured=['example/tools'];initial.composition.sections.stats=false;
+  const refined=refineWholeProfileSpec(initial,{composition:{direction:'expressive',biography:{voice:'approachable'}}});
+  assert.equal(refined.composition.direction,'expressive');assert.equal(refined.composition.biography.voice,'approachable');
+  assert.equal(refined.composition.biography.maxWords,initial.composition.biography.maxWords);
+  assert.deepEqual(refined.composition.featured,['example/tools']);assert.equal(refined.composition.sections.stats,false);
+  assert.equal(refined.account.bio,'Backend tools');assert.equal(initial.composition.direction,'minimal');
+});
+test('an orphaned temporary journal does not block recovery or replace the last valid state',()=>withState(async stateDir=>{
+  const f=fixture(),plan=await prepareProfilePlan('example',{readme:false,account:{bio:'New'}},undefined,f.api);
+  const orphan=join(stateDir,plan.fingerprint+'.json.tmp');writeFileSync(orphan,'partial abandoned write');
+  const result=await executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir});
+  assert.equal(result.state,'verified');assert.equal(readFileSync(orphan,'utf8'),'partial abandoned write');
+  const saved=JSON.parse(readFileSync(join(stateDir,plan.fingerprint+'.json'),'utf8'));assert.equal(saved.state,'verified');
+}));
+test('different approved plans for one account share a writer lock before remote effects',()=>withState(async stateDir=>{
+  const f=fixture(),firstPlan=await prepareProfilePlan('example',{readme:false,account:{bio:'New'}},undefined,f.api);
+  const secondPlan=await prepareProfilePlan('example',{readme:false,account:{name:'New name'}},undefined,f.api);
+  let enter,release;const entered=new Promise(resolve=>{enter=resolve;}),hold=new Promise(resolve=>{release=resolve;});let held=false;
+  const fetch=async(url,init)=>{if(!held&&new URL(url).pathname==='/user'){held=true;enter();await hold;}return f.api.fetch(url,init);};
+  const first=executeProfilePlan(firstPlan,firstPlan.fingerprint,{...f.api,fetch,stateDir});await entered;
+  try{await assert.rejects(executeProfilePlan(secondPlan,secondPlan.fingerprint,{...f.api,stateDir}),/locked/);assert.equal(f.state.writes.length,0);}
+  finally{release();await first;}
+  const second=await executeProfilePlan(secondPlan,secondPlan.fingerprint,{...f.api,stateDir});assert.equal(second.state,'verified');
+  assert.equal(f.state.user.bio,'New');assert.equal(f.state.user.name,'New name');assert.equal(f.state.writes.length,2);
+}));
 test('planning and preview are read-only and bind exact contents, account fields and asset rights', async () => {
   const f = fixture(); const spec = makeWholeProfileSpec({ account: { bio: 'New bio' }, assets: [{ path: 'assets/diagram.svg', content: '<svg/>', encoding: 'utf-8', alt: 'Architecture', rights: 'user-owned' }] });
   const plan = await prepareProfilePlan('example', spec, draft, f.api);

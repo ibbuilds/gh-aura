@@ -1,9 +1,9 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { lstatSync, readFileSync, writeFileSync, mkdirSync, openSync, closeSync, unlinkSync, existsSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { homedir, hostname } from 'node:os';
 import { getJSON, requestJSON, decodeReadme, validateLogin, tokenFor } from './github.mjs';
-import { makeProfileSpec, validateProfileSpec } from './agent-profile.mjs';
+import { makeProfileSpec, validateProfileSpec,refineProfileSpec } from './agent-profile.mjs';
 import { plain, httpsUrl } from './text.mjs';
 import { diffText } from './diff.mjs';
 import { prepareWorkspaceActions,validateWorkspaceActions,preflightWorkspaceActions,executeWorkspaceActions } from './workspace-actions.mjs';
@@ -86,7 +86,9 @@ export function makeWholeProfileSpec(input = {}, config) {
 export function refineWholeProfileSpec(spec, changes) {
   const current = makeWholeProfileSpec(spec);
   only(changes, ['composition', 'account', 'readme', 'pins', 'assets', 'activity', 'badges'], 'refinement');
-  return makeWholeProfileSpec({ ...current, ...changes, account: { ...current.account, ...changes.account } });
+  return makeWholeProfileSpec({ ...current, ...changes,
+    composition:changes.composition===undefined?current.composition:refineProfileSpec(current.composition,changes.composition),
+    account: { ...current.account, ...changes.account } });
 }
 export function readProfileJSON(file, max = 3 * 1024 * 1024) {
   const stat = lstatSync(file);
@@ -206,7 +208,7 @@ export function profileExecutionStatus(plan,options={}){
   return {fingerprint:plan.fingerprint,state:state.state||'incomplete',operations:state.operations,
     trust:'Local status is advisory. Applying a reviewed plan verifies actual GitHub state before reporting completion.'};
 }
-function acquireExecutionLock(lock,fingerprint){
+function acquireExecutionLock(lock,fingerprint,scope=fingerprint){
   const recovery=lock+'.recovery';
   const locked=()=>Object.assign(new Error('Profile execution is locked. Inspect '+lock+' and its recorded PID before resuming.'),{code:'PROFILE_LOCKED'});
   if(existsSync(recovery))throw locked();
@@ -218,7 +220,7 @@ function acquireExecutionLock(lock,fingerprint){
     try{guard=openSync(recovery,'wx',0o600);}catch{throw locked();}
     try{
       const previous=readProfileJSON(lock,2048);
-      if(previous.fingerprint!==fingerprint||previous.hostname!==hostname()||!Number.isInteger(previous.pid)||previous.pid<1)throw locked();
+      if((previous.scope||previous.fingerprint)!==scope||previous.hostname!==hostname()||!Number.isInteger(previous.pid)||previous.pid<1)throw locked();
       let dead=false;
       try{process.kill(previous.pid,0);}catch(e){if(e.code==='ESRCH')dead=true;}
       if(!dead)throw locked();
@@ -226,9 +228,20 @@ function acquireExecutionLock(lock,fingerprint){
       fd=openSync(lock,'wx',0o600);
     }finally{closeSync(guard);unlinkSync(recovery);}
   }
-  try{writeFileSync(fd,JSON.stringify({pid:process.pid,hostname:hostname(),fingerprint,createdAt:new Date().toISOString()}));}
+  try{writeFileSync(fd,JSON.stringify({pid:process.pid,hostname:hostname(),scope,fingerprint,createdAt:new Date().toISOString()}));}
   catch(error){closeSync(fd);unlinkSync(lock);throw error;}
   return fd;
+}
+function writeExecutionState(stateFile,state){
+  const temporary=stateFile+'.'+randomUUID()+'.tmp';
+  let fd=openSync(temporary,'wx',0o600);
+  try{
+    writeFileSync(fd,JSON.stringify(state)+'\n');closeSync(fd);fd=null;
+    renameSync(temporary,stateFile);
+  }finally{
+    if(fd!==null)closeSync(fd);
+    try{unlinkSync(temporary);}catch(error){if(error.code!=='ENOENT')throw error;}
+  }
 }
 async function publishFiles(plan, repo, api, onResult) {
   const base = baseFor(plan.username), refPath = base + '/git/ref/heads/' + repo.branch.split('/').map(encodeURIComponent).join('/');
@@ -291,10 +304,13 @@ export async function executeProfilePlan(input, approval, options = {}) {
   const stateDir = options.stateDir || process.env.GH_AURA_PROFILE_STATE_DIR || join(homedir(), '.gh-aura', 'profile-executions');
   mkdirSync(stateDir, { recursive: true, mode: 0o700 });
   const stateFile = join(stateDir, plan.fingerprint + '.json'), lock = stateFile + '.lock';
-  const fd=acquireExecutionLock(lock,plan.fingerprint);
+  const ownerScope='owner:'+plan.username.toLowerCase(),ownerLock=join(stateDir,'owner-'+digest(ownerScope)+'.lock');
+  const ownerFd=acquireExecutionLock(ownerLock,plan.fingerprint,ownerScope);
+  let fd;
+  try{fd=acquireExecutionLock(lock,plan.fingerprint);}catch(error){closeSync(ownerFd);unlinkSync(ownerLock);throw error;}
   let journalValid = false;
   let state = { format: 'gh-aura-profile-execution-v1', fingerprint: plan.fingerprint, operations: {} };
-  const save = () => { const temporary = stateFile + '.tmp'; writeFileSync(temporary, JSON.stringify(state) + '\n', { flag: 'wx', mode: 0o600 }); renameSync(temporary, stateFile); };
+  const save = () => writeExecutionState(stateFile,state);
   let lastMutation = 0;
   const api = apiOptions({ ...options, fetch: async (url, init) => {
     if (init?.method && init.method !== 'GET') {
@@ -306,7 +322,7 @@ export async function executeProfilePlan(input, approval, options = {}) {
   } });
   try {
     if (existsSync(stateFile)) state = readProfileJSON(stateFile);
-    if (state.fingerprint !== plan.fingerprint || !object(state.operations)) throw Error('Execution journal is invalid.');
+    if (state.format!=='gh-aura-profile-execution-v1'||state.fingerprint !== plan.fingerprint || !object(state.operations)) throw Error('Execution journal is invalid.');
     journalValid = true;
     const who = await getJSON('/user', api);
     if (who?.login?.toLowerCase() !== plan.username.toLowerCase()) throw Error('Authenticated account does not own this profile plan.');
@@ -387,5 +403,7 @@ export async function executeProfilePlan(input, approval, options = {}) {
   } catch (error) {
     state.error = plain(error.message).slice(0, 400);state.state='incomplete'; if(journalValid)save();
     throw Object.assign(new Error(state.error), { code: 'PROFILE_EXECUTION_INCOMPLETE', journal: stateFile });
-  } finally { closeSync(fd); unlinkSync(lock); }
+  } finally {
+    try{closeSync(fd);unlinkSync(lock);}finally{closeSync(ownerFd);unlinkSync(ownerLock);}
+  }
 }

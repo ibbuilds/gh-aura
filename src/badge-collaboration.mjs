@@ -44,7 +44,7 @@ export async function preflightBadgeCollaboration(input,options={}){
   if(plan.kind==='coauthor'){
     const email=options.collaboratorEmail??process.env.GH_AURA_COLLAB_EMAIL;
     const name=options.collaboratorName??process.env.GH_AURA_COLLAB_NAME;
-    if(typeof name!=='string'||!name.trim()||name.length>100||/[<>\r\n]/.test(name)||typeof email!=='string'||!/^\S+@\S+\.\S+$/.test(email)||/[<>\r\n]/.test(email))throw Error('Configure the collaborator name and verified email locally, never in agent arguments.');
+    if(typeof name!=='string'||!name.trim()||name.length>100||/[\u0000-\u001f\u007f<>]/.test(name)||typeof email!=='string'||email.length>254||!/^\S+@\S+\.\S+$/.test(email)||/[<>\r\n]/.test(email))throw Error('Configure the collaborator name and verified email locally, never in agent arguments.');
     const user=await getJSON('/user',secondary);
     const noreply=typeof user?.id==='number'&&email.toLowerCase()===(user.id+'+'+plan.collaborator+'@users.noreply.github.com').toLowerCase();
     const emails=noreply?[]:await getJSON('/user/emails?per_page=100',secondary);

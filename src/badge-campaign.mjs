@@ -5,6 +5,10 @@ import { observeVisibleAchievements, observedPullSharkTier } from './achievement
 import { validateLogin } from './github.mjs';
 
 const fingerprint=plan=>createHash('sha256').update(JSON.stringify(plan)).digest('hex');
+function missingCampaignAwards(report,plan,tier=plan.tier){
+  const ids=[...new Set(plan.batches.flatMap(batch=>batch.attempts.map(x=>x.badge)))],visible=new Set(report?.items?.filter(x=>x.state==='visible-award-observed').map(x=>x.id)||[]);
+  return ids.filter(id=>id==='pull-shark'?!observedPullSharkTier(report,tier):!visible.has(id));
+}
 export function planBadgeCampaign({repo,tier='base',strategy='rest',role='general engineering',quickdraw=true}={}){
   if(!Object.hasOwn(PULL_SHARK_TIERS,tier))throw Error('Unknown campaign tier.');
   const batches=[],milestones=[];let start=0;
@@ -32,7 +36,7 @@ export async function executeBadgeCampaign(input,approval,state={},options={}){
   const progress={format:'gh-aura-badge-campaign-state-v1',fingerprint:plan.fingerprint,nextBatch:0,...state};
   if(progress.fingerprint!==plan.fingerprint||!Number.isInteger(progress.nextBatch)||progress.nextBatch<0||progress.nextBatch>plan.batches.length)throw Error('Campaign progress is invalid.');
   let report=await observe();
-  if(observedPullSharkTier(report,plan.tier))return {...progress,state:'award-observed',award:report};
+  if(!missingCampaignAwards(report,plan).length)return {...progress,state:'award-observed',award:report};
   if(progress.state==='unknown'){
     const batch=plan.batches[progress.nextBatch];
     if(!batch)throw Error('Unknown final campaign result.');
@@ -43,14 +47,19 @@ export async function executeBadgeCampaign(input,approval,state={},options={}){
     progress.nextBatch++;progress.state='events-observed';persist(progress);
   }
   for(let i=progress.nextBatch;i<plan.batches.length;i++){
-    const prior=plan.milestones.filter(x=>x.afterBatch<=i).find(x=>!observedPullSharkTier(report,x.tier));
-    if(prior&&!observedPullSharkTier(report,prior.tier))return {...progress,state:'needs-award-verification',requiredTier:prior.tier,award:report};
+    const prior=plan.milestones.filter(x=>x.afterBatch<=i).find(x=>missingCampaignAwards(report,plan,x.tier).length);
+    if(prior)return {...progress,state:'needs-award-verification',requiredTier:prior.tier,missingAwards:missingCampaignAwards(report,plan,prior.tier),award:report};
     progress.nextBatch=i;progress.state='unknown';persist(progress);
     try{progress.lastBatch=await apply(plan.batches[i]);}
     catch(error){progress.error=String(error.message).slice(0,300);persist(progress);throw error;}
     progress.nextBatch=i+1;progress.state='events-observed';delete progress.error;persist(progress);
     const milestone=plan.milestones.find(x=>x.afterBatch===i+1);
-    if(milestone){report=await observe();if(!observedPullSharkTier(report,milestone.tier))return {...progress,state:'needs-award-verification',requiredTier:milestone.tier,award:report};}
+    if(milestone){
+      report=await observe();const missing=missingCampaignAwards(report,plan,milestone.tier);
+      if(missing.length)return {...progress,state:'needs-award-verification',requiredTier:milestone.tier,missingAwards:missing,award:report};
+      if(!missingCampaignAwards(report,plan).length)return {...progress,state:'award-observed',award:report};
+    }
   }
-  return {...progress,state:observedPullSharkTier(report,plan.tier)?'award-observed':'needs-award-verification',award:report};
+  const missing=missingCampaignAwards(report,plan);
+  return {...progress,state:missing.length?'needs-award-verification':'award-observed',missingAwards:missing,award:report};
 }

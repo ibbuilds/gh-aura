@@ -42,3 +42,18 @@ test('preparing daily targets reads existing contributions and computes only def
   const result=await prepareWorkspaceActions('owner',{activity:{repo:'owner/workspace',from:'2022-01-01',to:'2022-01-02',dailyTargets:{'2022-01-01':2,'2022-01-02':1}}},f.options);
   assert.deepEqual(result.activity.plan.days.map(d=>d.count),[1,1]);assert.equal(result.activity.plan.settings.expectedCounts['2022-01-01'],2);assert.equal(f.state.writes,0);
 });
+test('a long range with existing activity is not rejected by a fictitious new-commit total',async()=>{
+  let requests=0;
+  const fetch=async(url,init)=>{
+    requests++;assert.equal(new URL(url).pathname,'/graphql');const {variables}=JSON.parse(init.body),user={};
+    for(const key of Object.keys(variables).filter(k=>/^from\d*$/.test(k))){
+      const suffix=key.slice(4),days=[];
+      for(let ms=Date.parse(variables[key]);ms<=Date.parse(variables['to'+suffix]);ms+=86400000)
+        days.push({date:new Date(ms).toISOString().slice(0,10),contributionCount:1});
+      user[suffix?'y'+suffix:'contributionsCollection']={contributionCalendar:{weeks:[{contributionDays:days}]}};
+    }
+    return Response.json({data:{user}});
+  };
+  const result=await prepareWorkspaceActions('owner',{activity:{repo:'owner/workspace',from:'2020-01-01',to:'2023-12-31',density:100,intensity:6}},{fetch,token:'fixture'});
+  assert.equal(result.activity.plan.summary.syntheticCommits,0);assert.ok(requests>0);
+});
