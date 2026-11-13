@@ -2,7 +2,7 @@
   "schema": "gh-aura-public-profile-page-observations-v1",
   "start": 0,
   "count": 20,
-  "note": "Partial GitHub public page extracts from a third-party retrieval service; NOT a holistic audit. No raw biographies, locations or emails saved. Unobserved facets remain unknown.",
+  "note": "Partial GitHub public page extracts from a third-party retrieval service; NOT a holistic audit. No raw biographies, locations or emails saved. Unobserved facets remain unknown. Some GitHub pages have no pinned section; its absence in an extract is not proof of zero pins.",
   "observations": [
     {
       "login": "aaronccasanova",
@@ -536,13 +536,13 @@
       "url": "https://github.com/abecevello",
       "source": "public-github-profile-page-extraction",
       "acquiredAt": "2025-11-23T00:00:00Z",
-      "state": "incomplete-extraction",
+      "state": "profile-page-likely-no-pinned-section",
       "bio": {
-        "state": "not-observed",
+        "state": "partial-page-extract",
         "hasFreeText": true
       },
       "sidebar": {
-        "state": "not-observed",
+        "state": "partial-observed",
         "hasWebsite": false,
         "hasCompany": false,
         "socialLinkCount": 0
@@ -949,13 +949,13 @@
       "url": "https://github.com/afiffahreza",
       "source": "public-github-profile-page-extraction",
       "acquiredAt": "2025-07-29T00:00:00Z",
-      "state": "incomplete-extraction",
+      "state": "profile-page-likely-no-pinned-section",
       "bio": {
-        "state": "not-observed",
+        "state": "partial-page-extract",
         "hasFreeText": true
       },
       "sidebar": {
-        "state": "not-observed",
+        "state": "partial-observed",
         "hasWebsite": false,
         "hasCompany": false,
         "socialLinkCount": 0
@@ -995,13 +995,13 @@
       "url": "https://github.com/anatrajkovska",
       "source": "public-github-profile-page-extraction",
       "acquiredAt": "2026-09-05T00:00:00Z",
-      "state": "incomplete-extraction",
+      "state": "profile-page-likely-no-pinned-section",
       "bio": {
-        "state": "not-observed",
+        "state": "partial-page-extract",
         "hasFreeText": true
       },
       "sidebar": {
-        "state": "not-observed",
+        "state": "partial-observed",
         "hasWebsite": false,
         "hasCompany": true,
         "socialLinkCount": 0
