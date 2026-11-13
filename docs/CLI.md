@@ -1,8 +1,19 @@
-# GH Aura: AI tools and CLI
+# GH Aura: standalone CLI and optional AI tools
 
 `gh-aura COMMAND --help` gives full options. AI tools can read, guide, validate and preview but **never publish**.
 
-## Connect an AI agent
+## Works without AI
+
+```bash
+gh-aura sources profiles --json
+gh-aura sources profile SamuelSchlesinger --json
+gh-aura sources patterns --query "terminal retro" --direction expressive --json
+gh-aura check --file draft.md --professional --goal research --json
+```
+
+The 25 editorial references are selected from a retained 100-profile research bank; they contain patterns and links, not templates, copied art or verified personal credentials. Professional review is an offline heuristic, never a recruiter score.
+
+## Optional AI agent connection
 
 Local MCP stdio command: `gh-aura mcp`. Compatible client example:
 
