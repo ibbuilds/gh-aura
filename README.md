@@ -43,7 +43,7 @@ gh-aura agent spec --direction technical --visual-brief "Clean, original, 2 proj
 gh-aura brief --prompt --direction technical --output prompt.md
 ```
 
-**30 curated references and 25 layout techniques**, plus optional user-supplied resources in a local JSON file. External image providers are opt-in; GitHub's Markdown rules still apply. No AI vendor, paid API or template is required.
+**29 curated resources and 25 layout techniques**, plus optional user-supplied resources in a local JSON file. External image providers are opt-in; GitHub's Markdown rules still apply. No AI vendor, paid API or template is required.
 
 ## Traditional CLI
 
