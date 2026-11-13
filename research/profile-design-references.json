@@ -2938,10 +2938,30 @@
   ],
   "survey": {
     "targetTotal": 100,
-    "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
     "completed": 100,
-    "pendingApproval": true,
-    "countsAreHeuristics": true,
-    "verifiedSnapshotDate": "2026-11-12"
+    "curatedReadingFocus": "GitHub profile README presentation; 100 different developer accounts, not an engineering credential certification.",
+    "directReadmeChecks": 88,
+    "priorVerifiedProfileChecks": 12,
+    "originCounts": {
+      "user-supplied-reference": 8,
+      "external-curated-research": 4,
+      "independent-verified-research": 88
+    },
+    "designDirectionCounts": {
+      "expressive": 43,
+      "technical": 26,
+      "minimal": 24,
+      "barebones": 7
+    },
+    "checkingDate": "2026-11-12",
+    "primarySources": [
+      "https://github.com/ibbuilds/gh-aura/blob/main/research/ordinary-engineers-200.json",
+      "https://github.com/astra-intelligence/awesome-github-profile-readme-1",
+      "https://github.com/trending/developers?since=monthly"
+    ],
+    "trendingConstraint": "GitHub's monthly developers ranking was not accessible for verification. No candidate is labeled as ranked monthly trending; diversity comes from observed public READMEs and curated catalogs.",
+    "qualityConstraint": "Not an endorsement or hiring-quality rating. All entries require user editorial approval before influencing AI source selection.",
+    "autoApprovedCount": 0,
+    "assetPolicy": "No photos, screenshots, personal bios, readme files, or artwork copied. Only links, editorial notes, and observed count/hash metadata."
   }
 }
