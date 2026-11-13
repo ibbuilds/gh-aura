@@ -570,12 +570,396 @@
         "codeFenceLines": 0,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "alloydwhitlock",
+      "profileUrl": "https://github.com/alloydwhitlock",
+      "readmeUrl": "https://github.com/alloydwhitlock/alloydwhitlock/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "supabase",
+      "readmeObservation": {
+        "blobSha": "0f38a78c1826dd0c6729e2bfae6649f56b237338",
+        "characters": 2772,
+        "approximateWords": 407,
+        "images": 0,
+        "links": 5,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "axelavargas",
+      "profileUrl": "https://github.com/axelavargas",
+      "readmeUrl": "https://github.com/axelavargas/axelavargas/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "grafana",
+      "readmeObservation": {
+        "blobSha": "b753c36f21ae7a8fe9beec0b6b962a2409b20c09",
+        "characters": 2367,
+        "approximateWords": 254,
+        "images": 0,
+        "links": 14,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ATechAdventurer",
+      "profileUrl": "https://github.com/ATechAdventurer",
+      "readmeUrl": "https://github.com/ATechAdventurer/ATechAdventurer/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "postmanlabs",
+      "readmeObservation": {
+        "blobSha": "1b03374e15df72d4f2b6f3becd9e90c87f7ee747",
+        "characters": 480,
+        "approximateWords": 78,
+        "images": 0,
+        "links": 0,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "247arjun",
+      "profileUrl": "https://github.com/247arjun",
+      "readmeUrl": "https://github.com/247arjun/247arjun/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "microsoft",
+      "readmeObservation": {
+        "blobSha": "1e94f25d4f9bee89e8bd35de736f5348737fd451",
+        "characters": 3583,
+        "approximateWords": 358,
+        "images": 0,
+        "links": 17,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jadametz",
+      "profileUrl": "https://github.com/jadametz",
+      "readmeUrl": "https://github.com/jadametz/jadametz/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "twilio",
+      "readmeObservation": {
+        "blobSha": "f3d55505d90b77fb43fdd1830a57a8d3e482a159",
+        "characters": 534,
+        "approximateWords": 76,
+        "images": 0,
+        "links": 3,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ccfelius",
+      "profileUrl": "https://github.com/ccfelius",
+      "readmeUrl": "https://github.com/ccfelius/ccfelius/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "grafana",
+      "readmeObservation": {
+        "blobSha": "f1d588b10eb6265b9f0f9c408579e802ef3c945c",
+        "characters": 1208,
+        "approximateWords": 83,
+        "images": 0,
+        "links": 5,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "alexcwatt",
+      "profileUrl": "https://github.com/alexcwatt",
+      "readmeUrl": "https://github.com/alexcwatt/alexcwatt/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "shopify",
+      "readmeObservation": {
+        "blobSha": "1a466b318a00dc3adcbcb5cda28141cc3728b0ea",
+        "characters": 792,
+        "approximateWords": 59,
+        "images": 0,
+        "links": 3,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "afender",
+      "profileUrl": "https://github.com/afender",
+      "readmeUrl": "https://github.com/afender/afender/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "nvidia",
+      "readmeObservation": {
+        "blobSha": "3d4518b90fabd8236d5757a90d4504f46744d23c",
+        "characters": 426,
+        "approximateWords": 61,
+        "images": 0,
+        "links": 1,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ferhatelmas",
+      "profileUrl": "https://github.com/ferhatelmas",
+      "readmeUrl": "https://github.com/ferhatelmas/ferhatelmas/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "supabase",
+      "readmeObservation": {
+        "blobSha": "9b5d09e62fc6b354d9f1aefc290cc27eacaad550",
+        "characters": 697,
+        "approximateWords": 80,
+        "images": 0,
+        "links": 7,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "dieDeMiguel",
+      "profileUrl": "https://github.com/dieDeMiguel",
+      "readmeUrl": "https://github.com/dieDeMiguel/dieDeMiguel/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "vercel",
+      "readmeObservation": {
+        "blobSha": "394afe44305f7c88e416520d75267222c6437c36",
+        "characters": 2231,
+        "approximateWords": 320,
+        "images": 0,
+        "links": 1,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jeroenvervaeke",
+      "profileUrl": "https://github.com/jeroenvervaeke",
+      "readmeUrl": "https://github.com/jeroenvervaeke/jeroenvervaeke/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "mongodb",
+      "readmeObservation": {
+        "blobSha": "73ade6d624d4f082ff0cc10d013e441d7c458f80",
+        "characters": 1842,
+        "approximateWords": 213,
+        "images": 0,
+        "links": 16,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "rishavbharti",
+      "profileUrl": "https://github.com/rishavbharti",
+      "readmeUrl": "https://github.com/rishavbharti/rishavbharti/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "postmanlabs",
+      "readmeObservation": {
+        "blobSha": "3d5acea304a1ca54ebef957e90d94dddc9487289",
+        "characters": 1699,
+        "approximateWords": 201,
+        "images": 1,
+        "links": 12,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 22,
+    "completed": 34,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
