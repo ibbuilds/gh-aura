@@ -22,7 +22,7 @@ test('the 600 candidate study has authenticated public evidence without claiming
   assert.equal(summary.counts.categoryWinners,0);
   assert.equal(queue.entries.length,600);
   assert.ok(queue.entries.every(x=>x.primaryStyle===null&&x.editorialDecision===null&&
-    x.avatarVisuallyReviewed===false&&x.reviewedAchievements===false&&
+    x.reviewedAvatar===false&&x.reviewedAchievements===false&&
     x.needsHumanReview===true));
   const stored=research('holistic-public-observations-summary.json');
   assert.equal(stored.counts.available,summary.counts.publiclyReturned);
