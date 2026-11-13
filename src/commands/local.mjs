@@ -36,7 +36,12 @@ export async function run(command, options) {
   }
   const { checkDraft, renderDraftCheck } = await import('../editorial.mjs');
   const maxWords = options.config ? loadConfig(options.config).editorial.maxWords : brief?.editorial?.maxWords ?? loadConfig().editorial.maxWords;
-  const report = checkDraft(draft, brief, { maxWords });
-  emit(options.format === 'json' ? report : renderDraftCheck(report), options);
-  if (options.strict && report.findings.length) process.exitCode = 1;
+  const { professionalReview, renderProfessionalReview } = options.professional
+    ? await import('../profile-review.mjs') : {};
+  const report = options.professional
+    ? professionalReview(draft,{goal:options.goal||'general',maxWords})
+    : checkDraft(draft, brief, { maxWords });
+  emit(options.format === 'json' ? report :
+    options.professional?renderProfessionalReview(report):renderDraftCheck(report), options);
+  if (options.strict && (report.findings||report.observations).length) process.exitCode = 1;
 }
