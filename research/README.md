@@ -2,6 +2,7 @@
 
 ## Observaciones de perfiles completos (recolección pública)
 
+- [Clasificación estructural provisional de 600 perfiles](HOLISTIC_CATEGORY_TRIAGE.md) · [600 fichas con señales públicas](holistic-category-triage.json) · [561 fichas vacías de revisión editorial](holistic-editorial-review-template.json). También se examinó HTML público: **561 perfiles**, **526 secciones de achievements visibles**, **385 estructuras de README renderizado**. [Notas de revisión visual y errores detectados](HOLISTIC_VISUAL_SPOTCHECKS.md). **0 aprobaciones finales**; ninguna categoría tiene ganadores confirmados.
 - [Resumen de 600 observaciones GraphQL](holistic-public-observations-summary.json): **561 perfiles devueltos**, 39 no devueltos; 402 READMEs de perfil observados, 469 cuentas con pins y 561 calendarios de contribución visibles para el lector. Ninguna insignia se verificó visualmente; **0 perfiles completos auditados**, **0 ganadores**.
 - [Cola de 600 revisiones visuales](holistic-visual-review-queue.json) · [12 lotes de datos públicos autenticados](graphql-observations) · [extractos de 600 páginas como comprobación complementaria](partial-profiles). Los extractos tienen fechas de caché variables y no prueban actualidad.
 - [Capturas fechadas de GitHub Trending Developers](trending-developers-snapshot.json): 25 usuarios por período (diario, semanal y mensual), **66 cuentas distintas**; las fechas de adquisición son dispares y no equivalen necesariamente al ranking de hoy.
