@@ -1,0 +1,37 @@
+name: Temporary public profile HTML capability probe
+on:
+  push:
+    branches: [research/holistic-category-triage]
+    paths: ['.github/workflows/holistic-browser-probe.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Check public profile DOM data and browser capabilities
+        run: |
+          node --input-type=module - <<'JS'
+          for(const login of ['simonw','WenyuChiou','karpathy']){
+            try{
+              const r=await fetch('https://github.com/'+login,{redirect:'error',
+                signal:AbortSignal.timeout(10000),
+                headers:{'User-Agent':'GH-Aura-public-profile-research','Accept':'text/html'}});
+              const t=await r.text();
+              const slices=['Achievements','achievement','contributions','pinned','user-profile-bio','js-yearly-contributions','profile-avatar'].map(tag=>{
+                const i=t.indexOf(tag);
+                return {tag,index:i,context:i<0?'':t.slice(Math.max(0,i-110),i+170).replace(/\s+/g,' ')};
+              });
+              console.log('GH_AURA_HTML:'+JSON.stringify({login,status:r.status,length:t.length,title:(t.match(/<title>([^<]+)<\/title>/)||[])[1],slices}));
+            }catch(e){console.log('GH_AURA_HTML:'+JSON.stringify({login,error:String(e.message).slice(0,140)}));}
+          }
+          JS
+          for binary in google-chrome chromium chromium-browser firefox; do command -v "$binary" || true; done
