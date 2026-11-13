@@ -1,4 +1,4 @@
-name: GH Aura profile research pilot (temporary)
+name: GH Aura profile research pilot (temporary, schema validation)
 on:
   push:
     branches: [research/public-profile-observations-500]
