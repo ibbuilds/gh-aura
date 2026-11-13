@@ -5,6 +5,7 @@ import { AGENT_TOOL_DEFINITIONS, agentCapabilities, runAgentTool } from './agent
 import { listProfileSources } from './profile-sources.mjs';
 import { PROFILE_TECHNIQUES,PROFILE_TECHNIQUES_VERSION } from './profile-techniques.mjs';
 import { listCuratedProfiles } from './profile-patterns.mjs';
+import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
 
 const CURRENT='2026-07-28';
 const LEGACY='2025-11-25';
@@ -19,7 +20,9 @@ const RESOURCES=[
   description:'Offline source URLs, attribution, license notes and external image caveats.'},
  {uri:'gh-aura://techniques/catalog',name:'Composable README design techniques',mimeType:'application/json',
   description:'25 GitHub-compatible layout techniques, source IDs, access and professional fit.'},
- {uri:'gh-aura://profiles/selected',name:'25 curated README composition references',mimeType:'application/json',
+ {uri:'gh-aura://profiles/categories',name:'Whole GitHub profile categories',mimeType:'application/json',
+  description:'Avatar, sidebar, bio, links, README, pinned projects, visible contribution graph and achievements.'},
+ {uri:'gh-aura://profiles/selected',name:'25 provisional README composition references',mimeType:'application/json',
   description:'Offline editorial selection from 100 public README observations; patterns only, no copied text or assets.'},
  {uri:'gh-aura://guide/profile',name:'Professional profile workflow',mimeType:'text/markdown',
   description:'Model-neutral professional README authoring and review procedure.'},
@@ -129,6 +132,7 @@ export async function handleMcpMessage(msg){
         uri==='gh-aura://sources/catalog'?JSON.stringify(listProfileSources()):
         uri==='gh-aura://techniques/catalog'?JSON.stringify({
           version:PROFILE_TECHNIQUES_VERSION,techniques:PROFILE_TECHNIQUES}):
+        uri==='gh-aura://profiles/categories'?JSON.stringify({styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,purposes:PROFILE_PURPOSES}):
         uri==='gh-aura://profiles/selected'?JSON.stringify(listCuratedProfiles()):
         uri==='gh-aura://guide/profile'?GUIDE:
         uri==='gh-aura://guide/biography'?
