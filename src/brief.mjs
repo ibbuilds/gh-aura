@@ -7,6 +7,7 @@ import { makeProfileSpec } from './agent-profile.mjs';
 import { getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
+import { recommendCuratedPatterns } from './profile-patterns.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
 export function editorialBrief(snapshot, config, options={}) {
@@ -58,6 +59,12 @@ export function editorialBrief(snapshot, config, options={}) {
       note:'Editable composition intent, not a README template; source IDs are reading references only.'
     },
     sourceSuggestions,techniqueSuggestions:techniques,
+    patternSuggestions:recommendCuratedPatterns({
+      query:agentSpec.visualBrief||config.editorial?.targetRole||'',
+      direction:agentSpec.direction,limit:2,
+    }).profiles.map(item=>({
+      id:item.id,readmeUrl:item.readmeUrl,learn:item.learn,avoid:item.avoid,
+    })),
     editorial: { language: config.editorial?.language || 'en',
       targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
       targetCompany: clip(config.editorial?.targetCompany || '', 100, 'target company'),
