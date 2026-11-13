@@ -1,0 +1,32 @@
+name: Temporary GH Aura 4-view visual smoke pilot
+on:
+  push:
+    branches: [research/holistic-visual-render-smoke]
+    paths: ['.github/workflows/visual-smoke-pilot.yml']
+permissions:
+  contents: read
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Verify four modes without retaining screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/visual-profile-smoke.mjs --input research/graphql-observations/batch-000.json --start 0 --limit 3 --output /tmp/smoke.json
+          node --input-type=module - <<'JS'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync('/tmp/smoke.json','utf8'));
+          console.log('GH_AURA_VISUAL_SMOKE_PILOT:'+JSON.stringify({checked:data.checked,complete4:data.complete4,partial:data.partial,failed:data.failed,
+            profiles:data.profiles.map(x=>({login:x.login,status:x.status,modes:Object.fromEntries(
+              Object.entries(x.modes).map(([name,info])=>[name,{capture:info.captured,viewportWidth:info.viewportWidth,
+                screenshotBytes:info.screenshotBytes,background:info.bodyBackground,error:info.error}]))}))}));
+          JS
