@@ -31,7 +31,7 @@ test('all 100 unique original records remain unapproved and exactly 25 curated p
     assert.ok(source,row.id);
     assert.equal(source.readmeUrl,row.readmeUrl);
     assert.equal(source.reviewStatus,'pending-user-editorial-approval');
-    assert.equal(row.status.includes('pending'),true);
+    assert.equal(row.status.includes('provisional'),true);
     assert.match(row.profileUrl,/^https:\/\/github\.com\//);
     assert.match(row.readmeUrl,/\/README\.md$/);
     assert.ok(row.learn&&row.avoid&&row.when);
@@ -54,7 +54,7 @@ test('patterns are bounded and selected by intent, never copied from all 100',()
   assert.equal(getCuratedProfile('ORHUN').direction,'expressive');
   const r=recommendCuratedPatterns({query:'investigación',direction:'technical'});
   assert.ok(r.profiles.length>0&&r.profiles.length<=2);
-  assert.ok(r.profiles.every(x=>x.status.includes('pending')&&x.readmeUrl.startsWith('https://')));
+  assert.ok(r.profiles.every(x=>x.status.includes('provisional')&&x.readmeUrl.startsWith('https://')));
   assert.ok(!JSON.stringify(r).includes('poteto'));
   assert.throws(()=>recommendCuratedPatterns({limit:3}),/1–2/);
   assert.throws(()=>listCuratedProfiles({direction:'unknown'}),/direction/);
