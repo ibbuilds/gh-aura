@@ -1,0 +1,265 @@
+{
+  "schema": "gh-aura-professional-profile-references-v1",
+  "reviewedAt": "2026-11-12",
+  "purpose": "User-provided and independently researched GitHub profile design references. Qualitative editorial observations, not an assessment of a person's identity, job readiness or accomplishments.",
+  "publication": "repository-research-only; no GitHub Pages",
+  "policy": {
+    "doNotCopy": [
+      "profile README text",
+      "biographies",
+      "illustrations",
+      "profile photos",
+      "personal claims",
+      "logos",
+      "assets"
+    ],
+    "requireOwnerApprovalForEndorsement": true,
+    "numberOfReferencesPerGeneratedBrief": "1-2 once approved",
+    "defaultDesign": "professional clarity, real work and restrained formatting",
+    "expressiveDesign": "allowed when images/typography explain the actual work; never add decoration for its own sake",
+    "sourceLabels": "user-supplied screenshots vs independently researched examples",
+    "trendingCaveat": "Trending measures attention, not the professionalism of a README. The requested GitHub monthly developer filter was not directly accessible; do not mislabel these profiles as verified monthly ranked developers.",
+    "futureAdditions": "Append one bounded entry per verified profile README. Re-review if a profile changes."
+  },
+  "entries": [
+    {
+      "id": "fzn0x",
+      "profileUrl": "https://github.com/fzn0x",
+      "readmeUrl": "https://github.com/fzn0x/fzn0x/blob/main/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Code-like self-description as an original composition",
+        "One distinct visual identity where it supports the work"
+      ],
+      "avoidCopying": [
+        "Imitating another person's avatar, tarot art or biography",
+        "Followers, views and multiple decorative counters as hiring evidence"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "SamuelSchlesinger",
+      "profileUrl": "https://github.com/SamuelSchlesinger",
+      "readmeUrl": "https://github.com/SamuelSchlesinger/SamuelSchlesinger/blob/main/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Concise specialization and personal technical interests",
+        "Direct links to actual research, projects and teaching"
+      ],
+      "avoidCopying": [
+        "Copying technical credentials or organization roles",
+        "Assuming a sparse page works without inspectable work"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "yetone",
+      "profileUrl": "https://github.com/yetone",
+      "readmeUrl": "https://github.com/yetone/yetone/blob/master/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Single consistent visual motif instead of competing widgets",
+        "A coherent theme with a quiet layout"
+      ],
+      "avoidCopying": [
+        "A large illustration as a substitute for inspectable projects",
+        "Using another person's image without the necessary rights"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "serenakeyitan",
+      "profileUrl": "https://github.com/serenakeyitan",
+      "readmeUrl": "https://github.com/serenakeyitan/serenakeyitan/blob/main/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "One clear sentence about current work",
+        "Letting repository pins supply most of the evidence"
+      ],
+      "avoidCopying": [
+        "Treating trend badges as hiring proof",
+        "Copying the person's short introduction verbatim"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "mattabate",
+      "profileUrl": "https://github.com/mattabate",
+      "readmeUrl": "https://github.com/mattabate/mattabate/blob/main/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "A handful of purpose-labelled links",
+        "Using native GitHub pinned projects rather than duplicated cards"
+      ],
+      "avoidCopying": [
+        "Assuming link-only profiles suit a new candidate without strong work links",
+        "Publishing unrelated personal details by default"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "morluto",
+      "profileUrl": "https://github.com/morluto",
+      "readmeUrl": "https://github.com/morluto/morluto/blob/main/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Brief research narrative followed by specific project descriptions",
+        "Concrete public work and cross-project contributions"
+      ],
+      "avoidCopying": [
+        "Replicating a long project inventory in a hiring-focused README",
+        "Repeating stars counters beside every project"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "poteto",
+      "profileUrl": "https://github.com/poteto",
+      "readmeUrl": "https://github.com/poteto/poteto/blob/master/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "A single personal visual can create a memorable identity"
+      ],
+      "avoidCopying": [
+        "An oversized GIF as the only hiring evidence",
+        "Motion or humor that obscures actual software work"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "WenyuChiou",
+      "profileUrl": "https://github.com/WenyuChiou",
+      "readmeUrl": "https://github.com/WenyuChiou/WenyuChiou/blob/main/README.md",
+      "origin": "user-supplied-reference",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Original domain-relevant illustrations that explain research",
+        "Purposeful diagram-to-project-to-evidence hierarchy",
+        "Consistent colors, typography and section hierarchy"
+      ],
+      "avoidCopying": [
+        "Assuming all candidates should reproduce a long illustrated site",
+        "Copying original artwork or attributing external metrics without checks"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "karpathy",
+      "profileUrl": "https://github.com/karpathy",
+      "readmeUrl": "https://github.com/karpathy/karpathy/blob/main/README.md",
+      "origin": "external-curated-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Extremely concise positioning with most credibility coming from native pinned repositories"
+      ],
+      "avoidCopying": [
+        "Copying a near-empty README when a lesser-known applicant needs to explain their work",
+        "Equating fame or popularity with content quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "simonw",
+      "profileUrl": "https://github.com/simonw",
+      "readmeUrl": "https://github.com/simonw/simonw/blob/main/README.md",
+      "origin": "external-curated-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Current work and releases surfaced through dated, practical links",
+        "Automated updates with clear ownership and freshness"
+      ],
+      "avoidCopying": [
+        "Copying frequent-update sections without a real maintenance workflow",
+        "Adding multiple dynamic feeds unrelated to the user's target role"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "orhun",
+      "profileUrl": "https://github.com/orhun",
+      "readmeUrl": "https://github.com/orhun/orhun/blob/master/README.md",
+      "origin": "external-curated-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Consistent terminal/Rust visual identity tied to actual tools",
+        "Theme-aware imagery that has genuine project relevance"
+      ],
+      "avoidCopying": [
+        "Assuming every developer benefits from numerous visual elements and badges",
+        "Copying assets or logos without rights and attribution"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    },
+    {
+      "id": "cathrynlavery",
+      "profileUrl": "https://github.com/cathrynlavery",
+      "readmeUrl": "https://github.com/cathrynlavery/cathrynlavery/blob/main/README.md",
+      "origin": "external-curated-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "First-person narrative that connects a person's background to concrete projects",
+        "Outcome-oriented links with a recognizable voice"
+      ],
+      "avoidCopying": [
+        "Replicating unverified business claims from another profile",
+        "Automatically recommending large widget sections and activity images"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false
+    }
+  ]
+}
