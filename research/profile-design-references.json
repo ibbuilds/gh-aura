@@ -1284,12 +1284,312 @@
         "headings": 0,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "martincostello",
+      "profileUrl": "https://github.com/martincostello",
+      "readmeUrl": "https://github.com/martincostello/martincostello/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "301ae09efa76ef7c419bf70a8a700a5f99f2ed99",
+        "characters": 1924,
+        "approximateWords": 240,
+        "images": 0,
+        "links": 9,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "macintacos",
+      "profileUrl": "https://github.com/macintacos",
+      "readmeUrl": "https://github.com/macintacos/macintacos/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "44e102bbab6067292d38d50f92a626e0de7c15a2",
+        "characters": 379,
+        "approximateWords": 63,
+        "images": 0,
+        "links": 2,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "irisgve",
+      "profileUrl": "https://github.com/irisgve",
+      "readmeUrl": "https://github.com/irisgve/irisgve/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "dd5af1d4f4a945e2eb7bc8d577f6788ad27fd68b",
+        "characters": 1111,
+        "approximateWords": 106,
+        "images": 2,
+        "links": 5,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "setu4993",
+      "profileUrl": "https://github.com/setu4993",
+      "readmeUrl": "https://github.com/setu4993/setu4993/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a1718a8bb8053358ce97d386abd6a30d6acf6485",
+        "characters": 456,
+        "approximateWords": 60,
+        "images": 0,
+        "links": 5,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cogwirrel",
+      "profileUrl": "https://github.com/cogwirrel",
+      "readmeUrl": "https://github.com/cogwirrel/cogwirrel/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4cb4df23c5c678d07fb55d8ced4ebd5a3541b936",
+        "characters": 485,
+        "approximateWords": 72,
+        "images": 0,
+        "links": 3,
+        "headings": 2,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "mohammaddaoudfarooqi",
+      "profileUrl": "https://github.com/mohammaddaoudfarooqi",
+      "readmeUrl": "https://github.com/mohammaddaoudfarooqi/mohammaddaoudfarooqi/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "fddccc5a9e6280e43a1c5f403a25f12a2248aa97",
+        "characters": 2478,
+        "approximateWords": 250,
+        "images": 0,
+        "links": 9,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "Flipez",
+      "profileUrl": "https://github.com/Flipez",
+      "readmeUrl": "https://github.com/Flipez/flipez/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "1dce57a5ce0575b798559729e88f08ae0606c2bd",
+        "characters": 7704,
+        "approximateWords": 806,
+        "images": 0,
+        "links": 71,
+        "headings": 11,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "PragTob",
+      "profileUrl": "https://github.com/PragTob",
+      "readmeUrl": "https://github.com/PragTob/PragTob/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Evaluate density and purpose of visuals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "9a69b0fef03927e030453ee5d06f21e7122af492",
+        "characters": 4661,
+        "approximateWords": 228,
+        "images": 13,
+        "links": 37,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "benjamincanac",
+      "profileUrl": "https://github.com/benjamincanac",
+      "readmeUrl": "https://github.com/benjamincanac/benjamincanac/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0f95465494aea27c54a9279fea9aa65637c45ec4",
+        "characters": 405,
+        "approximateWords": 41,
+        "images": 1,
+        "links": 4,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "AbhJ",
+      "profileUrl": "https://github.com/AbhJ",
+      "readmeUrl": "https://github.com/AbhJ/abhj/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Evaluate density and purpose of visuals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "6251ac8ec4789a5e5de7db5decea834e66848683",
+        "characters": 3026,
+        "approximateWords": 145,
+        "images": 11,
+        "links": 31,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 45,
+    "completed": 55,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
