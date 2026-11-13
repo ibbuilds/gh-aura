@@ -32,7 +32,7 @@ export function suggestReviewStyles(profile){
 }
 export function summarizeObservations(roster,batches){
   if(roster?.schema!=='gh-aura-holistic-profile-candidates-v1'||
-    !Array.isArray(roster.candidates)||roster.candidates.length<500)
+    !Array.isArray(roster.candidates)||roster.candidates.length<1)
     throw Error('Expected GH Aura verified candidate roster.');
   if(!Array.isArray(batches)||!batches.length)throw Error('No GraphQL observation batches.');
   const seen=new Map();
@@ -116,6 +116,7 @@ function main(args){
   const root=resolve(fileURLToPath(DATA_ROOT)),dir=resolve(root,'graphql-observations');
   const files=readdirSync(dir).filter(x=>/^batch-\d{3}\.json$/.test(x)).sort();
   const roster=JSON.parse(readFileSync(resolve(root,'profile-candidates-600.json'),'utf8'));
+  if(roster.candidates.length<500)throw Error('Production research needs at least 500 candidate accounts.');
   const batches=files.map(name=>{
     const path=resolve(dir,name);if(statSync(path).size>1024*1024)throw Error('GraphQL research batch exceeds 1 MiB');
     return JSON.parse(readFileSync(path,'utf8'));
