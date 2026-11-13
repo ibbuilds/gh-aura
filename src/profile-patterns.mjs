@@ -502,8 +502,9 @@ export function listCuratedProfiles({direction='',query=''}={}){
   safeQuery(query);
   if(direction&&!directions.has(direction))throw Error('Invalid profile reference direction.');
   const words=intentWords(query);
+  const score=item=>intentMatchScore({...item,description:item.when+' '+item.learn},words);
   const profiles=CURATED_PROFILE_PATTERNS.filter(item=>
-    (!direction||item.direction===direction) && (!words.length||intentMatchScore(item,words)>0));
+    (!direction||item.direction===direction) && (!words.length||score(item)>0));
   return {version:PROFILE_SHORTLIST_VERSION, total:profiles.length,
     corpusCount:100,approval:'editorially selected patterns; visual and independent-user acceptance pending',
     profiles, notice:'Original READMEs and claims are not templates or verified credentials.'};
@@ -516,7 +517,8 @@ export function recommendCuratedPatterns({query='',direction='minimal',limit=2}=
   if(!Number.isInteger(limit)||limit<1||limit>2)throw Error('Only 1–2 profile patterns may be recommended.');
   const words=intentWords(query);
   const candidates=CURATED_PROFILE_PATTERNS.filter(item=>item.direction===direction)
-    .map((item,index)=>({item,index,score:intentMatchScore(item,words)}))
+    .map((item,index)=>({item,index,score:intentMatchScore({...item,
+      description:item.when+' '+item.learn},words)}))
     .sort((a,b)=>b.score-a.score||a.index-b.index);
   const matches=words.length?candidates.filter(x=>x.score>0):candidates;
   return {version:PROFILE_SHORTLIST_VERSION,direction,query,
