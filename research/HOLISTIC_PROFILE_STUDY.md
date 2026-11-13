@@ -18,7 +18,7 @@ Cada ficha representa lo que un visitante real puede ver en la página de perfil
 
 ## Fuentes y descubrimiento
 
-El archivo [profile-candidates-600.json](profile-candidates-600.json) une 285 cuentas distintas de cuatro registros previos (100 READMEs, 200 perfiles de ingenieros, cohorte histórica de 100 y 16 fuentes empresariales, con superposición) y 315 handles **únicamente listados** en el archivo histórico de [EddieHub Community](https://github.com/EddieHubCommunity/awesome-github-profiles/blob/main/profiles.md). El repositorio de EddieHub fue archivado en 2024; no constituye verificación actual.
+El archivo [profile-candidates-600.json](profile-candidates-600.json) une 285 cuentas distintas de cuatro registros previos (100 READMEs, 200 perfiles de ingenieros, cohorte histórica de 100 y 16 fuentes empresariales, con superposición) y 315 handles **únicamente listados** en el archivo histórico de [EddieHub Community](https://github.com/EddieHubCommunity/awesome-github-profiles/blob/main/profiles.md). El repositorio de EddieHub fue archivado en 2024; no constituye verificación actual. Los 315 candidatos adicionales se eligieron mediante un hash determinista de nombres de usuario, para evitar quedarse solo con el principio de un índice ordenado alfabéticamente. La muestra sigue siendo intencional y no representativa.
 
 GitHub Trending Developers (diario, semanal y mensual) es un **canal adicional de descubrimiento**, no de aprobación editorial. La página mensual no pudo verificarse directamente en este entorno; no hay rangos de Trending atribuidos a ningún candidato. No depender de una única galería ni solo de personas populares: mantener variedad de trayectorias, tamaño de audiencia, roles y necesidades.
 
