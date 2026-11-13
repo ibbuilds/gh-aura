@@ -98,6 +98,18 @@ export function readProfileJSON(file, max = 3 * 1024 * 1024) {
 }
 const apiOptions = options => ({ ...options, cache: undefined, publicRead: false });
 const baseFor = login => '/repos/' + encodeURIComponent(login) + '/' + encodeURIComponent(login);
+async function profileHead(login,branch,api){
+  const base=baseFor(login);let ref;
+  try{ref=await getJSON(base+'/git/ref/heads/'+branch.split('/').map(encodeURIComponent).join('/'),api);}
+  catch(error){if(error.status!==409)throw error;}
+  if(/^[a-f\d]{40}$/i.test(ref?.object?.sha||''))return ref.object.sha;
+  if(ref)throw Error('Cannot inspect the default branch revision.');
+  // A missing default branch alone does not mean the repository is empty.
+  const branches=await getJSON(base+'/branches?per_page=1',api),tags=await getJSON(base+'/tags?per_page=1',api);
+  if(!Array.isArray(branches)||!Array.isArray(tags)||branches.length||tags.length)throw Error('Profile repository has other history or its empty state is unknown.');
+  return null;
+}
+const needsInitialization=plan=>plan.files.length>0&&(plan.createRepository||plan.repository.empty===true);
 export async function inspectWholeProfile(username, options = {}) {
   const login = validateLogin(username), api = apiOptions(options);
   const user = options.publicUser||await getJSON('/users/' + encodeURIComponent(login), api);
@@ -108,13 +120,12 @@ export async function inspectWholeProfile(username, options = {}) {
   const repo = await getJSON(baseFor(login), api);
   if (repo && (repo.private !== false || repo.full_name?.toLowerCase() !== (login + '/' + login).toLowerCase())) throw Error('Profile repository must be the public USER/USER repository.');
   const branch = repo?.default_branch || 'main';
-  const readme = repo ? await getJSON(baseFor(login) + '/contents/README.md?ref=' + encodeURIComponent(branch), api) : null;
+  const head=repo?await profileHead(login,branch,api):null;
+  const readme = head ? await getJSON(baseFor(login) + '/contents/README.md?ref=' + encodeURIComponent(branch), api) : null;
   if (readme && (readme.type !== 'file' || readme.path !== 'README.md' || !/^[a-f\d]{40}$/i.test(readme.sha || ''))) throw Error('Invalid profile README response.');
-  const ref = repo ? await getJSON(baseFor(login) + '/git/ref/heads/' + branch.split('/').map(encodeURIComponent).join('/'), api) : null;
-  if (repo && !/^[a-f\d]{40}$/i.test(ref?.object?.sha || '')) throw Error('Cannot inspect the default branch revision.');
   return { format: 'gh-aura-profile-snapshot-v1', username: user.login, observedAt: new Date().toISOString(),
     account: Object.fromEntries([...Object.keys(fields), 'hireable'].map(k => [k, normalAccount(user, k)])),
-    repository: { exists: !!repo, inspected:true, id: repo?.id ?? null, branch, head: ref?.object?.sha ?? null },
+    repository: { exists: !!repo, inspected:true, id: repo?.id ?? null, branch, head,...(repo&&!head?{empty:true}:{}) },
     readme: { state: readme ? 'observed' : 'absent', sha: readme?.sha ?? null, content: readme ? decodeReadme(readme, 256 * 1024) : '' },
     pins: { state: 'not-observed', instructions: 'Verify the current pinned items on GitHub before changing the selection.' } };
 }
@@ -136,7 +147,7 @@ export async function prepareProfilePlan(username, spec, markdown, options = {})
       after: blobSha(Buffer.from(markdown)) });
   }
   for (const asset of intent.assets) {
-    const remote = snapshot.repository.exists ? await getJSON(baseFor(snapshot.username) + '/contents/' + asset.path + '?ref=' + encodeURIComponent(snapshot.repository.branch), apiOptions(options)) : null;
+    const remote = snapshot.repository.head ? await getJSON(baseFor(snapshot.username) + '/contents/' + asset.path + '?ref=' + encodeURIComponent(snapshot.repository.branch), apiOptions(options)) : null;
     if (remote && (remote.type !== 'file' || remote.path !== asset.path || !/^[a-f\d]{40}$/i.test(remote.sha || ''))) throw Error('Invalid asset state.');
     const after = blobSha(Buffer.from(asset.content, asset.encoding === 'utf-8' ? 'utf8' : 'base64'));
     if (after !== remote?.sha) files.push({ path: asset.path, encoding: asset.encoding, content: asset.content, alt: asset.alt, rights: asset.rights, before: remote?.sha ?? null, after });
@@ -148,7 +159,7 @@ export async function prepareProfilePlan(username, spec, markdown, options = {})
     repository: snapshot.repository, account: { before: beforeAccount, after: account }, files,
     pins: intent.pins, activity: workspaceActions.activity, badges: workspaceActions.badges,
     createRepository: files.length > 0 && !snapshot.repository.exists,
-    initialReadme:files.length>0&&!snapshot.repository.exists?'# '+snapshot.username+'\n':null,
+    initialReadme:files.length>0&&(!snapshot.repository.exists||snapshot.repository.empty)?'# '+snapshot.username+'\n':null,
     permissions: [...(files.length ? ['contents:write', ...(delivery === 'pr' ? ['pull_requests:write'] : [])] : []), ...(Object.keys(account).length ? ['profile:write'] : []),...(workspaceActions.activity||workspaceActions.badges?['private-workspace:write']:[])],
     syntheticOperationsAreProfessionalEvidence: false };
   if(options.resources&&intent.readme&&markdown!==undefined)plan.resourceCheck=await checkProfileResources(markdown,{...options,
@@ -167,13 +178,16 @@ export function validateProfilePlan(input) {
   only(plan, ['format', 'username', 'createdAt', 'delivery', 'composition','resourceCheck','repository', 'account', 'files', 'pins', 'activity', 'badges', 'createRepository', 'initialReadme', 'permissions', 'syntheticOperationsAreProfessionalEvidence'], 'plan');
   if (!['pr', 'commit'].includes(plan.delivery) || !Number.isFinite(Date.parse(plan.createdAt)) || !object(plan.repository) || typeof plan.repository.branch !== 'string' ||
       !/^[a-z\d_./-]+$/i.test(plan.repository.branch) || plan.repository.branch.includes('..') || typeof plan.repository.exists !== 'boolean') throw Error('Invalid profile plan target.');
-  if (plan.repository.exists && !/^[a-f\d]{40}$/i.test(plan.repository.head || '')) throw Error('Invalid profile base revision.');
+  if(plan.repository.empty!==undefined&&plan.repository.empty!==true)throw Error('Invalid empty profile state.');
+  if(plan.repository.empty&&(!plan.repository.exists||plan.repository.head!==null||!Number.isSafeInteger(plan.repository.id)||plan.repository.id<1))throw Error('Invalid empty profile identity.');
+  if (plan.repository.exists && !plan.repository.empty && !/^[a-f\d]{40}$/i.test(plan.repository.head || '')) throw Error('Invalid profile base revision.');
   only(plan.account,['before','after'],'account comparison');
   if(!object(plan.account.before)||!object(plan.account.after)||!Array.isArray(plan.pins)||!Array.isArray(plan.permissions)||plan.permissions.some(x=>!['contents:write','pull_requests:write','profile:write','private-workspace:write'].includes(x)))throw Error('Invalid plan components.');
   validateAccount(plan.account.before); validateAccount(plan.account.after);
   if (!same(Object.keys(plan.account.before).sort(), Object.keys(plan.account.after).sort())) throw Error('Account comparison is incomplete.');
   if (!Array.isArray(plan.files) || plan.files.length > 9 || typeof plan.createRepository !== 'boolean' || plan.createRepository !== (!plan.repository.exists && plan.files.length > 0)) throw Error('Invalid profile files/create plan.');
-  if(plan.files.length&&plan.repository.inspected===false||plan.initialReadme!==(plan.createRepository?'# '+plan.username+'\n':null))throw Error('Repository creation baseline is not reviewed.');
+  if(plan.repository.empty&&plan.files.some(file=>file.before!==null))throw Error('An empty profile cannot have previous file revisions.');
+  if(plan.files.length&&plan.repository.inspected===false||plan.initialReadme!==(needsInitialization(plan)?'# '+plan.username+'\n':null))throw Error('Repository creation baseline is not reviewed.');
   const paths = new Set();
   for (const file of plan.files) {
     only(file, ['path', 'encoding', 'content', 'previous', 'alt', 'rights', 'before', 'after'], 'file operation');
@@ -201,7 +215,7 @@ export function validateProfilePlan(input) {
 export function previewWholeProfilePlan(input) {
   const plan = validateProfilePlan(input);
   return { format: 'gh-aura-profile-plan-preview-v1', username: plan.username, fingerprint: plan.fingerprint,
-    createRepository: plan.createRepository, initialReadme:plan.initialReadme, delivery: plan.delivery, account: plan.account,
+    createRepository: plan.createRepository, initializeRepository:needsInitialization(plan), initialReadme:plan.initialReadme, delivery: plan.delivery, account: plan.account,
     files: plan.files.map(f => ({ path: f.path, before: f.before, after: f.after, bytes: Buffer.byteLength(f.content, f.encoding === 'utf-8' ? 'utf8' : 'base64'),
       ...(f.path === 'README.md' ? { diff: diffText(f.previous, f.content) } : { alt: f.alt, rights: f.rights }) })), pins: plan.pins,
     activity: plan.activity, badges: plan.badges,composition:plan.composition,resourceCheck:plan.resourceCheck, permissions: plan.permissions, writesPerformed: 0,
@@ -280,7 +294,7 @@ async function publishFiles(plan, repo, api, onResult) {
     if (ref?.object?.sha !== repo.head) throw Error('Profile branch changed; prepare a new plan.');
     for (const file of plan.files) {
       const current = await getJSON(base + '/contents/' + file.path + '?ref=' + encodeURIComponent(repo.branch), api);
-      const before=plan.repository.exists?file.before:file.path==='README.md'?repo.seedSha:null;
+      const before=plan.initialReadme&&file.path==='README.md'?repo.seedSha:file.before;
       if ((current?.sha ?? null) !== before) throw Error('A planned file changed; prepare a new plan.');
     }
     const commit = await getJSON(base + '/git/commits/' + repo.head, api);
@@ -314,6 +328,27 @@ async function publishFiles(plan, repo, api, onResult) {
     body: 'Owner-authorized GH Aura plan ' + plan.fingerprint + '. Review the exact README/assets; this PR is not merged automatically.' } });
   if (!Number.isInteger(pr?.number) || !pr.html_url?.startsWith('https://github.com/' + plan.username + '/' + plan.username + '/pull/')) throw Error('GitHub did not confirm the profile PR.');
   return { state: 'verified', branch, pullRequest: pr.html_url, publication: 'unmerged-review-branch' };
+}
+async function reviewedSeed(plan,head,api){
+  const base=baseFor(plan.username),commit=await getJSON(base+'/git/commits/'+head,api);
+  if(!Array.isArray(commit?.parents)||commit.parents.length||!/^[a-f\d]{40}$/i.test(commit.tree?.sha||''))return null;
+  const tree=await getJSON(base+'/git/trees/'+commit.tree.sha,api),seedSha=blobSha(Buffer.from(plan.initialReadme));
+  if(tree?.truncated!==false||!Array.isArray(tree.tree)||tree.tree.length!==1)return null;
+  const file=tree.tree[0];
+  return file.path==='README.md'&&file.type==='blob'&&file.mode==='100644'&&file.sha===seedSha?
+    {id:plan.repository.id,head,branch:plan.repository.branch,seedSha}:null;
+}
+async function initializeExistingProfile(plan,state,save,api){
+  if(state.operations.initialize?.state==='unknown')throw Error('Profile initialization remains uncertain; inspect before retrying.');
+  if(await profileHead(plan.username,plan.repository.branch,api))throw Error('Empty profile repository changed; prepare a new plan.');
+  state.operations.initialize={state:'unknown'};save();
+  // No SHA: this request can create the reviewed seed but cannot replace a file.
+  const result=await requestJSON(baseFor(plan.username)+'/contents/README.md',{...api,method:'PUT',body:{
+    message:'docs(profile): initialize reviewed empty profile repository',branch:plan.repository.branch,content:Buffer.from(plan.initialReadme).toString('base64')}});
+  const head=await profileHead(plan.username,plan.repository.branch,api);
+  const confirmed=head===result?.commit?.sha&&result?.content?.sha===blobSha(Buffer.from(plan.initialReadme))?await reviewedSeed(plan,head,api):null;
+  if(!confirmed)throw Error('Profile initialization is uncertain or raced with another writer; inspect before retrying.');
+  state.operations.initialize={state:'verified',...confirmed};save();return confirmed;
 }
 export async function executeProfilePlan(input, approval, options = {}) {
   const plan = validateProfilePlan(input);
@@ -351,17 +386,24 @@ export async function executeProfilePlan(input, approval, options = {}) {
     const workspacePreflight=await preflightWorkspaceActions(plan,who,api);
     let repo = plan.files.length ? await getJSON(baseFor(plan.username), api) : null;
     if (repo && (repo.private !== false || repo.full_name?.toLowerCase() !== (plan.username + '/' + plan.username).toLowerCase())) throw Error('Profile destination is not the reviewed public repository.');
+    if (plan.files.length && !plan.createRepository && (!repo || repo.id !== plan.repository.id || repo.default_branch !== plan.repository.branch)) throw Error('Profile repository identity/branch changed.');
+    let emptyBase=null,emptyHead=null;
+    if(plan.files.length&&plan.repository.empty){
+      emptyHead=await profileHead(plan.username,plan.repository.branch,api);
+      if(emptyHead)emptyBase=await reviewedSeed(plan,emptyHead,api);
+      if(emptyBase){state.operations.initialize={state:'verified',...emptyBase};save();}
+    }
     // The mutable journal is never authority to write into a repository which
     // appeared after review. Only a read-only reconciliation is permitted.
     let reconcileOnly=false;
-    if(plan.createRepository&&repo){
+    if(repo&&(plan.createRepository||plan.repository.empty&&emptyHead&&!emptyBase)){
       reconcileOnly=true;
       let defaultMatches=true;
       for(const file of plan.files){const found=await getJSON(baseFor(plan.username)+'/contents/'+file.path+'?ref='+encodeURIComponent(repo.default_branch),api);if(found?.sha!==file.after)defaultMatches=false;}
       const branch=defaultMatches?repo.default_branch:plan.delivery==='pr'?'gh-aura/profile-'+plan.fingerprint.slice(0,24):repo.default_branch;
       for(const file of plan.files){
         const found=await getJSON(baseFor(plan.username)+'/contents/'+file.path+'?ref='+encodeURIComponent(branch),api);
-        if(found?.sha!==file.after)throw Error('Profile repository appeared after planning; prepare a new plan.');
+        if(found?.sha!==file.after)throw Error('Profile repository appeared after planning or its empty state changed; prepare a new plan.');
       }
       if(plan.delivery==='pr'&&!defaultMatches){
         const prs=await getJSON(baseFor(plan.username)+'/pulls?'+new URLSearchParams({state:'all',head:plan.username+':'+branch,base:repo.default_branch,per_page:'100'}),api);
@@ -369,7 +411,6 @@ export async function executeProfilePlan(input, approval, options = {}) {
         state.operations.files={state:'needs-user-action',branch,pullRequest:prs[0].html_url,publication:prs[0].state==='closed'?'closed-review':'unmerged-review-branch'};
       }else state.operations.files={state:'verified',branch,publication:'default-branch-matches'};
     }
-    if (plan.files.length && !plan.createRepository && (!repo || repo.id !== plan.repository.id || repo.default_branch !== plan.repository.branch)) throw Error('Profile repository identity/branch changed.');
     if (plan.createRepository && !repo) {
       if (state.operations.create?.state === 'unknown') throw Error('Repository creation is uncertain; inspect before retrying.');
       state.operations.create = { state: 'unknown' }; save();
@@ -381,8 +422,9 @@ export async function executeProfilePlan(input, approval, options = {}) {
       state.operations.create = { state: 'verified', id: repo.id, head: initial.commit.sha, branch: plan.repository.branch,
         seedSha:initial.content.sha }; save();
     }
+    if(plan.files.length&&plan.repository.empty&&!reconcileOnly&&!emptyBase)emptyBase=await initializeExistingProfile(plan,state,save,api);
     if (plan.files.length&&!reconcileOnly) {
-      const base = plan.createRepository ? state.operations.create : plan.repository;
+      const base = plan.createRepository ? state.operations.create : emptyBase||plan.repository;
       // A previous uncertain write is reconciled by file/PR reads in publishFiles.
       // Visible mutations are never automatically retried after a network error.
       if (state.operations.files?.state === 'unknown') {

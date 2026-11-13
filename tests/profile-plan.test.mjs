@@ -9,13 +9,13 @@ import { makeWholeProfileSpec, refineWholeProfileSpec, prepareProfilePlan, previ
   executeProfilePlan, validateProfilePlan, digest, approvedPlanFromHost } from '../src/profile-plan.mjs';
 
 const sha = value => createHash('sha1').update('blob ' + Buffer.byteLength(value) + '\0').update(value).digest('hex');
-function fixture({ missing = false } = {}) {
+function fixture({ missing = false,empty = false } = {}) {
   const old = '# Existing\n';
   const s = { user: { login: 'example', type: 'User', bio: 'Old bio', name: 'Example', blog: '', company: '', location: '', hireable: false },
     repo: missing ? null : { id: 42, private: false, full_name: 'example/example', default_branch: 'main' },
     blobs: new Map([[sha(old), old]]), trees: new Map([['2'.repeat(40), { 'README.md': sha(old) }]]),
-    commits: new Map([['1'.repeat(40), { tree: { sha: '2'.repeat(40) } }]]), branches: new Map([['main', '1'.repeat(40)]]),
-    writes: [], pulls: [], failAccount: false, loseAccountResponse: false, loseRefResponse: false, authenticated: 'example' };
+    commits: new Map([['1'.repeat(40), { tree: { sha: '2'.repeat(40) } }]]), branches: new Map(empty?[]:[['main', '1'.repeat(40)]]),tags:[],
+    writes: [], pulls: [], failAccount: false, loseAccountResponse: false, loseRefResponse: false,loseSeedResponse:false, authenticated: 'example' };
   const response = (data, status = 200) => Response.json(data, { status });
   const fetch = async (address, init = {}) => {
     const u = new URL(address); assert.equal(u.origin, 'https://api.github.com');
@@ -33,10 +33,15 @@ function fixture({ missing = false } = {}) {
     }
     if (p === '/user/repos' && method === 'POST') { s.repo = { id: 42, full_name: 'example/example', private: false, default_branch: 'main' }; return response(s.repo); }
     if (p === base) return s.repo ? response(s.repo) : response({}, 404);
+    if(p===base+'/branches')return response([...s.branches].map(([name,oid])=>({name,commit:{sha:oid}})));
+    if(p===base+'/tags')return response(s.tags);
     if (p.startsWith(base + '/contents/')) {
       if(method==='PUT'){
-        const content=Buffer.from(body.content,'base64'),oid=sha(content),tree={ 'README.md':oid },treeSha=sha(JSON.stringify(tree)),commitSha=sha('initial'+treeSha);
-        s.blobs.set(oid,content);s.trees.set(treeSha,tree);s.commits.set(commitSha,{tree:{sha:treeSha}});s.branches.set(body.branch,commitSha);
+        const previous=empty?s.branches.get(body.branch):null,oldTree=s.trees.get(s.commits.get(previous)?.tree.sha)||{};
+        if(previous&&oldTree['README.md']&&!body.sha)return response({},409);
+        const content=Buffer.from(body.content,'base64'),oid=sha(content),tree={...oldTree,'README.md':oid},treeSha=sha(JSON.stringify(tree)),commitSha=sha('initial'+treeSha);
+        s.blobs.set(oid,content);s.trees.set(treeSha,tree);s.commits.set(commitSha,{tree:{sha:treeSha},parents:previous?[{sha:previous}]:[]});s.branches.set(body.branch,commitSha);
+        if(s.loseSeedResponse){s.loseSeedResponse=false;throw Error('lost initialization response');}
         return response({content:{sha:oid},commit:{sha:commitSha}});
       }
       const branch = u.searchParams.get('ref') || 'main', head = s.branches.get(branch);
@@ -46,12 +51,13 @@ function fixture({ missing = false } = {}) {
     }
     if (p.startsWith(base + '/git/ref/heads/')) {
       const branch = p.slice((base + '/git/ref/heads/').length), oid = s.branches.get(branch);
-      return oid ? response({ object: { sha: oid } }) : response({}, 404);
+      return oid ? response({ object: { sha: oid } }) : response({}, empty&&!s.branches.size?409:404);
     }
     if (p === base + '/git/blobs') { const content = Buffer.from(body.content, body.encoding === 'utf-8' ? 'utf8' : 'base64'); const oid = sha(content); s.blobs.set(oid, content); return response({ sha: oid }); }
     if (p === base + '/git/trees') { const tree = { ...s.trees.get(body.base_tree) }; for (const entry of body.tree) tree[entry.path] = entry.sha; const oid = sha(JSON.stringify(tree)); s.trees.set(oid, tree); return response({ sha: oid }); }
     if (p === base + '/git/commits') { const oid = sha(JSON.stringify(body)); s.commits.set(oid, { tree: { sha: body.tree }, parents: body.parents }); return response({ sha: oid }); }
     if (p.startsWith(base + '/git/commits/')) return response(s.commits.get(p.slice((base + '/git/commits/').length)));
+    if(p.startsWith(base+'/git/trees/')&&method==='GET')return response({truncated:false,tree:Object.entries(s.trees.get(p.slice((base+'/git/trees/').length))||{}).map(([path,oid])=>({path,sha:oid,type:'blob',mode:'100644'}))});
     if (p === base + '/git/refs') { const branch = body.ref.slice('refs/heads/'.length); if (s.branches.has(branch)) return response({}, 422); s.branches.set(branch, body.sha); return response({ object: { sha: body.sha } }); }
     if (p.startsWith(base + '/git/refs/heads/')) {
       const branch = p.slice((base + '/git/refs/heads/').length);
@@ -204,6 +210,64 @@ test('creating a profile repository is an explicit part of the reviewed plan', (
   assert.equal(plan.createRepository, true); await executeProfilePlan(plan, plan.fingerprint, { ...f.api, stateDir });
   assert.equal(f.state.writes.filter(x => x.path === '/user/repos').length, 1);
   assert.equal(f.state.repo.private, false);
+}));
+
+test('an existing empty profile explicitly reviews its seed and publishes README/assets in one review commit',()=>withState(async stateDir=>{
+  const f=fixture({empty:true}),plan=await prepareProfilePlan('example',{assets:[{path:'assets/diagram.svg',content:'<svg/>',encoding:'utf-8',alt:'Diagram',rights:'user-owned'}]},draft,f.api);
+  assert.equal(plan.createRepository,false);assert.equal(plan.repository.empty,true);assert.equal(plan.repository.head,null);
+  assert.equal(previewWholeProfilePlan(plan).initializeRepository,true);assert.equal(plan.initialReadme,'# example\n');
+  const invalid=structuredClone(plan);invalid.initialReadme=null;delete invalid.fingerprint;invalid.fingerprint=digest(invalid);
+  assert.throws(()=>validateProfilePlan(invalid),/baseline is not reviewed/);
+  const result=await executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir});assert.equal(result.state,'needs-user-action');
+  assert.equal(f.state.writes.filter(x=>x.path==='/user/repos').length,0);assert.equal(f.state.writes.filter(x=>x.method==='PUT').length,1);
+  const seed=f.state.branches.get('main'),branch='gh-aura/profile-'+plan.fingerprint.slice(0,24),commit=f.state.commits.get(f.state.branches.get(branch));
+  assert.deepEqual(commit.parents,[seed]);assert.equal(f.state.blobs.get(f.state.trees.get(f.state.commits.get(seed).tree.sha)['README.md']).toString(),'# example\n');
+  assert.equal(Object.keys(f.state.trees.get(commit.tree.sha)).length,2);
+  const count=f.state.writes.length;await executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir});assert.equal(f.state.writes.length,count);
+}));
+
+test('an empty profile supports direct commit delivery and repeated verification without initialization again',()=>withState(async stateDir=>{
+  const f=fixture({empty:true}),plan=await prepareProfilePlan('example',{},draft,{...f.api,delivery:'commit'});
+  assert.equal((await executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir})).state,'verified');
+  const count=f.state.writes.length;assert.equal((await executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir})).state,'verified');assert.equal(f.state.writes.length,count);
+}));
+
+test('a missing default branch cannot be mistaken for an empty repository with other branches or tags',async()=>{
+  for(const kind of ['branch','tag']){
+    const f=fixture({empty:true});if(kind==='branch')f.state.branches.set('work','1'.repeat(40));else f.state.tags.push({name:'v1'});
+    await assert.rejects(prepareProfilePlan('example',{},draft,f.api),/other history/);assert.equal(f.state.writes.length,0);
+  }
+});
+
+test('an empty repository changed or replaced after review is never initialized',()=>withState(async stateDir=>{
+  for(const kind of ['history','identity']){
+    const f=fixture({empty:true}),plan=await prepareProfilePlan('example',{},draft,f.api);
+    if(kind==='history')f.state.branches.set('main','1'.repeat(40));else f.state.repo.id=99;
+    await assert.rejects(executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir}),/changed/);assert.equal(f.state.writes.length,0);
+  }
+}));
+
+test('a lost initialization response reconciles the exact root seed from the reviewed repository',()=>withState(async stateDir=>{
+  const f=fixture({empty:true}),plan=await prepareProfilePlan('example',{},draft,{...f.api,delivery:'commit'});f.state.loseSeedResponse=true;
+  await assert.rejects(executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir}),/unknown|Network/);
+  assert.equal((await executeProfilePlan(plan,plan.fingerprint,{...f.api,stateDir})).state,'verified');
+  assert.equal(f.state.writes.filter(x=>x.method==='PUT').length,1);
+}));
+
+test('a writer racing initialization cannot have its README overwritten or its history used for publication',()=>withState(async stateDir=>{
+  for(const hasReadme of [false,true]){
+    const f=fixture({empty:true}),plan=await prepareProfilePlan('example',{account:{bio:'New'}},draft,f.api);
+    const fetch=async(url,init)=>{
+      if(init?.method==='PUT'){
+        const tree=hasReadme?{'README.md':sha('# Existing\n')}:{'other.txt':sha('other')};
+        f.state.trees.set('3'.repeat(40),tree);f.state.commits.set('4'.repeat(40),{tree:{sha:'3'.repeat(40)},parents:[]});f.state.branches.set('main','4'.repeat(40));
+      }
+      return f.api.fetch(url,init);
+    };
+    await assert.rejects(executeProfilePlan(plan,plan.fingerprint,{...f.api,fetch,stateDir}),/uncertain|conflict/);
+    assert.equal(f.state.writes.filter(x=>x.path.endsWith('/git/commits')||x.path==='/user').length,0);
+    assert.equal(f.state.user.bio,'Old bio');
+  }
 }));
 test('a newly created profile PR can be verified after merge and source-branch deletion',()=>withState(async stateDir=>{
   const f=fixture({missing:true}),plan=await prepareProfilePlan('example',{},draft,f.api);
