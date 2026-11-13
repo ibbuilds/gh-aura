@@ -19,3 +19,5 @@ Other explicit writes: `work apply` proposes one unmerged documentation PR; `act
 Reviewed collaboration exercises require two distinct authenticated identities, second-account write access, consent and verified coauthor attribution. Tokens and author emails stay local. Real account creation/access setup is an owner/provider action. Synthetic exercises are labeled and never presented as professional experience.
 
 MCP runs on local stdio with bounded JSON-RPC messages. GitHub rate limits apply; uncertain writes are never retried automatically. Report vulnerabilities privately, without sharing credentials.
+
+Opt-in resource checks use anonymous HTTPS, public DNS/IP pinning, bounded redirects/time/requests and no response-body retention.

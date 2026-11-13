@@ -14,6 +14,7 @@ import { renderProfile, preserveProfile } from '../src/render.mjs';
 import { profileTarget, previewProfile } from '../src/workflow.mjs';
 import { contributionsReport } from '../src/contributions.mjs';
 import { achievementReport } from '../src/achievements.mjs';
+import { checkProfileResources } from '../src/profile-resources.mjs';
 
 const username = process.argv[2] || 'ibbuilds';
 const directory = mkdtempSync(join(tmpdir(), 'gh-aura-live-'));
@@ -56,6 +57,8 @@ try {
   assert.equal(prompt.status, 0, prompt.stderr);
   assert.match(prompt.stdout, /BEGIN UNTRUSTED EDITORIAL DATA/);
   assert.ok(Buffer.byteLength(prompt.stdout) < 16000);
+  const resources=await checkProfileResources('[Repository](https://github.com/ibbuilds/gh-aura)\n[License](https://raw.githubusercontent.com/ibbuilds/gh-aura/main/LICENSE)');
+  assert.equal(resources.state,'checked');assert.equal(resources.networkRequests,2);
   console.log(JSON.stringify({ checked: 'public audit, 3 styles, managed draft, preview, opportunities, contribution history, bounded CLI reads and editorial prompt',
-    immediateRepeatRequests: 0, cliUsage, cache: cache.summary(), writes: 0 }, null, 2));
+    immediateRepeatRequests: 0, cliUsage,resourceChecks:resources.results.map(x=>({status:x.status,state:x.state})), cache: cache.summary(), writes: 0 }, null, 2));
 } finally { rmSync(directory, { recursive: true, force: true }); }

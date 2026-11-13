@@ -19,11 +19,9 @@ Download the [latest GitHub Release](https://github.com/ibbuilds/gh-aura/release
 
 Install the [Agent Skill](skills/gh-aura-profile/SKILL.md), and connect a compatible MCP client to **gh-aura mcp**:
 
-    gh-aura agent capabilities --json
     gh-aura agent install --client codex
     gh-aura agent doctor --json
     gh-aura brief --prompt --direction technical --output prompt.md
-    gh-aura sources design --query "terminal retro" --json
 
 Your AI can inspect evidence, preserve your style and project choices, compose an original draft and preview the complete change plan. Tools read by default. An owner-configured host grant permits execution of one exact reviewed plan; the model cannot authorize itself.
 
@@ -40,7 +38,8 @@ The shared workflow updates the actual sidebar bio (160 characters), selected ac
 ## Review the complete profile
 
     gh-aura improve spec --output profile.json
-    gh-aura improve context USERNAME --spec profile.json
+    gh-aura improve draft USERNAME --spec profile.json --output draft.md
+    gh-aura improve check USERNAME --spec profile.json --file draft.md --resources
     gh-aura improve plan USERNAME --spec profile.json --file draft.md --output plan.json
     gh-aura improve preview --review plan.json
 
@@ -48,7 +47,7 @@ The owner edits the spec and reviews the fingerprint before `improve apply` or a
 
 ## Product direction and evidence
 
-The [detailed delivery plan](https://github.com/ibbuilds/gh-aura/blob/main/docs/PRODUCT_PLAN.md) defines the complete profile journey, remaining work, dependencies and acceptance criteria. Historical research is [preserved at an immutable checkpoint](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research); provisional examples are reading references, not certified winners or templates.
+The [plan](https://github.com/ibbuilds/gh-aura/blob/main/docs/PRODUCT_PLAN.md) tracks delivery and acceptance. [Original examples](https://github.com/ibbuilds/gh-aura/tree/main/examples) demonstrate composition. Historical research is [preserved](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research); pending reviews never become approved patterns automatically.
 
 [CLI and MCP setup](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md) · [Security](SECURITY.md) · [Release gates](https://github.com/ibbuilds/gh-aura/blob/main/docs/RELEASE_READINESS.md)
 

@@ -121,6 +121,15 @@ test('planning and preview are read-only and bind exact contents, account fields
   const bad = structuredClone(plan); bad.files[0].content += 'changed'; const { fingerprint, ...rest } = bad; bad.fingerprint = digest(rest);
   assert.throws(() => validateProfilePlan(bad), /content changed/);
 });
+test('the reviewed plan binds composition and rejects drafts missing selected evidence before any mutation',async()=>{
+  const f=fixture(),spec=makeWholeProfileSpec();spec.composition.featured=['example/tools'];
+  await assert.rejects(prepareProfilePlan('example',spec,draft,f.api),/selected-project-missing/);assert.equal(f.state.writes.length,0);
+  const plan=await prepareProfilePlan('example',spec,draft+'\n[Tools](https://github.com/example/tools)\n',f.api);
+  assert.deepEqual(plan.composition.featured,['example/tools']);
+  const changed=structuredClone(plan);changed.files[0].content=draft;changed.files[0].after=sha(draft);
+  const {fingerprint,...payload}=changed;changed.fingerprint=digest(payload);
+  assert.throws(()=>validateProfilePlan(changed),/composition requirements/);
+});
 test('atomic README and asset publication preserves the old tree and updates only requested account fields', () => withState(async stateDir => {
   const f = fixture(); const plan = await prepareProfilePlan('example', { account: { bio: 'New bio' }, assets: [{ path: 'assets/diagram.svg', content: '<svg/>', encoding: 'utf-8', alt: 'Architecture', rights: 'user-owned' }] }, draft, { ...f.api, delivery: 'commit' });
   const result = await executeProfilePlan(plan, plan.fingerprint, { ...f.api, stateDir });

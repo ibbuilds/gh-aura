@@ -3,6 +3,7 @@ import { selectFeatured } from './engine.mjs';
 import { renderHiringReview } from './readiness.mjs';
 import { renderJobMatch } from './job-match.mjs';
 import { md, html, httpsUrl, repoUrl } from './text.mjs';
+import { profileConfigFromSpec } from './profile-spec-config.mjs';
 
 const PROFILE_COPY = Object.freeze({
   en: Object.freeze({
@@ -31,7 +32,9 @@ const PROFILE_COPY = Object.freeze({
   }),
 });
 
-export function renderProfile(snapshot, config, chosenStyle) {
+export function renderProfile(snapshot, config, chosenStyle, profileSpec) {
+  if(profileSpec)config=profileConfigFromSpec(config,profileSpec);
+  const allowExternal=!profileSpec||(profileSpec.composition||profileSpec).includeExternal===true;
   const plan = presentationPlan({ ...config.profile, ...(chosenStyle ? { style: chosenStyle, visual: -1 } : {}) });
   const style = plan.style;
   if (!['minimal', 'regular', 'flashy'].includes(style)) throw new Error('Choose minimal, regular, or flashy.');
@@ -50,7 +53,7 @@ export function renderProfile(snapshot, config, chosenStyle) {
   const links = p.links.map((link) => ({ label: link.label, url: httpsUrl(link.url) })).filter((link) => link.url);
   const blog = String(snapshot.user.blog || '');
   const website = httpsUrl(blog.includes(':') ? blog : 'https://' + blog);
-  if (blog && website && !links.some((link) => link.url === website)) links.push({ label: copy.website, url: website });
+  if (!profileSpec&&blog && website && !links.some((link) => link.url === website)) links.push({ label: copy.website, url: website });
   const lines = [];
   if (style === 'flashy') {
     lines.push('<div align="center">', '', '<h1>' + html(name) + '</h1>');
@@ -111,7 +114,7 @@ export function renderProfile(snapshot, config, chosenStyle) {
   }
   if (sections.technologies && technologies.length) {
     lines.push('## ' + techLabel, '');
-    if (style === 'flashy') {
+    if (style === 'flashy'&&allowExternal) {
       // Technology labels, not earned GitHub achievements. This opt-in style uses Shields.io.
       for (const tech of technologies) {
         const query = new URLSearchParams({ label: tech, message: '', color: p.accent.replace(/^#/, ''), style: 'for-the-badge' });

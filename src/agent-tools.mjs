@@ -14,7 +14,8 @@ import { validateLogin } from './github.mjs';
 import { makeWholeProfileSpec, refineWholeProfileSpec, inspectWholeProfile, prepareProfilePlan,
   previewWholeProfilePlan, executeProfilePlan, approvedPlanFromHost,profileExecutionStatus } from './profile-plan.mjs';
 import { scanPublicProjects, inspectPublicProject, inspectCurrentPins } from './profile-projects.mjs';
-import { wholeProfileContext } from './profile-context.mjs';
+import { wholeProfileContext,nativeProfileDraft } from './profile-context.mjs';
+import { checkProfileResources } from './profile-resources.mjs';
 
 export const AGENT_INTERFACE_VERSION='gh-aura-agent-v1';
 const properties=(shape,required=[])=>({
@@ -24,13 +25,17 @@ const str=(description,maxLength=160)=>({type:'string',description,maxLength});
 const optUser={user:str('Public GitHub username; omit to use local config.',39)};
 const art={direction:{type:'string',enum:['barebones','minimal','technical','expressive']}};
 const tools=[
+  ['gh_aura_profile_native_draft','Generate native GitHub Markdown using the shared whole-profile intent and observed public projects; no publication or AI service.',
+    properties({...optUser,spec:{type:'object'}},['spec'])],
+  ['gh_aura_profile_resources_check','Check README resource metadata through bounded anonymous public HTTPS requests. Blocks private/local destinations; retains no remote body or credentials.',
+    properties({markdown:str('README to check',100000),baseUrl:str('Public README URL used to resolve relative paths',2000),spec:{type:'object'}},['markdown'])],
   ['gh_aura_whole_profile_context','Build compact public evidence and writing guidance honoring the full shared intent, explicit projects and style.',
     properties({...optUser,spec:{type:'object'}},['spec'])],
   ['gh_aura_whole_profile_spec','Create or refine shared intent for README, sidebar account fields, assets, pins and optional workspace goals.',
     properties({spec:{type:'object'},changes:{type:'object'}})],
   ['gh_aura_whole_profile_inspect','Inspect public sidebar fields, profile repository and exact README/default branch revisions.',properties({...optUser})],
   ['gh_aura_whole_profile_plan','Build an exact read-only change plan from shared intent and original Markdown; never authorize it.',
-    properties({...optUser,spec:{type:'object'},markdown:str('Original README; omit to leave it unchanged',100000),delivery:{type:'string',enum:['pr','commit']}},['spec'])],
+    properties({...optUser,spec:{type:'object'},markdown:str('Original README; omit to leave it unchanged',100000),resources:{type:'boolean',description:'Opt into anonymous checks of public link/image metadata'},delivery:{type:'string',enum:['pr','commit']}},['spec'])],
   ['gh_aura_whole_profile_preview','Show reviewed field differences and file diffs from a plan without any remote writes.',properties({plan:{type:'object'}},['plan'])],
   ['gh_aura_projects_scan','Rank a bounded page range of public projects for a goal. Continue with nextCursor until coverage is complete.',
     properties({...optUser,goal:str('Target role',160),cursor:{type:'integer',minimum:1,maximum:100},pages:{type:'integer',minimum:1,maximum:20},inspect:{type:'integer',minimum:0,maximum:6}})],
@@ -80,7 +85,7 @@ const tools=[
   ['gh_aura_profile_prompt','Produce an original writing brief usable by any AI model. No AI service is called.',
     properties({...optUser,...art,includeExternal:{type:'boolean'}})],
   ['gh_aura_profile_validate','Run local heuristic checks on a Markdown draft; not a factuality certificate.',
-    properties({markdown:str('Proposed original Markdown',100000),spec:{type:'object'}},['markdown'])],
+    properties({...optUser,markdown:str('Proposed original Markdown',100000),spec:{type:'object'}},['markdown'])],
   ['gh_aura_profile_diff','Compare two Markdown drafts locally; produces no approval token.',
     properties({before:str('Existing Markdown',100000),after:str('Proposed Markdown',100000)},['before','after'])],
   ['gh_aura_profile_preview','Read the public USER/USER README live and show a diff; never produce an approval token.',
@@ -104,7 +109,7 @@ const tools=[
 ];
 export const AGENT_TOOL_DEFINITIONS=Object.freeze(tools.map(([name,description,inputSchema])=>({
   name,title:name.replaceAll('_',' '),description,inputSchema,
-  annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false},
+  annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:['gh_aura_profile_resources_check','gh_aura_whole_profile_plan'].includes(name)},
 })));
 const APPROVED_EXECUTION_TOOL=Object.freeze({name:'gh_aura_apply_approved_profile',title:'Apply owner-approved profile plan',
   description:'Execute only the exact plan pinned in owner/host configuration. Cannot choose a plan/path or create approval. May create the reviewed public profile repository, publish README/assets and update reviewed account fields.',
@@ -169,9 +174,14 @@ export async function runAgentTool(name,args={}){
   }
   if(name==='gh_aura_approved_profile_status')return profileExecutionStatus(approvedPlanFromHost());
   if(name==='gh_aura_whole_profile_spec')return args.changes?refineWholeProfileSpec(args.spec,args.changes):makeWholeProfileSpec(args.spec||{},loadConfig());
+  if(name==='gh_aura_profile_native_draft')return nativeProfileDraft(actualUser(args.user),args.spec,{config:loadConfig()});
+  if(name==='gh_aura_profile_resources_check'){
+    const spec=makeWholeProfileSpec(args.spec||{readme:false});
+    return checkProfileResources(args.markdown,{baseUrl:args.baseUrl,assets:spec.assets});
+  }
   if(name==='gh_aura_whole_profile_context')return wholeProfileContext(actualUser(args.user),args.spec,{config:loadConfig()});
   if(name==='gh_aura_whole_profile_inspect')return inspectWholeProfile(actualUser(args.user));
-  if(name==='gh_aura_whole_profile_plan')return prepareProfilePlan(actualUser(args.user),args.spec,args.markdown,{delivery:args.delivery});
+  if(name==='gh_aura_whole_profile_plan')return prepareProfilePlan(actualUser(args.user),args.spec,args.markdown,{delivery:args.delivery,resources:args.resources});
   if(name==='gh_aura_whole_profile_preview')return previewWholeProfilePlan(args.plan);
   if(name==='gh_aura_projects_scan')return scanPublicProjects(actualUser(args.user),args);
   if(name==='gh_aura_project_evidence')return inspectPublicProject(args.repository);
@@ -208,7 +218,7 @@ export async function runAgentTool(name,args={}){
   if(name==='gh_aura_profile_refine')
     return refineProfileSpec(args.spec,args.changes);
   if(name==='gh_aura_profile_validate')
-    return validateProfileDraft(args.markdown,args.spec);
+    return validateProfileDraft(args.markdown,args.spec,{username:args.user?actualUser(args.user):undefined});
   if(name==='gh_aura_profile_diff')
     return previewProfileDiff(args.before,args.after);
   if(name==='gh_aura_profile_preview'){

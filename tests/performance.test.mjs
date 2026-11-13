@@ -9,6 +9,8 @@ import { measure } from '../scripts/benchmark.mjs';
 test('profile generation has a measured request budget and warm-cache regression gate', async () => {
   const result = await measure();
   assert.deepEqual(result.profileGeneration, { previousReadPlanRequests: 4, currentColdRequests: 2, currentWarmRequests: 0 });
+  assert.equal(result.wholeProfile.previousContextRequests,11);assert.equal(result.wholeProfile.currentContextRequests,8);
+  assert.equal(result.wholeProfile.nativeDraftRequests,2);assert.ok(result.wholeProfile.contextBytes<16000);
 });
 
 test('local editorial check makes zero network calls and strict mode is useful in scripts', () => {

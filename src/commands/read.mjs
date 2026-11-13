@@ -6,7 +6,13 @@ import { emit, loginFor } from '../output.mjs';
 
 /** One lifecycle for public reads. Publishing deliberately never uses this session/cache. */
 export async function run(command, options) {
-  const config = loadConfig(options.config);
+  let config = loadConfig(options.config),profileSpec=null;
+  if(options.spec){
+    const {readProfileJSON}=await import('../profile-plan.mjs');
+    const {compositionFromSpec}=await import('../agent-profile.mjs');
+    profileSpec=compositionFromSpec(readProfileJSON(options.spec));
+    config=(await import('../profile-spec-config.mjs')).profileConfigFromSpec(config,profileSpec);
+  }
   if (options.style) { config.profile.style = options.style; config.profile.visual = -1; }
   if (options.visual !== undefined) config.profile.visual = Number(options.visual);
   if (options.language) config.editorial.language = options.language;
@@ -49,6 +55,7 @@ export async function run(command, options) {
     const login = loginFor(options, config);
     const includeProfile = ['audit', 'brief', 'diff'].includes(command) || (command === 'profile' && Boolean(options.keep));
     const snapshot = await getSnapshot(login, { ...api, maxRepos: config.scan.maxRepos, includeProfile });
+    if(profileSpec)await (await import('../profile-projects.mjs')).includeSelectedPublicProjects(snapshot,profileSpec,api);
     if (!['contributions', 'achievements'].includes(command) && config.scan.inspectRepos) {
       const { inspectRepositories } = await import('../inspection.mjs');
       await inspectRepositories(snapshot, config, config.scan.inspectRepos, api);
@@ -72,19 +79,19 @@ export async function run(command, options) {
     }
     if (command === 'brief') {
       const { editorialBrief } = await import('../brief.mjs');
-      const brief = editorialBrief(snapshot, config,{includeExternal:options.external===true});
+      const brief = editorialBrief(snapshot, config,{includeExternal:options.external===true,...(profileSpec?{profileSpec}:{})});
       const value = options.prompt ? (await import('../editorial.mjs')).writingPrompt(brief) : brief;
       emit(value, options); return;
     }
     const { renderProfile, renderShowcaseMarkdown, renderAuditMarkdown, preserveProfile } = await import('../render.mjs');
     if (command === 'profile') {
       if (options.keep && snapshot.profileReadme?.unknown) throw new Error('Cannot preserve an unreadable existing README.');
-      const generated = renderProfile(snapshot, config);
+      const generated = renderProfile(snapshot, config,undefined,profileSpec);
       emit(options.keep ? preserveProfile(snapshot.profileReadme?.content || '', generated) : generated, options); return;
     }
     if (command === 'diff') {
       const { diffText } = await import('../diff.mjs');
-      emit(diffText(snapshot.profileReadme?.content || '', renderProfile(snapshot, config)), options); return;
+      emit(diffText(snapshot.profileReadme?.content || '', renderProfile(snapshot, config,undefined,profileSpec)), options); return;
     }
     const { rankRepositories, auditProfile } = await import('../engine.mjs');
     if (command === 'showcase') {

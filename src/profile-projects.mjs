@@ -9,6 +9,16 @@ const repoName = value => {
   if (typeof value !== 'string' || !/^[a-z\d-]{1,39}\/[a-z\d_.-]{1,100}$/i.test(value)) throw Error('Expected public OWNER/REPO.');
   validateLogin(value.split('/')[0]); return value;
 };
+export async function includeSelectedPublicProjects(snapshot,spec,options={}){
+  for(const name of spec.sections.projects===false?[]:spec.featured.slice(0,spec.maxProjects)){
+    const full=name.includes('/')?name:snapshot.username+'/'+name;repoName(full);
+    if(snapshot.repos.some(r=>r.full_name.toLowerCase()===full.toLowerCase()))continue;
+    const repo=await getJSON('/repos/'+full.split('/').map(encodeURIComponent).join('/'),{...options,publicRead:false,cache:undefined});
+    if(!repo||repo.private!==false||repo.full_name?.toLowerCase()!==full.toLowerCase())throw Error('Selected public project is unavailable: '+full);
+    snapshot.repos.push(repo);
+  }
+  return snapshot;
+}
 export async function inspectPublicProject(name, options = {}) {
   repoName(name);
   const base = '/repos/' + name.split('/').map(encodeURIComponent).join('/');

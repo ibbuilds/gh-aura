@@ -3,11 +3,12 @@ import { lstatSync, readFileSync, writeFileSync, mkdirSync, openSync, closeSync,
 import { join } from 'node:path';
 import { homedir, hostname } from 'node:os';
 import { getJSON, requestJSON, decodeReadme, validateLogin, tokenFor } from './github.mjs';
-import { makeProfileSpec, validateProfileSpec,refineProfileSpec } from './agent-profile.mjs';
+import { makeProfileSpec, validateProfileSpec,refineProfileSpec,validateProfileDraft } from './agent-profile.mjs';
 import { plain, httpsUrl } from './text.mjs';
 import { diffText } from './diff.mjs';
 import { prepareWorkspaceActions,validateWorkspaceActions,preflightWorkspaceActions,executeWorkspaceActions } from './workspace-actions.mjs';
 import { inspectCurrentPins } from './profile-projects.mjs';
+import { checkProfileResources } from './profile-resources.mjs';
 
 export const WHOLE_PROFILE_FORMAT = 'gh-aura-whole-profile-v1';
 export const PROFILE_PLAN_FORMAT = 'gh-aura-profile-change-plan-v1';
@@ -99,7 +100,7 @@ const apiOptions = options => ({ ...options, cache: undefined, publicRead: false
 const baseFor = login => '/repos/' + encodeURIComponent(login) + '/' + encodeURIComponent(login);
 export async function inspectWholeProfile(username, options = {}) {
   const login = validateLogin(username), api = apiOptions(options);
-  const user = await getJSON('/users/' + encodeURIComponent(login), api);
+  const user = options.publicUser||await getJSON('/users/' + encodeURIComponent(login), api);
   if (!user || user.type && user.type !== 'User' || user.login?.toLowerCase() !== login.toLowerCase()) throw Error('Personal account not found.');
   if(options.includeRepository===false)return {format:'gh-aura-profile-snapshot-v1',username:user.login,observedAt:new Date().toISOString(),
     account:Object.fromEntries([...Object.keys(fields),'hireable'].map(k=>[k,normalAccount(user,k)])),
@@ -118,7 +119,9 @@ export async function inspectWholeProfile(username, options = {}) {
     pins: { state: 'not-observed', instructions: 'Verify the current pinned items on GitHub before changing the selection.' } };
 }
 export async function prepareProfilePlan(username, spec, markdown, options = {}) {
-  const intent = makeWholeProfileSpec(spec),workspaceActions=await prepareWorkspaceActions(validateLogin(username),intent,options),snapshot = await inspectWholeProfile(username, {...options,
+  const intent = makeWholeProfileSpec(spec);
+  if(options.resources&&(!intent.readme||markdown===undefined))throw Error('Resource verification requires a requested README draft.');
+  const workspaceActions=await prepareWorkspaceActions(validateLogin(username),intent,options),snapshot = await inspectWholeProfile(username, {...options,
     includeRepository:(intent.readme&&markdown!==undefined)||intent.assets.length>0});
   const delivery = options.delivery || 'pr';
   if (!['pr', 'commit'].includes(delivery)) throw Error('Delivery must be pr or commit.');
@@ -126,6 +129,8 @@ export async function prepareProfilePlan(username, spec, markdown, options = {})
   if (intent.readme && markdown !== undefined) {
     text(markdown, 256 * 1024, 'README');
     if (!markdown.trim() || markdown.split('\n').length > 600) throw Error('README must be nonempty and at most 600 lines.');
+    const validation=validateProfileDraft(markdown,intent.composition,{username:snapshot.username});
+    if(validation.findings.some(x=>x.severity==='error'))throw Error('Draft does not satisfy the reviewed intent: '+validation.findings.filter(x=>x.severity==='error').map(x=>x.id).join(', ')+'. Run check --spec before planning.');
     if (plain(snapshot.readme.content) !== snapshot.readme.content) throw Error('Existing README contains terminal control characters.');
     if (markdown !== snapshot.readme.content) files.push({ path: 'README.md', encoding: 'utf-8', content: markdown, previous: snapshot.readme.content, before: snapshot.readme.sha,
       after: blobSha(Buffer.from(markdown)) });
@@ -139,20 +144,27 @@ export async function prepareProfilePlan(username, spec, markdown, options = {})
   const account = Object.fromEntries(Object.entries(intent.account).filter(([k, v]) => !same(snapshot.account[k], v)));
   const beforeAccount = Object.fromEntries(Object.keys(account).map(k => [k, snapshot.account[k]]));
   const plan = { format: PROFILE_PLAN_FORMAT, username: snapshot.username, createdAt: new Date().toISOString(), delivery,
+    composition:intent.composition,
     repository: snapshot.repository, account: { before: beforeAccount, after: account }, files,
     pins: intent.pins, activity: workspaceActions.activity, badges: workspaceActions.badges,
     createRepository: files.length > 0 && !snapshot.repository.exists,
     initialReadme:files.length>0&&!snapshot.repository.exists?'# '+snapshot.username+'\n':null,
     permissions: [...(files.length ? ['contents:write', ...(delivery === 'pr' ? ['pull_requests:write'] : [])] : []), ...(Object.keys(account).length ? ['profile:write'] : []),...(workspaceActions.activity||workspaceActions.badges?['private-workspace:write']:[])],
     syntheticOperationsAreProfessionalEvidence: false };
+  if(options.resources&&intent.readme&&markdown!==undefined)plan.resourceCheck=await checkProfileResources(markdown,{...options,
+    baseUrl:profileResourceBase(snapshot.username,snapshot.repository),assets:intent.assets});
   return { ...plan, fingerprint: digest(plan) };
+}
+export function profileResourceBase(username,repo){
+  validateLogin(username);
+  return 'https://raw.githubusercontent.com/'+username+'/'+username+'/'+(repo.head||encodeURIComponent(repo.branch||'main'))+'/README.md';
 }
 export function validateProfilePlan(input) {
   if (!object(input) || input.format !== PROFILE_PLAN_FORMAT) throw Error('Unsupported profile plan.');
   const { fingerprint, ...plan } = input;
   if (!/^[a-f\d]{64}$/.test(fingerprint || '') || digest(plan) !== fingerprint) throw Error('Profile plan fingerprint mismatch.');
   validateLogin(plan.username);
-  only(plan, ['format', 'username', 'createdAt', 'delivery', 'repository', 'account', 'files', 'pins', 'activity', 'badges', 'createRepository', 'initialReadme', 'permissions', 'syntheticOperationsAreProfessionalEvidence'], 'plan');
+  only(plan, ['format', 'username', 'createdAt', 'delivery', 'composition','resourceCheck','repository', 'account', 'files', 'pins', 'activity', 'badges', 'createRepository', 'initialReadme', 'permissions', 'syntheticOperationsAreProfessionalEvidence'], 'plan');
   if (!['pr', 'commit'].includes(plan.delivery) || !Number.isFinite(Date.parse(plan.createdAt)) || !object(plan.repository) || typeof plan.repository.branch !== 'string' ||
       !/^[a-z\d_./-]+$/i.test(plan.repository.branch) || plan.repository.branch.includes('..') || typeof plan.repository.exists !== 'boolean') throw Error('Invalid profile plan target.');
   if (plan.repository.exists && !/^[a-f\d]{40}$/i.test(plan.repository.head || '')) throw Error('Invalid profile base revision.');
@@ -176,6 +188,12 @@ export function validateProfilePlan(input) {
     if (blobSha(Buffer.from(file.content, file.encoding === 'utf-8' ? 'utf8' : 'base64')) !== file.after) throw Error('Planned file content changed.');
   }
   makeWholeProfileSpec({ readme: false, pins: plan.pins, activity: plan.activity, badges: plan.badges });
+  if(plan.composition){
+    validateProfileSpec(plan.composition);
+    const readme=plan.files.find(f=>f.path==='README.md');
+    if(readme&&validateProfileDraft(readme.content,plan.composition,{username:plan.username}).findings.some(f=>f.severity==='error'))throw Error('Planned README violates its composition requirements.');
+  }
+  if(plan.resourceCheck&&plan.resourceCheck.format!=='gh-aura-resource-check-v1')throw Error('Invalid planned resource report.');
   validateWorkspaceActions(plan.username,plan);
   if (Buffer.byteLength(JSON.stringify(input)) > 3 * 1024 * 1024) throw Error('Profile plan exceeds 3 MiB.');
   return input;
@@ -186,7 +204,7 @@ export function previewWholeProfilePlan(input) {
     createRepository: plan.createRepository, initialReadme:plan.initialReadme, delivery: plan.delivery, account: plan.account,
     files: plan.files.map(f => ({ path: f.path, before: f.before, after: f.after, bytes: Buffer.byteLength(f.content, f.encoding === 'utf-8' ? 'utf8' : 'base64'),
       ...(f.path === 'README.md' ? { diff: diffText(f.previous, f.content) } : { alt: f.alt, rights: f.rights }) })), pins: plan.pins,
-    activity: plan.activity, badges: plan.badges, permissions: plan.permissions, writesPerformed: 0,
+    activity: plan.activity, badges: plan.badges,composition:plan.composition,resourceCheck:plan.resourceCheck, permissions: plan.permissions, writesPerformed: 0,
     next: 'The owner/host must independently authorize this exact fingerprint before execution.' };
 }
 export function saveProfilePlan(file, plan) {

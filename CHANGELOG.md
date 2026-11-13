@@ -6,6 +6,7 @@
 - Added owner-pinned MCP execution, skill installation and recovery/status diagnostics.
 - Added bounded badge campaigns, reviewed two-account routes and daily calendar targets/readback.
 - Archived research tooling without deleting its immutable provenance; editorial acceptance remains separate.
+- Unified native drafts and AI intent, validated selected evidence and added bounded public resource checks.
 
 ## 1.18.0 — 2026-11-12
 

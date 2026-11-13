@@ -29,6 +29,14 @@ export async function run(command, options) {
   if (!options.file) throw new Error('Specify a Markdown draft with --file.');
   if (statSync(options.file).size > 256 * 1024) throw new Error('Draft exceeds 256 KiB.');
   const draft = readFileSync(options.file, 'utf8');
+  if(options.spec){
+    const {readProfileJSON}=await import('../profile-plan.mjs'),{validateProfileDraft}=await import('../agent-profile.mjs');
+    const raw=readProfileJSON(options.spec),report=validateProfileDraft(draft,raw,{username:options.user||loadConfig(options.config).user});
+    if(options.professional)report.professional=(await import('../profile-review.mjs')).professionalReview(draft,{goal:options.goal||'general',maxWords:(raw.composition||raw).maxWords});
+    emit(options.format==='json'?report:(await import('../editorial.mjs')).renderDraftCheck(report),options);
+    if(options.strict&&(report.findings.length||report.professional?.observations.length))process.exitCode=1;
+    return;
+  }
   let brief = null;
   if (options.brief) {
     if (statSync(options.brief).size > 128 * 1024) throw new Error('Brief exceeds 128 KiB.');

@@ -1,7 +1,7 @@
 # GH Aura: plan definitivo de producto y entrega
 
 **Current release:** v1.18.0
-**Actualizado:** 13 de noviembre de 2026, America/Chihuahua.
+**Actualizado:** 13 de noviembre de 2026, America/Mazatlan.
 **Base verificada y archivo:** d978bbae0234b30390885fc17bb7f2b6d52bc21b.
 **Estado:** limpieza e implementación técnica en la rama `codex/cleanup-and-delivery-plan`. No es una release publicada ni una certificación de resultados reales.
 
@@ -22,6 +22,8 @@ Entrega técnica actual:
 La investigación editorial pendiente, los pilotos de cuentas/clientes/usuarios y una nueva versión siguen siendo aceptación separada. No se cierran por pruebas simuladas. `main` ya está protegido: una revisión independiente, siete checks vinculados a GitHub Actions, revisión de último push, conversaciones resueltas, sin force-push/borrado y administradores incluidos; verificado mediante API el 13-11-2026. [Guía operativa del incremento](IMPROVE.md).
 
 Validación local del candidato: pruebas de producto, **46/46 del archivo histórico**, sintaxis y empaquetado/instalación offline correctos en Windows, Node 24. La matriz remota del PR se comprueba por separado.
+
+Incremento posterior: el render nativo y los comandos README/brief/diff aceptan el mismo Spec; el plan conserva sus requisitos y comprueba evidencia seleccionada. Hay verificación anónima opcional de recursos públicos con límites de red, cinco ejemplos originales y medición del recorrido integral. La comparación controlada de contexto pasó de 11 a 8 solicitudes, con 2 para un borrador nativo. Los ejemplos y las comprobaciones HTTP no sustituyen revisión visual, derechos reales ni pruebas con participantes.
 
 ## 1. Objetivo acordado
 

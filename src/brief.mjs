@@ -8,6 +8,7 @@ import { getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { recommendApprovedPatterns } from './pattern-library.mjs';
 import { validateProfileSpec } from './agent-profile.mjs';
+import { profileConfigFromSpec } from './profile-spec-config.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
@@ -19,12 +20,7 @@ export function editorialBrief(snapshot, config, options={}) {
     return text.slice(0, limit);
   };
   const agentSpec=options.profileSpec?validateProfileSpec(options.profileSpec.composition||options.profileSpec):makeProfileSpec({includeExternal:options.includeExternal===true},config);
-  config=structuredClone(config);
-  if(options.profileSpec){
-    Object.assign(config.profile,{featured:agentSpec.featured,maxProjects:agentSpec.maxProjects,sections:agentSpec.sections,links:agentSpec.links});
-    Object.assign(config.editorial,{direction:agentSpec.direction,targetRole:agentSpec.goal,language:agentSpec.language,maxWords:agentSpec.maxWords});
-    config.showcase.goal=agentSpec.goal;
-  }
+  if(options.profileSpec)config=profileConfigFromSpec(config,agentSpec);
   const p = config.profile;
   const presentation = presentationPlan(p);
   const acceptedPatterns=recommendApprovedPatterns({query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].join(' '),direction:agentSpec.direction});

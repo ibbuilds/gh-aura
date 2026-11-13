@@ -2,7 +2,9 @@
 
 `gh-aura COMMAND --help` gives full options. AI tools read by default; an independently configured host grant enables only its exact reviewed plan.
 
-The [complete profile workflow](IMPROVE.md) covers actual sidebar fields, README/assets, public projects/pins and optional workspace actions. Install with `gh-aura agent install --client codex` or `--client claude`; use `--client generic --directory PATH` for another skill host. `gh-aura agent doctor --json` checks local setup. Host discovery and live client activation are separate checks.
+The [whole-profile guide](IMPROVE.md) covers account fields, README/assets, projects and workspace actions. Use `agent install --client codex|claude` or `--client generic --directory PATH`; `agent doctor --json` checks setup. Real client activation remains separate acceptance.
+
+`improve draft USER --spec profile.json` and `readme USER --spec profile.json` share intent. Validate with `check --spec profile.json --file draft.md`; `improve check ... --resources` also checks public HTTP metadata anonymously.
 
 ## Works without AI
 

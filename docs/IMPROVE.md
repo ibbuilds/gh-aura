@@ -5,6 +5,7 @@ The CLI and MCP share `gh-aura-whole-profile-v1` intent and a fingerprinted `gh-
 ## Intent and evidence
 
     gh-aura improve spec --output profile.json
+    gh-aura improve draft USER --spec profile.json --output draft.md
     gh-aura improve context USER --spec profile.json --output context.json
     gh-aura improve projects USER --goal "backend engineer" --pages 5 --inspect 3
     gh-aura improve project --repo OWNER/PROJECT
@@ -12,11 +13,18 @@ The CLI and MCP share `gh-aura-whole-profile-v1` intent and a fingerprinted `gh-
 
 Edit the generated JSON: `composition` holds style, language, narrative biography, sections, selected projects, links and visual preferences. `account` holds only requested sidebar fields: `bio` (160 Unicode characters), `name`, HTTPS `blog`, `company`, `location`, `hireable`. Empty strings explicitly clear fields. Unspecified fields stay untouched. A target role is not a claim of current employment.
 
+`readme USER --spec profile.json`, `brief USER --spec profile.json` and `diff USER --spec profile.json` use the same composition projection as `improve draft`. They accept either the shared whole-profile spec or a legacy composition spec. Edit presentation flags inside that file when using `--spec`. The native renderer honors projects/order, sections, contact choices, language and third-party opt-in; custom art direction and narrative voice are written by the chosen AI or owner, not invented by deterministic code.
+
+Original [before/after composition examples](../examples/README.md) cover learning, engineering, project-led, research and visual goals. They are authored demonstrations, not real candidate evaluations or approved winners from the research corpus.
+
 Set `readme:false` to preserve the README or choose a profile without one. `assets` accept up to eight local payloads: safe `assets/NAME.svg|png|jpg|gif|webp`, `encoding` utf-8/base64, `content`, nonempty `alt` and `rights` user-owned/permitted-license. Each is limited to 256 KiB. No remote image is copied automatically.
 
 Project scans return coverage and `nextCursor`. Continue with the same goal until complete, or inspect explicit public projects including organization work. READMEs and source structure are observations; files are not executed. Confirm personal contributions. Selected project order and disabled sections survive refinements. The eight style categories guide freely composable designs, including minimal profiles; no fixed winner is imposed.
 
 ## Preview, approval and execution
+
+    gh-aura improve check USER --spec profile.json --file draft.md --resources
+    gh-aura check --spec profile.json --file draft.md --strict --json
 
     gh-aura improve plan USER --spec profile.json --file draft.md --delivery pr --output plan.json
     gh-aura improve preview --review plan.json
@@ -24,6 +32,12 @@ Project scans return coverage and `nextCursor`. Continue with the same goal unti
     gh-aura improve status --review plan.json
 
 Omit `--file` for account/workspace-only changes. Plans bind exact bytes, previous revisions, account differences, asset rights, targets and workspace actions. New public USER/USER creation and its seed README are explicit in the preview. Default `pr` opens a review without merging; `commit` explicitly updates the default branch. README and assets share one Git commit. Account updates are independently verified steps; there is no cross-component rollback transaction.
+
+New plans also bind composition requirements and reject missing selected project/contact links, unresolved placeholders and unsafe links/images before publication planning. Comments and code snippets cannot satisfy selected visible evidence. Disabled conventional sections produce review findings without imposing a fixed heading structure. These checks cannot prove factual accuracy or complete semantic agreement with a freeform design brief.
+
+`--resources` on `improve check` or `improve plan` opts into bounded anonymous HTTPS metadata checks. Relative paths resolve against the public profile repository revision; assets included in the plan are recognized locally. Checks detect unavailable responses and image endpoints serving HTML. DNS addresses are pinned, private/local destinations and credential-bearing URLs are blocked, redirects are revalidated, and no GitHub token or response body is forwarded/retained. Maximums are 24 targets by default (32 explicitly in the library), 48 requests and 12 seconds overall. Unknown results remain review findings. HTTP metadata does not establish image decoding, license rights, fragment validity or actual GitHub light/dark rendering.
+
+MCP exposes `gh_aura_profile_native_draft`, `gh_aura_profile_validate` and `gh_aura_profile_resources_check`; these do not publish or authorize anything. Opt-in resource findings accompany the reviewed plan. Legacy plans without composition metadata remain readable.
 
 The owner can run `improve authorize --review plan.json --confirm FINGERPRINT` to display MCP host environment settings. The owner installs **both** `GH_AURA_APPROVED_PLAN` (absolute path) and `GH_AURA_APPROVED_FINGERPRINT`. Then `gh_aura_apply_approved_profile` takes no arguments and executes only that grant. `gh_aura_approved_profile_status` reads its local progress. Remove the environment settings to revoke access. A model-generated fingerprint or plan does not constitute approval.
 
@@ -66,5 +80,7 @@ Badge exercises and workspace creation affect today's graph. Initialize the work
 Historical corpus and original eight references remain at the [immutable archive](../research/README.md). `sources compile --catalog reviews.json --output patterns.json` accepts at least 500 complete, source-linked editorial reviews with coverage of all eight styles. `GH_AURA_PATTERNS_FILE` selects the compiled library locally. The default has no fabricated approvals. `sources library` shows its state.
 
 Skill installation supports Codex (`~/.agents/skills`), Claude (`~/.claude/skills`) and explicit generic destinations. Local edits are preserved; replacing them requires `--force --directory PATH`. MCP and a portable writing prompt serve other clients. Publishing a GitHub repository alone does not guarantee discovery by every AI.
+
+`npm run benchmark` measures the complete context and native draft against a deterministic public fixture. The current fixture uses 8 context requests versus 11 for the earlier duplicated sequence; a native draft uses 2. Actual response sizes are reported. This is not a universal latency or model-token saving claim.
 
 [CLI](CLI.md) · [Security](../SECURITY.md) · [Acceptance](RELEASE_READINESS.md)

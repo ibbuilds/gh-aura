@@ -27,7 +27,8 @@ try {
     'src/profile-custom-sources.mjs','src/profile-techniques.mjs',
     'src/profile-biography.mjs','src/profile-plan.mjs','src/profile-context.mjs',
     'src/profile-projects.mjs','src/improve-command.mjs','src/agent-install.mjs',
-    'src/pattern-library.mjs','src/workspace-actions.mjs','src/badge-collaboration.mjs']) {
+    'src/pattern-library.mjs','src/workspace-actions.mjs','src/badge-collaboration.mjs',
+    'src/profile-spec-config.mjs','src/profile-references.mjs','src/profile-resources.mjs','src/public-https.mjs']) {
     assert.ok(packed.files.some(file=>file.path===path),'Missing packaged '+path);
   }
   assert.ok(packed.files.every((file) => !file.path.startsWith('tests/') &&
@@ -93,6 +94,7 @@ try {
     {jsonrpc:'2.0',id:2,method:'tools/list'},
     {jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'gh_aura_whole_profile_spec',arguments:{spec:{readme:false,account:{bio:'Installed fixture'}}}}},
     {jsonrpc:'2.0',id:4,method:'resources/read',params:{uri:'gh-aura://guide/profile'}},
+    {jsonrpc:'2.0',id:5,method:'tools/call',params:{name:'gh_aura_profile_resources_check',arguments:{markdown:'![Local](assets/missing.svg)'}}},
   ];
   const mcp=spawnSync(process.execPath,[cli,'mcp'],{cwd:directory,encoding:'utf8',timeout:10000,
     input:messages.map(x=>JSON.stringify(x)).join('\n')+'\n',env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:'',GH_AURA_APPROVED_PLAN:'',GH_AURA_APPROVED_FINGERPRINT:''}});
@@ -102,5 +104,6 @@ try {
   assert.ok(!byId.get(2).result.tools.some(t=>t.name==='gh_aura_apply_approved_profile'));
   assert.equal(JSON.parse(byId.get(3).result.content[0].text).account.bio,'Installed fixture');
   assert.ok(byId.get(4).result.contents[0].text.includes('gh_aura_whole_profile_plan'));
+  assert.equal(JSON.parse(byId.get(5).result.content[0].text).results[0].state,'unresolved-relative');
   console.log('Installed CLI, checksum, whole-profile handlers, Skill and MCP validated offline.');
 } finally { rmSync(directory, { recursive: true, force: true }); }
