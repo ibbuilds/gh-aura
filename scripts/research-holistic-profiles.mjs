@@ -132,9 +132,18 @@ export async function runResearch(argv=process.argv.slice(2)){
   const subset=input.candidates.slice(opts.start,opts.start+opts.limit);
   const profiles=[],observedAt=new Date().toISOString();let requests=0;
   for(let i=0;i<subset.length;i+=opts.batchSize){
-    if(++requests>opts.budget)throw Error('Bounded research budget exhausted; no file written.');
     const group=subset.slice(i,i+opts.batchSize);
-    const result=await graphql(token,buildBatchQuery(group.map(x=>x.login)));
+    const query=buildBatchQuery(group.map(x=>x.login));
+    let result;
+    for(let attempt=0;attempt<3;attempt++){
+      if(++requests>opts.budget)throw Error('Bounded research budget exhausted; no file written.');
+      try{result=await graphql(token,query);break;}
+      catch(error){
+        const transient=/HTTP (?:429|502|503|504)|Something went wrong while executing your query/.test(error.message);
+        if(!transient||attempt===2)throw error;
+        await new Promise(resolve=>setTimeout(resolve,(attempt+1)*1000));
+      }
+    }
     group.forEach((candidate,n)=>profiles.push(
       normalizePublicProfile(candidate.login,result['p'+n]||null,observedAt)));
   }
