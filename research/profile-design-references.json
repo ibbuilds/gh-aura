@@ -260,6 +260,324 @@
       ],
       "originalWorkRequired": true,
       "assetsCopied": false
+    },
+    {
+      "id": "addyosmani",
+      "profileUrl": "https://github.com/addyosmani",
+      "readmeUrl": "https://github.com/addyosmani/addyosmani/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Readme concise; inspect how the author relies on native GitHub project links",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0d9aade37dfeacce303ea20803917d1c792aab3a",
+        "characters": 438,
+        "approximateWords": 40,
+        "images": 0,
+        "links": 0,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cassidoo",
+      "profileUrl": "https://github.com/cassidoo",
+      "readmeUrl": "https://github.com/cassidoo/cassidoo/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "87615a73a41e894ea411446e3b93f9820d10e319",
+        "characters": 1703,
+        "approximateWords": 202,
+        "images": 0,
+        "links": 20,
+        "headings": 1,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "antfu",
+      "profileUrl": "https://github.com/antfu",
+      "readmeUrl": "https://github.com/antfu/antfu/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Readme concise; inspect how the author relies on native GitHub project links",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "5d5480d128ece9c36160a7bb3f2671a5263b55be",
+        "characters": 617,
+        "approximateWords": 21,
+        "images": 0,
+        "links": 11,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "tannerlinsley",
+      "profileUrl": "https://github.com/tannerlinsley",
+      "readmeUrl": "https://github.com/tannerlinsley/tannerlinsley/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "2f6167ffce5086ee6c865cc7d29d4548c158ede9",
+        "characters": 1300,
+        "approximateWords": 153,
+        "images": 0,
+        "links": 15,
+        "headings": 3,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "rasbt",
+      "profileUrl": "https://github.com/rasbt",
+      "readmeUrl": "https://github.com/rasbt/rasbt/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "490c0a91003028a311831dacbc247529f42f355c",
+        "characters": 580,
+        "approximateWords": 58,
+        "images": 0,
+        "links": 5,
+        "headings": 2,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jxnl",
+      "profileUrl": "https://github.com/jxnl",
+      "readmeUrl": "https://github.com/jxnl/jxnl/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "21c9fe5a1705318a1721c41fc4305c030111d8c8",
+        "characters": 996,
+        "approximateWords": 126,
+        "images": 0,
+        "links": 7,
+        "headings": 3,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "eugeneyan",
+      "profileUrl": "https://github.com/eugeneyan",
+      "readmeUrl": "https://github.com/eugeneyan/eugeneyan/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Observe the relationship between images and technical content"
+      ],
+      "avoidCopying": [
+        "Never reuse profile graphics or badges without permission",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d7b5d702d288ba8c52f3fe8a7f77185954cf2d0a",
+        "characters": 1821,
+        "approximateWords": 180,
+        "images": 1,
+        "links": 16,
+        "headings": 2,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "hamelsmu",
+      "profileUrl": "https://github.com/hamelsmu",
+      "readmeUrl": "https://github.com/hamelsmu/hamelsmu/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Observe the relationship between images and technical content"
+      ],
+      "avoidCopying": [
+        "Never reuse profile graphics or badges without permission",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f403c734d46d6178369576c54d66ea29e327b6b7",
+        "characters": 2281,
+        "approximateWords": 235,
+        "images": 1,
+        "links": 16,
+        "headings": 3,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jonhoo",
+      "profileUrl": "https://github.com/jonhoo",
+      "readmeUrl": "https://github.com/jonhoo/jonhoo/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a6eb6057f3c6fe03549a22204e836b934beca5e1",
+        "characters": 1002,
+        "approximateWords": 133,
+        "images": 0,
+        "links": 9,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "kentcdodds",
+      "profileUrl": "https://github.com/kentcdodds",
+      "readmeUrl": "https://github.com/kentcdodds/kentcdodds/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Readme concise; inspect how the author relies on native GitHub project links",
+        "Observe the relationship between images and technical content"
+      ],
+      "avoidCopying": [
+        "Never reuse profile graphics or badges without permission",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "c98708116ea7e6b01e198d9ad5940d319729bdb3",
+        "characters": 265,
+        "approximateWords": 5,
+        "images": 1,
+        "links": 3,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
     }
-  ]
+  ],
+  "survey": {
+    "targetTotal": 100,
+    "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
+    "completed": 22,
+    "pendingApproval": true,
+    "countsAreHeuristics": true,
+    "verifiedSnapshotDate": "2026-11-12"
+  }
 }
