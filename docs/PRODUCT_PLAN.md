@@ -6,7 +6,7 @@ GH Aura is a **local-first, model-agnostic GitHub profile toolkit** with a compl
 
 | Area | Delivered | Still unverified |
 | --- | --- | --- |
-| README | Original AI briefs, editable composition, **30 curated sources**, **25 techniques**, optional custom resources, biography voice and evidence, safe local preview | Real-agent and user usability |
+| README | Original AI briefs, editable composition, **29 active sources**, **25 techniques**, optional custom resources, biography voice and evidence, safe local preview | Real-agent and user usability |
 | Pins | Rank real public projects against target roles | Owner manually pins |
 | Activity | Read contribution history; bounded synthetic private plans | Real contribution attribution |
 | Badges | Catalog, three private event candidates, verified-access preflight, atomic PR batching | GitHub awards on real accounts |
