@@ -110,7 +110,8 @@ async function graphql(token,payload){
   if(raw.length>3*1024*1024)throw Error('Research GraphQL response exceeds 3 MiB.');
   const body=JSON.parse(raw);
   const failures=(body.errors||[]).filter(e=>
-    !(e.type==='NOT_FOUND'&&Array.isArray(e.path)&&e.path[1]==='repository'));
+    !(e.type==='NOT_FOUND'&&Array.isArray(e.path)&&
+      (e.path[1]==='repository'||(e.path.length===1&&/^p\d+$/.test(String(e.path[0]))))));
   if(failures.length||!body.data){
     const kinds=[...new Set(failures.slice(0,4).map(e=>
       String(e.type||'GRAPHQL')+':'+String(e.message||'unknown').slice(0,160)
