@@ -24,7 +24,7 @@ test('MCP modern stateless discovery, resources and prompts follow the 2026 prot
   assert.equal(list.result.resultType,'complete');
   assert.ok(list.result.tools.every(x=>x.annotations.readOnlyHint));
   const resourceList=await handleMcpMessage(req(3,'resources/list'));
-  assert.equal(resourceList.result.resources.length,6);
+  assert.equal(resourceList.result.resources.length,7);
   assert.ok(resourceList.result.resources.some(x=>x.uri==='gh-aura://profiles/selected'));
   const resource=await handleMcpMessage(req(4,'resources/read',{
     uri:'gh-aura://sources/catalog'}));
