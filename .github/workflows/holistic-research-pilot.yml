@@ -1,4 +1,4 @@
-name: GH Aura profile research pilot (public GraphQL)
+name: GH Aura bounded public-profile metadata study (temporary)
 on:
   push:
     branches: [research/public-profile-observations-500]
@@ -6,10 +6,15 @@ on:
 permissions:
   contents: read
 jobs:
-  pilot:
+  collect:
     if: github.repository == 'ibbuilds/gh-aura'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        start: [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -17,11 +22,22 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
-      - name: Collect five public profile snapshots with bounded read-only queries
+          package-manager-cache: false
+      - name: Inspect public GitHub metadata, without writes or private profile content
         env:
           GH_TOKEN: ${{ github.token }}
+          OFFSET: ${{ matrix.start }}
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/research-holistic-profiles.mjs --start 0 --limit 5 --batch-size 5 --budget 2 --output pilot.json
-          node -e "const j=require('./pilot.json'); console.log(JSON.stringify({responded:j.responded,requested:j.requested,requests:j.requests,completeVisualReviews:0}))"
+          node scripts/research-holistic-profiles.mjs --start "$OFFSET" --limit 50 --batch-size 5 --budget 12 --output observed.json
+          node --input-type=module - <<'JS'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync('observed.json','utf8'));
+          if(data.schema!=='gh-aura-holistic-api-observation-batch-v1'||data.requested!==50)
+            throw Error('Incomplete data batch');
+          const encoded=Buffer.from(JSON.stringify(data)).toString('base64');
+          const parts=encoded.match(/.{1,6000}/g)||[];
+          parts.forEach((part,i)=>process.stdout.write('GH_AURA_PAYLOAD_'+(i+1)+'_'+parts.length+':'+part+'\n'));
+          console.log('GH_AURA_COUNTER:'+JSON.stringify({start:data.start,requested:data.requested,responded:data.responded,requests:data.requests,fullProfileReviews:0}));
+          JS
