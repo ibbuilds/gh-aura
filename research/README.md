@@ -1,7 +1,8 @@
 # Research
 
-GH Aura uses a versioned, **offline** structural reference to inform profile presentation. Research is never collected in normal CLI use, and **no biography or README prose is copied**.
+GH Aura uses versioned, **offline** structural references to inform profile presentation. Research is never collected in normal CLI use, and **no biography or README prose is copied**.
 
+- [User-supplied and researched profile design references](PROFILE_REFERENCES.md) · [editable reference bank](profile-design-references.json) (all pending editorial approval; no copied assets).
 - [Primary reference: 200 ordinary-visibility engineer profiles](ORDINARY_STUDY.md) · [structured data](ordinary-engineers-200.json).
 - [Historical professional affiliation baseline (100) and employer-source examples (16)](INDUSTRY_STUDY.md) · [100-account dataset](company-profiles.json) · [16-account observations](employer-observations.json) · [source roster](employer-sourced.json).
 
