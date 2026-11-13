@@ -69,5 +69,5 @@ test('600 public observations are categorized as review candidates, never winner
   assert.match(renderTriageReport(report),/NO SON GANADORES/);
   const broken=structuredClone(html);
   broken[0].profiles[0].login='someone-else';
-  assert.throws(()=>buildHolisticTriage(roster,gql,broken,old),/mismatched/);
+  assert.throws(()=>buildHolisticTriage(roster,gql,broken,old),/reordered/);
 });
