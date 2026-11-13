@@ -5,6 +5,7 @@ import { findProfileSources, getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
 import { professionalReview } from './profile-review.mjs';
+import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
@@ -27,6 +28,7 @@ const tools=[
   ['gh_aura_design_recommend','Combine GitHub-compatible layout techniques with source links for a natural-language design request; no template or image is downloaded.',
     properties({query:str('Requested visual effect, density, biography, or composition (Spanish or English)',400),...art,
       includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:25}})],
+  ['gh_aura_profile_categories','Describe eight whole-profile styles and facets; the old 25 list is provisional, not category winners.',properties({})],
   ['gh_aura_profiles_list','List the 25 selected public README references for human inspection; no copies or external fetch.',
     properties({query:str('Filter references by theme or role',400),
       direction:{type:'string',enum:['barebones','minimal','technical','expressive']}})],
@@ -147,6 +149,8 @@ export async function runAgentTool(name,args={}){
         limitations:x.limitations}));
     return {...options,sources};
   }
+  if(name==='gh_aura_profile_categories')return {styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,
+    purposes:PROFILE_PURPOSES,qualityGate:'No best-of-category until avatar, README, pins, sidebar, contribution graph and achievements reviewed.'};
   if(name==='gh_aura_profiles_list')
     return listCuratedProfiles(args);
   if(name==='gh_aura_patterns_recommend')
