@@ -1,5 +1,13 @@
 # Research
 
+## Observaciones de perfiles completos (recolección pública)
+
+- [Resumen de 600 observaciones GraphQL](holistic-public-observations-summary.json): **561 perfiles devueltos**, 39 no devueltos; 402 READMEs de perfil observados, 469 cuentas con pins y 561 calendarios de contribución visibles para el lector. Ninguna insignia se verificó visualmente; **0 perfiles completos auditados**, **0 ganadores**.
+- [Cola de 600 revisiones visuales](holistic-visual-review-queue.json) · [12 lotes de datos públicos autenticados](graphql-observations) · [extractos de 600 páginas como comprobación complementaria](partial-profiles). Los extractos tienen fechas de caché variables y no prueban actualidad.
+- [Capturas fechadas de GitHub Trending Developers](trending-developers-snapshot.json): 25 usuarios por período (diario, semanal y mensual), **66 cuentas distintas**; las fechas de adquisición son dispares y no equivalen necesariamente al ranking de hoy.
+- [Metodología de perfil completo](HOLISTIC_PROFILE_STUDY.md): avatar, cabecera, biografía, enlaces, README, pins, gráfico, achievements y contexto visual. Los estilos de la cola son hipótesis superpuestas, no categorías aprobadas.
+
+
 - [600 unique candidate accounts, not yet fully audited](profile-candidates-600.json) · [complete-profile methodology, eight style categories and evidence gates](HOLISTIC_PROFILE_STUDY.md). Target: at least 500 fully reviewed profiles with avatar, sidebar, READMEs, pins, contribution graphs and visible achievements. The earlier 25 selection is a provisional README-only pilot, not category winners.
 
 GH Aura uses versioned, **offline** structural references to inform profile presentation. Research is never collected in normal CLI use, and **no biography or README prose is copied**.
