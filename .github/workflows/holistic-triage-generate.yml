@@ -1,4 +1,4 @@
-name: Temporary offline holistic category report generation (compact JSON)
+name: Temporary offline holistic category report generation (style refined)
 on:
   push:
     branches: [research/holistic-category-triage]
