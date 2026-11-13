@@ -1,4 +1,4 @@
-name: Temporary GitHub public profile four-view render retry
+name: Temporary GitHub public profile four-view render last batches
 on:
   push:
     branches: [research/holistic-visual-render-smoke]
@@ -12,9 +12,9 @@ jobs:
     timeout-minutes: 17
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 3
       matrix:
-        start: [0, 50, 150, 200]
+        start: [250, 300, 350, 400, 450, 500, 550]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
