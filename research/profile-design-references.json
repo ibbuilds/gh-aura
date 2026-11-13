@@ -2634,12 +2634,312 @@
         "headings": 0,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "afc163",
+      "profileUrl": "https://github.com/afc163",
+      "readmeUrl": "https://github.com/afc163/afc163/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4830fa24acfc2c1394e18de0a4c2e8c2ea114d0a",
+        "characters": 107,
+        "approximateWords": 0,
+        "images": 1,
+        "links": 1,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "marcizhu",
+      "profileUrl": "https://github.com/marcizhu",
+      "readmeUrl": "https://github.com/marcizhu/marcizhu/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "88243ca79f47ab0f024258f8cbe89445679bc65d",
+        "characters": 14245,
+        "approximateWords": 396,
+        "images": 65,
+        "links": 63,
+        "headings": 2,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "natemoo-re",
+      "profileUrl": "https://github.com/natemoo-re",
+      "readmeUrl": "https://github.com/natemoo-re/natemoo-re/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "359c59b9c6a941aa91310f007fa9901535e4544a",
+        "characters": 2326,
+        "approximateWords": 128,
+        "images": 4,
+        "links": 16,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "onimur",
+      "profileUrl": "https://github.com/onimur",
+      "readmeUrl": "https://github.com/onimur/onimur/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ce5fe95bc70641a0e839c640a1e5354cee006b1f",
+        "characters": 4987,
+        "approximateWords": 100,
+        "images": 25,
+        "links": 43,
+        "headings": 2,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "swyxio",
+      "profileUrl": "https://github.com/swyxio",
+      "readmeUrl": "https://github.com/swyxio/swyxio/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d216fb786f4772b24233e31390f2557527cd5584",
+        "characters": 17703,
+        "approximateWords": 242,
+        "images": 112,
+        "links": 161,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "HwangTaehyun",
+      "profileUrl": "https://github.com/HwangTaehyun",
+      "readmeUrl": "https://github.com/HwangTaehyun/HwangTaehyun/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f7f7c9ddcf2623fe29d5a71772ee755dd11569f5",
+        "characters": 4228,
+        "approximateWords": 73,
+        "images": 22,
+        "links": 34,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ileriayo",
+      "profileUrl": "https://github.com/ileriayo",
+      "readmeUrl": "https://github.com/Ileriayo/ileriayo/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ed96001e2cce018f32343ad8b328d8b24660de41",
+        "characters": 2778,
+        "approximateWords": 94,
+        "images": 10,
+        "links": 15,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "JessicaLim8",
+      "profileUrl": "https://github.com/JessicaLim8",
+      "readmeUrl": "https://github.com/JessicaLim8/JessicaLim8/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "66e6f5dbdd347a8760e498b3470363819d98bfa3",
+        "characters": 17938,
+        "approximateWords": 266,
+        "images": 95,
+        "links": 278,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "WaylonWalker",
+      "profileUrl": "https://github.com/WaylonWalker",
+      "readmeUrl": "https://github.com/WaylonWalker/WaylonWalker/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4b31e783735f7070b44cbde47ba777f6b01fb632",
+        "characters": 6197,
+        "approximateWords": 253,
+        "images": 21,
+        "links": 53,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "laohanme",
+      "profileUrl": "https://github.com/laohanme",
+      "readmeUrl": "https://github.com/laohanme/laohanme/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Code",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study code composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "260dda09a6fcf40bb419b5554ef7838f457c0de3",
+        "characters": 600,
+        "approximateWords": 68,
+        "images": 0,
+        "links": 1,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 90,
+    "completed": 100,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
