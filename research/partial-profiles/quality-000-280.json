@@ -1,0 +1,21 @@
+{
+  "seen": 300,
+  "within7days": 77,
+  "within30days": 148,
+  "within90days": 208,
+  "within180days": 225,
+  "within365days": 240,
+  "missingDate": 4,
+  "marked": {
+    "observed-partial-sidebar-and-pins": 278,
+    "profile-page-likely-no-pinned-section": 3,
+    "incomplete-extraction": 15,
+    "unavailable": 4
+  },
+  "pinsObserved": 275,
+  "year": {
+    "2025": 21,
+    "2026": 275,
+    "unknown": 4
+  }
+}
