@@ -46,7 +46,7 @@ const GUIDE=`# GH Aura AI-first profile workflow
 1. Get the user's goal, desired density, personal design direction, language and project preferences.
 2. Use gh_aura_profile_plan and refine the spec instead of filling a rigid README template.
 3. Inspect public profile context through gh_aura_profile_context and rank existing real projects through gh_aura_pins_rank.
-4. Use gh_aura_design_recommend plus gh_aura_sources_search to select GitHub-native techniques. Consult gh_aura_patterns_recommend for at most two suitable editorial pattern references from the 25 selected examples; never copy their prose, claims or assets.
+4. Use gh_aura_design_recommend plus gh_aura_sources_search to select GitHub-native techniques. The 25 previous README-only examples are provisional; consult them only as explicitly requested reading references, never as certified full-profile winners. Never copy their prose, claims or assets.
 5. Use gh_aura_biography_guide for voice, narrative focus and factual questions. Hiring is optional; a target employer is not an employment claim.
 6. Prefer native GitHub Markdown. Only offer third-party images with user opt-in, maintained sources, license review and a text fallback.
 7. Draft ORIGINAL Markdown using the chosen model. Honor the user's freeform visualBrief, biography voice, approved media and project choices. Never invent employers, authorship, badges, results or tech expertise.
