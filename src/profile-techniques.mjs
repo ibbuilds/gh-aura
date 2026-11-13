@@ -7,6 +7,10 @@ const t=(id,title,medium,tags,opts={})=>Object.freeze({
   constraints:'Must remain legible on desktop/mobile and respect GitHub Markdown sanitization.',
   accessibility:'Use meaningful text links and alt text for non-decorative images.',
   thirdParty:false,risk:'low',sourceIds:['github-markdown'],
+  recommendationTier:opts.thirdParty?'explicit-request-only':
+    ['one-hero-image','small-project-screenshot','ascii-art','architecture-diagram',
+      'custom-svg','light-dark-image','code-portrait','project-table'].includes(id)?
+      'contextual':'recommended-by-default',
   ...opts,
 });
 export const PROFILE_TECHNIQUES=Object.freeze([
@@ -120,7 +124,8 @@ export function recommendProfileTechniques({query='',direction='minimal',include
   if(!Number.isInteger(limit)||limit<1||limit>25)
     throw Error('Technique limit must be 1..25.');
   const words=intentWords(query);
-  const ranked=PROFILE_TECHNIQUES.filter(t=>includeExternal||!t.thirdParty)
+  const ranked=PROFILE_TECHNIQUES.filter(t=>(includeExternal||!t.thirdParty)&&
+      (t.recommendationTier!=='explicit-request-only'||words.length>0))
     .map(item=>{const match=intentMatchScore(item,words);
       return {item,match,score:match+(item.tags.includes(direction)?4:0)+
         (item.risk==='low'?2:0)};})
