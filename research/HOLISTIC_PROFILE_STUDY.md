@@ -57,3 +57,30 @@ La lista anterior de 25 (PR #67) fue un **piloto de READMEs**, no un veredicto d
 El recolector es solo de desarrollo; no se ejecuta en el CLI normal ni en MCP, no escribe en cuentas GitHub, no descargas imágenes, no almacena emails, bios completas ni ubicaciones. GitHub puede mostrar contribuciones privadas anonimizadas; nunca afirmar que se conoce la actividad privada ni que GitHub concedió una insignia.
 
 La generación de perfiles de GH Aura funciona sin IA y puede mejorarse con IA opcional. **No se necesita GitHub Pages.** El registro de 600 candidatos es el inicio de la auditoría, no su finalización.
+
+## Ejecución reproducible (opt-in, en terminal propia)
+
+El CLI normal no ejecuta estas tareas. El token de solo lectura se configura localmente, nunca se añade al JSON ni se envía a una IA. Los registros de 600 candidatos no cuentan como 600 perfiles analizados.
+
+```bash
+# Revisar el primer grupo de 50 candidatos con 10 peticiones GraphQL acotadas:
+GH_TOKEN=... node scripts/research-holistic-profiles.mjs \
+  --start 0 --limit 50 --batch-size 5 --budget 10 \
+  --output research/holistic-batch-000.json
+
+# Repetir con starts 50, 100, 150, ... (sin sobrescribir archivos).
+# Unificar las fichas de API y crear una cola editable para inspección visual:
+node scripts/merge-holistic-batches.mjs \
+  --output research/holistic-observed.json \
+  --reviews research/holistic-review-queue.json \
+  research/holistic-batch-*.json
+
+# Solo tras revisar manualmente los componentes y completar >=500 fichas:
+node scripts/select-holistic-exemplars.mjs \
+  --reviews research/holistic-reviewed.json \
+  --output research/holistic-category-exemplars.json
+```
+
+`holistic-review-queue.json` es una plantilla **sin clasificar**, no un estudio acabado. Completar estado de cada componente, capturas/URL fechadas, comprobación desktop/móvil/claro/oscuro, estilo principal y secundarios, propósitos, notas y decisión editorial. Marcar `privacy-hidden` cuando una sección sea legítimamente privada; nunca asumir que su contenido está vacío. Si una categoría no tiene suficientes ejemplos completos, ampliar descubrimiento antes de proclamar un ganador. La selección no define un número fijo de ganadores globales.
+
+**Limite externo actual:** la credencial de investigación de GitHub no está disponible como token en esta conversación, y la inspección visual completa de 500 cuentas no ha sido realizada. Los scripts quedan preparados para ejecutar el estudio con una credencial de lectura autorizada y revisión humana. Las pruebas locales/mocks no sustituyen esa ejecución.
