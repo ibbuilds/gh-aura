@@ -1,0 +1,410 @@
+{
+  "schema": "gh-aura-github-developer-trending-snapshot-v1",
+  "source": "GitHub Trending Developers public pages",
+  "caution": "Ranking measures recent attention, not profile professionalism, technical competence, or README quality. Time-bound and subject to change.",
+  "periods": [
+    {
+      "period": "daily",
+      "source": "https://github.com/trending/developers?since=daily",
+      "acquiredAt": "2026-10-25T00:00:00Z",
+      "validRankedPage": true,
+      "total": 25,
+      "profiles": [
+        {
+          "rank": 1,
+          "login": "max-sixty",
+          "profileUrl": "https://github.com/max-sixty"
+        },
+        {
+          "rank": 2,
+          "login": "pbakaus",
+          "profileUrl": "https://github.com/pbakaus"
+        },
+        {
+          "rank": 3,
+          "login": "mvanhorn",
+          "profileUrl": "https://github.com/mvanhorn"
+        },
+        {
+          "rank": 4,
+          "login": "DeanChensj",
+          "profileUrl": "https://github.com/DeanChensj"
+        },
+        {
+          "rank": 5,
+          "login": "jarrodwatts",
+          "profileUrl": "https://github.com/jarrodwatts"
+        },
+        {
+          "rank": 6,
+          "login": "Calcium-Ion",
+          "profileUrl": "https://github.com/Calcium-Ion"
+        },
+        {
+          "rank": 7,
+          "login": "JustVugg",
+          "profileUrl": "https://github.com/JustVugg"
+        },
+        {
+          "rank": 8,
+          "login": "777genius",
+          "profileUrl": "https://github.com/777genius"
+        },
+        {
+          "rank": 9,
+          "login": "backnotprop",
+          "profileUrl": "https://github.com/backnotprop"
+        },
+        {
+          "rank": 10,
+          "login": "JimLiu",
+          "profileUrl": "https://github.com/JimLiu"
+        },
+        {
+          "rank": 11,
+          "login": "colbymchenry",
+          "profileUrl": "https://github.com/colbymchenry"
+        },
+        {
+          "rank": 12,
+          "login": "Alan-TheGentleman",
+          "profileUrl": "https://github.com/Alan-TheGentleman"
+        },
+        {
+          "rank": 13,
+          "login": "elie222",
+          "profileUrl": "https://github.com/elie222"
+        },
+        {
+          "rank": 14,
+          "login": "portyu9",
+          "profileUrl": "https://github.com/portyu9"
+        },
+        {
+          "rank": 15,
+          "login": "Cyan4973",
+          "profileUrl": "https://github.com/Cyan4973"
+        },
+        {
+          "rank": 16,
+          "login": "Anionex",
+          "profileUrl": "https://github.com/Anionex"
+        },
+        {
+          "rank": 17,
+          "login": "arsenm",
+          "profileUrl": "https://github.com/arsenm"
+        },
+        {
+          "rank": 18,
+          "login": "doobidoo",
+          "profileUrl": "https://github.com/doobidoo"
+        },
+        {
+          "rank": 19,
+          "login": "kunchenguid",
+          "profileUrl": "https://github.com/kunchenguid"
+        },
+        {
+          "rank": 20,
+          "login": "alirezarezvani",
+          "profileUrl": "https://github.com/alirezarezvani"
+        },
+        {
+          "rank": 21,
+          "login": "can1357",
+          "profileUrl": "https://github.com/can1357"
+        },
+        {
+          "rank": 22,
+          "login": "toksdotdev",
+          "profileUrl": "https://github.com/toksdotdev"
+        },
+        {
+          "rank": 23,
+          "login": "mmabrouk",
+          "profileUrl": "https://github.com/mmabrouk"
+        },
+        {
+          "rank": 24,
+          "login": "garrytan",
+          "profileUrl": "https://github.com/garrytan"
+        },
+        {
+          "rank": 25,
+          "login": "lidge-jun",
+          "profileUrl": "https://github.com/lidge-jun"
+        }
+      ]
+    },
+    {
+      "period": "weekly",
+      "source": "https://github.com/trending/developers?since=weekly",
+      "acquiredAt": "2026-11-05T00:00:00Z",
+      "validRankedPage": true,
+      "total": 25,
+      "profiles": [
+        {
+          "rank": 1,
+          "login": "deepcoldy",
+          "profileUrl": "https://github.com/deepcoldy"
+        },
+        {
+          "rank": 2,
+          "login": "Gathin23",
+          "profileUrl": "https://github.com/Gathin23"
+        },
+        {
+          "rank": 3,
+          "login": "jayleaton",
+          "profileUrl": "https://github.com/jayleaton"
+        },
+        {
+          "rank": 4,
+          "login": "derekross",
+          "profileUrl": "https://github.com/derekross"
+        },
+        {
+          "rank": 5,
+          "login": "yetone",
+          "profileUrl": "https://github.com/yetone"
+        },
+        {
+          "rank": 6,
+          "login": "WenyuChiou",
+          "profileUrl": "https://github.com/WenyuChiou"
+        },
+        {
+          "rank": 7,
+          "login": "code-yeongyu",
+          "profileUrl": "https://github.com/code-yeongyu"
+        },
+        {
+          "rank": 8,
+          "login": "poteto",
+          "profileUrl": "https://github.com/poteto"
+        },
+        {
+          "rank": 9,
+          "login": "ahmadrosid",
+          "profileUrl": "https://github.com/ahmadrosid"
+        },
+        {
+          "rank": 10,
+          "login": "penso",
+          "profileUrl": "https://github.com/penso"
+        },
+        {
+          "rank": 11,
+          "login": "ccch1mneyyy",
+          "profileUrl": "https://github.com/ccch1mneyyy"
+        },
+        {
+          "rank": 12,
+          "login": "elie222",
+          "profileUrl": "https://github.com/elie222"
+        },
+        {
+          "rank": 13,
+          "login": "mokevnin",
+          "profileUrl": "https://github.com/mokevnin"
+        },
+        {
+          "rank": 14,
+          "login": "vshulcz",
+          "profileUrl": "https://github.com/vshulcz"
+        },
+        {
+          "rank": 15,
+          "login": "EricLBuehler",
+          "profileUrl": "https://github.com/EricLBuehler"
+        },
+        {
+          "rank": 16,
+          "login": "Mahmud0808",
+          "profileUrl": "https://github.com/Mahmud0808"
+        },
+        {
+          "rank": 17,
+          "login": "orkunisitmak",
+          "profileUrl": "https://github.com/orkunisitmak"
+        },
+        {
+          "rank": 18,
+          "login": "garrytan",
+          "profileUrl": "https://github.com/garrytan"
+        },
+        {
+          "rank": 19,
+          "login": "DeanChensj",
+          "profileUrl": "https://github.com/DeanChensj"
+        },
+        {
+          "rank": 20,
+          "login": "kalil0321",
+          "profileUrl": "https://github.com/kalil0321"
+        },
+        {
+          "rank": 21,
+          "login": "christian-byrne",
+          "profileUrl": "https://github.com/christian-byrne"
+        },
+        {
+          "rank": 22,
+          "login": "JimLiu",
+          "profileUrl": "https://github.com/JimLiu"
+        },
+        {
+          "rank": 23,
+          "login": "drowzeys",
+          "profileUrl": "https://github.com/drowzeys"
+        },
+        {
+          "rank": 24,
+          "login": "jrouwe",
+          "profileUrl": "https://github.com/jrouwe"
+        },
+        {
+          "rank": 25,
+          "login": "timoncool",
+          "profileUrl": "https://github.com/timoncool"
+        }
+      ]
+    },
+    {
+      "period": "monthly",
+      "source": "https://github.com/trending/developers?since=monthly",
+      "acquiredAt": "2026-09-06T00:00:00Z",
+      "validRankedPage": true,
+      "total": 25,
+      "profiles": [
+        {
+          "rank": 1,
+          "login": "lidge-jun",
+          "profileUrl": "https://github.com/lidge-jun"
+        },
+        {
+          "rank": 2,
+          "login": "lalalune",
+          "profileUrl": "https://github.com/lalalune"
+        },
+        {
+          "rank": 3,
+          "login": "Astro-Han",
+          "profileUrl": "https://github.com/Astro-Han"
+        },
+        {
+          "rank": 4,
+          "login": "Soju06",
+          "profileUrl": "https://github.com/Soju06"
+        },
+        {
+          "rank": 5,
+          "login": "poteto",
+          "profileUrl": "https://github.com/poteto"
+        },
+        {
+          "rank": 6,
+          "login": "narumiruna",
+          "profileUrl": "https://github.com/narumiruna"
+        },
+        {
+          "rank": 7,
+          "login": "tobi",
+          "profileUrl": "https://github.com/tobi"
+        },
+        {
+          "rank": 8,
+          "login": "tt-a1i",
+          "profileUrl": "https://github.com/tt-a1i"
+        },
+        {
+          "rank": 9,
+          "login": "backnotprop",
+          "profileUrl": "https://github.com/backnotprop"
+        },
+        {
+          "rank": 10,
+          "login": "agalwood",
+          "profileUrl": "https://github.com/agalwood"
+        },
+        {
+          "rank": 11,
+          "login": "nicoburns",
+          "profileUrl": "https://github.com/nicoburns"
+        },
+        {
+          "rank": 12,
+          "login": "owainlewis",
+          "profileUrl": "https://github.com/owainlewis"
+        },
+        {
+          "rank": 13,
+          "login": "danielhanchen",
+          "profileUrl": "https://github.com/danielhanchen"
+        },
+        {
+          "rank": 14,
+          "login": "1weiho",
+          "profileUrl": "https://github.com/1weiho"
+        },
+        {
+          "rank": 15,
+          "login": "amElnagdy",
+          "profileUrl": "https://github.com/amElnagdy"
+        },
+        {
+          "rank": 16,
+          "login": "mikepenz",
+          "profileUrl": "https://github.com/mikepenz"
+        },
+        {
+          "rank": 17,
+          "login": "huangruiteng",
+          "profileUrl": "https://github.com/huangruiteng"
+        },
+        {
+          "rank": 18,
+          "login": "jeremy",
+          "profileUrl": "https://github.com/jeremy"
+        },
+        {
+          "rank": 19,
+          "login": "kunchenguid",
+          "profileUrl": "https://github.com/kunchenguid"
+        },
+        {
+          "rank": 20,
+          "login": "max-sixty",
+          "profileUrl": "https://github.com/max-sixty"
+        },
+        {
+          "rank": 21,
+          "login": "noonghunna",
+          "profileUrl": "https://github.com/noonghunna"
+        },
+        {
+          "rank": 22,
+          "login": "emilk",
+          "profileUrl": "https://github.com/emilk"
+        },
+        {
+          "rank": 23,
+          "login": "huiyadanli",
+          "profileUrl": "https://github.com/huiyadanli"
+        },
+        {
+          "rank": 24,
+          "login": "Git-on-my-level",
+          "profileUrl": "https://github.com/Git-on-my-level"
+        },
+        {
+          "rank": 25,
+          "login": "Scottcjn",
+          "profileUrl": "https://github.com/Scottcjn"
+        }
+      ]
+    }
+  ],
+  "uniqueDeveloperCandidates": 66
+}
