@@ -1,4 +1,4 @@
-name: GH Aura bounded public-profile metadata retry (temporary)
+name: GH Aura isolated public-profile retry (temporary)
 on:
   push:
     branches: [research/public-profile-observations-500]
@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        start: [150, 200]
+        start: [200]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/research-holistic-profiles.mjs --start "$OFFSET" --limit 50 --batch-size 5 --budget 18 --output observed.json
+          node scripts/research-holistic-profiles.mjs --start "$OFFSET" --limit 50 --batch-size 5 --budget 40 --output observed.json
           node --input-type=module - <<'JS'
           import {readFileSync} from 'node:fs';
           const data=JSON.parse(readFileSync('observed.json','utf8'));
