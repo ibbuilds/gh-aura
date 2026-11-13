@@ -1,0 +1,136 @@
+{
+  "schema": "gh-aura-public-profile-extract-partition-v1",
+  "batchStart": 0,
+  "batchEnd": 280,
+  "observations": 300,
+  "counts": {
+    "observed-partial-sidebar-and-pins": 278,
+    "profile-page-likely-no-pinned-section": 3,
+    "incomplete-extraction": 15,
+    "unavailable": 4
+  },
+  "observedPinnedSection": 278,
+  "withPinnedInExtract": 273,
+  "pinLinks": 1297,
+  "acquiredDateMin": "2025-06-02",
+  "acquiredDateMax": "2026-11-13",
+  "duplicates": false,
+  "batches": [
+    {
+      "start": 0,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 17,
+        "profile-page-likely-no-pinned-section": 3
+      }
+    },
+    {
+      "start": 20,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 18,
+        "incomplete-extraction": 2
+      }
+    },
+    {
+      "start": 40,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 18,
+        "incomplete-extraction": 2
+      }
+    },
+    {
+      "start": 60,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 20
+      }
+    },
+    {
+      "start": 80,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 19,
+        "incomplete-extraction": 1
+      }
+    },
+    {
+      "start": 100,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 20
+      }
+    },
+    {
+      "start": 120,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 20
+      }
+    },
+    {
+      "start": 140,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 18,
+        "incomplete-extraction": 2
+      }
+    },
+    {
+      "start": 160,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 19,
+        "incomplete-extraction": 1
+      }
+    },
+    {
+      "start": 180,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 19,
+        "incomplete-extraction": 1
+      }
+    },
+    {
+      "start": 200,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 19,
+        "incomplete-extraction": 1
+      }
+    },
+    {
+      "start": 220,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 20
+      }
+    },
+    {
+      "start": 240,
+      "count": 20,
+      "states": {
+        "incomplete-extraction": 4,
+        "observed-partial-sidebar-and-pins": 16
+      }
+    },
+    {
+      "start": 260,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 20
+      }
+    },
+    {
+      "start": 280,
+      "count": 20,
+      "states": {
+        "observed-partial-sidebar-and-pins": 15,
+        "unavailable": 4,
+        "incomplete-extraction": 1
+      }
+    }
+  ]
+}

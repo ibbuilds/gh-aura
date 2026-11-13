@@ -93,9 +93,8 @@ export function buildBatchQuery(logins){
   const parts=logins.map((_,i)=>
     'p'+i+':user(login:$u'+i+'){login url avatarUrl name bio company location websiteUrl '+
     'status{message} socialAccounts(first:10){nodes{provider}} '+
-    'pinnedItems(first:6,types:[REPOSITORY,GIST]){nodes{'+
-    '... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}} '+
-    '... on Gist{name url description}}} '+
+    'pinnedItems(first:6,types:[REPOSITORY]){nodes{'+
+    '... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}}}} '+
     'contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}} '+
     'repository(name:$u'+i+'){isPrivate object(expression:"HEAD:README.md"){... on Blob{oid byteSize text}}}}'
   ).join('\n');
@@ -111,8 +110,14 @@ async function graphql(token,payload){
   if(raw.length>3*1024*1024)throw Error('Research GraphQL response exceeds 3 MiB.');
   const body=JSON.parse(raw);
   const failures=(body.errors||[]).filter(e=>
-    !(e.type==='NOT_FOUND'&&Array.isArray(e.path)&&e.path[1]==='repository'));
-  if(failures.length||!body.data)throw Error('Incomplete GraphQL response; no research file was written.');
+    !(e.type==='NOT_FOUND'&&Array.isArray(e.path)&&
+      (e.path[1]==='repository'||(e.path.length===1&&/^p\d+$/.test(String(e.path[0]))))));
+  if(failures.length||!body.data){
+    const kinds=[...new Set(failures.slice(0,4).map(e=>
+      String(e.type||'GRAPHQL')+':'+String(e.message||'unknown').slice(0,160)
+        .replace(/https?:\/\/\S+/g,'[URL]').replace(/[\r\n]/g,' ')))];
+    throw Error('Incomplete GraphQL response ('+kinds.join('; ')+'); no research file was written.');
+  }
   return body.data;
 }
 export async function runResearch(argv=process.argv.slice(2)){
@@ -126,12 +131,37 @@ export async function runResearch(argv=process.argv.slice(2)){
     throw Error('Requested batch exceeds the available candidates.');
   const subset=input.candidates.slice(opts.start,opts.start+opts.limit);
   const profiles=[],observedAt=new Date().toISOString();let requests=0;
+  async function collectGroup(group){
+    const query=buildBatchQuery(group.map(x=>x.login));
+    for(let attempt=0;attempt<2;attempt++){
+      if(++requests>opts.budget)throw Error('Bounded research budget exhausted; no file written.');
+      try{
+        const result=await graphql(token,query);
+        return group.map((candidate,n)=>
+          normalizePublicProfile(candidate.login,result['p'+n]||null,observedAt));
+      }catch(error){
+        const transient=/HTTP (?:429|502|503|504)|Something went wrong while executing your query/.test(error.message);
+        if(!transient)throw error;
+        if(attempt===0){
+          await new Promise(resolve=>setTimeout(resolve,1000));
+          continue;
+        }
+        if(group.length===1)return [{login:group[0].login,
+          profileUrl:'https://github.com/'+group[0].login,
+          availability:'transient-github-api-unavailable',observedAt,complete:false,
+          missing:['avatar','biography','links','profileReadme','pinnedRepositories',
+            'contributionCalendar','achievements','visual review'],
+          note:'GitHub public GraphQL repeatedly returned a temporary error; no account state was inferred.'}];
+        const mid=Math.ceil(group.length/2);
+        return [...await collectGroup(group.slice(0,mid)),
+          ...await collectGroup(group.slice(mid))];
+      }
+    }
+    throw Error('Unreachable bounded research attempt.');
+  }
   for(let i=0;i<subset.length;i+=opts.batchSize){
-    if(++requests>opts.budget)throw Error('Bounded research budget exhausted; no file written.');
     const group=subset.slice(i,i+opts.batchSize);
-    const result=await graphql(token,buildBatchQuery(group.map(x=>x.login)));
-    group.forEach((candidate,n)=>profiles.push(
-      normalizePublicProfile(candidate.login,result['p'+n]||null,observedAt)));
+    profiles.push(...await collectGroup(group));
   }
   const output={schema:'gh-aura-holistic-api-observation-batch-v1',observedAt,
     sourceRoster:'profile-candidates-600.json',start:opts.start,requested:subset.length,

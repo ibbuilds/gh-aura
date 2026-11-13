@@ -25,7 +25,7 @@ export function mergeHolisticBatches(roster,batches){
       const observation=batch.profiles[i],login=key(expected[i].login);
       if(key(observation.login)!==login||unique.has(login))
         throw Error('Research batch order mismatch or repeated profile.');
-      if(!['graphql-public-metadata','not-returned-by-github'].includes(observation.availability)||
+      if(!['graphql-public-metadata','not-returned-by-github','transient-github-api-unavailable'].includes(observation.availability)||
         observation.complete!==false||!observation.observedAt)
         throw Error('Invalid observation state; completed visual profiles cannot come from an API batch.');
       if(Object.hasOwn(observation,'rawBio')||Object.hasOwn(observation,'rawReadme')||
