@@ -5,30 +5,29 @@ Hay 526 secciones de achievements visibles y 385 estructuras de README renderiza
 
 **NO SON GANADORES NI ESTILOS APROBADOS.** Es una cola de revisión priorizada según evidencia disponible.
 
-## native-no-readme (151 hipótesis)
+## native-no-readme (146 hipótesis)
 
 | Perfil | Señal documentada para revisión |
 | --- | --- |
-| [amelia2802](https://github.com/amelia2802) | No root README observed; 4 pinned items. Missing is not proof of absence. |
-| [AyushSarode](https://github.com/AyushSarode) | No root README observed; 4 pinned items. Missing is not proof of absence. |
-| [metantonio](https://github.com/metantonio) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [Pranjal360Agarwal](https://github.com/Pranjal360Agarwal) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [0intro](https://github.com/0intro) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [1st1](https://github.com/1st1) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [333fred](https://github.com/333fred) | No root README observed; 4 pinned items. Missing is not proof of absence. |
-| [AArnott](https://github.com/AArnott) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [aaronccasanova](https://github.com/aaronccasanova) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [aaronj1335](https://github.com/aaronj1335) | No root README observed; 6 pinned items. Missing is not proof of absence. |
-| [AaronRM](https://github.com/AaronRM) | No root README observed; 2 pinned items. Missing is not proof of absence. |
-| [abeckDev](https://github.com/abeckDev) | No root README observed; 6 pinned items. Missing is not proof of absence. |
+| [0intro](https://github.com/0intro) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [1st1](https://github.com/1st1) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [333fred](https://github.com/333fred) | No root README in API OR rendered GitHub page; 4 pinned items (not proof of permanent absence). |
+| [AArnott](https://github.com/AArnott) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [aaronccasanova](https://github.com/aaronccasanova) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [aaronj1335](https://github.com/aaronj1335) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [AaronRM](https://github.com/AaronRM) | No root README in API OR rendered GitHub page; 2 pinned items (not proof of permanent absence). |
+| [abeckDev](https://github.com/abeckDev) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [abstratt](https://github.com/abstratt) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
+| [adisazhar123](https://github.com/adisazhar123) | No root README in API OR rendered GitHub page; 4 pinned items (not proof of permanent absence). |
+| [aelse](https://github.com/aelse) | No root README in API OR rendered GitHub page; 3 pinned items (not proof of permanent absence). |
+| [aetheryx](https://github.com/aetheryx) | No root README in API OR rendered GitHub page; 6 pinned items (not proof of permanent absence). |
 
-## minimal-text (31 hipótesis)
+## minimal-text (30 hipótesis)
 
 | Perfil | Señal documentada para revisión |
 | --- | --- |
 | [mattabate](https://github.com/mattabate) | Concise text-only README with 29 approximate words. · referencia original |
 | [serenakeyitan](https://github.com/serenakeyitan) | Brief README with one image; image purpose requires visual review. · referencia original |
-| [SamuelSchlesinger](https://github.com/SamuelSchlesinger) | Concise text-only README with 99 approximate words. · referencia original |
 | [addyosmani](https://github.com/addyosmani) | Concise text-only README with 40 approximate words. |
 | [afender](https://github.com/afender) | Concise text-only README with 61 approximate words. |
 | [alexcwatt](https://github.com/alexcwatt) | Concise text-only README with 55 approximate words. |
@@ -38,12 +37,14 @@ Hay 526 secciones de achievements visibles y 385 estructuras de README renderiza
 | [artogahr](https://github.com/artogahr) | Concise text-only README with 19 approximate words. |
 | [ATechAdventurer](https://github.com/ATechAdventurer) | Concise text-only README with 79 approximate words. |
 | [bahne-dev](https://github.com/bahne-dev) | Concise text-only README with 34 approximate words. |
+| [benjaminsampica](https://github.com/benjaminsampica) | Concise text-only README with 72 approximate words. |
 
-## technical-editorial (37 hipótesis)
+## technical-editorial (38 hipótesis)
 
 | Perfil | Señal documentada para revisión |
 | --- | --- |
 | [morluto](https://github.com/morluto) | Structured README: 3 headings and 1028 approximate words. · referencia original |
+| [SamuelSchlesinger](https://github.com/SamuelSchlesinger) | User-provided README was previously studied as technical; entire profile is not yet approved. · referencia original |
 | [247arjun](https://github.com/247arjun) | Structured README: 3 headings and 327 approximate words. |
 | [ahammadshawki8](https://github.com/ahammadshawki8) | Structured README: 6 headings and 895 approximate words. |
 | [babboe1](https://github.com/babboe1) | Structured README: 2 headings and 141 approximate words. |
@@ -54,7 +55,6 @@ Hay 526 secciones de achievements visibles y 385 estructuras de README renderiza
 | [hamelsmu](https://github.com/hamelsmu) | Structured README: 3 headings and 255 approximate words. |
 | [icyJoseph](https://github.com/icyJoseph) | Structured README: 10 headings and 159 approximate words. |
 | [jeroenvervaeke](https://github.com/jeroenvervaeke) | Structured README: 4 headings and 192 approximate words. |
-| [jxnl](https://github.com/jxnl) | Structured README: 3 headings and 116 approximate words. |
 
 ## project-showcase (31 hipótesis)
 
@@ -73,7 +73,7 @@ Hay 526 secciones de achievements visibles y 385 estructuras de README renderiza
 | [hairyhenderson](https://github.com/hairyhenderson) | Profile displays 6 pinned items. |
 | [himanshu1221](https://github.com/himanshu1221) | Profile displays 4 pinned items. |
 
-## visual-illustrated (131 hipótesis)
+## visual-illustrated (136 hipótesis)
 
 | Perfil | Señal documentada para revisión |
 | --- | --- |
@@ -81,14 +81,14 @@ Hay 526 secciones de achievements visibles y 385 estructuras de README renderiza
 | [poteto](https://github.com/poteto) | 1 README image references; the visual meaning and rights remain unreviewed. · referencia original |
 | [WenyuChiou](https://github.com/WenyuChiou) | 29 README image references; the visual meaning and rights remain unreviewed. · referencia original |
 | [yetone](https://github.com/yetone) | 1 README image references; the visual meaning and rights remain unreviewed. · referencia original |
+| [amelia2802](https://github.com/amelia2802) | GitHub renders 9 README images not returned by the earlier API observation. |
+| [AyushSarode](https://github.com/AyushSarode) | GitHub renders 25 README images not returned by the earlier API observation. |
+| [metantonio](https://github.com/metantonio) | GitHub renders 28 README images not returned by the earlier API observation. |
+| [Pranjal360Agarwal](https://github.com/Pranjal360Agarwal) | GitHub renders 31 README images not returned by the earlier API observation. |
 | [abhinit21](https://github.com/abhinit21) | 95 README image references; the visual meaning and rights remain unreviewed. |
 | [abraham](https://github.com/abraham) | 35 README image references; the visual meaning and rights remain unreviewed. |
 | [Aleksey-Voko](https://github.com/Aleksey-Voko) | 40 README image references; the visual meaning and rights remain unreviewed. |
 | [Ashutosh00710](https://github.com/Ashutosh00710) | 3 README image references; the visual meaning and rights remain unreviewed. |
-| [cheehwatang](https://github.com/cheehwatang) | 165 README image references; the visual meaning and rights remain unreviewed. |
-| [chinmay29hub](https://github.com/chinmay29hub) | 104 README image references; the visual meaning and rights remain unreviewed. |
-| [codestackr](https://github.com/codestackr) | 33 README image references; the visual meaning and rights remain unreviewed. |
-| [faouzimohamed](https://github.com/faouzimohamed) | 16 README image references; the visual meaning and rights remain unreviewed. |
 
 ## terminal-code (4 hipótesis)
 
@@ -97,7 +97,7 @@ Hay 526 secciones de achievements visibles y 385 estructuras de README renderiza
 | [laohanme](https://github.com/laohanme) | GitHub rendered README contains 1 code blocks. |
 | [orhun](https://github.com/orhun) | Previously examined Rust/terminal-inspired visual composition; verify whole-page theme and code. |
 | [FlorentCollin](https://github.com/FlorentCollin) | GitHub rendered README contains 1 code blocks. |
-| [ektaarora16](https://github.com/ektaarora16) | GitHub rendered README contains 1 code blocks. |
+| [itsgareth](https://github.com/itsgareth) | GitHub rendered README contains 1 code blocks. |
 
 ## data-dashboard (158 hipótesis)
 
