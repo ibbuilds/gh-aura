@@ -1,0 +1,38 @@
+name: Temporary GH Aura complete four-view research validation
+on:
+  push:
+    branches: [research/holistic-visual-render-smoke]
+    paths: ['.github/workflows/visual-smoke-summary.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Verify 600 ordered public profiles and their 4-mode rendering evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test tests/holistic-visual-smoke.test.mjs
+          node scripts/summarize-four-mode-visuals.mjs /tmp/gh-aura-visual-report.json
+          node --input-type=module - <<'JS'
+          import {readFileSync} from 'node:fs';
+          const data=JSON.parse(readFileSync('/tmp/gh-aura-visual-report.json','utf8'));
+          if(data.schema!=='gh-aura-public-render-smoke-summary-v1'||
+             data.counts.candidates!==600||data.counts.categoryWinners!==0||
+             data.records.length!==600||!data.styleDiagnostics)
+              throw Error('Unexpected summary schema or missing full dataset');
+          console.log('GH_AURA_VISUAL_REPORT_COUNTS:'+JSON.stringify(data.counts));
+          console.log('GH_AURA_VISUAL_REPORT_STYLES:'+JSON.stringify(data.styleDiagnostics.categories));
+          const payload=Buffer.from(JSON.stringify(data)).toString('base64');
+          const parts=payload.match(/.{1,6000}/g)||[];
+          parts.forEach((part,i)=>console.log('GH_AURA_VISUAL_REPORT_'+(i+1)+'_'+parts.length+':'+part));
+          JS
