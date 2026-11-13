@@ -112,7 +112,12 @@ async function graphql(token,payload){
   const body=JSON.parse(raw);
   const failures=(body.errors||[]).filter(e=>
     !(e.type==='NOT_FOUND'&&Array.isArray(e.path)&&e.path[1]==='repository'));
-  if(failures.length||!body.data)throw Error('Incomplete GraphQL response; no research file was written.');
+  if(failures.length||!body.data){
+    const kinds=[...new Set(failures.slice(0,4).map(e=>
+      String(e.type||'GRAPHQL')+':'+String(e.message||'unknown').slice(0,160)
+        .replace(/https?:\/\/\S+/g,'[URL]').replace(/[\r\n]/g,' ')))];
+    throw Error('Incomplete GraphQL response ('+kinds.join('; ')+'); no research file was written.');
+  }
   return body.data;
 }
 export async function runResearch(argv=process.argv.slice(2)){
