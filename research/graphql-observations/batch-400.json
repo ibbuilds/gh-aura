@@ -1,0 +1,4844 @@
+{
+  "schema": "gh-aura-holistic-api-observation-batch-v1",
+  "observedAt": "2026-11-13T02:52:32.998Z",
+  "sourceRoster": "profile-candidates-600.json",
+  "start": 400,
+  "requested": 50,
+  "requests": 10,
+  "responded": 43,
+  "limitation": "API-only. Avatar artwork, visible achievements, rendered README/pins and mobile/light/dark layout still require direct editorial inspection.",
+  "profiles": [
+    {
+      "login": "syofyanzuhad",
+      "profileUrl": "https://github.com/syofyanzuhad",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/52684582?u=543866839652bcab3cb57e40e8f0aa7b0a9f0f5b&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 92,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 4,
+        "providers": [
+          "GENERIC",
+          "LINKEDIN",
+          "TWITTER",
+          "INSTAGRAM"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "d18bf1b4a782770b88a3c5101587d0db9540e9a5",
+        "approxWords": 383,
+        "headings": 4,
+        "markdownLinks": 39,
+        "imageCount": 80,
+        "remoteStatsImages": 4,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/syofyanzuhad/Laravel-Trik-Indonesia",
+            "type": "repository",
+            "name": "syofyanzuhad/Laravel-Trik-Indonesia",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/syofyanzuhad/uptime-kita",
+            "type": "repository",
+            "name": "syofyanzuhad/uptime-kita",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          },
+          {
+            "url": "https://github.com/syofyanzuhad/syofyanzuhad.dev",
+            "type": "repository",
+            "name": "syofyanzuhad/syofyanzuhad.dev",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "Vue"
+          },
+          {
+            "url": "https://github.com/syofyanzuhad/katla",
+            "type": "repository",
+            "name": "syofyanzuhad/katla",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/syofyanzuhad/hobits",
+            "type": "repository",
+            "name": "syofyanzuhad/hobits",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Vue"
+          },
+          {
+            "url": "https://github.com/syofyanzuhad/lumina",
+            "type": "repository",
+            "name": "syofyanzuhad/lumina",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 6904,
+        "activeDays": 322,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "bevennyamande",
+      "profileUrl": "https://github.com/bevennyamande",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/10162710?u=8b983563743e58803811a51926823f5b6e2189ca&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 159,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 3,
+        "providers": [
+          "TWITTER",
+          "GENERIC",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "not-observed-at-root",
+        "note": "No public root README available through this query; a README is not required."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/bevennyamande/paynowzw",
+            "type": "repository",
+            "name": "bevennyamande/paynowzw",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bevennyamande/bocadillo",
+            "type": "repository",
+            "name": "bevennyamande/bocadillo",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bevennyamande/Sentinel_SnR",
+            "type": "repository",
+            "name": "bevennyamande/Sentinel_SnR",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "Jupyter Notebook"
+          },
+          {
+            "url": "https://github.com/bevennyamande/Zimbabwe-Stock-Exchange-Daily-Pricesheets",
+            "type": "repository",
+            "name": "bevennyamande/Zimbabwe-Stock-Exchange-Daily-Pricesheets",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bevennyamande/zim_leaderboard",
+            "type": "repository",
+            "name": "bevennyamande/zim_leaderboard",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bevennyamande/africa_lotto_ball_statistics",
+            "type": "repository",
+            "name": "bevennyamande/africa_lotto_ball_statistics",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Jupyter Notebook"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 96,
+        "activeDays": 59,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "krshdev",
+      "profileUrl": "https://github.com/krshdev",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "tips367",
+      "profileUrl": "https://github.com/tips367",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/41302067?u=06a014e5ae4d8a6d90c61c1a9cb3990bfbbdb8e8&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": false,
+        "characters": 0,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "9f813ef987bca02a57f94c68bb488f9a873dd76a",
+        "approxWords": 65,
+        "headings": 3,
+        "markdownLinks": 0,
+        "imageCount": 41,
+        "remoteStatsImages": 6,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "dhrumishah",
+      "profileUrl": "https://github.com/dhrumishah",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/84569241?u=5a1d8ae0acec066be185e4d8a1dd017a86813231&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 37,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "c3db8188e6950fdf811679f9186a721e50b38ea9",
+        "approxWords": 158,
+        "headings": 4,
+        "markdownLinks": 1,
+        "imageCount": 0,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 3,
+        "items": [
+          {
+            "url": "https://github.com/dhrumishah/Legacy-Of-Brothers-Transportation",
+            "type": "repository",
+            "name": "dhrumishah/Legacy-Of-Brothers-Transportation",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/dhrumishah/BrainGrid",
+            "type": "repository",
+            "name": "dhrumishah/BrainGrid",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/dhrumishah/FinGraph",
+            "type": "repository",
+            "name": "dhrumishah/FinGraph",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 1143,
+        "activeDays": 202,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "rperry99",
+      "profileUrl": "https://github.com/rperry99",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/24259120?u=21ae64ca92d7c8245146a1eaffc8bc5e7c57ff46&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 36,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 2,
+        "providers": [
+          "LINKEDIN",
+          "GENERIC"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "bed0033044b966ae84dc5e31202ef55f8f888f1a",
+        "approxWords": 326,
+        "headings": 9,
+        "markdownLinks": 10,
+        "imageCount": 2,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 3,
+        "items": [
+          {
+            "url": "https://github.com/rperry99/Query-selector-playground",
+            "type": "repository",
+            "name": "rperry99/Query-selector-playground",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/rperry99/MountainTravel",
+            "type": "repository",
+            "name": "rperry99/MountainTravel",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Sass"
+          },
+          {
+            "url": "https://github.com/rperry99/theEssen",
+            "type": "repository",
+            "name": "rperry99/theEssen",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "CSS"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 74,
+        "activeDays": 11,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "nawed2611",
+      "profileUrl": "https://github.com/nawed2611",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/83456083?u=1d0ba6a70e294acdc766b882f2c2409104e3338c&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 93,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "0104296651da14c4508a2d655903d288ed585729",
+        "approxWords": 68,
+        "headings": 0,
+        "markdownLinks": 4,
+        "imageCount": 0,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/SuperteamDAO/earn",
+            "type": "repository",
+            "name": "SuperteamDAO/earn",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/nawed2611/paperbrain",
+            "type": "repository",
+            "name": "nawed2611/paperbrain",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/qdrant/qdrant-web-ui",
+            "type": "repository",
+            "name": "qdrant/qdrant-web-ui",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/asyncapi/studio",
+            "type": "repository",
+            "name": "asyncapi/studio",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/bigansh/tweepsbook",
+            "type": "repository",
+            "name": "bigansh/tweepsbook",
+            "descriptionPresent": true,
+            "archived": true,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/elevenlabs/elevenlabs-python",
+            "type": "repository",
+            "name": "elevenlabs/elevenlabs-python",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 5,
+        "activeDays": 3,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "bocan",
+      "profileUrl": "https://github.com/bocan",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/8620175?u=ad9c063b8cef6e47196f37145ae3329bf06739fd&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 154,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "MASTODON",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "6f613c3dc4e99b90fc959ba6b8c907a36992df5f",
+        "approxWords": 700,
+        "headings": 0,
+        "markdownLinks": 33,
+        "imageCount": 31,
+        "remoteStatsImages": 1,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 5,
+        "items": [
+          {
+            "url": "https://github.com/bocan/bocan-music",
+            "type": "repository",
+            "name": "bocan/bocan-music",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Swift"
+          },
+          {
+            "url": "https://github.com/bocan/codex",
+            "type": "repository",
+            "name": "bocan/codex",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/bocan/ultraformat",
+            "type": "repository",
+            "name": "bocan/ultraformat",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/bocan/bocan-music-android",
+            "type": "repository",
+            "name": "bocan/bocan-music-android",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Kotlin"
+          },
+          {
+            "url": "https://github.com/bocan/mood-rss-reader",
+            "type": "repository",
+            "name": "bocan/mood-rss-reader",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 5571,
+        "activeDays": 275,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "ayush-09",
+      "profileUrl": "https://github.com/ayush-09",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/51924622?u=2acbeb3fbc8bfbdfbd15faafea874b8326fbc7df&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": false
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 118,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "08c875a6df7c15cc558df60be57c13d49ec5f1da",
+        "approxWords": 265,
+        "headings": 6,
+        "markdownLinks": 0,
+        "imageCount": 27,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 31,
+        "activeDays": 13,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "raj007-star",
+      "profileUrl": "https://github.com/raj007-star",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/83889037?u=faa0039127e86c8aca1d36ded2357747e89ec143&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 115,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 3,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN",
+          "GENERIC"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "a955570bb0c5498d29f4b63d5c931f020e4bcf03",
+        "approxWords": 138,
+        "headings": 4,
+        "markdownLinks": 7,
+        "imageCount": 36,
+        "remoteStatsImages": 6,
+        "themeAwareImages": 6,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 4,
+        "items": [
+          {
+            "url": "https://github.com/raj007-star/COB-Python-Development",
+            "type": "repository",
+            "name": "raj007-star/COB-Python-Development",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/raj007-star/Smart-Energy-Meter",
+            "type": "repository",
+            "name": "raj007-star/Smart-Energy-Meter",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/raj007-star/Weather-Station-System",
+            "type": "repository",
+            "name": "raj007-star/Weather-Station-System",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/raj007-star/Taxi-Fare-Prediction",
+            "type": "repository",
+            "name": "raj007-star/Taxi-Fare-Prediction",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "Jupyter Notebook"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Jitesh117",
+      "profileUrl": "https://github.com/Jitesh117",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/77315098?u=74abe4170c56983e0a40c9dd37c37c0cb2d9de20&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 13,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "1cce4decd0d80709250d90c4b8f38964e4611520",
+        "approxWords": 232,
+        "headings": 3,
+        "markdownLinks": 10,
+        "imageCount": 5,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/Jitesh117/vim_royale",
+            "type": "repository",
+            "name": "Jitesh117/vim_royale",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/Jitesh117/brainrot-lsp",
+            "type": "repository",
+            "name": "Jitesh117/brainrot-lsp",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Go"
+          },
+          {
+            "url": "https://github.com/Jitesh117/jitesh117.github.io",
+            "type": "repository",
+            "name": "Jitesh117/jitesh117.github.io",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/Jitesh117/nvim",
+            "type": "repository",
+            "name": "Jitesh117/nvim",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Lua"
+          },
+          {
+            "url": "https://github.com/Jitesh117/mapReduceGo",
+            "type": "repository",
+            "name": "Jitesh117/mapReduceGo",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "Go"
+          },
+          {
+            "url": "https://github.com/Jitesh117/dynamo_elixir",
+            "type": "repository",
+            "name": "Jitesh117/dynamo_elixir",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Elixir"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 215,
+        "activeDays": 62,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "kaustav202",
+      "profileUrl": "https://github.com/kaustav202",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/89788120?u=cdb26b2a5399dc824f08a91e3de516f13e72b928&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 149,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "LINKEDIN",
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "220b1cf68362f88d5f91eddc90c386eec297f6b5",
+        "approxWords": 418,
+        "headings": 20,
+        "markdownLinks": 1,
+        "imageCount": 78,
+        "remoteStatsImages": 9,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 5,
+        "items": [
+          {
+            "url": "https://github.com/kaustav202/Cryptosense",
+            "type": "repository",
+            "name": "kaustav202/Cryptosense",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/kaustav202/search-genie",
+            "type": "repository",
+            "name": "kaustav202/search-genie",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/kaustav202/Elastic-Chat",
+            "type": "repository",
+            "name": "kaustav202/Elastic-Chat",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/kaustav202/News-Accumulator",
+            "type": "repository",
+            "name": "kaustav202/News-Accumulator",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/kaustav202/RealTime-TwitterDataAnalysis",
+            "type": "repository",
+            "name": "kaustav202/RealTime-TwitterDataAnalysis",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 2,
+        "activeDays": 1,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "abhijeet-26",
+      "profileUrl": "https://github.com/abhijeet-26",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/68768410?u=318db42542afe53ef26b0ad7bcdab101a71338d7&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 132,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 4,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN",
+          "GENERIC",
+          "FACEBOOK"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "12cbbe898f5222e539dd56e1e8b18db19f390fb7",
+        "approxWords": 126,
+        "headings": 5,
+        "markdownLinks": 10,
+        "imageCount": 24,
+        "remoteStatsImages": 1,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "srishti666",
+      "profileUrl": "https://github.com/srishti666",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/85846340?u=91e274ebc6a11acd0dc93ae39df298a2f6191a4d&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": false
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 155,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "0c2ee7c3c4d640ca9b0069bc1d1b45790903cd35",
+        "approxWords": 54,
+        "headings": 0,
+        "markdownLinks": 0,
+        "imageCount": 38,
+        "remoteStatsImages": 10,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 1,
+        "items": [
+          {
+            "url": "https://github.com/srishti666/Movie-Recommender",
+            "type": "repository",
+            "name": "srishti666/Movie-Recommender",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 83,
+        "activeDays": 50,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Bryson69",
+      "profileUrl": "https://github.com/Bryson69",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/62892010?v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": false
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 59,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "ca22bcf5c878c1476d2ea2a9ebecd92fdd635e11",
+        "approxWords": 154,
+        "headings": 6,
+        "markdownLinks": 8,
+        "imageCount": 56,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 3,
+        "items": [
+          {
+            "url": "https://github.com/Bryson69/Airbnb-Next.js-Clone",
+            "type": "repository",
+            "name": "Bryson69/Airbnb-Next.js-Clone",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/Bryson69/Django-Blog",
+            "type": "repository",
+            "name": "Bryson69/Django-Blog",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "CSS"
+          },
+          {
+            "url": "https://github.com/Bryson69/Base-Apparel-coming-soon-page-challenge-hub",
+            "type": "repository",
+            "name": "Bryson69/Base-Apparel-coming-soon-page-challenge-hub",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 2,
+        "activeDays": 2,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "An-prog-hub",
+      "profileUrl": "https://github.com/An-prog-hub",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "grawish",
+      "profileUrl": "https://github.com/grawish",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/41504211?u=a0c9cbb6ed1c3e4658f264a8386375677f8cf108&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 37,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "f975e0984cb5f794fca3430c4e726cf6a5722935",
+        "approxWords": 28,
+        "headings": 0,
+        "markdownLinks": 0,
+        "imageCount": 37,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 1980,
+        "activeDays": 277,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Priyanshi-Rai",
+      "profileUrl": "https://github.com/Priyanshi-Rai",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/83975944?u=d9a5d526f5fe8928772b82ddc032b44dd33438c1&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 52,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "733155546e847dd9c4dab32bfa7f419aba88ad1b",
+        "approxWords": 128,
+        "headings": 4,
+        "markdownLinks": 4,
+        "imageCount": 19,
+        "remoteStatsImages": 5,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 10,
+        "activeDays": 4,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "diyajaiswal11",
+      "profileUrl": "https://github.com/diyajaiswal11",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/48059117?u=4021d082b8601a29e4da5036774502970a373c12&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 42,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "37d1fcf2e9487a58b4bad073a3cf086af59c8384",
+        "approxWords": 36,
+        "headings": 0,
+        "markdownLinks": 3,
+        "imageCount": 18,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/diyajaiswal11/Quizzit",
+            "type": "repository",
+            "name": "diyajaiswal11/Quizzit",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/diyajaiswal11/GitScrap",
+            "type": "repository",
+            "name": "diyajaiswal11/GitScrap",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/Algo-Phantoms/Algo-Phantoms-Backend",
+            "type": "repository",
+            "name": "Algo-Phantoms/Algo-Phantoms-Backend",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/diyajaiswal11/Bloggitt",
+            "type": "repository",
+            "name": "diyajaiswal11/Bloggitt",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/AbsurdNerd/SimplifyReport_Backend",
+            "type": "repository",
+            "name": "AbsurdNerd/SimplifyReport_Backend",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/diyajaiswal11/BookStore",
+            "type": "repository",
+            "name": "diyajaiswal11/BookStore",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 10,
+        "activeDays": 4,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "cleverhare",
+      "profileUrl": "https://github.com/cleverhare",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "bylickilabs",
+      "profileUrl": "https://github.com/bylickilabs",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/109308073?u=4a499383b27c66132d1de7a1e50cd3f782d01d9e&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 150,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 3,
+        "providers": [
+          "FACEBOOK",
+          "LINKEDIN",
+          "GENERIC"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "cbf2cc5fca1b67e9180c2bc661ff7826922814bf",
+        "approxWords": 2267,
+        "headings": 30,
+        "markdownLinks": 85,
+        "imageCount": 150,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/bylickilabs/Post-Quantum-Security",
+            "type": "repository",
+            "name": "bylickilabs/Post-Quantum-Security",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bylickilabs/DataShredder",
+            "type": "repository",
+            "name": "bylickilabs/DataShredder",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bylickilabs/Desktop-Utility-Toolkit",
+            "type": "repository",
+            "name": "bylickilabs/Desktop-Utility-Toolkit",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bylickilabs/PDF-Image-Processing-Toolkit",
+            "type": "repository",
+            "name": "bylickilabs/PDF-Image-Processing-Toolkit",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/bylickilabs/PSX-Classic-Modding-Hub",
+            "type": "repository",
+            "name": "bylickilabs/PSX-Classic-Modding-Hub",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PowerShell"
+          },
+          {
+            "url": "https://github.com/bylickilabs/SecureDataVault",
+            "type": "repository",
+            "name": "bylickilabs/SecureDataVault",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 1497,
+        "activeDays": 114,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "kartikmehta8",
+      "profileUrl": "https://github.com/kartikmehta8",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/77505989?u=2623d7eba548697a6440e3b8b4f3f88d1c7dd93a&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 110,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "26a534f7916b85d7727fe5b4c1b2ee5441e1a1cb",
+        "approxWords": 2,
+        "headings": 0,
+        "markdownLinks": 0,
+        "imageCount": 4,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 5,
+        "items": [
+          {
+            "url": "https://github.com/kartikmehta8/nt",
+            "type": "repository",
+            "name": "kartikmehta8/nt",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/kartikmehta8/pyKeylogger",
+            "type": "repository",
+            "name": "kartikmehta8/pyKeylogger",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/kartikmehta8/s3rcel-pr-preview",
+            "type": "repository",
+            "name": "kartikmehta8/s3rcel-pr-preview",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/kartikmehta8/linear-to-pr",
+            "type": "repository",
+            "name": "kartikmehta8/linear-to-pr",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Shell"
+          },
+          {
+            "url": "https://github.com/kartikmehta8/thedaotool",
+            "type": "repository",
+            "name": "kartikmehta8/thedaotool",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 5551,
+        "activeDays": 369,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Samridhi-98",
+      "profileUrl": "https://github.com/Samridhi-98",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/54466041?v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 120,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "ae521468d29257b95ba913f159af06124cda1870",
+        "approxWords": 18,
+        "headings": 0,
+        "markdownLinks": 3,
+        "imageCount": 37,
+        "remoteStatsImages": 4,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/Samridhi-98/OnlyMeal",
+            "type": "repository",
+            "name": "Samridhi-98/OnlyMeal",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/1s-0s/Captcha-IMHUMAN",
+            "type": "repository",
+            "name": "1s-0s/Captcha-IMHUMAN",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/1s-0s/Psychic-Doodle",
+            "type": "repository",
+            "name": "1s-0s/Psychic-Doodle",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/1s-0s/Rapid-NPM-Package",
+            "type": "repository",
+            "name": "1s-0s/Rapid-NPM-Package",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/Samridhi-98/blog",
+            "type": "repository",
+            "name": "Samridhi-98/blog",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/Samridhi-98/Gitto",
+            "type": "repository",
+            "name": "Samridhi-98/Gitto",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 52,
+        "activeDays": 38,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "hrishikeshnikam2000",
+      "profileUrl": "https://github.com/hrishikeshnikam2000",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/58680992?u=00f2621f0af95d86a6de72e707bed6652df78ff1&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 20,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "9739bd5f52bb7bdec75f5f36d76c25c292a8e021",
+        "approxWords": 110,
+        "headings": 0,
+        "markdownLinks": 2,
+        "imageCount": 12,
+        "remoteStatsImages": 7,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/hrishikeshnikam2000/NutriSnapAI",
+            "type": "repository",
+            "name": "hrishikeshnikam2000/NutriSnapAI",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/hrishikeshnikam2000/ecom-url-harvester",
+            "type": "repository",
+            "name": "hrishikeshnikam2000/ecom-url-harvester",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/hrishikeshnikam2000/zoma_clone_flutter_UI",
+            "type": "repository",
+            "name": "hrishikeshnikam2000/zoma_clone_flutter_UI",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Dart"
+          },
+          {
+            "url": "https://github.com/hrishikeshnikam2000/Invisibility_Tshirt",
+            "type": "repository",
+            "name": "hrishikeshnikam2000/Invisibility_Tshirt",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Jupyter Notebook"
+          },
+          {
+            "url": "https://github.com/hrishikeshnikam2000/Sorting_Algorithms_with_react.github.io",
+            "type": "repository",
+            "name": "hrishikeshnikam2000/Sorting_Algorithms_with_react.github.io",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/hrishikeshnikam2000/Face_mask_detector",
+            "type": "repository",
+            "name": "hrishikeshnikam2000/Face_mask_detector",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 4,
+        "activeDays": 3,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Adit0507",
+      "profileUrl": "https://github.com/Adit0507",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/78037846?u=b0662f8cef98f5b9c975cff2b9c66d40c0f7fcef&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 9,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 4,
+        "providers": [
+          "LINKEDIN",
+          "GENERIC",
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "55666f9e2bfd63c94608c98abc812f7507ee7f9d",
+        "approxWords": 39,
+        "headings": 0,
+        "markdownLinks": 0,
+        "imageCount": 5,
+        "remoteStatsImages": 1,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/Adit0507/Address-Sanitizer",
+            "type": "repository",
+            "name": "Adit0507/Address-Sanitizer",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "C++"
+          },
+          {
+            "url": "https://github.com/Adit0507/GoFlow",
+            "type": "repository",
+            "name": "Adit0507/GoFlow",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Go"
+          },
+          {
+            "url": "https://github.com/Adit0507/wiki-search-engine",
+            "type": "repository",
+            "name": "Adit0507/wiki-search-engine",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Go"
+          },
+          {
+            "url": "https://github.com/Adit0507/Bare-GPT",
+            "type": "repository",
+            "name": "Adit0507/Bare-GPT",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Jupyter Notebook"
+          },
+          {
+            "url": "https://github.com/Adit0507/Interpreter",
+            "type": "repository",
+            "name": "Adit0507/Interpreter",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Go"
+          },
+          {
+            "url": "https://github.com/Adit0507/video-rag",
+            "type": "repository",
+            "name": "Adit0507/video-rag",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 301,
+        "activeDays": 94,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "jaypatel31",
+      "profileUrl": "https://github.com/jaypatel31",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/59785863?u=7cb175e44fe4d4764e5c3cf86a8f51679c409332&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 113,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "6a1214c69dfc87df98333ecab6ac00ea1667c6b6",
+        "approxWords": 226,
+        "headings": 4,
+        "markdownLinks": 0,
+        "imageCount": 46,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/jaypatel31/Form-Builder",
+            "type": "repository",
+            "name": "jaypatel31/Form-Builder",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "CSS"
+          },
+          {
+            "url": "https://github.com/jaypatel31/Portfolio-Website",
+            "type": "repository",
+            "name": "jaypatel31/Portfolio-Website",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/shahamitr/sms",
+            "type": "repository",
+            "name": "shahamitr/sms",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          },
+          {
+            "url": "https://github.com/jaypatel31/Encode-RegistrationWorkshop",
+            "type": "repository",
+            "name": "jaypatel31/Encode-RegistrationWorkshop",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          },
+          {
+            "url": "https://github.com/jaypatel31/Devi-Plastic",
+            "type": "repository",
+            "name": "jaypatel31/Devi-Plastic",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/jaypatel31/Certificate_generator",
+            "type": "repository",
+            "name": "jaypatel31/Certificate_generator",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 3214,
+        "activeDays": 239,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "priyaankamishra",
+      "profileUrl": "https://github.com/priyaankamishra",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "akshitagupta15june",
+      "profileUrl": "https://github.com/akshitagupta15june",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/57909583?u=5eb810c8a5de2b8188e952b51a8b650b5c142dcf&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 14,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "743f8c7529da70a2641b3cbcc147c0520d0a6adc",
+        "approxWords": 161,
+        "headings": 1,
+        "markdownLinks": 4,
+        "imageCount": 34,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/akshitagupta15june/Face-X",
+            "type": "repository",
+            "name": "akshitagupta15june/Face-X",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Jupyter Notebook"
+          },
+          {
+            "url": "https://github.com/akshitagupta15june/PetMe",
+            "type": "repository",
+            "name": "akshitagupta15june/PetMe",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/akshitagupta15june/Moksh",
+            "type": "repository",
+            "name": "akshitagupta15june/Moksh",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/akshitagupta15june/Emusify",
+            "type": "repository",
+            "name": "akshitagupta15june/Emusify",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/akshitagupta15june/akshitagupta15june",
+            "type": "repository",
+            "name": "akshitagupta15june/akshitagupta15june",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/akshitagupta15june/ART-Analysis-Using-Qubitro",
+            "type": "repository",
+            "name": "akshitagupta15june/ART-Analysis-Using-Qubitro",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "C++"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 7,
+        "activeDays": 6,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "hariketsheth",
+      "profileUrl": "https://github.com/hariketsheth",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/72455881?u=b765b967c8a909aff912fc79af755d46991f86c9&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 140,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 4,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN",
+          "INSTAGRAM",
+          "FACEBOOK"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "5bc7d60ad06eee6704ca79c51e013270afecc5d4",
+        "approxWords": 510,
+        "headings": 6,
+        "markdownLinks": 16,
+        "imageCount": 24,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 4,
+        "items": [
+          {
+            "url": "https://github.com/hariketsheth/Vault-Treasure",
+            "type": "repository",
+            "name": "hariketsheth/Vault-Treasure",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/hariketsheth/Article_Repository_Management_System",
+            "type": "repository",
+            "name": "hariketsheth/Article_Repository_Management_System",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          },
+          {
+            "url": "https://github.com/hariketsheth/TCR_Task_1",
+            "type": "repository",
+            "name": "hariketsheth/TCR_Task_1",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/hariketsheth/Student-Portal",
+            "type": "repository",
+            "name": "hariketsheth/Student-Portal",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 9,
+        "activeDays": 2,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "adityaoberai",
+      "profileUrl": "https://github.com/adityaoberai",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/31401437?u=e146d5bd202433cdf25d885bf1fa4d049be2c788&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 51,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 3,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN",
+          "GENERIC"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "b1d1f86cce57ec3673af4db77767e85806fec789",
+        "approxWords": 166,
+        "headings": 3,
+        "markdownLinks": 16,
+        "imageCount": 38,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/appwrite/appwrite",
+            "type": "repository",
+            "name": "appwrite/appwrite",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/adityaoberai/hackathon-submissions-platform-template",
+            "type": "repository",
+            "name": "adityaoberai/hackathon-submissions-platform-template",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/adityaoberai/AI-Crystal-Ball",
+            "type": "repository",
+            "name": "adityaoberai/AI-Crystal-Ball",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Svelte"
+          },
+          {
+            "url": "https://github.com/adityaoberai/SOS-MAUI",
+            "type": "repository",
+            "name": "adityaoberai/SOS-MAUI",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "C#"
+          },
+          {
+            "url": "https://github.com/adityaoberai/valentine-sonnet",
+            "type": "repository",
+            "name": "adityaoberai/valentine-sonnet",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/adityaoberai/BlazorAppwriteAuthDemo",
+            "type": "repository",
+            "name": "adityaoberai/BlazorAppwriteAuthDemo",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 2143,
+        "activeDays": 248,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "ighoshsubho",
+      "profileUrl": "https://github.com/ighoshsubho",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/93722719?u=0f09773f2161aafb450cf6f67fb6cd3bbef32419&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 3,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 3,
+        "providers": [
+          "LINKEDIN",
+          "TWITTER",
+          "INSTAGRAM"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "8437a18efb8d292ce38d27b65fdb1a71ac7d48dc",
+        "approxWords": 102,
+        "headings": 3,
+        "markdownLinks": 6,
+        "imageCount": 0,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 5,
+        "items": [
+          {
+            "url": "https://github.com/ighoshsubho/Diffusion-Kernels",
+            "type": "repository",
+            "name": "ighoshsubho/Diffusion-Kernels",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Cuda"
+          },
+          {
+            "url": "https://github.com/ighoshsubho/flow_grpo_flux",
+            "type": "repository",
+            "name": "ighoshsubho/flow_grpo_flux",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/ighoshsubho/MCTS_distributed",
+            "type": "repository",
+            "name": "ighoshsubho/MCTS_distributed",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/ighoshsubho/Hunyuan3D-2.1-Optims",
+            "type": "repository",
+            "name": "ighoshsubho/Hunyuan3D-2.1-Optims",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": true,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/ighoshsubho/blackwell_kernels",
+            "type": "repository",
+            "name": "ighoshsubho/blackwell_kernels",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Cuda"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 112,
+        "activeDays": 57,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Pinkuagrawal28",
+      "profileUrl": "https://github.com/Pinkuagrawal28",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/92142824?u=6fd7119bc53f249438c7348b893fd4b766a31b67&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 40,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "9e4c77e2e4e0287b0aa565ecc073268d1d5ad693",
+        "approxWords": 301,
+        "headings": 1,
+        "markdownLinks": 5,
+        "imageCount": 29,
+        "remoteStatsImages": 7,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/Pinkuagrawal28/Pinkuagrawal28",
+            "type": "repository",
+            "name": "Pinkuagrawal28/Pinkuagrawal28",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/QuarkSchool/Join-the-team",
+            "type": "repository",
+            "name": "QuarkSchool/Join-the-team",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/Pinkuagrawal28/Internet-Of-Things101",
+            "type": "repository",
+            "name": "Pinkuagrawal28/Internet-Of-Things101",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/Pinkuagrawal28/Osmygod",
+            "type": "repository",
+            "name": "Pinkuagrawal28/Osmygod",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/Pinkuagrawal28/BlogX",
+            "type": "repository",
+            "name": "Pinkuagrawal28/BlogX",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "Astro"
+          },
+          {
+            "url": "https://github.com/Pinkuagrawal28/SciCompute",
+            "type": "repository",
+            "name": "Pinkuagrawal28/SciCompute",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": null
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "iemsahil",
+      "profileUrl": "https://github.com/iemsahil",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/88196017?u=597ddd1b951e94265a601f37dc68bc486e649fff&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": false,
+        "characters": 0,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "c4f3843265d804420e2fd69c88a378fc6b380ae1",
+        "approxWords": 37,
+        "headings": 2,
+        "markdownLinks": 5,
+        "imageCount": 6,
+        "remoteStatsImages": 6,
+        "themeAwareImages": 4,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "praveenscience",
+      "profileUrl": "https://github.com/praveenscience",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/1830380?u=23ab8a7dce9a437c9c763bf3fa5deb7aba1e64c5&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 66,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 4,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN",
+          "FACEBOOK",
+          "GENERIC"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "a6e22a80e2574a09118a876ff79e790995c33b0b",
+        "approxWords": 215,
+        "headings": 5,
+        "markdownLinks": 31,
+        "imageCount": 37,
+        "remoteStatsImages": 4,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 4,
+        "items": [
+          {
+            "url": "https://github.com/praveenscience/Internship-LMS-FrontEnd",
+            "type": "repository",
+            "name": "praveenscience/Internship-LMS-FrontEnd",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/praveenscience/FinalYear-Project-Ideas",
+            "type": "repository",
+            "name": "praveenscience/FinalYear-Project-Ideas",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/praveenscience/PHP-eCertificate-Generator",
+            "type": "repository",
+            "name": "praveenscience/PHP-eCertificate-Generator",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "PHP"
+          },
+          {
+            "url": "https://github.com/praveenscience/praveenscience",
+            "type": "repository",
+            "name": "praveenscience/praveenscience",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 3149,
+        "activeDays": 264,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "webdevrachit",
+      "profileUrl": "https://github.com/webdevrachit",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/72686780?v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 71,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "991a74a1a3e16f81c6613ee9231c7298dd2fd0f0",
+        "approxWords": 57,
+        "headings": 1,
+        "markdownLinks": 4,
+        "imageCount": 14,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 5,
+        "items": [
+          {
+            "url": "https://github.com/webdevrachit/covid19-tracker",
+            "type": "repository",
+            "name": "webdevrachit/covid19-tracker",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/webdevrachit/Finance-desk",
+            "type": "repository",
+            "name": "webdevrachit/Finance-desk",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/webdevrachit/Sticky-notes",
+            "type": "repository",
+            "name": "webdevrachit/Sticky-notes",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "CSS"
+          },
+          {
+            "url": "https://github.com/webdevrachit/chatit",
+            "type": "repository",
+            "name": "webdevrachit/chatit",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/webdevrachit/Flash-typing",
+            "type": "repository",
+            "name": "webdevrachit/Flash-typing",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 2,
+        "activeDays": 1,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "subhadeepbanerjee2003",
+      "profileUrl": "https://github.com/subhadeepbanerjee2003",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/116381157?u=f983ae96a6287360f583bc036a64b78063ba3390&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 129,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 2,
+        "providers": [
+          "LINKEDIN",
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "4808c7757806b62e40415113208b9f028935d1a4",
+        "approxWords": 77,
+        "headings": 1,
+        "markdownLinks": 4,
+        "imageCount": 21,
+        "remoteStatsImages": 7,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 2,
+        "items": [
+          {
+            "url": "https://github.com/subhadeepbanerjee2003/grid-project",
+            "type": "repository",
+            "name": "subhadeepbanerjee2003/grid-project",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/subhadeepbanerjee2003/Clock",
+            "type": "repository",
+            "name": "subhadeepbanerjee2003/Clock",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Push9828",
+      "profileUrl": "https://github.com/Push9828",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/31934448?u=ed3e73232fd41c11a2b8f0516c389b4ffa8b1ed9&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 30,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "ea5e939326cb371f1ce39d30b2eb8873df1590ef",
+        "approxWords": 73,
+        "headings": 2,
+        "markdownLinks": 1,
+        "imageCount": 8,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 5,
+        "items": [
+          {
+            "url": "https://github.com/Push9828/new-portfolio",
+            "type": "repository",
+            "name": "Push9828/new-portfolio",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/Push9828/apple-website",
+            "type": "repository",
+            "name": "Push9828/apple-website",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/Push9828/The-Breaking-Bad",
+            "type": "repository",
+            "name": "Push9828/The-Breaking-Bad",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/Push9828/deno-demo",
+            "type": "repository",
+            "name": "Push9828/deno-demo",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/Push9828/react-todo-app",
+            "type": "repository",
+            "name": "Push9828/react-todo-app",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 980,
+        "activeDays": 173,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "JoykishanSharma",
+      "profileUrl": "https://github.com/JoykishanSharma",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/47889468?u=b65dc4a86de834ec79e84d7139169c935f4ceff6&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 40,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "87a4e19d86c12ce9bb2611222ad6f6defbc658ca",
+        "approxWords": 257,
+        "headings": 5,
+        "markdownLinks": 10,
+        "imageCount": 33,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 4,
+        "items": [
+          {
+            "url": "https://github.com/JoykishanSharma/Covid-19-Mobile-Updater-App",
+            "type": "repository",
+            "name": "JoykishanSharma/Covid-19-Mobile-Updater-App",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Java"
+          },
+          {
+            "url": "https://github.com/JoykishanSharma/Potato-Power",
+            "type": "repository",
+            "name": "JoykishanSharma/Potato-Power",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "CSS"
+          },
+          {
+            "url": "https://github.com/JoykishanSharma/Git-Command-Guide",
+            "type": "repository",
+            "name": "JoykishanSharma/Git-Command-Guide",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/JoykishanSharma/Tirbute-Page-Srinivasa-Ramanujan",
+            "type": "repository",
+            "name": "JoykishanSharma/Tirbute-Page-Srinivasa-Ramanujan",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 12,
+        "activeDays": 2,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "hill",
+      "profileUrl": "https://github.com/hill",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/5620045?u=b8344df84b5bcfcdbaf1ec7b993c79e5b39af298&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 37,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "BLUESKY",
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "b5912d8354ab965feda735addfa1572b36fdd117",
+        "approxWords": 16,
+        "headings": 0,
+        "markdownLinks": 1,
+        "imageCount": 1,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/hill/lazyslurm",
+            "type": "repository",
+            "name": "hill/lazyslurm",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Rust"
+          },
+          {
+            "url": "https://github.com/hill/recursive-github-profile",
+            "type": "repository",
+            "name": "hill/recursive-github-profile",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/hill/ergosphere",
+            "type": "repository",
+            "name": "hill/ergosphere",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Rust"
+          },
+          {
+            "url": "https://github.com/hill/tldr-chrome",
+            "type": "repository",
+            "name": "hill/tldr-chrome",
+            "descriptionPresent": true,
+            "archived": true,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/hill/pg_tamagotchi",
+            "type": "repository",
+            "name": "hill/pg_tamagotchi",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "C"
+          },
+          {
+            "url": "https://github.com/hill/annomate",
+            "type": "repository",
+            "name": "hill/annomate",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 2056,
+        "activeDays": 242,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Aleksey-Voko",
+      "profileUrl": "https://github.com/Aleksey-Voko",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/61884038?u=2c219c3aa00bd1bdb14bfd752842a99cea09f33e&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 33,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "608727eb2679a77b20e741e22dd5df4949790271",
+        "approxWords": 2,
+        "headings": 0,
+        "markdownLinks": 0,
+        "imageCount": 40,
+        "remoteStatsImages": 15,
+        "themeAwareImages": 18,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/OldCodersClub/faq",
+            "type": "repository",
+            "name": "OldCodersClub/faq",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/OldCodersClub/LariskaBot",
+            "type": "repository",
+            "name": "OldCodersClub/LariskaBot",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/Aleksey-Voko/ChatGPT_Bot",
+            "type": "repository",
+            "name": "Aleksey-Voko/ChatGPT_Bot",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/DroidDump/CryptoCompare",
+            "type": "repository",
+            "name": "DroidDump/CryptoCompare",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Kotlin"
+          },
+          {
+            "url": "https://github.com/Aleksey-Voko/TranslatorSelenium",
+            "type": "repository",
+            "name": "Aleksey-Voko/TranslatorSelenium",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/Aleksey-Voko/Avito_autoload",
+            "type": "repository",
+            "name": "Aleksey-Voko/Avito_autoload",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "tooxic",
+      "profileUrl": "https://github.com/tooxic",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/152753768?v=4"
+      },
+      "profileHeader": {
+        "namePresent": false,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": false
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": false,
+        "characters": 0,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": false,
+        "socialAccounts": 0,
+        "providers": [],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "a494c107ab502b870a186dc683e7af013128c359",
+        "approxWords": 65,
+        "headings": 5,
+        "markdownLinks": 1,
+        "imageCount": 18,
+        "remoteStatsImages": 4,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "SubhadeepZilong",
+      "profileUrl": "https://github.com/SubhadeepZilong",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/63146468?u=010112ebac42834dc13bd1d7b8b7dae9a4795d20&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 24,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "276d1de81aa2fb352179fcc2a5df3ca158e5bdde",
+        "approxWords": 109,
+        "headings": 8,
+        "markdownLinks": 3,
+        "imageCount": 51,
+        "remoteStatsImages": 7,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/SubhadeepZilong/Discord-Bot-Python",
+            "type": "repository",
+            "name": "SubhadeepZilong/Discord-Bot-Python",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/SubhadeepZilong/Music-Player-Tkinter",
+            "type": "repository",
+            "name": "SubhadeepZilong/Music-Player-Tkinter",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/SubhadeepZilong/Email-Sending-via-Python",
+            "type": "repository",
+            "name": "SubhadeepZilong/Email-Sending-via-Python",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/SubhadeepZilong/Number-Guesser",
+            "type": "repository",
+            "name": "SubhadeepZilong/Number-Guesser",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/SubhadeepZilong/Music-Player-Java",
+            "type": "repository",
+            "name": "SubhadeepZilong/Music-Player-Java",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Java"
+          },
+          {
+            "url": "https://github.com/SubhadeepZilong/Weather-Tracker",
+            "type": "repository",
+            "name": "SubhadeepZilong/Weather-Tracker",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Iamthevk",
+      "profileUrl": "https://github.com/Iamthevk",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "shreyaansjain06",
+      "profileUrl": "https://github.com/shreyaansjain06",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/86606251?u=4533527ee6f70a05a02f5ba242754d613effd8de&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 71,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "807508b3646f17349cf9ec7d2fd87a2ec9dbb7f6",
+        "approxWords": 89,
+        "headings": 0,
+        "markdownLinks": 4,
+        "imageCount": 24,
+        "remoteStatsImages": 2,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/shreyaansjain06/ipl",
+            "type": "repository",
+            "name": "shreyaansjain06/ipl",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/shreyaansjain06/rock-paper-scissors",
+            "type": "repository",
+            "name": "shreyaansjain06/rock-paper-scissors",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "EJS"
+          },
+          {
+            "url": "https://github.com/shreyaansjain06/User-Portal",
+            "type": "repository",
+            "name": "shreyaansjain06/User-Portal",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/shreyaansjain06/food4need",
+            "type": "repository",
+            "name": "shreyaansjain06/food4need",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "HTML"
+          },
+          {
+            "url": "https://github.com/shreyaansjain06/react-form-to-pdf-convertor",
+            "type": "repository",
+            "name": "shreyaansjain06/react-form-to-pdf-convertor",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/shreyaansjain06/Stocks-Price-Tracker",
+            "type": "repository",
+            "name": "shreyaansjain06/Stocks-Price-Tracker",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "EJS"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "fabdul88",
+      "profileUrl": "https://github.com/fabdul88",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/60126985?u=ae7abe5aa7415c7615c1fd106088096278deee8b&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 149,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 2,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "8d2b82b3db5602399bc77447a7300d0154e4a766",
+        "approxWords": 167,
+        "headings": 2,
+        "markdownLinks": 1,
+        "imageCount": 23,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 4,
+        "items": [
+          {
+            "url": "https://github.com/fabdul88/abdulfarhan",
+            "type": "repository",
+            "name": "fabdul88/abdulfarhan",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/fabdul88/COVID-19-TRACKER",
+            "type": "repository",
+            "name": "fabdul88/COVID-19-TRACKER",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/fabdul88/TraveLog",
+            "type": "repository",
+            "name": "fabdul88/TraveLog",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/fabdul88/FiTrack",
+            "type": "repository",
+            "name": "fabdul88/FiTrack",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 380,
+        "activeDays": 99,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "aniketsingh98571",
+      "profileUrl": "https://github.com/aniketsingh98571",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/63097956?u=3f0ee9b8527d001a7fd61d5e82bd9bd27348d9f1&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": true,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 24,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 3,
+        "providers": [
+          "TWITTER",
+          "LINKEDIN",
+          "GENERIC"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "09c7974fc458198ff1fe8c813abc639abeb040a3",
+        "approxWords": 360,
+        "headings": 7,
+        "markdownLinks": 0,
+        "imageCount": 0,
+        "remoteStatsImages": 0,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 6,
+        "items": [
+          {
+            "url": "https://github.com/aniketsingh98571/Fraudvisor_Mumbai_Hacks_2025",
+            "type": "repository",
+            "name": "aniketsingh98571/Fraudvisor_Mumbai_Hacks_2025",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "TypeScript"
+          },
+          {
+            "url": "https://github.com/aniketsingh98571/Naruto-x-Kakashi-Agent",
+            "type": "repository",
+            "name": "aniketsingh98571/Naruto-x-Kakashi-Agent",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": null
+          },
+          {
+            "url": "https://github.com/aniketsingh98571/AstroBaba",
+            "type": "repository",
+            "name": "aniketsingh98571/AstroBaba",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/aniketsingh98571/Mocky",
+            "type": "repository",
+            "name": "aniketsingh98571/Mocky",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/aniketsingh98571/Gold_Rate_Tracker",
+            "type": "repository",
+            "name": "aniketsingh98571/Gold_Rate_Tracker",
+            "descriptionPresent": true,
+            "archived": false,
+            "fork": false,
+            "language": "Python"
+          },
+          {
+            "url": "https://github.com/aniketsingh98571/worldwise",
+            "type": "repository",
+            "name": "aniketsingh98571/worldwise",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 2542,
+        "activeDays": 269,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "Anjuli08",
+      "profileUrl": "https://github.com/Anjuli08",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/90701800?u=e1eaa3fbef37f503cc9c2e3296975c4a95417f11&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": true,
+        "companyFieldPresent": false,
+        "locationFieldPresent": false
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 103,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "cd9b281efa402ef519b76b43350ff7b30744f9db",
+        "approxWords": 151,
+        "headings": 4,
+        "markdownLinks": 10,
+        "imageCount": 47,
+        "remoteStatsImages": 8,
+        "themeAwareImages": 2,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 0,
+        "items": []
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    },
+    {
+      "login": "anubhav201241",
+      "profileUrl": "https://github.com/anubhav201241",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "KarthikNayak024",
+      "profileUrl": "https://github.com/KarthikNayak024",
+      "availability": "not-returned-by-github",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "missing": [
+        "avatar",
+        "biography",
+        "links",
+        "profileReadme",
+        "pinnedRepositories",
+        "contributionCalendar",
+        "achievements",
+        "visual review"
+      ]
+    },
+    {
+      "login": "ianskie26",
+      "profileUrl": "https://github.com/ianskie26",
+      "availability": "graphql-public-metadata",
+      "observedAt": "2026-11-13T02:52:32.998Z",
+      "complete": false,
+      "avatar": {
+        "state": "url-observed-visual-unreviewed",
+        "url": "https://avatars.githubusercontent.com/u/81738932?u=f78bb77f406a980d93add94368ee7c8e182ef462&v=4"
+      },
+      "profileHeader": {
+        "namePresent": true,
+        "statusPresent": false,
+        "companyFieldPresent": false,
+        "locationFieldPresent": true
+      },
+      "biography": {
+        "state": "metadata-observed",
+        "present": true,
+        "characters": 32,
+        "textRetained": false
+      },
+      "links": {
+        "state": "metadata-observed",
+        "websitePresent": true,
+        "socialAccounts": 1,
+        "providers": [
+          "TWITTER"
+        ],
+        "destinationsRetained": false
+      },
+      "profileReadme": {
+        "state": "observed",
+        "gitBlob": "b5cba31b47cce1baf303099da4ba4aed8fe6404b",
+        "approxWords": 47,
+        "headings": 0,
+        "markdownLinks": 1,
+        "imageCount": 14,
+        "remoteStatsImages": 3,
+        "themeAwareImages": 0,
+        "licenseNote": "Observed public metadata only; do not copy source prose, artwork or personal claims."
+      },
+      "pinnedRepositories": {
+        "state": "public-pinned-items",
+        "count": 3,
+        "items": [
+          {
+            "url": "https://github.com/ianskie26/google-clone",
+            "type": "repository",
+            "name": "ianskie26/google-clone",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/ianskie26/landing-page",
+            "type": "repository",
+            "name": "ianskie26/landing-page",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          },
+          {
+            "url": "https://github.com/ianskie26/bitcoin-quotes",
+            "type": "repository",
+            "name": "ianskie26/bitcoin-quotes",
+            "descriptionPresent": false,
+            "archived": false,
+            "fork": false,
+            "language": "JavaScript"
+          }
+        ]
+      },
+      "contributionCalendar": {
+        "state": "github-visible-to-query-caller",
+        "totalVisible": 0,
+        "activeDays": 0,
+        "sampledDays": 370,
+        "note": "Visible contribution counts do not show authorship quality, private repository details or awards."
+      },
+      "achievements": {
+        "state": "not-observed",
+        "note": "No official supported per-profile award query; check visible GitHub profile manually."
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "classification": {
+        "primaryStyle": null,
+        "secondaryStyles": [],
+        "purposes": [],
+        "status": "requires-full-visual-and-contextual-review"
+      },
+      "note": "This API record is NOT a holistic profile assessment and is not eligible for best-in-category selection."
+    }
+  ],
+  "provenance": {
+    "workflowRun": 43354810322,
+    "jobId": 131654188203,
+    "headCommit": "1057aa49a340d56ce71ccff6b3cae4b4a59fc437",
+    "source": "read-only GitHub GraphQL via GitHub Actions token"
+  }
+}
