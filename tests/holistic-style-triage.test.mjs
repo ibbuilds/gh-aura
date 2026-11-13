@@ -43,6 +43,12 @@ test('structure-only classifier emits provisional primary and secondary directio
   assert.equal(pictures.primary,'visual-illustrated');
   const missing=styleHypotheses({...fake,profileReadme:{state:'not-observed-at-root'}},{});
   assert.equal(missing.primary,'native-no-readme');
+  const renderedDespiteGraphql=styleHypotheses({...fake,
+    profileReadme:{state:'not-observed-at-root'}},{
+    renderedReadme:{state:'github-rendered-html-observed',images:9,headings:3,
+      links:12,codeBlocks:0,tables:0}});
+  assert.notEqual(renderedDespiteGraphql.primary,'native-no-readme');
+  assert.equal(renderedDespiteGraphql.primary,'visual-illustrated');
 });
 test('600 public observations are categorized as review candidates, never winners',()=>{
   const roster=read('profile-candidates-600.json'),old=read('profile-design-references.json');
