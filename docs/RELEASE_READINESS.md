@@ -1,6 +1,8 @@
 # Release acceptance
 
-**Current published release: v1.18.0.** The [product plan](PRODUCT_PLAN.md) is the single delivery backlog and definition of a complete GH Aura. Its future capabilities are not implemented by documentation changes.
+**Current published release: v1.18.0.** The [product plan](PRODUCT_PLAN.md) records implementation and acceptance separately. The owner will perform live account pilots after technical development; no real credentials are needed for fixture tests.
+
+The candidate implements the [whole-profile workflow](IMPROVE.md), including sidebar fields, README/assets, project coverage, private campaigns, two-account exercises, daily targets and owner-pinned agent execution. Local simulation is not proof of GitHub awards, private attribution or live client activation.
 
 ## Candidate checks
 
@@ -12,11 +14,11 @@
 - [ ] Validate P6 contribution attribution and coexistence with badge operations.
 - [ ] Complete P7 journeys in three actual clients; verify installation and activation.
 - [ ] Complete P8 independent user/professional evaluation and resolve important findings.
-- [ ] Protect main and require CI/PR checks; verify the active rule.
+- [x] Main protection verified: one review, seven Actions checks, fresh status, no force-push/deletion, admins included.
 - [ ] Pass syntax, product, package and version-appropriate integration checks on the candidate revision.
 - [ ] Install the exact tarball outside the checkout; verify resources, commands, MCP and checksum.
 - [ ] Align version/tag/notes and obtain external publication authorization.
 
 The six Node 22/24 Linux/macOS/Windows checks and public read-only GitHub integration establish the exercised technical behavior. Private writes, actual awards and user outcomes need separate evidence. Historical corpus checks run with **npm run test:research** and are not claims about completed editorial reviews.
 
-The release workflow publishes only a new version after CI, retains the latest release assets and preserves historical Git tags. npm registry publication remains a separate owner decision. A missing or unknown external result stays pending.
+Release requires CI and a new version. Historical tags survive; npm publication is a separate owner decision. Unknown external results stay pending.

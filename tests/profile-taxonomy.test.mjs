@@ -12,7 +12,7 @@ test('best in category requires every facet, visual review and explicit editoria
   const base={login:'some-builder',primaryStyle:'project-showcase',
     secondaryStyles:['visual-illustrated'],purposes:['product'],editorialRank:1,
     decision:'approved',reviewer:'two-person-editorial-review',reviewedAt:'2026-11-12',
-    evidenceNotes:'Projects and pins inspected; imagery rights and layout checked.'};
+    evidenceNotes:'Projects and pins inspected; imagery rights and layout checked.',editorialChecks:{accessibility:true,assetRights:true,projectAttribution:true}};
   assert.equal(holisticReadiness(base).complete,false);
   const pending=groupReviewedProfiles([base]);
   assert.equal(pending.groups['project-showcase'].length,0);

@@ -7,6 +7,9 @@ import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { findProfileSources, getProfileSource, listProfileSources } from './profile-sources.mjs';
 import { getCuratedProfile, listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
 import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
+import { installAgentSkill,agentDoctor } from './agent-install.mjs';
+import { compilePatternLibrary,readPatternLibrary } from './pattern-library.mjs';
+import { readProfileJSON } from './profile-plan.mjs';
 
 const designOptions=options=>({
   query:options.query||'',direction:options.direction||'minimal',
@@ -16,6 +19,11 @@ const designOptions=options=>({
 export function runAgentCommand(command,options={}){
   const [action='list',id]=options.positional||[];
   if(command==='sources'){
+    if(action==='library')return emit(readPatternLibrary(),options);
+    if(action==='compile'){
+      if(!options.catalog)throw Error('Supply --catalog EDITORIAL-REVIEWS.json.');
+      return emit(compilePatternLibrary(readProfileJSON(options.catalog)),options);
+    }
     const sourceFile=options.catalog;
     if(action==='categories')return emit({styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,
       purposes:PROFILE_PURPOSES,status:'600 candidates discovered, not 500 full-profile audits; legacy 25 README-only samples remain provisional'},options);
@@ -54,6 +62,8 @@ export function runAgentCommand(command,options={}){
     throw Error('Use sources list, show ID, recommend, design, categories, profiles, profile ID or patterns --query TEXT.');
   }
   if(command==='agent'){
+    if(action==='install')return emit(installAgentSkill({client:options.client,directory:options.directory,force:options.force}),{format:'json'});
+    if(action==='doctor')return emit(agentDoctor(),options);
     if(action==='capabilities')return emit(agentCapabilities(),options);
     if(action==='spec'||action==='bio'){
       const config=loadConfig(options.config);

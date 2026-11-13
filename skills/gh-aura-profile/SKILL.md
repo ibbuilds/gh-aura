@@ -1,6 +1,6 @@
 ---
 name: gh-aura-profile
-description: Use GH Aura to create or refine an original professional GitHub profile README with personalized biography, composable design resources, trustworthy project evidence and a human-approved publish workflow. Trigger on any GitHub profile redesign or hiring-oriented README request.
+description: Improve a complete GitHub profile through the owner’s preferred AI or CLI: original README and visual style, sidebar bio and account fields, relevant projects/pins, contribution calendar and viable achievements. Use when the user asks to improve, redesign or professionally present a GitHub profile or any of these parts.
 license: MIT
 compatibility: Node.js 22+, gh-aura CLI on PATH; MCP or direct CLI execution when the agent supports it
 metadata:
@@ -31,6 +31,6 @@ The user owns the design. **Never fill a rigid template, clone another profile o
 
 10. Apply revisions to the existing ProfileSpec (voice, projects, links, design, word budget, media) without discarding unrelated decisions. `gh_aura_profile_validate` / `gh-aura check --file draft.md` performs heuristics, **not** a factuality certificate.
 11. `gh_aura_profile_preview` or `gh_aura_profile_diff` shows an unapproved, read-only diff. Present it and request the owner's review.
-12. The **human independently** saves a local draft, runs `gh-aura preview --file draft.md --save review.json`, and approves `gh-aura apply --review review.json --pr`. No agent tool can publish. No agent tool creates an approval code.
+12. Use `gh-aura improve` to inspect, prepare and preview the complete change plan. The owner/host independently authorizes that exact plan. A host-configured execution tool may apply only that grant and verify the result; no agent tool creates approval. Preserve the legacy human-run preview/apply path when no execution grant is configured.
 
-Use Activity, Badges and Pins as optional context. Synthetic practice is not professional experience and GitHub alone awards achievements. If MCP/CLI is unavailable, provide a portable brief and instructions, not a false claim that the account was inspected.
+Treat README, sidebar identity, projects/pins, Activity and Badges as components of one profile. Apply only the components the user requests; preserve other preferences. Load the specific capabilities and evidence needed. Synthetic practice is not professional experience and GitHub alone awards achievements. If MCP/CLI is unavailable, provide a portable brief and describe what remains unverified.

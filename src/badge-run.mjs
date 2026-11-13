@@ -71,7 +71,7 @@ export function planBadgeRun(options={}) {
     throw Error('Planned PR exercise indices exceed the selected tier or 1024 limit.');
   const quickdraw=options.quickdraw!==false && !(tier && start>0);
   const role=String(options.role||'general engineering').trim();
-  if(!role||role.length>100||/[\\x00-\\x1f]/.test(role))
+  if(!role||role.length>100||/[\u0000-\u001f]/.test(role))
     throw Error('--role must be 1-100 printable characters.');
   if(!pulls&&!quickdraw)
     throw Error('Select at least one GitHub event: --pulls > 0 and/or Quickdraw.');
@@ -109,6 +109,9 @@ export function loadBadgePlan(path) {
   let p;
   try{p=JSON.parse(readFileSync(path,'utf8'));}
   catch{throw Error('Invalid badge plan JSON.');}
+  return validateBadgePlan(p);
+}
+export function validateBadgePlan(p){
   if(![BATCH_PLAN_FORMAT,PLAN_FORMAT,LEGACY_PLAN_FORMAT].includes(p?.format)||
     p.private!==true||
     !/^[a-f0-9]{64}$/.test(p.fingerprint||'')||badgeDigest(p)!==p.fingerprint)

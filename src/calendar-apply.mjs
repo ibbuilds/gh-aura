@@ -5,10 +5,19 @@ import { join } from 'node:path';
 import { requestJSON, getJSON, decodeReadme, tokenFor, validateLogin } from './github.mjs';
 import { workspaceRepo, managedWorkspaceReadme, WORKSPACE_README } from './workspace.mjs';
 import { loadCalendarPlan } from './calendar.mjs';
+import { createHash } from 'node:crypto';
 
 const LIMIT=2500;
+export function calendarPracticeFiles(plan){
+  return plan.days.flatMap(d=>Array.from({length:d.count},(_,i)=>{
+    const date=d.date,index=(d.startIndex||1)+i,path='practice/'+date.slice(0,4)+'/'+date.slice(5,7)+'/'+date.slice(8)+'-'+index+'.md';
+    const content='# Generated practice session\n\nDate label: '+date+'\nFocus: '+plan.settings.role+'\nSession: '+index+'\n\n'+
+      'This is synthetic practice activity created by GH Aura. It is not independently verified historical software work.\n';
+    return {date,index,path,content,sha:createHash('sha1').update('blob '+Buffer.byteLength(content)+'\0').update(content).digest('hex')};
+  }));
+}
 function section(text){return 'data '+Buffer.byteLength(text,'utf8')+'\n'+text+'\n';}
-function validIdentity(name,email) {
+export function validCalendarIdentity(name,email) {
   if(typeof name!=='string'||!name.trim()||name.length>80||/[\x00-\x1f<>]/.test(name))
     throw Error('--author-name must be printable text of 1-80 characters.');
   if(typeof email!=='string'||email.length>254||
@@ -45,13 +54,13 @@ export async function verifyAuthorEmail(email,identity,opts={}) {
 }
 
 export function fastImportCalendar(plan,authorName,authorEmail,options={}) {
-  validIdentity(authorName,authorEmail);
+  validCalendarIdentity(authorName,authorEmail);
   const branch=options.branch||'main';
   if(!/^[a-z\d][a-z\d._-]{0,79}$/i.test(branch) || branch.includes('..') || branch.endsWith('.lock'))
     throw Error('Unsupported private workspace default branch.');
   if(options.baseSha && !/^[a-f0-9]{40}$/i.test(options.baseSha))
     throw Error('Invalid workspace base commit.');
-  const entries=plan.days.flatMap(d=>Array.from({length:d.count},(_,i)=>({date:d.date,index:i+1})));
+  const entries=calendarPracticeFiles(plan);
   if(entries.length>LIMIT||!entries.length)throw Error('Calendar plan must have between 1 and 2500 commits.');
   const name=authorName.trim();
   let payload='',n=0,previous=null;
@@ -60,14 +69,9 @@ export function fastImportCalendar(plan,authorName,authorEmail,options={}) {
     const seconds=Math.floor(Date.parse(date+'T12:00:00Z')/1000)+
       (entry.index*181);
     const tz=seconds+' +0000';
-    const file='practice/'+date.slice(0,4)+'/'+date.slice(5,7)+'/'+date.slice(8)+'-'+entry.index+'.md';
+    const file=entry.path;
     const message='chore(practice): generated '+date+' session '+entry.index;
-    const text='# Generated practice session\n\n'+
-      'Date label: '+date+'\n'+
-      'Focus: '+plan.settings.role+'\n'+
-      'Session: '+entry.index+'\n\n'+
-      'This is synthetic practice activity created by GH Aura. '+
-      'It is not independently verified historical software work.\n';
+    const text=entry.content;
     n++;
     payload+='commit refs/heads/'+branch+'\nmark :'+n+'\nauthor '+name+' <'+authorEmail+'> '+tz+
       '\ncommitter '+name+' <'+authorEmail+'> '+tz+'\n'+section(message);
@@ -98,7 +102,7 @@ export async function applyCalendar(plan,opts={}) {
     throw Error('Invalid approved activity plan.');
   if(!/^[a-f0-9]{64}$/.test(opts.confirm||'')||opts.confirm!==plan.fingerprint)
     throw Error('Activity plan fingerprint mismatch. Review the JSON plan and pass --confirm FINGERPRINT.');
-  validIdentity(opts.authorName,opts.authorEmail);
+  validCalendarIdentity(opts.authorName,opts.authorEmail);
   const selected=workspaceRepo(opts.repo);
   const token=tokenFor(opts);
   if(!token)throw Error('A GH_TOKEN/GITHUB_TOKEN with private repository creation/Contents write permission is required.');
@@ -140,7 +144,7 @@ export async function applyCalendar(plan,opts={}) {
       throw Error('Cannot inspect the complete private workspace tree; no writes performed.');
     const paths=new Set(tree.tree.map(item=>item.path));
     const collisions=plan.days.flatMap(d=>Array.from({length:d.count},(_,i)=>
-      'practice/'+d.date.slice(0,4)+'/'+d.date.slice(5,7)+'/'+d.date.slice(8)+'-'+(i+1)+'.md'))
+      'practice/'+d.date.slice(0,4)+'/'+d.date.slice(5,7)+'/'+d.date.slice(8)+'-'+((d.startIndex||1)+i)+'.md'))
       .filter(path=>paths.has(path));
     if(collisions.length)
       throw Error('Practice dates already exist in this workspace ('+collisions.length+' paths). Use a non-overlapping plan; no files were overwritten.');

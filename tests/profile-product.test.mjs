@@ -1,0 +1,106 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync,writeFileSync,readFileSync,rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { installAgentSkill,agentDoctor } from '../src/agent-install.mjs';
+import { HOLISTIC_STYLES,PROFILE_FACETS,holisticReadiness } from '../src/holistic-profile-taxonomy.mjs';
+import { compilePatternLibrary,readPatternLibrary,recommendApprovedPatterns,ORIGINAL_PROFILE_REFERENCES } from '../src/pattern-library.mjs';
+import { scanPublicProjects,inspectPublicProject,inspectCurrentPins } from '../src/profile-projects.mjs';
+import { planCalendar,validateCalendarPlan } from '../src/calendar.mjs';
+import { fastImportCalendar } from '../src/calendar-apply.mjs';
+import { planBadgeCampaign,executeBadgeCampaign } from '../src/badge-campaign.mjs';
+import { parseVisibleAchievements,observeVisibleAchievements } from '../src/achievement-observation.mjs';
+import { getAgentToolDefinitions,runAgentTool } from '../src/agent-tools.mjs';
+import { makeWholeProfileSpec } from '../src/profile-plan.mjs';
+
+const temporary=async fn=>{const root=mkdtempSync(join(tmpdir(),'aura-product-'));try{await fn(root);}finally{rmSync(root,{recursive:true,force:true});}};
+const review=(i)=>({login:'fixture-builder-'+i,primaryStyle:HOLISTIC_STYLES[i%8].id,secondaryStyles:[],purposes:['career'],decision:'approved',editorialRank:1,
+  reviewer:'Synthetic test reviewer',reviewedAt:'2026-11-12',evidenceNotes:'Synthetic fixture: no real profile review is asserted.',
+  evidenceUrls:['https://github.com/fixture-builder-'+i],facetStates:Object.fromEntries(PROFILE_FACETS.map(f=>[f,'observed'])),
+  visualChecks:{desktopLight:true,desktopDark:true,mobileLight:true,mobileDark:true},editorialChecks:{accessibility:true,assetRights:true,projectAttribution:true}});
+const study=()=>({reviews:Array.from({length:500},(_,i)=>review(i)),patterns:[{id:'native-links',styles:['native-no-readme'],title:'Intentional links',
+  when:'Quiet profiles with existing project evidence',principle:'Let clear links and selected public work carry the identity.',avoid:'Do not remove context needed by an unfamiliar reader.',
+  techniques:['link-hub'],reviewLogins:['fixture-builder-0','fixture-builder-8','fixture-builder-16']}]});
+
+test('malformed editorial claims and missing rights/accessibility do not become complete reviews',()=>{
+  assert.equal(holisticReadiness(review(0)).complete,true);
+  for(const delta of [{reviewedAt:'not-a-date'},{reviewedAt:'2026-02-30'},{reviewer:{}},{evidenceNotes:[]},{evidenceNotes:' '},{editorialChecks:{accessibility:true}}])
+    assert.equal(holisticReadiness({...review(0),...delta}).complete,false);
+});
+test('the compiler requires complete category coverage and source-linked approvals, without changing original references',()=>{
+  const input=study(),compiled=compilePatternLibrary(input);
+  assert.equal(compiled.reviewedProfiles,500);assert.equal(compiled.patterns.length,1);assert.equal(ORIGINAL_PROFILE_REFERENCES.length,8);
+  assert.equal(recommendApprovedPatterns({direction:'barebones',library:compiled}).patterns.length,1);
+  assert.equal(recommendApprovedPatterns({direction:'technical',library:compiled}).patterns.length,0);
+  const missing=study();missing.reviews[0].editorialChecks.assetRights=false;assert.throws(()=>compilePatternLibrary(missing),/500/);
+  const fake=study();fake.patterns[0].reviewLogins[0]='unknown';assert.throws(()=>compilePatternLibrary(fake),/reference/);
+  const duplicate=study();duplicate.reviews[499]=duplicate.reviews[0];assert.throws(()=>compilePatternLibrary(duplicate),/Duplicate/);
+});
+test('owner-configured compiled patterns remain separate from an unreviewed default',()=>temporary(async root=>{
+  assert.deepEqual(readPatternLibrary('').patterns,[]);
+  const path=join(root,'patterns.json'),compiled=compilePatternLibrary(study());writeFileSync(path,JSON.stringify(compiled));
+  assert.equal(readPatternLibrary(path).patterns[0].status,'approved-editorial-pattern');
+  compiled.patterns[0].status='pending';writeFileSync(path,JSON.stringify(compiled));assert.throws(()=>readPatternLibrary(path),/provenance/);
+}));
+test('skills install into a discovered directory, preserve edits and are idempotent',()=>temporary(async root=>{
+  const result=installAgentSkill({client:'codex',home:root});
+  assert.equal(result.directory,join(root,'.agents','skills','gh-aura-profile'));assert.equal(result.hostConfigurationChanged,false);
+  assert.equal(installAgentSkill({client:'codex',home:root}).changed,0);
+  const path=join(result.directory,'SKILL.md');writeFileSync(path,'Local edits');
+  assert.throws(()=>installAgentSkill({client:'codex',home:root}),/differs locally/);assert.equal(readFileSync(path,'utf8'),'Local edits');
+  assert.equal(installAgentSkill({client:'codex',directory:join(root,'.agents','skills'),force:true}).changed,1);
+  assert.equal(agentDoctor().skillPackaged,true);
+}));
+test('public project pagination exposes coverage and can discover a strong later-page candidate',async()=>{
+  const calls=[];const fetch=async address=>{const u=new URL(address),page=Number(u.searchParams.get('page'));calls.push(page);
+    return Response.json(page===1?Array.from({length:100},(_,i)=>({full_name:'example/a'+i,name:'a'+i,private:false,fork:false,description:'Unrelated project',size:1,topics:[]})):
+      [{full_name:'example/z-backend',name:'z-backend',private:false,fork:false,description:'Backend systems',size:20,language:'Go',topics:['backend']}]);};
+  const first=await scanPublicProjects('example',{fetch,token:'',goal:'backend',pages:1});
+  assert.equal(first.coverage.complete,false);assert.equal(first.coverage.nextCursor,2);
+  const later=await scanPublicProjects('example',{fetch,token:'',goal:'backend',cursor:first.coverage.nextCursor,pages:1});
+  assert.equal(later.coverage.complete,true);assert.equal(later.candidates[0].repository,'example/z-backend');assert.deepEqual(calls,[1,2]);
+});
+test('a selected private project is rejected before content inspection and pins do not infer absence',async()=>{
+  let calls=0;await assert.rejects(inspectPublicProject('example/private',{token:'fixture',fetch:async()=>{calls++;return Response.json({full_name:'example/private',private:true});}}),/Public project/);
+  assert.equal(calls,1);assert.equal((await inspectCurrentPins('example',{token:''})).state,'unavailable');
+});
+test('daily calendar targets add only deficits and can append non-overlapping practice files',()=>{
+  const history=new Map([['2022-01-01',2],['2022-01-02',0]]);
+  const plan=planCalendar({from:'2022-01-01',to:'2022-01-02',dailyTargets:{'2022-01-01':4,'2022-01-02':1}},history);
+  assert.deepEqual(plan.days.map(d=>d.count),[2,1]);assert.equal(validateCalendarPlan(plan).summary.syntheticCommits,3);
+  assert.throws(()=>planCalendar({from:'2022-01-01',to:'2022-01-02',dailyTargets:{'2022-01-01':1}},history),/remove existing/);
+  assert.throws(()=>planCalendar({year:'2022',dailyTargets:{'2023-01-01':1}}),/outside/);
+  const changed=structuredClone(plan);changed.days[0].startIndex=3;
+  assert.match(fastImportCalendar(changed,'Fixture','fixture@example.test').toString('utf8'),/practice\/2022\/01\/01-3\.md/);
+});
+const html=(content)=>'<h2><a href="/example?tab=achievements">Achievements</a></h2>'+content;
+const badge=(tier='')=>'<a href="/example?achievement=pull-shark&amp;tab=achievements"><img alt="Achievement: Pull Shark"/>'+(tier?'<span class="achievement-tier-label--'+tier+'"></span>':'')+'</a>';
+test('award observations reject README imitations and never send a GitHub token to public HTML',async()=>{
+  assert.equal(parseVisibleAchievements(html(badge('gold')),'example').items[0].tier,'gold');
+  assert.equal(parseVisibleAchievements('<article class="markdown-body">'+html(badge('gold'))+'</article>','example').state,'unknown');
+  assert.equal(parseVisibleAchievements('<p>No public badges</p>','example').state,'unknown');
+  const observed=await observeVisibleAchievements('example',{fetch:async(url,options)=>{assert.equal(url,'https://github.com/example');assert.equal(options.headers.Authorization,undefined);return new Response(html(badge()));}});
+  assert.equal(observed.retainedHTML,false);assert.match(observed.evidenceSha256,/^[a-f\d]{64}$/);
+});
+test('a Gold campaign stops after the pilot when the actual award is not visible',async()=>{
+  const plan=planBadgeCampaign({repo:'example/gh-aura-workspace',tier:'gold'}),batches=[];
+  const result=await executeBadgeCampaign(plan,plan.fingerprint,{}, {applyBatch:async batch=>{batches.push(batch);return {events:'observed'};},observeAwards:async()=>({state:'unknown',items:[]})});
+  assert.equal(plan.maxPulls,1024);assert.equal(result.state,'needs-award-verification');assert.equal(result.requiredTier,'base');
+  assert.equal(batches.length,1);assert.equal(batches[0].pulls,2);
+  await assert.rejects(executeBadgeCampaign(plan,'0'.repeat(64),{}, {applyBatch:async()=>assert.fail('unauthorized effect')}),/approval/);
+});
+test('forged campaign progress cannot bypass earlier award milestones',async()=>{
+  const plan=planBadgeCampaign({repo:'example/gh-aura-workspace',tier:'gold'});
+  const result=await executeBadgeCampaign(plan,plan.fingerprint,{fingerprint:plan.fingerprint,nextBatch:4,state:'events-observed'},
+    {applyBatch:async()=>assert.fail('a missing pilot award must stop writes'),observeAwards:async()=>({state:'unknown',items:[]})});
+  assert.equal(result.state,'needs-award-verification');assert.equal(result.requiredTier,'base');
+});
+test('agent execution is absent by default and model arguments cannot select a grant',async()=>{
+  assert.ok(getAgentToolDefinitions({}).every(x=>x.annotations.readOnlyHint));
+  const env={GH_AURA_APPROVED_PLAN:'owner-selected.json',GH_AURA_APPROVED_FINGERPRINT:'a'.repeat(64)};
+  assert.equal(getAgentToolDefinitions(env).find(x=>x.name==='gh_aura_apply_approved_profile').annotations.readOnlyHint,false);
+  const spec=await runAgentTool('gh_aura_whole_profile_spec',{spec:{readme:false,account:{bio:'Backend'}}});
+  assert.equal(makeWholeProfileSpec(spec).account.bio,'Backend');
+  await assert.rejects(runAgentTool('gh_aura_apply_approved_profile',{plan:{}}),/unauthorized|Unexpected/);
+});

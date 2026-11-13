@@ -11,6 +11,13 @@ test('a relevant zero-star project outranks an irrelevant popular fork', () => {
   assert.equal(result[0].repo.name, 'backend-toolkit');
   assert.ok(result.find((entry) => entry.repo.name === 'old-popular-fork'));
 });
+test('a fork with an owner-supplied contribution and proof is considered without claiming verified authorship',()=>{
+  const snapshot=snapshotForTest(),config=configForTest(),fork=snapshot.repos.find(r=>r.fork);
+  const before=rankRepositories(snapshot,config).find(x=>x.repo.full_name===fork.full_name).score;
+  config.profile.projectStories=[{repo:fork.full_name,contribution:'Implemented the documented fix',proof:'https://github.com/example/project/pull/1'}];
+  const after=rankRepositories(snapshot,config).find(x=>x.repo.full_name===fork.full_name);
+  assert.ok(after.score>before);assert.ok(after.reasons.some(x=>x.includes('not independently verified')));
+});
 
 test('respects excludes and manually selected featured projects', () => {
   const config = configForTest();
@@ -55,7 +62,8 @@ test('inspected README absence produces evidence-backed guidance', () => {
 
 test('audit identifies sparse README and repository metadata without rewriting history', () => {
   const report = auditProfile(snapshotForTest(), configForTest());
-  assert.ok(report.findings.some((finding) => finding.title === 'No profile README'));
+  assert.ok(report.findings.some((finding) => finding.title === 'Profile presentation without a README' && finding.severity === 'info'));
+  assert.ok(!report.findings.some(finding=>finding.action.startsWith('Create a public')));
   assert.ok(report.findings.some((finding) => finding.title === 'Repositories without descriptions'));
   assert.equal(report.publicRepositoriesScanned, 3);
   assert.match(report.caveat, /Does not inspect repository source code/);

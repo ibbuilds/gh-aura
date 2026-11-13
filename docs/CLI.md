@@ -1,6 +1,8 @@
 # GH Aura: standalone CLI and optional AI tools
 
-`gh-aura COMMAND --help` gives full options. AI tools can read, guide, validate and preview but **never publish**.
+`gh-aura COMMAND --help` gives full options. AI tools read by default; an independently configured host grant enables only its exact reviewed plan.
+
+The [complete profile workflow](IMPROVE.md) covers actual sidebar fields, README/assets, public projects/pins and optional workspace actions. Install with `gh-aura agent install --client codex` or `--client claude`; use `--client generic --directory PATH` for another skill host. `gh-aura agent doctor --json` checks local setup. Host discovery and live client activation are separate checks.
 
 ## Works without AI
 

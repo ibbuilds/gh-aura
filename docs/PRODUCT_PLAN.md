@@ -1,11 +1,27 @@
 # GH Aura: plan definitivo de producto y entrega
 
 **Current release:** v1.18.0
-**Actualizado:** 13 de noviembre de 2026, America/Mazatlan.
+**Actualizado:** 13 de noviembre de 2026, America/Chihuahua.
 **Base verificada y archivo:** d978bbae0234b30390885fc17bb7f2b6d52bc21b.
-**Estado:** limpieza y planificación. Las funciones futuras de este documento todavía no están implementadas.
+**Estado:** limpieza e implementación técnica en la rama `codex/cleanup-and-delivery-plan`. No es una release publicada ni una certificación de resultados reales.
 
 Este es el plan único de ejecución. Las guías de comandos describen el comportamiento actual; este documento fija resultado objetivo, entregables, dependencias y comprobaciones de terminado. Sustituye la hoja de ruta anterior centrada principalmente en el README.
+
+**Decisión posterior del dueño:** ejecutar el desarrollo y las simulaciones ahora; el dueño probará las cuentas y recorridos reales cuando esté listo. No se piden credenciales ni se usan cuentas reales para dar por terminados esos pilotos. La propuesta exacta de AGENTS/Skill/llms fue aprobada y aplicada.
+
+Entrega técnica actual:
+
+- P0: corpus, recolectores y pruebas históricas fuera del árbol activo, recuperables desde la base inmutable y comprobables con `test:research`.
+- P1: controles editoriales estrictos y compilador de patrones trazables; 500 revisiones/3 por categoría requeridas. El catálogo aprobado predeterminado sigue vacío porque las revisiones no se han realizado.
+- P2/P3: intención/refinamientos compartidos, contexto, plan/preview vinculados a bytes, cuenta real, README/assets atómicos, nuevo USER/USER, PR o commit, estado y reconciliación.
+- P4: scans públicos paginados con continuación, proyectos explícitos externos, evidencia progresiva y contribuciones declaradas a forks. Pins se preparan para la UI soportada y su estado se comprueba por lectura.
+- P5: campañas por tiers con pausa ante premio desconocido, observación pública de achievements y rutas revisadas de dos cuentas para coautoría y Q&A. Los eventos no equivalen a premios. Alta de cuentas, permisos y categorías son prerrequisitos del proveedor.
+- P6: objetivos diarios sobre baseline observado, archivos sin solapamiento, preflight de identidad/baseline y reconciliación de publicación por SHA antes del readback del gráfico. Hoy requiere workspace ya inicializado y badges terminados.
+- P7: instalador de Skill y diagnóstico, contexto integral y ejecución/estado expuestos solo para el plan fijado por dueño/host; errores saneados y pruebas del paquete instalado.
+
+La investigación editorial pendiente, los pilotos de cuentas/clientes/usuarios y una nueva versión siguen siendo aceptación separada. No se cierran por pruebas simuladas. `main` ya está protegido: una revisión independiente, siete checks vinculados a GitHub Actions, revisión de último push, conversaciones resueltas, sin force-push/borrado y administradores incluidos; verificado mediante API el 13-11-2026. [Guía operativa del incremento](IMPROVE.md).
+
+Validación local del candidato: pruebas de producto, **46/46 del archivo histórico**, sintaxis y empaquetado/instalación offline correctos en Windows, Node 24. La matriz remota del PR se comprueba por separado.
 
 ## 1. Objetivo acordado
 

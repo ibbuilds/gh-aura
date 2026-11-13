@@ -62,6 +62,10 @@ export async function main(argv = process.argv.slice(2)) {
     process.stdout.write('Usage: gh-aura ' + spec.usage + '\nOptions: ' + spec.flags.map((flag) => '--' + flag).join(', ') + '\n'); return;
   }
   validateOptions(command, options);
+  if (command === 'improve') {
+    await (await import('./improve-command.mjs')).runImprove(options);
+    return;
+  }
   if(command==='mcp') {
     (await import('./mcp-server.mjs')).startMcpStdio();
     return;

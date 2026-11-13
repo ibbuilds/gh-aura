@@ -6,6 +6,8 @@ import { resolveProfileDirection } from './profile-directions.mjs';
 import { makeProfileSpec } from './agent-profile.mjs';
 import { getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
+import { recommendApprovedPatterns } from './pattern-library.mjs';
+import { validateProfileSpec } from './agent-profile.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 
 /** Compact, evidence-grounded transport for any writer; no model or network client. */
@@ -16,16 +18,23 @@ export function editorialBrief(snapshot, config, options={}) {
     if (text.length > limit) omissions.push(label + ' truncated; do not base factual claims on the missing portion.');
     return text.slice(0, limit);
   };
+  const agentSpec=options.profileSpec?validateProfileSpec(options.profileSpec.composition||options.profileSpec):makeProfileSpec({includeExternal:options.includeExternal===true},config);
+  config=structuredClone(config);
+  if(options.profileSpec){
+    Object.assign(config.profile,{featured:agentSpec.featured,maxProjects:agentSpec.maxProjects,sections:agentSpec.sections,links:agentSpec.links});
+    Object.assign(config.editorial,{direction:agentSpec.direction,targetRole:agentSpec.goal,language:agentSpec.language,maxWords:agentSpec.maxWords});
+    config.showcase.goal=agentSpec.goal;
+  }
   const p = config.profile;
   const presentation = presentationPlan(p);
-  const agentSpec=makeProfileSpec({includeExternal:options.includeExternal===true},config);
+  const acceptedPatterns=recommendApprovedPatterns({query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].join(' '),direction:agentSpec.direction});
   const sourceSuggestions=agentSpec.sourceIds.slice(0,4).map(id=>{
     const source=getProfileSource(id);
     return {id,url:source.url,trust:source.trust,
       limitations:clip(source.limitations,170,'source limitation: '+id)};
   });
   const techniques=recommendProfileTechniques({
-    query:config.editorial?.targetRole||p.headline||'professional',
+    query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].filter(Boolean).join(' ')||p.headline||'professional',
     direction:agentSpec.direction,includeExternal:agentSpec.includeExternal,limit:4,
   }).techniques.map(item=>({id:item.id,title:item.title,medium:item.medium,
     fit:clip(item.fit,140,'technique: '+item.id),
@@ -58,8 +67,8 @@ export function editorialBrief(snapshot, config, options={}) {
       note:'Editable composition intent, not a README template; source IDs are reading references only.'
     },
     sourceSuggestions,techniqueSuggestions:techniques,
-    patternSuggestions:[],
-    patternSelectionStatus:'README-only legacy shortlist is provisional. No full-profile examples are automatically injected until holistic avatar/sidebar/pins/calendar/achievement and rendered-layout review.',
+    patternSuggestions:acceptedPatterns.patterns,
+    patternSelectionStatus:acceptedPatterns.patterns.length?acceptedPatterns.status:'README-only legacy shortlist is provisional. No full-profile examples are automatically injected until holistic avatar/sidebar/pins/calendar/achievement and rendered-layout review.',
     editorial: { language: config.editorial?.language || 'en',
       targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
       targetCompany: clip(config.editorial?.targetCompany || '', 100, 'target company'),

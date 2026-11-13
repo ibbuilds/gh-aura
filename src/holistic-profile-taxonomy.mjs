@@ -49,8 +49,13 @@ export function holisticReadiness(review={}){
   const displays=review.visualChecks||{};
   for(const kind of ['desktopLight','desktopDark','mobileLight','mobileDark'])
     if(displays[kind]!==true)missing.push('visualChecks.'+kind);
-  if(!review.reviewedAt||!review.reviewer||!review.evidenceNotes)
+  const date=typeof review.reviewedAt==='string'&&/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z)?$/.test(review.reviewedAt)&&
+    Number.isFinite(Date.parse(review.reviewedAt))&&new Date(review.reviewedAt).toISOString().slice(0,10)===review.reviewedAt.slice(0,10);
+  if(!date||typeof review.reviewer!=='string'||!review.reviewer.trim()||review.reviewer.length>160||
+    typeof review.evidenceNotes!=='string'||!review.evidenceNotes.trim()||review.evidenceNotes.length>4000)
     missing.push('editorialReview');
+  for(const key of ['accessibility','assetRights','projectAttribution'])
+    if(review.editorialChecks?.[key]!==true)missing.push('editorialChecks.'+key);
   return {complete:missing.length===0,missing};
 }
 export function validateHolisticReview(review){

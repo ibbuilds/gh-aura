@@ -11,6 +11,10 @@ import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfil
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
 import { profileTarget } from './workflow.mjs';
 import { validateLogin } from './github.mjs';
+import { makeWholeProfileSpec, refineWholeProfileSpec, inspectWholeProfile, prepareProfilePlan,
+  previewWholeProfilePlan, executeProfilePlan, approvedPlanFromHost,profileExecutionStatus } from './profile-plan.mjs';
+import { scanPublicProjects, inspectPublicProject, inspectCurrentPins } from './profile-projects.mjs';
+import { wholeProfileContext } from './profile-context.mjs';
 
 export const AGENT_INTERFACE_VERSION='gh-aura-agent-v1';
 const properties=(shape,required=[])=>({
@@ -20,6 +24,19 @@ const str=(description,maxLength=160)=>({type:'string',description,maxLength});
 const optUser={user:str('Public GitHub username; omit to use local config.',39)};
 const art={direction:{type:'string',enum:['barebones','minimal','technical','expressive']}};
 const tools=[
+  ['gh_aura_whole_profile_context','Build compact public evidence and writing guidance honoring the full shared intent, explicit projects and style.',
+    properties({...optUser,spec:{type:'object'}},['spec'])],
+  ['gh_aura_whole_profile_spec','Create or refine shared intent for README, sidebar account fields, assets, pins and optional workspace goals.',
+    properties({spec:{type:'object'},changes:{type:'object'}})],
+  ['gh_aura_whole_profile_inspect','Inspect public sidebar fields, profile repository and exact README/default branch revisions.',properties({...optUser})],
+  ['gh_aura_whole_profile_plan','Build an exact read-only change plan from shared intent and original Markdown; never authorize it.',
+    properties({...optUser,spec:{type:'object'},markdown:str('Original README; omit to leave it unchanged',100000),delivery:{type:'string',enum:['pr','commit']}},['spec'])],
+  ['gh_aura_whole_profile_preview','Show reviewed field differences and file diffs from a plan without any remote writes.',properties({plan:{type:'object'}},['plan'])],
+  ['gh_aura_projects_scan','Rank a bounded page range of public projects for a goal. Continue with nextCursor until coverage is complete.',
+    properties({...optUser,goal:str('Target role',160),cursor:{type:'integer',minimum:1,maximum:100},pages:{type:'integer',minimum:1,maximum:20},inspect:{type:'integer',minimum:0,maximum:6}})],
+  ['gh_aura_project_evidence','Inspect one explicitly chosen public repository, its README and source/test structure; does not execute code.',
+    properties({repository:str('Public OWNER/REPO',140)},['repository'])],
+  ['gh_aura_pins_current','Read currently visible pinned repositories/gists using public GraphQL; does not change them.',properties({...optUser})],
   ['gh_aura_sources_search','Search curated GitHub README resources; no links are embedded or fetched automatically.',
     properties({query:str('Goal, keyword or resource to find (Spanish or English)',400),category:str('Source category',40),...art,
       includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:50}})],
@@ -89,16 +106,26 @@ export const AGENT_TOOL_DEFINITIONS=Object.freeze(tools.map(([name,description,i
   name,title:name.replaceAll('_',' '),description,inputSchema,
   annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false},
 })));
+const APPROVED_EXECUTION_TOOL=Object.freeze({name:'gh_aura_apply_approved_profile',title:'Apply owner-approved profile plan',
+  description:'Execute only the exact plan pinned in owner/host configuration. Cannot choose a plan/path or create approval. May create the reviewed public profile repository, publish README/assets and update reviewed account fields.',
+  inputSchema:properties({}),annotations:{readOnlyHint:false,destructiveHint:true,openWorldHint:true}});
+const APPROVED_STATUS_TOOL=Object.freeze({name:'gh_aura_approved_profile_status',title:'Read approved plan status',
+  description:'Read local progress only for the plan pinned by the owner/host; does not authorize or execute it.',
+  inputSchema:properties({}),annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false}});
+export function getAgentToolDefinitions(env=process.env){
+  return env.GH_AURA_APPROVED_PLAN&&/^[a-f\d]{64}$/.test(env.GH_AURA_APPROVED_FINGERPRINT||'')
+    ?[...AGENT_TOOL_DEFINITIONS,APPROVED_EXECUTION_TOOL,APPROVED_STATUS_TOOL]:AGENT_TOOL_DEFINITIONS;
+}
 export function agentCapabilities(){
   return {format:AGENT_INTERFACE_VERSION,transport:['CLI','Agent Skills','MCP stdio 2026-07-28 and legacy 2025-11-25'],
-    tools:AGENT_TOOL_DEFINITIONS,resources:[
+    tools:getAgentToolDefinitions(),resources:[
       'gh-aura://sources/catalog','gh-aura://techniques/catalog','gh-aura://profiles/selected',
       'gh-aura://guide/profile','gh-aura://guide/biography',
       'gh-aura://capabilities'],
     prompts:['create_professional_profile','refine_existing_profile',
       'compare_profile_directions','write_original_biography'],
-    writesExposed:false,aiProviderRequired:false,runtimeDependencies:0,
-    publication:'No publishing tool is exposed to the AI. A human must inspect a real draft file, run gh-aura preview --file draft.md --save review.json, and independently execute gh-aura apply --review review.json --pr.',
+    writesExposed:getAgentToolDefinitions().some(x=>x.annotations.readOnlyHint===false),aiProviderRequired:false,runtimeDependencies:0,
+    publication:'Read-only by default. The owner/host can pin one reviewed plan and fingerprint to expose only its execution. Agent tools cannot mint approval. Legacy independent preview/apply remains supported.',
     caveat:'Agent tools expose public data and explicit private workspace status only. No GitHub achievement awards are guaranteed.'};
 }
 function actualUser(value){
@@ -126,14 +153,29 @@ function runCliJson(tokens,{text=false}={}){
   catch{throw Error('GH Aura did not produce a valid bounded JSON response.');}
 }
 export async function runAgentTool(name,args={}){
-  if(!AGENT_TOOL_DEFINITIONS.some(x=>x.name===name))
+  const definitions=getAgentToolDefinitions();
+  if(!definitions.some(x=>x.name===name))
     throw Error('Unknown or unauthorized GH Aura agent tool.');
   if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Tool arguments must be an object.');
   // Validate argument names, not just the JSON Schema presented to the model.
-  const schema=AGENT_TOOL_DEFINITIONS.find(x=>x.name===name).inputSchema;
+  const schema=definitions.find(x=>x.name===name).inputSchema;
   if(Object.keys(args).some(key=>!Object.hasOwn(schema.properties,key))||
       (schema.required||[]).some(key=>args[key]===undefined))
     throw Error('Unexpected or missing GH Aura agent tool arguments.');
+  if(name==='gh_aura_apply_approved_profile'){
+    const plan=approvedPlanFromHost();
+    const {journal,...result}=await executeProfilePlan(plan,process.env.GH_AURA_APPROVED_FINGERPRINT);
+    return result;
+  }
+  if(name==='gh_aura_approved_profile_status')return profileExecutionStatus(approvedPlanFromHost());
+  if(name==='gh_aura_whole_profile_spec')return args.changes?refineWholeProfileSpec(args.spec,args.changes):makeWholeProfileSpec(args.spec||{},loadConfig());
+  if(name==='gh_aura_whole_profile_context')return wholeProfileContext(actualUser(args.user),args.spec,{config:loadConfig()});
+  if(name==='gh_aura_whole_profile_inspect')return inspectWholeProfile(actualUser(args.user));
+  if(name==='gh_aura_whole_profile_plan')return prepareProfilePlan(actualUser(args.user),args.spec,args.markdown,{delivery:args.delivery});
+  if(name==='gh_aura_whole_profile_preview')return previewWholeProfilePlan(args.plan);
+  if(name==='gh_aura_projects_scan')return scanPublicProjects(actualUser(args.user),args);
+  if(name==='gh_aura_project_evidence')return inspectPublicProject(args.repository);
+  if(name==='gh_aura_pins_current')return inspectCurrentPins(actualUser(args.user));
   if(name==='gh_aura_sources_search')
     return findProfileSources(args);
   if(name==='gh_aura_sources_get')

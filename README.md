@@ -2,7 +2,7 @@
 
 **Improve your GitHub profile with your preferred AI or the standalone CLI.**
 
-GH Aura brings together original README composition, biography guidance, relevant public projects, achievement eligibility and contribution-calendar tools. The goal is a coherent profile that communicates your actual work in your chosen style.
+GH Aura combines original READMEs, biography, relevant public projects, achievements and contribution-calendar tools to communicate your actual work in your chosen style.
 
 **Node.js 22+ · Free · Zero runtime dependencies · Local-first**
 
@@ -17,13 +17,15 @@ Download the [latest GitHub Release](https://github.com/ibbuilds/gh-aura/release
 
 ## Use with your AI
 
-Connect a compatible MCP client to the local stdio command **gh-aura mcp**, or load the [portable Agent Skill](skills/gh-aura-profile/SKILL.md).
+Install the [Agent Skill](skills/gh-aura-profile/SKILL.md), and connect a compatible MCP client to **gh-aura mcp**:
 
     gh-aura agent capabilities --json
+    gh-aura agent install --client codex
+    gh-aura agent doctor --json
     gh-aura brief --prompt --direction technical --output prompt.md
     gh-aura sources design --query "terminal retro" --json
 
-Your AI can inspect public evidence, refine an editable profile specification, choose composition techniques, guide biography writing and validate an original draft. Current agent tools are read-only; full authorized execution is part of the delivery plan.
+Your AI can inspect evidence, preserve your style and project choices, compose an original draft and preview the complete change plan. Tools read by default. An owner-configured host grant permits execution of one exact reviewed plan; the model cannot authorize itself.
 
 ## Use the CLI directly
 
@@ -33,15 +35,16 @@ Your AI can inspect public evidence, refine an editable profile specification, c
     gh-aura badges free
     gh-aura activity 2022
 
-Bio guidance currently targets prose; updating the account's sidebar bio is pending. Pins are recommendations. Optional synthetic Activity/Badges exercises use one owned, marked private workspace and separately reviewed plans; GitHub determines contribution attribution and awards.
+The shared workflow updates the actual sidebar bio (160 characters), selected account fields, README and owned assets. It scans public projects with explicit coverage and prepares up to six pins; GitHub's pin editor remains a manual step. Optional Activity/Badges use one marked private workspace. GitHub determines attribution and awards.
 
-## Review and publish a README
+## Review the complete profile
 
-    gh-aura check --file draft.md --professional --goal hiring
-    gh-aura preview --file draft.md --save review.json
-    gh-aura apply --review review.json --pr
+    gh-aura improve spec --output profile.json
+    gh-aura improve context USERNAME --spec profile.json
+    gh-aura improve plan USERNAME --spec profile.json --file draft.md --output plan.json
+    gh-aura improve preview --review plan.json
 
-The owner independently reviews and executes publication. A PR remains unmerged.
+The owner edits the spec and reviews the fingerprint before `improve apply` or a host grant. Default delivery opens an unmerged PR. [Full workflow and workspace setup](https://github.com/ibbuilds/gh-aura/blob/main/docs/IMPROVE.md).
 
 ## Product direction and evidence
 
