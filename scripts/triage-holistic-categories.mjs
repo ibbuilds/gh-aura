@@ -23,14 +23,16 @@ export function styleHypotheses(g,h,ref=null){
     add('native-no-readme',6,'Sidebar supplies identity without a root README observed.');
   if(r.state==='observed'){
     const words=r.approxWords??0,imgs=r.imageCount??0,heads=r.headings??0;
-    if(words<=90&&imgs<=1)
-      add('minimal-text',10,'Short, low-image README: '+words+' approximate words; '+imgs+' images.');
+    if(words>=18&&words<=90&&imgs<=1&&!(words<35&&imgs>0))
+      add('minimal-text',10,'Short, text-first README: '+words+' approximate words; '+imgs+' images.');
     if(words>=115&&heads>=2)
       add('technical-editorial',10,'Structured README: '+heads+' headings and '+words+' approximate words.');
+    if(words>=115&&imgs<=3&&(r.markdownLinks||0)>=3)
+      add('technical-editorial',6,'Substantive text with inspectable direct links and limited imagery.');
     if(words>=100&&imgs<=2)
       add('technical-editorial',2,'Text-first README merits detailed editorial inspection.');
-    if(imgs>=3){
-      add('visual-illustrated',11,'README references '+imgs+' images; quality and rights unreviewed.');
+    if(imgs>=3||(imgs>0&&words<35)){
+      add('visual-illustrated',11,imgs+' README image references; the visual meaning and rights remain unreviewed.');
       if(r.themeAwareImages>0)add('visual-illustrated',2,'Theme-aware images detected.');
     }
     if(r.remoteStatsImages>=2)
@@ -39,6 +41,7 @@ export function styleHypotheses(g,h,ref=null){
   if(pins>=3){
     add('project-showcase',5,'Profile displays '+pins+' pinned items.');
     if(described>=3)add('project-showcase',3,described+' pinned projects have descriptions.');
+    if(pins>=4&&described>=4)add('project-showcase',3,'Four or more described pinned projects invite a showcase review.');
     if(r.state==='observed'&&r.headings>=2)add('project-showcase',1,'README adds headings to pinned project links.');
   }
   if(hr.state==='github-rendered-html-observed'){
@@ -47,10 +50,12 @@ export function styleHypotheses(g,h,ref=null){
     if(hr.images>=3&&(r.imageCount||0)<3)
       add('visual-illustrated',8,'Rendered README contains '+hr.images+' images.');
   }
+  if(ref?.origin==='user-supplied-reference'&&ref?.designDirection==='technical'&&r.state==='observed')
+    add('technical-editorial',4,'Previously user-supplied example was described as technical; full-page review remains required.');
   if(ref?.discoverySource?.includes(': Dynamic')&&r.state==='observed')
     add('dynamic-content',12,'Previously catalogued dynamic README; freshness requires verification.');
   if(['simonw','Flipez','eugeneyan','athul'].some(x=>x.toLowerCase()===g.login.toLowerCase())&&r.state==='observed')
-    add('dynamic-content',13,'Prior direct README observation showed dated updates; live maintenance not established.');
+    add('dynamic-content',17,'Prior direct README observation showed dated updates; live maintenance not established.');
   const ordered=[...cues.entries()].filter(([_,x])=>x.weight>0)
     .sort((a,b)=>b[1].weight-a[1].weight||IDS.indexOf(a[0])-IDS.indexOf(b[0]));
   return {primary:ordered[0]?.[0]||null,
