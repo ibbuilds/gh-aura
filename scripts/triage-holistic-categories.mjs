@@ -66,11 +66,12 @@ export function buildHolisticTriage(roster,graphql,html,old){
   for(let source=0;source<2;source++){
     const list=source?html:graphql;
     for(const batch of list){
+      const start=source?batch.sourceBatchStart:batch.start;
       if(batch.schema!==(source?'gh-aura-public-html-facets-batch-v1':'gh-aura-holistic-api-observation-batch-v1')||
-        !Number.isInteger(batch.start)||batch.profiles?.length!==50)
+        !Number.isInteger(start)||start<0||start+50>roster.candidates.length||batch.profiles?.length!==50)
         throw Error('Invalid public observation batch');
       for(let i=0;i<50;i++){
-        const expected=roster.candidates[batch.start+i],p=batch.profiles[i],key=expected?.login.toLowerCase();
+        const expected=roster.candidates[start+i],p=batch.profiles[i],key=expected?.login.toLowerCase();
         if(!key||!p||p.login.toLowerCase()!==key||maps[source].has(key))
           throw Error('Missing, repeated or reordered account in public evidence');
         maps[source].set(key,p);
