@@ -1,4 +1,4 @@
-name: Temporary public profile DOM achievements probe
+name: Temporary public profile HTML collector pilot
 on:
   push:
     branches: [research/holistic-category-triage]
@@ -17,19 +17,15 @@ jobs:
         with:
           node-version: '22'
           package-manager-cache: false
-      - name: Inspect visible achievement segment and profile README HTML boundaries
+      - name: Observe five public rendered profile pages without storing prose or images
         run: |
+          set -euo pipefail
+          node scripts/research-profile-html.mjs --start 0 --limit 5 --input research/graphql-observations/batch-000.json --output /tmp/profile-html.json
           node --input-type=module - <<'JS'
-          for(const login of ['simonw','WenyuChiou','karpathy']){
-            const r=await fetch('https://github.com/'+login,{signal:AbortSignal.timeout(12000),
-              headers:{'User-Agent':'GH-Aura-public-profile-research','Accept':'text/html'}});
-            const t=await r.text();
-            const i=t.indexOf('>Achievements</a>');
-            const cut=i>=0?t.slice(i,Math.min(t.length,i+2800)):'';
-            const badges=[...cut.matchAll(/\?achievement=([^&"\s]+)&amp;tab=achievements/g)].map(m=>m[1]);
-            const idx=t.indexOf('markdown-body');
-            const av=t.indexOf('avatar-user');
-            console.log('BADGES:'+JSON.stringify({login,status:r.status,badges:[...new Set(badges)],
-              section:cut.replace(/\s+/g,' ').slice(0,1100),markdownBodyIdx:idx,avatarIndex:av}));
-          }
+          import {readFileSync} from 'node:fs';
+          const p=JSON.parse(readFileSync('/tmp/profile-html.json','utf8'));
+          console.log('GH_AURA_HTML_SUMMARY:'+JSON.stringify({queried:p.queried,
+            observed:p.pageObserved,achievements:p.achievementsVisible,
+            rendered:p.renderedReadmes,items:p.profiles.map(x=>({login:x.login,state:x.state,
+            badges:x.achievements.items.map(a=>a.slug),render:x.renderedReadme.state}))}));
           JS
