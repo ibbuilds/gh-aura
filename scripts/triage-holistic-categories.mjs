@@ -23,8 +23,10 @@ export function styleHypotheses(g,h,ref=null){
     add('native-no-readme',6,'Sidebar supplies identity without a root README observed.');
   if(r.state==='observed'){
     const words=r.approxWords??0,imgs=r.imageCount??0,heads=r.headings??0;
-    if(words>=18&&words<=90&&imgs<=1&&!(words<35&&imgs>0))
-      add('minimal-text',10,'Short, text-first README: '+words+' approximate words; '+imgs+' images.');
+    if(words>=18&&words<=110&&imgs===0)
+      add('minimal-text',13,'Concise text-only README with '+words+' approximate words.');
+    else if(words>=25&&words<=110&&imgs===1)
+      add('minimal-text',10,'Brief README with one image; image purpose requires visual review.');
     if(words>=115&&heads>=2)
       add('technical-editorial',10,'Structured README: '+heads+' headings and '+words+' approximate words.');
     if(words>=115&&imgs<=3&&(r.markdownLinks||0)>=3)
@@ -50,12 +52,20 @@ export function styleHypotheses(g,h,ref=null){
     if(hr.images>=3&&(r.imageCount||0)<3)
       add('visual-illustrated',8,'Rendered README contains '+hr.images+' images.');
   }
-  if(ref?.origin==='user-supplied-reference'&&ref?.designDirection==='technical'&&r.state==='observed')
-    add('technical-editorial',4,'Previously user-supplied example was described as technical; full-page review remains required.');
+  if(ref?.origin==='user-supplied-reference'&&r.state==='observed'){
+    const hint=ref.designDirection;
+    if(hint==='technical')add('technical-editorial',12,'User-provided README was previously studied as technical; entire profile is not yet approved.');
+    if(hint==='minimal'||hint==='barebones')add('minimal-text',12,'User-provided README was described as minimal/link-first; verify the whole profile.');
+    if(hint==='expressive')add('visual-illustrated',6,'User-provided README was described as expressive; verify originality and profile-wide coherence.');
+  }
+  if(ref?.id==='orhun'&&r.state==='observed')
+    add('terminal-code',16,'Previously examined Rust/terminal-inspired visual composition; verify whole-page theme and code.');
+  if(ref?.discoverySource?.includes(': Code')&&r.state==='observed')
+    add('terminal-code',16,'Prior gallery categorized the README as code; live visual fit unverified.');
   if(ref?.discoverySource?.includes(': Dynamic')&&r.state==='observed')
     add('dynamic-content',12,'Previously catalogued dynamic README; freshness requires verification.');
   if(['simonw','Flipez','eugeneyan','athul'].some(x=>x.toLowerCase()===g.login.toLowerCase())&&r.state==='observed')
-    add('dynamic-content',17,'Prior direct README observation showed dated updates; live maintenance not established.');
+    add('dynamic-content',21,'Prior direct README observation showed dated updates; live maintenance not established.');
   const ordered=[...cues.entries()].filter(([_,x])=>x.weight>0)
     .sort((a,b)=>b[1].weight-a[1].weight||IDS.indexOf(a[0])-IDS.indexOf(b[0]));
   return {primary:ordered[0]?.[0]||null,
