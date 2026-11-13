@@ -124,8 +124,14 @@ export function recommendProfileTechniques({query='',direction='minimal',include
   if(!Number.isInteger(limit)||limit<1||limit>25)
     throw Error('Technique limit must be 1..25.');
   const words=intentWords(query);
-  const ranked=PROFILE_TECHNIQUES.filter(t=>(includeExternal||!t.thirdParty)&&
-      (t.recommendationTier!=='explicit-request-only'||words.length>0))
+  const specificMediaTerms=new Set(['icon','icons','iconos','logo','logos','logotipos','insignia',
+    'insignias','badge','badges','streak','estadistica','estadisticas','statistics','stats',
+    'tarjetas','cards','chart','graph','gif','typing','animacion','animation','banner','cabecera',
+    'capsule','header','gradient','gradiente']);
+  const explicitMediaRequest=query.normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase().split(/[^a-z0-9]+/).some(word=>specificMediaTerms.has(word));
+  const ranked=PROFILE_TECHNIQUES.filter(t=>!t.thirdParty||
+    (includeExternal&&explicitMediaRequest))
     .map(item=>{const match=intentMatchScore(item,words);
       return {item,match,score:match+(item.tags.includes(direction)?4:0)+
         (item.risk==='low'?2:0)};})
