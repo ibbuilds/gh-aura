@@ -58,7 +58,8 @@ export function validateHolisticReview(review){
     throw Error('Expected one holistic profile review object.');
   if(typeof review.login!=='string'||!/^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(review.login))
     throw Error('Invalid reviewed GitHub login.');
-  if(!styleSet.has(review.primaryStyle))throw Error('Unknown primary profile style.');
+  if(review.primaryStyle!=null&&!styleSet.has(review.primaryStyle))throw Error('Unknown primary profile style.');
+  if(review.decision==='approved'&&review.primaryStyle==null)throw Error('Cannot approve without a primary style.');
   if(!Array.isArray(review.secondaryStyles)||review.secondaryStyles.some(x=>!styleSet.has(x))||
     new Set(review.secondaryStyles).size!==review.secondaryStyles.length)
     throw Error('Invalid secondary style tags.');
@@ -67,9 +68,9 @@ export function validateHolisticReview(review){
   const states=review.facetStates||{};
   if(Object.keys(states).some(f=>!PROFILE_FACETS.includes(f)||!FACET_STATES.includes(states[f])))
     throw Error('Invalid profile facet states.');
-  if(review.editorialRank!==undefined&&(!Number.isInteger(review.editorialRank)||review.editorialRank<1))
+  if(review.editorialRank!=null&&(!Number.isInteger(review.editorialRank)||review.editorialRank<1))
     throw Error('Editorial rank must be a positive integer when provided.');
-  if(review.decision!==undefined&&!['approved','conditional','exclude'].includes(review.decision))
+  if(review.decision!=null&&!['approved','conditional','exclude'].includes(review.decision))
     throw Error('Invalid manual editorial decision.');
   return {...review,readiness:holisticReadiness(review)};
 }
