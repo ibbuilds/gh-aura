@@ -1,6 +1,6 @@
 # Investigación GH Aura: perfiles completos, no solo README
 
-**Estado (12 de noviembre de 2026):** 600 **candidatos únicos descubiertos**, NO 600 perfiles examinados ni categorizados. Objetivo: al menos 500 perfiles completos verificables, con exploración y reposición de candidatos inaccesibles. No publicar conclusiones sobre los mejores hasta cerrar la evaluación de sus componentes.
+**Estado de investigación (12 de noviembre de 2026, Sinaloa; registros UTC del día 13):** 600 candidatos distintos, **561 perfiles con datos públicos GraphQL y HTML**, 526 secciones de achievements visibles y 385 estructuras de README renderizado. Los 561 están en la [cola por categoría](HOLISTIC_CATEGORY_TRIAGE.md) y su [plantilla de revisión](holistic-editorial-review-template.json). **Aún no son 500 perfiles completos visual/editorialmente aprobados**; 0 ganadores. Objetivo: al menos 500 revisiones integrales con comparación por estilo. Ver [comprobaciones visuales de muestra](HOLISTIC_VISUAL_SPOTCHECKS.md).
 
 ## Qué constituye un perfil
 

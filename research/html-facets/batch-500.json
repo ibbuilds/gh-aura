@@ -1,0 +1,2448 @@
+{
+  "schema": "gh-aura-public-html-facets-batch-v1",
+  "observedAt": "2026-11-13T03:34:21.450Z",
+  "sourceBatchStart": 500,
+  "queried": 50,
+  "pageObserved": 42,
+  "achievementsVisible": 42,
+  "renderedReadmes": 40,
+  "completeProfileReviews": 0,
+  "limitations": "Public page HTML structure and visible badges only; no screenshots reviewed, image rights or contrast assessed, no verified expertise or hiring score. Public HTML can change; no screenshot or image quality review is inferred.",
+  "profiles": [
+    {
+      "login": "shreyalive",
+      "observedAt": "2026-11-13T03:33:47.547Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "fabian4",
+      "observedAt": "2026-11-13T03:33:47.547Z",
+      "profileUrl": "https://github.com/fabian4",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 3,
+        "headings": 1,
+        "links": 6,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 3942,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Anjan50",
+      "observedAt": "2026-11-13T03:33:48.350Z",
+      "profileUrl": "https://github.com/Anjan50",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 29,
+        "headings": 28,
+        "links": 70,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 53897,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "mrkc2303",
+      "observedAt": "2026-11-13T03:33:49.170Z",
+      "profileUrl": "https://github.com/mrkc2303",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 27,
+        "headings": 2,
+        "links": 32,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 5,
+        "bytes": 22829,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "rudrabarad",
+      "observedAt": "2026-11-13T03:33:50.055Z",
+      "profileUrl": "https://github.com/rudrabarad",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 16,
+        "headings": 1,
+        "links": 17,
+        "details": 1,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 3,
+        "altMissing": 4,
+        "bytes": 12176,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Vanshikapandey30",
+      "observedAt": "2026-11-13T03:33:50.836Z",
+      "profileUrl": "https://github.com/Vanshikapandey30",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 49,
+        "headings": 8,
+        "links": 58,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 2,
+        "bytes": 47280,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "chryzcodez",
+      "observedAt": "2026-11-13T03:33:51.659Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "thalesgomest",
+      "observedAt": "2026-11-13T03:33:51.659Z",
+      "profileUrl": "https://github.com/thalesgomest",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 8,
+        "headings": 9,
+        "links": 15,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 3,
+        "bytes": 12293,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "SamirPaul1",
+      "observedAt": "2026-11-13T03:33:52.480Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "prakhartiwari0",
+      "observedAt": "2026-11-13T03:33:52.480Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "AnishDe12020",
+      "observedAt": "2026-11-13T03:33:52.480Z",
+      "profileUrl": "https://github.com/AnishDe12020",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 1,
+        "headings": 0,
+        "links": 15,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 3270,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "TheRemyD",
+      "observedAt": "2026-11-13T03:33:53.259Z",
+      "profileUrl": "https://github.com/TheRemyD",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 17,
+        "headings": 7,
+        "links": 24,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 5,
+        "bytes": 19884,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "nikita-jain-01",
+      "observedAt": "2026-11-13T03:33:54.112Z",
+      "profileUrl": "https://github.com/nikita-jain-01",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 13,
+        "headings": 5,
+        "links": 18,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 2,
+        "bytes": 15294,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "angshuBHADRA",
+      "observedAt": "2026-11-13T03:33:54.923Z",
+      "profileUrl": "https://github.com/angshuBHADRA",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 23,
+        "headings": 9,
+        "links": 33,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 4,
+        "altMissing": 4,
+        "bytes": 21159,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Samadrita-Shaw",
+      "observedAt": "2026-11-13T03:33:55.764Z",
+      "profileUrl": "https://github.com/Samadrita-Shaw",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 10,
+        "headings": 5,
+        "links": 15,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 5,
+        "bytes": 12339,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "WassCodeur",
+      "observedAt": "2026-11-13T03:33:56.575Z",
+      "profileUrl": "https://github.com/WassCodeur",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "public-sponsor",
+            "title": "Public Sponsor",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 0,
+        "headings": 9,
+        "links": 15,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 10515,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Siddhesh-Agarwal",
+      "observedAt": "2026-11-13T03:33:57.380Z",
+      "profileUrl": "https://github.com/Siddhesh-Agarwal",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 1,
+        "headings": 0,
+        "links": 1,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 1,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 3236,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Rupam-Shil",
+      "observedAt": "2026-11-13T03:33:58.258Z",
+      "profileUrl": "https://github.com/Rupam-Shil",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 33,
+        "headings": 3,
+        "links": 43,
+        "details": 0,
+        "tables": 1,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 30,
+        "bytes": 24766,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "abhisheks008",
+      "observedAt": "2026-11-13T03:33:59.118Z",
+      "profileUrl": "https://github.com/abhisheks008",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 61,
+        "headings": 11,
+        "links": 116,
+        "details": 0,
+        "tables": 3,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 36,
+        "bytes": 52085,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "JaideepGuntupalli",
+      "observedAt": "2026-11-13T03:33:59.895Z",
+      "profileUrl": "https://github.com/JaideepGuntupalli",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 1,
+        "headings": 1,
+        "links": 3,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 1,
+        "bytes": 1690,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "13yadav",
+      "observedAt": "2026-11-13T03:34:00.709Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "devesh-anand",
+      "observedAt": "2026-11-13T03:34:00.709Z",
+      "profileUrl": "https://github.com/devesh-anand",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 6,
+        "headings": 1,
+        "links": 8,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 1,
+        "bytes": 5253,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "victoria-lo",
+      "observedAt": "2026-11-13T03:34:01.533Z",
+      "profileUrl": "https://github.com/victoria-lo",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "arctic-code-vault-contributor",
+            "title": "Arctic Code Vault Contributor",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 21,
+        "headings": 5,
+        "links": 41,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 0,
+        "bytes": 24735,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "humsarika",
+      "observedAt": "2026-11-13T03:34:02.347Z",
+      "profileUrl": "https://github.com/humsarika",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 1,
+        "headings": 7,
+        "links": 9,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 8871,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "oyin-systems",
+      "observedAt": "2026-11-13T03:34:03.147Z",
+      "profileUrl": "https://github.com/oyin-systems",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 5,
+        "headings": 1,
+        "links": 10,
+        "details": 0,
+        "tables": 1,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 6838,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "hashfx",
+      "observedAt": "2026-11-13T03:34:03.816Z",
+      "profileUrl": "https://github.com/hashfx",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 52,
+        "headings": 4,
+        "links": 57,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 31906,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Ashutosh00710",
+      "observedAt": "2026-11-13T03:34:04.661Z",
+      "profileUrl": "https://github.com/Ashutosh00710",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "galaxy-brain",
+            "title": "Galaxy Brain",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "arctic-code-vault-contributor",
+            "title": "Arctic Code Vault Contributor",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 3,
+        "headings": 1,
+        "links": 6,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 3,
+        "bytes": 3054,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "amelia2802",
+      "observedAt": "2026-11-13T03:34:05.350Z",
+      "profileUrl": "https://github.com/amelia2802",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 9,
+        "headings": 8,
+        "links": 21,
+        "details": 0,
+        "tables": 1,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 2,
+        "bytes": 19211,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "ahamedbasha-n",
+      "observedAt": "2026-11-13T03:34:06.233Z",
+      "profileUrl": "https://github.com/ahamedbasha-n",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 15,
+        "headings": 5,
+        "links": 28,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 14164,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "AVI-SHUKLA1110",
+      "observedAt": "2026-11-13T03:34:06.916Z",
+      "profileUrl": "https://github.com/AVI-SHUKLA1110",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 18,
+        "headings": 4,
+        "links": 24,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 7,
+        "bytes": 14869,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Sulagna-Dutta-Roy",
+      "observedAt": "2026-11-13T03:34:07.753Z",
+      "profileUrl": "https://github.com/Sulagna-Dutta-Roy",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 21,
+        "headings": 4,
+        "links": 25,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 14487,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "KaranChandekar",
+      "observedAt": "2026-11-13T03:34:08.524Z",
+      "profileUrl": "https://github.com/KaranChandekar",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 38,
+        "headings": 13,
+        "links": 59,
+        "details": 0,
+        "tables": 1,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 3,
+        "bytes": 44112,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "himanshu1221",
+      "observedAt": "2026-11-13T03:34:09.278Z",
+      "profileUrl": "https://github.com/himanshu1221",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 1,
+        "headings": 1,
+        "links": 5,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 2003,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "iamrahul8",
+      "observedAt": "2026-11-13T03:34:09.959Z",
+      "profileUrl": "https://github.com/iamrahul8",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 44,
+        "headings": 6,
+        "links": 55,
+        "details": 1,
+        "tables": 0,
+        "codeBlocks": 1,
+        "animatedImageUrls": 4,
+        "altMissing": 7,
+        "bytes": 39923,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Gur-jot",
+      "observedAt": "2026-11-13T03:34:10.911Z",
+      "profileUrl": "https://github.com/Gur-jot",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 25,
+        "headings": 4,
+        "links": 33,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 16956,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "kumarsonsoff3",
+      "observedAt": "2026-11-13T03:34:11.749Z",
+      "profileUrl": "https://github.com/kumarsonsoff3",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "galaxy-brain",
+            "title": "Galaxy Brain",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "gold",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 16,
+        "headings": 5,
+        "links": 23,
+        "details": 0,
+        "tables": 1,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 0,
+        "bytes": 19313,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "SparkScratch-P",
+      "observedAt": "2026-11-13T03:34:12.752Z",
+      "profileUrl": "https://github.com/SparkScratch-P",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 2,
+        "headings": 19,
+        "links": 30,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 23023,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "lord-benjamin",
+      "observedAt": "2026-11-13T03:34:13.525Z",
+      "profileUrl": "https://github.com/lord-benjamin",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 52,
+        "headings": 12,
+        "links": 64,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 10,
+        "bytes": 52624,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "OlojaMuyiwa",
+      "observedAt": "2026-11-13T03:34:14.341Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "Asmit2952",
+      "observedAt": "2026-11-13T03:34:14.341Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "Sumansourabh14",
+      "observedAt": "2026-11-13T03:34:14.341Z",
+      "profileUrl": "https://github.com/Sumansourabh14",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "starstruck",
+            "title": "Starstruck",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 15,
+        "headings": 4,
+        "links": 21,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 16441,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Jas-Script",
+      "observedAt": "2026-11-13T03:34:15.147Z",
+      "state": "not-returned-by-github-graphql",
+      "achievements": {
+        "state": "not-observed",
+        "items": []
+      },
+      "renderedReadme": {
+        "state": "not-observed"
+      },
+      "completedHolisticAudit": false
+    },
+    {
+      "login": "Anikcb",
+      "observedAt": "2026-11-13T03:34:15.147Z",
+      "profileUrl": "https://github.com/Anikcb",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 62,
+        "headings": 11,
+        "links": 71,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 5,
+        "altMissing": 29,
+        "bytes": 40431,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "sansk",
+      "observedAt": "2026-11-13T03:34:15.968Z",
+      "profileUrl": "https://github.com/sansk",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "arctic-code-vault-contributor",
+            "title": "Arctic Code Vault Contributor",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 14,
+        "headings": 8,
+        "links": 25,
+        "details": 0,
+        "tables": 3,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 7,
+        "bytes": 19524,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "vinay-ksingh",
+      "observedAt": "2026-11-13T03:34:16.785Z",
+      "profileUrl": "https://github.com/vinay-ksingh",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "not-observed-in-page-html"
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "sachinparihar",
+      "observedAt": "2026-11-13T03:34:17.430Z",
+      "profileUrl": "https://github.com/sachinparihar",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "not-observed-in-page-html"
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "vigdisha",
+      "observedAt": "2026-11-13T03:34:18.218Z",
+      "profileUrl": "https://github.com/vigdisha",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 28,
+        "headings": 8,
+        "links": 38,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 1,
+        "bytes": 30591,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "shpatrickguo",
+      "observedAt": "2026-11-13T03:34:19.073Z",
+      "profileUrl": "https://github.com/shpatrickguo",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 7,
+        "headings": 1,
+        "links": 8,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 1,
+        "altMissing": 5,
+        "bytes": 3931,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "Johnmiicheal",
+      "observedAt": "2026-11-13T03:34:19.964Z",
+      "profileUrl": "https://github.com/Johnmiicheal",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "silver",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 0,
+        "headings": 0,
+        "links": 0,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 0,
+        "altMissing": 0,
+        "bytes": 153,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    },
+    {
+      "login": "haldaranup",
+      "observedAt": "2026-11-13T03:34:20.760Z",
+      "profileUrl": "https://github.com/haldaranup",
+      "source": "live-github-public-profile-html",
+      "state": "github-page-observed",
+      "titlePresent": true,
+      "achievements": {
+        "state": "observed-visible-section",
+        "items": [
+          {
+            "slug": "pair-extraordinaire",
+            "title": "Pair Extraordinaire",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "pull-shark",
+            "title": "Pull Shark",
+            "tier": "bronze",
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "galaxy-brain",
+            "title": "Galaxy Brain",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "yolo",
+            "title": "YOLO",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          },
+          {
+            "slug": "quickdraw",
+            "title": "Quickdraw",
+            "tier": null,
+            "source": "visible-github-profile-achievement-link"
+          }
+        ]
+      },
+      "renderedReadme": {
+        "state": "github-rendered-html-observed",
+        "images": 6,
+        "headings": 5,
+        "links": 13,
+        "details": 0,
+        "tables": 0,
+        "codeBlocks": 0,
+        "animatedImageUrls": 2,
+        "altMissing": 6,
+        "bytes": 7812,
+        "note": "Rendered HTML structure only; image content, contrast and responsive behavior not visually reviewed."
+      },
+      "visual": {
+        "avatarArtReviewed": false,
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "completedHolisticAudit": false,
+      "note": "Public HTML only. Awards are those visible in the acquired page, not a full account inventory. Missing is unknown, and this is NOT a design quality approval."
+    }
+  ],
+  "provenance": {
+    "provider": "GitHub public HTML fetched without token",
+    "workflowRun": 43359358113,
+    "sourceJob": 131668943938
+  }
+}
