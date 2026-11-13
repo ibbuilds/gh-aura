@@ -1,0 +1,50 @@
+name: Temporary 8-style public profile visual contact sheets
+on:
+  push:
+    branches: [research/holistic-category-triage]
+    paths: ['.github/workflows/holistic-contact-sheets.yml']
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        group: [native, minimal, technical, showcase, visual, terminal, dashboard, dynamic]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Capture four public profile screenshots, construct ephemeral visual sheet
+        env:
+          GROUP: ${{ matrix.group }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/gh-aura-visual
+          case "$GROUP" in
+            native) people="amelia2802 AyushSarode 0intro 1st1" ;;
+            minimal) people="mattabate serenakeyitan antfu rasbt" ;;
+            technical) people="morluto SamuelSchlesinger martincostello jeroenvervaeke" ;;
+            showcase) people="guichristovao dereknguyen269 mokkapps benjamincanac" ;;
+            visual) people="WenyuChiou fzn0x davidgcs yetone" ;;
+            terminal) people="orhun FlorentCollin fzn0x laohanme" ;;
+            dashboard) people="gautamkrishnar swyxio anuraghazra Abiola-Farounbi" ;;
+            dynamic) people="simonw eugeneyan Flipez athul" ;;
+            *) exit 2 ;;
+          esac
+          n=0
+          for user in $people; do
+            n=$((n+1))
+            raw=$(printf '/tmp/gh-aura-%02d.png' "$n")
+            jpg=$(printf '/tmp/gh-aura-visual/%02d-%s.jpg' "$n" "$user")
+            timeout 25 chromium --headless --no-sandbox --disable-gpu --hide-scrollbars --disable-extensions --disable-dev-shm-usage --virtual-time-budget=2600 --window-size=1220,1900 --screenshot="$raw" "https://github.com/$user" >/tmp/gh-aura-chrome-log 2>&1 || true
+            if [[ ! -s "$raw" ]]; then echo "SCREENSHOT_UNAVAILABLE:$user"; continue; fi
+            convert "$raw" -resize '730x1250!' -strip -quality 65 "$jpg"
+          done
+          if ! ls /tmp/gh-aura-visual/*.jpg >/dev/null 2>&1; then exit 1; fi
+          montage /tmp/gh-aura-visual/*.jpg -tile 2x2 -geometry +12+12 -background '#e5e5e5' -strip -quality 73 /tmp/gh-aura-contact.jpg
+          node -e 'const fs=require("fs"),group=process.env.GROUP;const b=fs.readFileSync("/tmp/gh-aura-contact.jpg");const p=b.toString("base64").match(/.{1,6000}/g)||[];console.log("GH_AURA_SHEET_INFO:"+JSON.stringify({group,bytes:b.length,parts:p.length}));p.forEach((v,i)=>console.log("GH_AURA_SHEET_PART_"+group+"_"+(i+1)+"_"+p.length+":"+v));'
