@@ -65,9 +65,10 @@ function execute(argv){
   const o=argv.indexOf('--output'),m=argv.indexOf('--reviews');
   if(o<0||!argv[o+1]?.endsWith('.json'))
     throw Error('Usage: merge-holistic-batches --output result.json [--reviews queue.json] batch*.json');
-  const paths=argv.filter((a,i)=>a!=='--output'&&a!=='--reviews'&&i!==o+1&&i!==m+1);
+  const paths=argv.filter((a,i)=>a!=='--output'&&a!=='--reviews'&&i!==o+1&&(m<0||i!==m+1));
   if(!paths.length||paths.some(x=>!x.endsWith('.json')))
     throw Error('Supply at least one JSON batch.');
+  if(m>=0&&!argv[m+1]?.endsWith('.json'))throw Error('Expected --reviews queue.json');
   const roster=read(ROSTER_URL),batches=paths.map(read),merged=mergeHolisticBatches(roster,batches);
   const output=resolve(argv[o+1]);
   writeFileSync(output,JSON.stringify(merged,null,2)+'\n',{flag:'wx',mode:0o600});
