@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {MODES,runVisualSmoke} from '../scripts/visual-profile-smoke.mjs';
-import {analyzeFourModeEvidence} from '../scripts/summarize-four-mode-visuals.mjs';
+import {analyzeFourModeEvidence,summarizeByProvisionalStyle} from '../scripts/summarize-four-mode-visuals.mjs';
 
 const roster=JSON.parse(readFileSync(new URL('../research/profile-candidates-600.json',import.meta.url),'utf8'));
 const fake=(login)=>{
@@ -60,4 +60,15 @@ test('real screenshot runner rejects invalid user input before opening a browser
   await assert.rejects(runVisualSmoke(['../../etc/passwd']),/real public/);
   await assert.rejects(runVisualSmoke([]),/real public/);
   await assert.rejects(runVisualSmoke(Array(51).fill('safe')),/real public/);
+});
+
+test('technical render diagnostics are grouped within provisional styles, never translated into professional rankings',()=>{
+  const triage=JSON.parse(readFileSync(new URL('../research/holistic-category-triage.json',import.meta.url),'utf8'));
+  const summary=analyzeFourModeEvidence(roster,all());
+  const grouped=summarizeByProvisionalStyle(summary,triage);
+  assert.equal(grouped.schema,'gh-aura-technical-render-by-provisional-category-v1');
+  assert.equal(Object.values(grouped.categories).reduce((a,x)=>a+x.candidates,0),600);
+  assert.equal(Object.values(grouped.categories).reduce((a,x)=>a+x.fourViews,0),600);
+  assert.ok(!Object.hasOwn(grouped,'qualityScore'));
+  assert.ok(!Object.hasOwn(grouped,'winners'));
 });
