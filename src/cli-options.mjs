@@ -7,7 +7,7 @@ export const SPECS = {
   agent: { usage: 'agent install --client codex|claude|generic [--directory PATH] | doctor | capabilities | spec [--direction technical] [--visual-brief TEXT] | bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['client','directory','config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
   mcp: { usage: 'mcp (local stdio; read-only by default, execution only for an owner/host-pinned plan)', flags:[], max:0 },
   'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
-  calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','daily-targets','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
+  calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity preview --review plan.json [--year YYYY] [--svg --output preview.svg] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['svg','year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','daily-targets','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
@@ -25,7 +25,7 @@ export const SPECS = {
   diff: { usage: 'diff [USER] [--spec profile.json | --style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'spec','style', 'visual', 'output', 'force'], max: 1 },
 };
 const VALUES = new Set(['client','directory','daily-targets','cursor','pages','spec','delivery','catalog','visual-brief','voice','perspective','focus','bio-words','notes','category','query','max-words','max-projects','direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
-const FLAGS = new Set(['resources','professional','external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
+const FLAGS = new Set(['svg','resources','professional','external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
   'One-time setup:',
@@ -168,7 +168,13 @@ export function validateOptions(command, options) {
     const [action, shorthand] = options.positional;
     const planning = ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force'];
     const applying = ['review','repo','confirm','author-name','author-email'];
-    if (!['plan','apply'].includes(action)) throw Error('Use activity plan [YEAR] or activity apply --review FILE.');
+    if (!['plan','preview','apply'].includes(action)) throw Error('Use activity plan [YEAR], preview --review FILE or apply --review FILE.');
+    if(action==='preview'){
+      if(options.positional.length!==1||!options.review||Object.keys(options).some(k=>!['positional','review','year','svg','output','force'].includes(k)))throw Error('activity preview accepts only --review, --year, --svg and local output flags.');
+      if(options.year&&!/^\d{4}$/.test(String(options.year)))throw Error('--year must be YYYY.');
+      return;
+    }
+    if(options.svg)throw Error('--svg is only valid for activity preview.');
     if (action === 'plan') {
       if (shorthand && (!/^\d{4}$/.test(shorthand) || options.year || options.from || options.to)) {
         throw Error('Use one year (activity plan 2022), or --from/--to, not both.');

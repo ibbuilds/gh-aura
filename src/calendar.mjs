@@ -78,7 +78,7 @@ export function planCalendar(options={},history=null) {
       const date=new Date(ms).toISOString().slice(0,10);
       if(!history.has(date))throw Error('Existing history is incomplete for '+date+'; cannot infer zero days.');
       const count=history.get(date);
-      if(!Number.isInteger(count)||count<0)throw Error('Invalid existing contribution count for '+date);
+      if(!Number.isSafeInteger(count)||count<0)throw Error('Invalid existing contribution count for '+date);
       expected.set(date,count);
     }
   }
@@ -138,7 +138,7 @@ export function planCalendar(options={},history=null) {
     density,growth,weekends,intensity,seed,mode,role,
     existingHistory:history?'supplied-verified-counts':'none-provided',
     ...(options.dailyTargets!==undefined?{dailyTargets:{...options.dailyTargets}}:{}),
-    ...(history?{expectedCounts:Object.fromEntries(days.map(d=>[d.date,(expected.get(d.date)||0)+d.count]))}:{})};
+    ...(history?{initialCounts:Object.fromEntries(expected),expectedCounts:Object.fromEntries(days.map(d=>[d.date,(expected.get(d.date)||0)+d.count]))}:{})};
   const plan={format:'gh-aura-synthetic-calendar-v1',settings,days,
     summary:{selectedDays:days.length,syntheticCommits:commits,perYear},
     limitations:[
@@ -175,6 +175,12 @@ export function validateCalendarPlan(doc){
   if(doc.settings.expectedCounts!==undefined&&(!doc.settings.expectedCounts||typeof doc.settings.expectedCounts!=='object'||Array.isArray(doc.settings.expectedCounts)||
     Object.keys(doc.settings.expectedCounts).length!==doc.days.length||doc.days.some(d=>!Number.isInteger(doc.settings.expectedCounts[d.date])||doc.settings.expectedCounts[d.date]<d.count)))
     throw Error('Expected graph counts are incomplete or invalid.');
+  if(doc.settings.initialCounts!==undefined){
+    const initial=doc.settings.initialCounts,start=dateUTC(doc.settings.from,'from'),end=dateUTC(doc.settings.to,'to');
+    if(!initial||typeof initial!=='object'||Array.isArray(initial)||Object.keys(initial).length!==(end-start)/DAY+1)throw Error('Calendar baseline coverage is invalid.');
+    for(let ms=start;ms<=end;ms+=DAY){const date=new Date(ms).toISOString().slice(0,10);if(!Object.hasOwn(initial,date)||!Number.isSafeInteger(initial[date])||initial[date]<0)throw Error('Calendar baseline has unknown or invalid dates.');}
+    for(const day of doc.days)if(doc.settings.expectedCounts?.[day.date]!==initial[day.date]+day.count)throw Error('Calendar projection differs from the reviewed baseline.');
+  }
   let prev='',commits=0;
   for(const item of doc.days){
     if(typeof item.date!=='string'||!/^\d{4}-\d\d-\d\d$/.test(item.date)||item.date<=prev||

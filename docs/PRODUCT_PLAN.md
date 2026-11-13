@@ -25,6 +25,8 @@ Validación local del candidato: pruebas de producto, **46/46 del archivo histó
 
 Incremento posterior: el render nativo y los comandos README/brief/diff aceptan el mismo Spec; el plan conserva sus requisitos y comprueba evidencia seleccionada. Hay verificación anónima opcional de recursos públicos con límites de red, cinco ejemplos originales y medición del recorrido integral. La comparación controlada de contexto pasó de 11 a 8 solicitudes, con 2 para un borrador nativo. Los ejemplos y las comprobaciones HTTP no sustituyen revisión visual, derechos reales ni pruebas con participantes.
 
+El calendario conserva además el baseline diario suministrado y ofrece preview JSON/SVG por año mediante CLI/MCP. Distingue conteos conocidos, desconocidos, aportes y proyección; no garantiza colores ni atribución de GitHub.
+
 ## 1. Objetivo acordado
 
 GH Aura debe permitir que una persona o su agente mejoren el **perfil completo de GitHub** de acuerdo con su rol, propósito y estilo: README, biografía y datos públicos, identidad visual, proyectos/pins, achievements disponibles y mapa de contribuciones.

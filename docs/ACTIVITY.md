@@ -19,6 +19,7 @@ GitHub determines the observed counts. Private contribution visibility is a GitH
 gh-aura init USERNAME
 gh-aura activity plan --from 2022-07-01 --to 2022-07-31 \
   --density 80 --mode seasonal --intensity 3 --output plan.json
+gh-aura activity preview --review plan.json --svg --output preview.svg
 # Read the plan and its SHA-256 fingerprint before approving:
 gh-aura activity apply --review plan.json --confirm FINGERPRINT \
   --author-name "Name" --author-email VERIFIED_EMAIL
@@ -32,3 +33,5 @@ gh-aura activity apply --review plan.json --confirm FINGERPRINT \
 - Generated content is labeled synthetic. GitHub alone decides if it counts as a contribution.
 
 `calendar` remains a legacy alias. No deletion or force push is automated.
+
+`activity preview` compares baseline, additions and projected totals by UTC date. JSON is the default; `--svg` exports an original visual comparison. For multi-year plans, choose `--year YYYY`. Unknown dates stay unknown, including legacy plans without supplied history. Illustration colors do not predict GitHub's shades or confirm attribution. Preview performs no network request or Git write.

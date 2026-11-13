@@ -57,6 +57,8 @@ Example activity intent:
 
 Planning reads the actual graph baseline, adds deficits and binds expected totals. Configure `GH_AURA_AUTHOR_NAME` and `GH_AURA_AUTHOR_EMAIL` locally; the email must belong to the authenticated account. Existing dates append distinct practice files, without rewriting history. Applying refreshes the baseline and reconciles exact already-published files. Readback distinguishes graph targets observed, delayed/hidden attribution and differing totals. Colors are GitHub's relative rendering, not a fixed color API. Other activity may change totals.
 
+New calendar plans retain the supplied daily baseline. `activity preview --review calendar.json --year 2022 --svg --output preview.svg` shows before/projected values; omit `--svg` for JSON. Select one year for a multi-year plan. `gh_aura_activity_preview` exposes the same read-only comparison to an agent. Unknown cells are hatched and never inferred as zero. The graphic is original illustrative output, not a screenshot of GitHub or a prediction of its exact colors.
+
 For a legacy standalone `calendar plan --daily-targets targets.json`, supply `--existing history.json` from `contributions --all --days --json` to account for existing activity. Without history, values describe additions against an unknown baseline, not guaranteed final totals.
 
 Badge intents support `mode:events` (bounded PR/issue attempts), `mode:campaign` with `tier:base|bronze|silver|gold`, or `mode:collaboration`. Campaigns retain one reviewed maximum scope, serialize writes and pause after each tier until the actual award is visible. An unknown/missing award stops scaling; 1,024 events do not prove Gold. Historical, paid and externally controlled achievements keep their real requirements.

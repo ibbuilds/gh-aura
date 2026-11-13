@@ -15,7 +15,7 @@ export async function main(argv = process.argv.slice(2)) {
   // No alias changes files or starts GitHub activity by itself.
   if (command === 'activity') {
     const first = tokens[0];
-    if (first === 'plan' || first === 'apply') {
+    if (['plan','preview','apply'].includes(first)) {
       // Reuse the reviewed calendar engine under the unified activity command.
       command = 'calendar';
     } else {

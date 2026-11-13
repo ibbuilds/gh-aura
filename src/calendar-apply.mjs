@@ -203,6 +203,11 @@ export async function runCalendar(command,opts={}) {
     const { runCalendarPlan }=await import('./calendar.mjs');
     return runCalendarPlan(opts);
   }
+  if(command==='preview'){
+    const {previewCalendar}=await import('./calendar-preview.mjs'),{emit}=await import('./output.mjs');
+    const result=previewCalendar(loadCalendarPlan(opts.review),{year:opts.year,svg:opts.svg});
+    emit(opts.svg?result.svg:result,opts);return result;
+  }
   if(command!=='apply')throw Error('Use calendar plan or calendar apply.');
   const plan=loadCalendarPlan(opts.review);
   const result=await applyCalendar(plan,{repo:opts.repo,

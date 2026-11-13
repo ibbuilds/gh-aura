@@ -16,6 +16,7 @@ import { makeWholeProfileSpec, refineWholeProfileSpec, inspectWholeProfile, prep
 import { scanPublicProjects, inspectPublicProject, inspectCurrentPins } from './profile-projects.mjs';
 import { wholeProfileContext,nativeProfileDraft } from './profile-context.mjs';
 import { checkProfileResources } from './profile-resources.mjs';
+import { previewCalendar } from './calendar-preview.mjs';
 
 export const AGENT_INTERFACE_VERSION='gh-aura-agent-v1';
 const properties=(shape,required=[])=>({
@@ -25,6 +26,8 @@ const str=(description,maxLength=160)=>({type:'string',description,maxLength});
 const optUser={user:str('Public GitHub username; omit to use local config.',39)};
 const art={direction:{type:'string',enum:['barebones','minimal','technical','expressive']}};
 const tools=[
+  ['gh_aura_activity_preview','Compare supplied/unknown baseline counts and projected synthetic additions for one UTC year. Optional original SVG is illustrative, not a GitHub color guarantee.',
+    properties({plan:{type:'object'},year:{type:'integer',minimum:2008,maximum:2100},svg:{type:'boolean'}},['plan'])],
   ['gh_aura_profile_native_draft','Generate native GitHub Markdown using the shared whole-profile intent and observed public projects; no publication or AI service.',
     properties({...optUser,spec:{type:'object'}},['spec'])],
   ['gh_aura_profile_resources_check','Check README resource metadata through bounded anonymous public HTTPS requests. Blocks private/local destinations; retains no remote body or credentials.',
@@ -175,6 +178,7 @@ export async function runAgentTool(name,args={}){
   if(name==='gh_aura_approved_profile_status')return profileExecutionStatus(approvedPlanFromHost());
   if(name==='gh_aura_whole_profile_spec')return args.changes?refineWholeProfileSpec(args.spec,args.changes):makeWholeProfileSpec(args.spec||{},loadConfig());
   if(name==='gh_aura_profile_native_draft')return nativeProfileDraft(actualUser(args.user),args.spec,{config:loadConfig()});
+  if(name==='gh_aura_activity_preview')return previewCalendar(args.plan,{year:args.year,svg:args.svg===true});
   if(name==='gh_aura_profile_resources_check'){
     const spec=makeWholeProfileSpec(args.spec||{readme:false});
     return checkProfileResources(args.markdown,{baseUrl:args.baseUrl,assets:spec.assets});
