@@ -1,0 +1,27 @@
+name: GH Aura profile research pilot (temporary)
+on:
+  push:
+    branches: [research/public-profile-observations-500]
+    paths: ['.github/workflows/holistic-research-pilot.yml']
+permissions:
+  contents: read
+jobs:
+  pilot:
+    if: github.repository == 'ibbuilds/gh-aura'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - name: Collect five public profile snapshots with bounded read-only queries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/research-holistic-profiles.mjs --start 0 --limit 5 --batch-size 5 --budget 2 --output pilot.json
+          node -e "const j=require('./pilot.json'); console.log(JSON.stringify({responded:j.responded,requested:j.requested,requests:j.requests,completeVisualReviews:0}))"
