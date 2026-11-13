@@ -28,4 +28,11 @@ jobs:
             observed:p.pageObserved,achievements:p.achievementsVisible,
             rendered:p.renderedReadmes,items:p.profiles.map(x=>({login:x.login,state:x.state,
             badges:x.achievements.items.map(a=>a.slug),render:x.renderedReadme.state}))}));
+          const {parsePublicProfileHtml}=await import('./scripts/research-profile-html.mjs');
+          const r=await fetch('https://github.com/WenyuChiou',{headers:{'User-Agent':'GH-Aura-public-profile-research'},signal:AbortSignal.timeout(12000)});
+          const html=await r.text(),mi=html.search(/class="[^"]*\\bmarkdown-body\\b[^"]*"/);
+          const bi=html.lastIndexOf('<article',mi),ei=html.indexOf('</article>',mi);
+          const result=parsePublicProfileHtml('WenyuChiou',html,new Date().toISOString());
+          console.log('GH_AURA_README_DEBUG:'+JSON.stringify({mi,bi,ei,marker:html.slice(Math.max(0,mi-160),mi+140).replace(/\\s+/g,' ').slice(0,300),
+            render:result.renderedReadme,badges:result.achievements.items.length}));
           JS
