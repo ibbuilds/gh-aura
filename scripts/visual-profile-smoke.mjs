@@ -136,7 +136,10 @@ export async function runVisualSmoke(logins,{throttleMs=350}={}){
       await wait(throttleMs);
     }
   }finally{
-    browser.cdp.close();browser.proc.kill('SIGKILL');rmSync(browser.temp,{recursive:true,force:true});
+    browser.cdp.close();browser.proc.kill('SIGKILL');
+    // Chrome may still be writing its ephemeral profile while the OS terminates it.
+    // Cleanup must never discard a successfully completed public research batch.
+    try{rmSync(browser.temp,{recursive:true,force:true,maxRetries:6,retryDelay:150});}catch{}
   }
   return {schema:'gh-aura-four-view-render-smoke-v1',
     observedAt:new Date().toISOString(),source:'PUBLIC GitHub pages in Chromium, no credentials',
