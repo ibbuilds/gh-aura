@@ -93,9 +93,8 @@ export function buildBatchQuery(logins){
   const parts=logins.map((_,i)=>
     'p'+i+':user(login:$u'+i+'){login url avatarUrl name bio company location websiteUrl '+
     'status{message} socialAccounts(first:10){nodes{provider}} '+
-    'pinnedItems(first:6,types:[REPOSITORY,GIST]){nodes{'+
-    '... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}} '+
-    '... on Gist{name url description}}} '+
+    'pinnedItems(first:6,types:[REPOSITORY]){nodes{'+
+    '... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}}}} '+
     'contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}} '+
     'repository(name:$u'+i+'){isPrivate object(expression:"HEAD:README.md"){... on Blob{oid byteSize text}}}}'
   ).join('\n');
