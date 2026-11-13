@@ -4,7 +4,7 @@
 
 - Added whole-profile plans for sidebar fields, README/assets, empty profile setup and project evidence.
 - Added owner-pinned MCP execution, skill installation and recovery/status diagnostics.
-- Added bounded badge campaigns, reviewed two-account routes and daily calendar targets, visual preview/readback.
+- Added tier-gated one/two-account campaigns and daily calendar targets, visual preview/readback.
 - Archived research tooling without deleting its immutable provenance; editorial acceptance remains separate.
 - Unified native drafts and AI intent, validated selected evidence and added bounded public resource checks.
 

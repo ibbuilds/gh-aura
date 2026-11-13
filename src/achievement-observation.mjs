@@ -31,8 +31,12 @@ export async function observeVisibleAchievements(login,{fetch:transport=globalTh
     evidenceSha256:createHash('sha256').update(raw).digest('hex'),retainedHTML:false};
 }
 export function observedPullSharkTier(report,target){
-  const item=report?.items?.find(x=>x.id==='pull-shark'&&x.state==='visible-award-observed');
+  return observedAchievementTier(report,'pull-shark',target);
+}
+export function observedAchievementTier(report,id,target){
+  const tiers=['base','bronze','silver','gold'];if(!tiers.includes(target))return false;
+  const item=report?.items?.find(x=>x.id===id&&x.state==='visible-award-observed');
   if(!item)return false;
   if(target==='base')return true;
-  const tiers=['base','bronze','silver','gold'];return item.tier!==null&&tiers.indexOf(item.tier)>=tiers.indexOf(target);
+  return item.tier!=null&&tiers.indexOf(item.tier)>=tiers.indexOf(target);
 }

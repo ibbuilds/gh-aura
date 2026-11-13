@@ -3,11 +3,13 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { planBadgeCollaboration,executeBadgeCollaboration } from '../src/badge-collaboration.mjs';
 import { WORKSPACE_README } from '../src/workspace.mjs';
+import { planCollaborationCampaign,executeCollaborationCampaign } from '../src/badge-collaboration-campaign.mjs';
+import { compileWorkspaceActions,preflightWorkspaceActions,executeWorkspaceActions } from '../src/workspace-actions.mjs';
 
 const oid=x=>createHash('sha1').update('blob '+Buffer.byteLength(x)+'\0').update(x).digest('hex');
 function fixture(){
   const base='/repos/owner/workspace',state={owner:'owner',secondary:'helper',private:true,push:true,writes:[],refs:new Map([['main','1'.repeat(40)]]),
-    commits:new Map([['1'.repeat(40),{tree:{sha:'2'.repeat(40)}}]]),trees:new Map([['2'.repeat(40),{}]]),blobs:new Map(),prs:[],discussions:[],comments:[],chosen:null,lose:null};
+    commits:new Map([['1'.repeat(40),{tree:{sha:'2'.repeat(40)}}]]),trees:new Map([['2'.repeat(40),{}]]),blobs:new Map(),prs:[],discussions:[],comments:[],answers:new Map(),chosen:null,lose:null};
   const result=(data,status=200)=>Response.json(data,{status});
   const fetch=async(url,init={})=>{
     assert.equal(new URL(url).origin,'https://api.github.com');
@@ -20,17 +22,17 @@ function fixture(){
     if(p==='/graphql'&&b.query.startsWith('query')){
       if(b.query.includes('discussionCategories'))return result({data:{repository:{id:'R',isPrivate:state.private,discussionCategories:{nodes:[{id:'Q',isAnswerable:true}],pageInfo:{hasNextPage:false}}}}});
       if(b.query.includes('discussions(first'))return result({data:{repository:{discussions:{nodes:state.discussions,pageInfo:{hasNextPage:false}}}}});
-      if(b.query.includes('comments(first'))return result({data:{node:{answer:state.chosen?{id:state.chosen}:null,comments:{nodes:state.comments,pageInfo:{hasNextPage:false}}}}});
-      if(b.query.includes('DiscussionComment')){const c=state.comments.find(x=>x.id===b.variables.id);return result({data:{node:c?{...c,isAnswer:state.chosen===c.id,viewerCanMarkAsAnswer:true,discussion:{id:'D'}}:null}});}
-      return result({data:{node:{answer:state.chosen?{id:state.chosen}:null}}});
+      if(b.query.includes('comments(first')){const chosen=state.chosen||state.answers.get(b.variables.id);return result({data:{node:{answer:chosen?{id:chosen}:null,comments:{nodes:state.comments.filter(c=>c.discussionId===b.variables.id),pageInfo:{hasNextPage:false}}}}});}
+      if(b.query.includes('DiscussionComment')){const c=state.comments.find(x=>x.id===b.variables.id);return result({data:{node:c?{...c,isAnswer:state.answers.get(c.discussionId)===c.id,viewerCanMarkAsAnswer:true,discussion:{id:c.discussionId}}:null}});}
+      const chosen=state.chosen||state.answers.get(b.variables.id);return result({data:{node:{answer:chosen?{id:chosen}:null}}});
     }
     if(method!=='GET'){
       state.writes.push({p,method,b,actor});
       if(p==='/graphql'){
         let data;
-        if(b.query.includes('createDiscussion(')){const d={id:'D',body:b.variables.input.body,author:{login:actor}};state.discussions.push(d);data={createDiscussion:{discussion:d}};}
-        else if(b.query.includes('addDiscussionComment(')){const c={id:'C',body:b.variables.input.body,author:{login:actor}};state.comments.push(c);data={addDiscussionComment:{comment:c}};}
-        else {state.chosen=b.variables.input.id;data={markDiscussionCommentAsAnswer:{discussion:{id:'D',answer:{id:state.chosen}}}};}
+        if(b.query.includes('createDiscussion(')){const d={id:'D'+(state.discussions.length||''),body:b.variables.input.body,author:{login:actor}};state.discussions.push(d);data={createDiscussion:{discussion:d}};}
+        else if(b.query.includes('addDiscussionComment(')){const c={id:'C'+(state.comments.length||''),body:b.variables.input.body,discussionId:b.variables.input.discussionId,author:{login:actor}};state.comments.push(c);data={addDiscussionComment:{comment:c}};}
+        else {const c=state.comments.find(c=>c.id===b.variables.input.id);state.answers.set(c.discussionId,c.id);data={markDiscussionCommentAsAnswer:{discussion:{id:c.discussionId,answer:{id:c.id}}}};}
         if(state.lose==='graphql'){state.lose=null;throw Error('lost');}return result({data});
       }
       if(p.endsWith('/git/blobs')){const sha=oid(b.content);state.blobs.set(sha,b.content);return result({sha});}
@@ -92,4 +94,30 @@ test('a conflicting Discussion or chosen answer is never overwritten',async()=>{
   const f=fixture(),plan=discussion();f.state.discussions=[{id:'D',body:'forged GH-AURA-'+plan.fingerprint,author:{login:'helper'}}];
   await assert.rejects(executeBadgeCollaboration(plan,plan.fingerprint,f.options),/conflicts/);assert.equal(f.state.writes.length,0);
   const g=fixture();g.state.chosen='other-answer';await assert.rejects(executeBadgeCollaboration(plan,plan.fingerprint,g.options),/will not be replaced/);assert.equal(g.state.comments.length,0);
+});
+
+test('a whole-profile campaign executes two distinct reviewed Q&A exercises, then waits for the actual award',async()=>{
+  const f=fixture(),intent={repo:'owner/workspace',mode:'collaboration-campaign',kind:'discussion-answer',collaborator:'helper',consent:true,
+    exercises:[{question:'How are UTC dates represented?',answer:'Use an explicit UTC date and state synthetic additions.'},{question:'What does a retry verify?',answer:'Read the exact remote marker and answer before creating anything.'}]};
+  const plan={username:'owner',...compileWorkspaceActions('owner',{badges:intent})},state={operations:{}};
+  await preflightWorkspaceActions(plan,{login:'owner'},f.options);assert.equal(f.state.writes.length,0);
+  const options={...f.options,observeAwards:async()=>({items:[]})},first=await executeWorkspaceActions(plan,state,()=>{},options);
+  assert.equal(first.pending,true);assert.equal(state.operations.badges.nextExercise,2);assert.equal(state.operations.badges.state,'needs-award-verification');
+  assert.equal(f.state.discussions.length,2);assert.equal(f.state.comments.length,2);assert.equal(f.state.answers.size,2);
+  assert.deepEqual(f.state.writes.map(x=>x.actor),['helper','owner','helper','helper','owner','helper']);
+  assert.deepEqual(state.operations.badges.writeReservations,{primary:2,secondary:4});
+  const count=f.state.writes.length;await executeWorkspaceActions(plan,state,()=>{},options);assert.equal(f.state.writes.length,count);
+  const final=await executeWorkspaceActions(plan,state,()=>{},{...options,observeAwards:async()=>({items:[{id:'galaxy-brain',tier:null,state:'visible-award-observed'}]})});
+  assert.equal(final.pending,false);assert.equal(state.operations.badges.state,'award-observed');assert.equal(f.state.writes.length,count);
+});
+
+test('a lost first Discussion response resumes the same campaign without duplicate questions or lost reservations',async()=>{
+  const f=fixture(),plan=planCollaborationCampaign({repo:'owner/workspace',kind:'discussion-answer',collaborator:'helper',consent:true,
+    exercises:[{question:'Reviewed first question',answer:'Reviewed first answer'},{question:'Reviewed second question',answer:'Reviewed second answer'}]});
+  let state;const options={...f.options,observeAwards:async()=>({items:[]}),onState:value=>{state=value;}};
+  f.state.lose='graphql';await assert.rejects(executeCollaborationCampaign(plan,plan.fingerprint,{},options),/unknown|reached/);
+  assert.equal(state.nextExercise,0);assert.equal(state.writeReservations.secondary,1);
+  const result=await executeCollaborationCampaign(plan,plan.fingerprint,state,options);
+  assert.equal(result.state,'needs-award-verification');assert.equal(f.state.discussions.length,2);assert.equal(f.state.comments.length,2);
+  assert.deepEqual(result.writeReservations,{primary:2,secondary:4});assert.equal(f.state.writes.length,6);
 });

@@ -77,6 +77,14 @@ Token requirements appear by identity in the plan. Coauthor: principal needs Con
 
 For `kind:discussion-answer`, supply reviewed `question` and `answer` instead of `content`. Enable Discussions and a Q&A category first. The authorized second account asks, the owner answers, and that second account accepts the exact answer if permitted. Changed content or another chosen answer blocks replacement. These are labeled private exercises; eligibility for Pair Extraordinaire/Galaxy Brain is unverified until GitHub shows the award. Signup, consent, account access and provider-required interactions remain owner actions.
 
+For multiple exact exercises under one authorization, use `mode:collaboration-campaign` and `exercises` instead of the top-level content/question/answer. CLI `improve plan` and MCP share this intent; `gh_aura_badges_collaboration_campaign` also previews it offline. Example Galaxy Brain base intent:
+
+```json
+{"repo":"USER/gh-aura-workspace","mode":"collaboration-campaign","kind":"discussion-answer","collaborator":"SECOND_ACCOUNT","consent":true,"tier":"base","exercises":[{"question":"How does this private exercise handle UTC dates?","answer":"Dates and synthetic additions are explicitly labeled."},{"question":"What does retry verify in this private exercise?","answer":"The exact remote marker and answer are read before another write."}]}
+```
+
+Supply distinct exact content for every reviewed exercise. Source-reported targets are Pair **1/10/24/48**, Galaxy **2/8/16/32** for base/bronze/silver/gold. The campaign stops at each milestone until that actual award/tier is visible; it also stops if its per-account write reservations are exhausted. One approved scope survives normal resumption and reconciles uncertain remote results. The local journal and shared hourly ledger bound this coordinator; they are not GitHub's global quota. Changing content, accounts, target or budget requires a new owner review. These simulated private routes have not earned verified awards in a live pilot.
+
 Badge exercises and workspace creation affect today's graph. Initialize the workspace and run badges before planning today's exact calendar target; a combined plan may include historical dates. Private graph visibility, GitHub processing and account age affect attribution. No third-party stars, paid sponsorship or fabricated professional history are generated.
 
 ## Research and distribution

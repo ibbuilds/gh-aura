@@ -88,6 +88,7 @@ test('matrix catalog covers all current, historical, disabled, staff-only and hi
   });
   assert.equal(summary.total,19);
   assert.deepEqual(PRIVATE_AUTOMATABLE_IDS,['pull-shark','yolo','quickdraw']);
+  assert.deepEqual(ACHIEVEMENTS.filter(x=>x.conditionalAutomation).map(x=>x.id),['pair-extraordinaire','galaxy-brain']);
   assert.deepEqual(PULL_SHARK_TIERS,{base:2,bronze:16,silver:128,gold:1024});
   assert.equal(new Set(ACHIEVEMENT_MATRIX.map(x=>x.id)).size,19);
   assert.ok(ACHIEVEMENT_MATRIX.every(item=>item.sourceUrls.length>0&&

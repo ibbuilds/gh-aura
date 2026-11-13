@@ -15,7 +15,7 @@ Entrega técnica actual:
 - P1: controles editoriales estrictos y compilador de patrones trazables; 500 revisiones/3 por categoría requeridas. El catálogo aprobado predeterminado sigue vacío porque las revisiones no se han realizado.
 - P2/P3: intención/refinamientos compartidos, contexto, plan/preview vinculados a bytes, cuenta real, README/assets atómicos, USER/USER nuevo o vacío, PR o commit, estado y reconciliación.
 - P4: scans públicos paginados con continuación, proyectos explícitos externos, evidencia progresiva y contribuciones declaradas a forks. Pins se preparan para la UI soportada y su estado se comprueba por lectura.
-- P5: campañas por tiers con pausa ante premio desconocido, observación pública de achievements y rutas revisadas de dos cuentas para coautoría y Q&A. Los eventos no equivalen a premios. Alta de cuentas, permisos y categorías son prerrequisitos del proveedor.
+- P5: campañas de una o dos cuentas con alcance aprobado y pausa ante premios/tiers desconocidos; coautoría y Q&A con contenido exacto, presupuesto por identidad y reconciliación. Alta de cuentas, permisos y categorías son prerrequisitos del proveedor.
 - P6: objetivos diarios sobre baseline observado, archivos sin solapamiento, preflight de identidad/baseline y reconciliación de publicación por SHA antes del readback del gráfico. Hoy requiere workspace ya inicializado y badges terminados.
 - P7: instalador de Skill y diagnóstico, contexto integral y ejecución/estado expuestos solo para el plan fijado por dueño/host; errores saneados y pruebas del paquete instalado.
 

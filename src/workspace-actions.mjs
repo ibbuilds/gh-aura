@@ -7,6 +7,7 @@ import { planBadgeCampaign, validateBadgeCampaign, executeBadgeCampaign } from '
 import { readContributionWindows } from './contributions.mjs';
 import { planBadgeCollaboration,validateBadgeCollaboration,preflightBadgeCollaboration,executeBadgeCollaboration } from './badge-collaboration.mjs';
 import { observeVisibleAchievements } from './achievement-observation.mjs';
+import { planCollaborationCampaign,validateCollaborationCampaign,executeCollaborationCampaign } from './badge-collaboration-campaign.mjs';
 
 function workspace(value,user){
   const name=value||user+'/gh-aura-workspace';
@@ -21,10 +22,11 @@ export function compileWorkspaceActions(user,{activity,badges}){
     const history=observedCounts?new Map(Object.entries(observedCounts)):null;
     a={repo:workspace(repo,user),plan:planCalendar(settings,history)};
   }
-  if(badges){allowed(badges,['repo','mode','tier','strategy','role','quickdraw','pulls','start','kind','collaborator','consent','content','question','answer']);
+  if(badges){allowed(badges,['repo','mode','tier','strategy','role','quickdraw','pulls','start','kind','collaborator','consent','content','question','answer','exercises']);
     const repo=workspace(badges.repo,user),mode=badges.mode||'events';
-    if(!['events','campaign','collaboration'].includes(mode))throw Error('Use events, campaign or collaboration for the reviewed badge workspace.');
-    b={repo,mode,plan:mode==='campaign'?planBadgeCampaign({...badges,repo}):mode==='collaboration'?planBadgeCollaboration({...badges,repo}):planBadgeRun({...badges,repo})};
+    if(!['events','campaign','collaboration','collaboration-campaign'].includes(mode))throw Error('Use events, campaign, collaboration or collaboration-campaign for the reviewed badge workspace.');
+    if(mode==='collaboration-campaign')allowed(badges,['repo','mode','tier','kind','collaborator','consent','exercises']);
+    b={repo,mode,plan:mode==='collaboration-campaign'?planCollaborationCampaign({...badges,repo}):mode==='campaign'?planBadgeCampaign({...badges,repo}):mode==='collaboration'?planBadgeCollaboration({...badges,repo}):planBadgeRun({...badges,repo})};
   }
   if(a&&b&&a.repo.toLowerCase()!==b.repo.toLowerCase())throw Error('Activity and Badges must share the same reviewed private workspace.');
   if(a&&b&&a.plan.days.some(d=>d.date===new Date().toISOString().slice(0,10)))throw Error('Badge exercises also affect today. Run badges first, then observe and plan today’s calendar target; historical dates can share one plan.');
@@ -66,7 +68,7 @@ export async function prepareWorkspaceActions(user,intent,options={}){
 export function validateWorkspaceActions(user,{activity,badges}){
   if(activity){allowed(activity,['repo','plan']);workspace(activity.repo,user);validateCalendarPlan(activity.plan);}
   if(badges){allowed(badges,['repo','mode','plan']);workspace(badges.repo,user);
-    if(badges.mode==='campaign')validateBadgeCampaign(badges.plan);else if(badges.mode==='collaboration')validateBadgeCollaboration(badges.plan);else if(badges.mode==='events')validateBadgePlan(badges.plan);else throw Error('Unknown badge execution mode.');
+    if(badges.mode==='collaboration-campaign')validateCollaborationCampaign(badges.plan);else if(badges.mode==='campaign')validateBadgeCampaign(badges.plan);else if(badges.mode==='collaboration')validateBadgeCollaboration(badges.plan);else if(badges.mode==='events')validateBadgePlan(badges.plan);else throw Error('Unknown badge execution mode.');
     if(badges.plan.repo.toLowerCase()!==badges.repo.toLowerCase())throw Error('Badge workspace differs from the reviewed target.');
   }
   if(activity&&badges&&activity.repo.toLowerCase()!==badges.repo.toLowerCase())throw Error('Workspace targets differ.');
@@ -76,6 +78,7 @@ export async function preflightWorkspaceActions(plan,identity,options={}){
   if(!plan.activity&&!plan.badges)return {};
   let calendarPublished=false;
   if(plan.badges?.mode==='collaboration')await preflightBadgeCollaboration(plan.badges.plan,options);
+  if(plan.badges?.mode==='collaboration-campaign')await preflightBadgeCollaboration(plan.badges.plan.steps[0],options);
   const name=plan.activity?.repo||plan.badges.repo,base='/repos/'+name.split('/').map(encodeURIComponent).join('/');
   const repo=await getJSON(base,{...options,cache:undefined,publicRead:false});
   if(!repo&&plan.activity?.plan.days.length&&(Object.hasOwn(plan.activity.plan.settings.dailyTargets||{},new Date().toISOString().slice(0,10))||plan.activity.plan.days.some(d=>d.date===new Date().toISOString().slice(0,10))))
@@ -132,7 +135,11 @@ export async function verifyWorkspaceCalendar(user,action,options={}){
 export async function executeWorkspaceActions(plan,state,save,options={}){
   if(plan.badges){
     const action=plan.badges;
-    if(action.mode==='collaboration'){
+    if(action.mode==='collaboration-campaign'){
+      state.operations.badges=await executeCollaborationCampaign(action.plan,action.plan.fingerprint,state.operations.badges||{},
+        {...options,onState:progress=>{state.operations.badges=structuredClone(progress);save();}});save();
+      if(state.operations.badges.state!=='award-observed')return {pending:true};
+    }else if(action.mode==='collaboration'){
       state.operations.badges=await executeBadgeCollaboration(action.plan,action.plan.fingerprint,options);save();
     }else if(action.mode==='campaign'){
       state.operations.badges=await executeBadgeCampaign(action.plan,action.plan.fingerprint,state.operations.badges||{},
@@ -167,7 +174,7 @@ export async function executeWorkspaceActions(plan,state,save,options={}){
     catch{state.operations.activity.observation={state:'unknown',reason:'Graph visibility or processing could not be verified.'};state.operations.activity.state='pushed-awaiting-graph';}
     save();
   }
-  if(plan.badges&&plan.badges.mode!=='campaign'){
+  if(plan.badges&&!['campaign','collaboration-campaign'].includes(plan.badges.mode)){
     try{
       const report=await (options.observeAwards?options.observeAwards():observeVisibleAchievements(plan.username,options.publicFetch?{fetch:options.publicFetch}:{}));
       const wanted=plan.badges.mode==='collaboration'?[plan.badges.plan.attempt]:plan.badges.plan.attempts.map(x=>x.badge);

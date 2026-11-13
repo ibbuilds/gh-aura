@@ -27,7 +27,7 @@ gh-aura badges auto accounts
 
 This verifies distinct accounts that **both read the same marked private workspace**. The collaborator needs existing access. Tokens remain local and are never printed or saved in configuration. This command **does not** check write rights, perform coauthored commits, accept Discussion answers or guarantee awards.
 
-The new [whole-profile collaboration route](IMPROVE.md) separately plans and executes reviewed coauthor/Q&A exercises. It verifies the second identity, write access and route-specific token scopes. Events remain distinct from actual awards.
+The [whole-profile workflow](IMPROVE.md) adds reviewed coauthor/Q&A exercises and tier-gated campaigns with one approval. It checks identities/access and lists token scopes. Actual private award eligibility remains unverified.
 
 ## Execution strategies
 

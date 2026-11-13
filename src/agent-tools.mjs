@@ -9,6 +9,7 @@ import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-prof
 import { makeBiographyGuide } from './profile-biography.mjs';
 import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
+import { planCollaborationCampaign } from './badge-collaboration-campaign.mjs';
 import { profileTarget } from './workflow.mjs';
 import { validateLogin } from './github.mjs';
 import { makeWholeProfileSpec, refineWholeProfileSpec, inspectWholeProfile, prepareProfilePlan,
@@ -104,6 +105,10 @@ const tools=[
       density:{type:'integer',minimum:0,maximum:100}},['year'])],
   ['gh_aura_badges_catalog','Inspect the source-attributed achievement catalog and eligibility caveats.',
     properties({})],
+  ['gh_aura_badges_collaboration_campaign','Plan exact coauthor or Q&A exercises for two consenting accounts. One owner-authorized whole-profile plan can run the campaign; actual awards gate tiers. Offline and read-only.',
+    properties({repo:str('Existing owned marked private workspace OWNER/REPO',120),collaborator:str('Distinct authorized second account',39),consent:{type:'boolean'},
+      kind:{type:'string',enum:['coauthor','discussion-answer']},tier:{type:'string',enum:['base','bronze','silver','gold']},
+      exercises:{type:'array',minItems:1,maxItems:48,items:properties({content:str('Exact coauthor exercise content',12000),question:str('Exact private question',4000),answer:str('Exact reviewed answer',8000)})}},['repo','collaborator','consent','kind','exercises'])],
   ['gh_aura_badges_plan','Plan bounded private workspace exercise attempts offline; never apply.',
     properties({tier:{type:'string',enum:['base','bronze','silver','gold']},
       strategy:{type:'string',enum:['rest','git-batch']},repo:str('Owned private GH Aura workspace OWNER/NAME',120)})],
@@ -231,6 +236,7 @@ export async function runAgentTool(name,args={}){
       repository:target.repo,branch:target.branch,readOnly:true,
       next:'Ask the user to inspect the draft, save it locally, then separately run gh-aura preview --file draft.md --save review.json and gh-aura apply --review review.json --pr.'};
   }
+  if(name==='gh_aura_badges_collaboration_campaign')return planCollaborationCampaign(args);
   if(name==='gh_aura_badges_catalog')
     return {entries:ACHIEVEMENT_MATRIX,
       notice:'Eligibility and tier estimates are informational. GitHub awards are never guaranteed.'};
