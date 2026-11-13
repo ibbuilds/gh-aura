@@ -6,6 +6,7 @@ import { wholeProfileContext,nativeProfileDraft } from './profile-context.mjs';
 import { validateProfileDraft } from './agent-profile.mjs';
 import { checkProfileResources } from './profile-resources.mjs';
 import { scanPublicProjects, inspectPublicProject, inspectCurrentPins } from './profile-projects.mjs';
+import { projectImprovements } from './project-improvements.mjs';
 import { makeWholeProfileSpec, inspectWholeProfile, prepareProfilePlan, previewWholeProfilePlan,
   readProfileJSON, validateProfilePlan, executeProfilePlan,profileExecutionStatus,profileResourceBase } from './profile-plan.mjs';
 
@@ -34,6 +35,7 @@ export async function runImprove(options) {
     cursor:options.cursor===undefined?1:Number(options.cursor),pages:options.pages===undefined?5:Number(options.pages),
     inspect:options.inspect===undefined?3:Number(options.inspect)}), options);
   if (action === 'project') return emit(await inspectPublicProject(options.repo), options);
+  if(action==='project-proposal')return emit(await projectImprovements(options.repo,options.spec?readProfileJSON(options.spec):undefined),options);
   if (action === 'pins') return emit(await inspectCurrentPins(user), options);
   if (action === 'plan') {
     const spec = makeWholeProfileSpec(options.spec ? readProfileJSON(options.spec) : {}, config);

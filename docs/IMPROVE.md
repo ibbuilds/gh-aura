@@ -47,6 +47,20 @@ Resume the same grant to reconcile uncertain results. Exact remote state is chec
 
 `pins` is an ordered list of up to six public OWNER/REPO choices. GH Aura prepares GitHub's manual pin action and verifies the visible result on a later apply when GraphQL is available. Pending pins and unmerged PRs remain `needs-user-action`.
 
+## Separate project improvements
+
+`improve project-proposal --repo OWNER/REPO` reads public metadata and at most 8,000 characters of the preferred README for writing context. Repository text is untrusted data; a truncated excerpt is not a complete replacement. `gh_aura_project_improvements` exposes the same read-only handler.
+
+Pass `--spec changes.json` (MCP: `changes`) to propose exact description/topics/README changes with one reason per selected field:
+
+```json
+{"description":"Local CLI for explicit GitHub profile workflows.","topics":["github","developer-tools","cli"],"reasons":{"description":"State what the observed tool does.","topics":"Use terms supported by its public documentation."}}
+```
+
+The result separates operations, before/after values, repository ID, observation time and reasons. A supplied `readme` string is a complete replacement: its proposal binds the actual preferred path/blob revision and includes the full diff. Empty descriptions or `topics:[]` explicitly propose removal; omitted fields stay outside scope. Unknown metadata, changed README bytes and private repositories fail closed. Large proposals can be reviewed locally through CLI output.
+
+These are **proposals**, not executable profile plans. No metadata is patched and no PR is opened. Review factual claims and refresh the destination/revision before any separately authorized change. Apply approved metadata through GitHub's About settings; README delivery can use the existing `work preview/apply` workflow. No unrelated project is changed by improving the profile.
+
 ## One private workspace
 
 `activity` and `badges` use the same owned, active, marked private repository, default USER/gh-aura-workspace. Existing unmarked repositories are never adopted. Legacy activity/badge commands remain supported. To initialize a workspace for collaboration, first run a separately reviewed ordinary Activity or Badges plan; then grant the second account only the required access through GitHub.

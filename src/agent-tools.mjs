@@ -10,10 +10,12 @@ import { makeBiographyGuide } from './profile-biography.mjs';
 import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
 import { planCollaborationCampaign } from './badge-collaboration-campaign.mjs';
+import { projectImprovements } from './project-improvements.mjs';
+import { auditPatternStudy } from './pattern-library.mjs';
 import { profileTarget } from './workflow.mjs';
 import { validateLogin } from './github.mjs';
 import { makeWholeProfileSpec, refineWholeProfileSpec, inspectWholeProfile, prepareProfilePlan,
-  previewWholeProfilePlan, executeProfilePlan, approvedPlanFromHost,profileExecutionStatus } from './profile-plan.mjs';
+  previewWholeProfilePlan, executeProfilePlan, approvedPlanFromHost,profileExecutionStatus,readProfileJSON } from './profile-plan.mjs';
 import { scanPublicProjects, inspectPublicProject, inspectCurrentPins } from './profile-projects.mjs';
 import { wholeProfileContext,nativeProfileDraft } from './profile-context.mjs';
 import { checkProfileResources } from './profile-resources.mjs';
@@ -27,6 +29,10 @@ const str=(description,maxLength=160)=>({type:'string',description,maxLength});
 const optUser={user:str('Public GitHub username; omit to use local config.',39)};
 const art={direction:{type:'string',enum:['barebones','minimal','technical','expressive']}};
 const tools=[
+  ['gh_aura_editorial_progress','Summarize gaps in the local research review file independently selected by the owner through GH_AURA_EDITORIAL_FILE. Returns counts and bounded missing-field samples, never raw review notes; cannot approve or activate patterns.',
+    properties({limit:{type:'integer',minimum:1,maximum:50}})],
+  ['gh_aura_project_improvements','Read bounded public project writing context, or supply exact description/topics/README changes and per-field reasons for separate reviewable proposals. Never publishes or authorizes changes.',
+    properties({repo:str('Public project OWNER/REPO',140),changes:{type:'object'}},['repo'])],
   ['gh_aura_activity_preview','Compare supplied/unknown baseline counts and projected synthetic additions for one UTC year. Optional original SVG is illustrative, not a GitHub color guarantee.',
     properties({plan:{type:'object'},year:{type:'integer',minimum:2008,maximum:2100},svg:{type:'boolean'}},['plan'])],
   ['gh_aura_profile_native_draft','Generate native GitHub Markdown using the shared whole-profile intent and observed public projects; no publication or AI service.',
@@ -117,7 +123,7 @@ const tools=[
 ];
 export const AGENT_TOOL_DEFINITIONS=Object.freeze(tools.map(([name,description,inputSchema])=>({
   name,title:name.replaceAll('_',' '),description,inputSchema,
-  annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:['gh_aura_profile_resources_check','gh_aura_whole_profile_plan'].includes(name)},
+  annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:['gh_aura_profile_resources_check','gh_aura_whole_profile_plan','gh_aura_project_improvements'].includes(name)},
 })));
 const APPROVED_EXECUTION_TOOL=Object.freeze({name:'gh_aura_apply_approved_profile',title:'Apply owner-approved profile plan',
   description:'Execute only the exact plan pinned in owner/host configuration. Cannot choose a plan/path or create approval. May create the reviewed public profile repository, publish README/assets and update reviewed account fields.',
@@ -236,6 +242,10 @@ export async function runAgentTool(name,args={}){
       repository:target.repo,branch:target.branch,readOnly:true,
       next:'Ask the user to inspect the draft, save it locally, then separately run gh-aura preview --file draft.md --save review.json and gh-aura apply --review review.json --pr.'};
   }
+  if(name==='gh_aura_editorial_progress')return process.env.GH_AURA_EDITORIAL_FILE?
+    auditPatternStudy(readProfileJSON(process.env.GH_AURA_EDITORIAL_FILE,16*1024*1024),{limit:args.limit??20}):
+    {format:'gh-aura-editorial-progress-v1',state:'not-configured',next:'The owner may select a local review file using GH_AURA_EDITORIAL_FILE; the agent cannot select a path.',readOnly:true,writesPerformed:0};
+  if(name==='gh_aura_project_improvements')return projectImprovements(args.repo,args.changes);
   if(name==='gh_aura_badges_collaboration_campaign')return planCollaborationCampaign(args);
   if(name==='gh_aura_badges_catalog')
     return {entries:ACHIEVEMENT_MATRIX,

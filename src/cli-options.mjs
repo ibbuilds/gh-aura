@@ -2,8 +2,8 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  improve: { usage: 'improve spec | draft [USER] --spec profile.json | check [USER] --spec profile.json --file draft.md [--resources] | context [USER] --spec profile.json | inspect [USER] | projects [USER] [--goal TEXT] [--cursor PAGE] | project --repo OWNER/REPO | pins [USER] | plan [USER] --spec profile.json [--file draft.md] [--resources] [--delivery pr|commit] | preview --review plan.json | authorize --review plan.json --confirm FINGERPRINT | apply --review plan.json --confirm FINGERPRINT | status --review plan.json', flags: ['resources','config','user','spec','file','review','confirm','delivery','format','output','force','goal','cursor','pages','inspect','repo'], max: 2 },
-  sources: { usage: 'sources list | show ID | recommend | design | categories | profiles | profile ID | patterns --query TEXT [--direction minimal] | library | compile --catalog reviews.json --output patterns.json', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
+  improve: { usage: 'improve spec | draft [USER] --spec profile.json | check [USER] --spec profile.json --file draft.md [--resources] | context [USER] --spec profile.json | inspect [USER] | projects [USER] [--goal TEXT] [--cursor PAGE] | project --repo OWNER/REPO | project-proposal --repo OWNER/REPO [--spec changes.json] | pins [USER] | plan [USER] --spec profile.json [--file draft.md] [--resources] [--delivery pr|commit] | preview --review plan.json | authorize --review plan.json --confirm FINGERPRINT | apply --review plan.json --confirm FINGERPRINT | status --review plan.json', flags: ['resources','config','user','spec','file','review','confirm','delivery','format','output','force','goal','cursor','pages','inspect','repo'], max: 2 },
+  sources: { usage: 'sources list | show ID | recommend | design | categories | profiles | profile ID | patterns --query TEXT [--direction minimal] | library | audit --catalog reviews.json [--limit 20] | compile --catalog reviews.json --output patterns.json', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
   agent: { usage: 'agent install --client codex|claude|generic [--directory PATH] | doctor | capabilities | spec [--direction technical] [--visual-brief TEXT] | bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['client','directory','config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
   mcp: { usage: 'mcp (local stdio; read-only by default, execution only for an owner/host-pinned plan)', flags:[], max:0 },
   'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
@@ -81,15 +81,15 @@ export function validateOptions(command, options) {
     throw Error('With --spec, edit presentation/language/source preferences in the spec instead of supplying conflicting flags.');
   if(command==='improve'){
     const action=options.positional[0]||'spec';
-    if(!['spec','draft','check','context','inspect','projects','project','pins','plan','preview','authorize','apply','status'].includes(action))throw Error('Unknown improve action.');
+    if(!['spec','draft','check','context','inspect','projects','project','project-proposal','pins','plan','preview','authorize','apply','status'].includes(action))throw Error('Unknown improve action.');
     if(options.delivery&&!['pr','commit'].includes(options.delivery))throw Error('--delivery must be pr or commit.');
     if(['preview','authorize','apply','status'].includes(action)&&!options.review)throw Error('--review is required.');
     if(['authorize','apply'].includes(action)&&!options.confirm)throw Error('--confirm is required.');
-    const specific={spec:['spec'],draft:['spec'],check:['spec','file','resources'],context:['spec'],inspect:[],projects:['goal','cursor','pages','inspect'],project:['repo'],pins:[],
+    const specific={spec:['spec'],draft:['spec'],check:['spec','file','resources'],context:['spec'],inspect:[],projects:['goal','cursor','pages','inspect'],project:['repo'],'project-proposal':['repo','spec'],pins:[],
       plan:['spec','file','delivery','resources'],preview:['review'],authorize:['review','confirm'],apply:['review','confirm'],status:['review']};
     const scoped=['resources','spec','file','review','confirm','delivery','goal','cursor','pages','inspect','repo'];
     if(scoped.some(k=>options[k]!==undefined&&!specific[action].includes(k)))throw Error('An option is not applicable to improve '+action+'.');
-    if(action==='project'&&!options.repo)throw Error('improve project requires --repo OWNER/REPO.');
+    if(['project','project-proposal'].includes(action)&&!options.repo)throw Error('improve '+action+' requires --repo OWNER/REPO.');
     if(action==='check'&&!options.file)throw Error('improve check requires --file draft.md.');
     if(options.positional.length>1&&!['draft','check','context','inspect','projects','pins','plan'].includes(action))throw Error('This improve action takes no positional username.');
   }
@@ -230,8 +230,12 @@ export function validateOptions(command, options) {
   if (command === 'sources') {
     const [action,id]=options.positional;
     const detail=['show','profile'].includes(action);
-    const search=['recommend','design','profiles','patterns'].includes(action);
-    if (!['compile','library','list','show','recommend','design','categories','profiles','profile','patterns'].includes(action) ||
+    const search=['recommend','design','profiles','patterns','audit'].includes(action);
+    if(action==='audit'){
+      if(!options.catalog||options.positional.length!==1||['query','category','direction','external'].some(key=>options[key]!==undefined))throw Error('sources audit requires --catalog and accepts only local output and sample limit options.');
+      if(options.limit!==undefined&&(!/^\d+$/.test(options.limit)||Number(options.limit)<1||Number(options.limit)>50))throw Error('Editorial sample limit must be 1–50.');
+    }
+    if (!['audit','compile','library','list','show','recommend','design','categories','profiles','profile','patterns'].includes(action) ||
         (detail&&!id)||(!detail&&id)||
         (!search&&['query','category','direction','limit','external'].some(k=>options[k]!==undefined))||
         (['design','profiles','patterns','profile'].includes(action)&&options.category!==undefined)||

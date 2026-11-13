@@ -53,6 +53,38 @@ export function compilePatternLibrary(input){
     reviewedProfiles:complete.length,styleCounts,patterns,
     limitations:'Editorial composition patterns, not a hiring score, identity verification or permission to copy source assets.'};
 }
+export function auditPatternStudy(input,{limit=20}={}){
+  if(!input||!Array.isArray(input.reviews)||input.reviews.length>2500||!Number.isInteger(limit)||limit<1||limit>50)throw Error('Expected up to 2500 editorial reviews and sample limit 1–50.');
+  groupReviewedProfiles(input.reviews);
+  const reviews=input.reviews.map(validateHolisticReview),pending=[],missingCounts={},complete=[];
+  const styles=Object.fromEntries(HOLISTIC_STYLES.map(style=>[style.id,0]));
+  for(const review of reviews){
+    const missing=[...review.readiness.missing,...(!review.decision?['decision']:[]),...(!review.primaryStyle?['primaryStyle']:[])];
+    if(missing.length){pending.push({login:review.login,missing});for(const key of missing)missingCounts[key]=(missingCounts[key]||0)+1;}
+    else{complete.push(review);styles[review.primaryStyle]++;}
+  }
+  const byLogin=new Map(complete.map(review=>[review.login.toLowerCase(),review]));
+  if(input.patterns!==undefined&&!Array.isArray(input.patterns)||input.patterns?.length>64)throw Error('Expected up to 64 candidate patterns.');
+  const patternProblems=(input.patterns||[]).map(raw=>{
+    const pattern=validatePattern(raw),missingReferences=pattern.reviewLogins.filter(login=>{
+      const review=byLogin.get(login.toLowerCase());
+      return !review||review.decision!=='approved'||!pattern.styles.some(style=>review.primaryStyle===style||review.secondaryStyles.includes(style))||
+        !Array.isArray(review.evidenceUrls)||!review.evidenceUrls.length||review.evidenceUrls.length>8||review.evidenceUrls.some(url=>!httpsUrl(url));
+    });
+    return {id:pattern.id,missingReferences};
+  }).filter(pattern=>pattern.missingReferences.length);
+  const blockers=[];
+  if(complete.length<500)blockers.push('complete-review-count');
+  if(Object.values(styles).some(count=>count<3))blockers.push('style-coverage');
+  if(!input.patterns?.length)blockers.push('no-candidate-patterns');
+  if(patternProblems.length)blockers.push('pattern-references');
+  let eligible=blockers.length===0;
+  if(eligible){try{compilePatternLibrary(input);}catch{blockers.push('compilation-contract');eligible=false;}}
+  return {format:'gh-aura-editorial-progress-v1',supplied:reviews.length,complete:complete.length,pending:pending.length,target:500,
+    remaining:Math.max(0,500-complete.length),styles,minimumPerStyle:3,missingCounts,pendingSample:pending.slice(0,limit),sampleTruncated:pending.length>limit,
+    candidatePatterns:input.patterns?.length||0,patternProblems,eligibleForCompilation:eligible,blockers,readOnly:true,writesPerformed:0,
+    caveat:'Readiness of supplied evidence only. This does not perform reviews, certify human approval or activate patterns. Counts include complete conditional/excluded reviews; pattern sources must be approved separately.'};
+}
 export function readPatternLibrary(file=process.env.GH_AURA_PATTERNS_FILE){
   if(!file)return {format:'gh-aura-pattern-library-v1',patterns:[],status:'awaiting-complete-editorial-reviews'};
   const stat=lstatSync(file);

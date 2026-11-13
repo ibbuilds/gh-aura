@@ -26,7 +26,7 @@ try {
     'src/profile-query.mjs','src/profile-source-extra.mjs',
     'src/profile-custom-sources.mjs','src/profile-techniques.mjs',
     'src/profile-biography.mjs','src/profile-plan.mjs','src/profile-context.mjs',
-    'src/profile-projects.mjs','src/improve-command.mjs','src/agent-install.mjs',
+    'src/profile-projects.mjs','src/improve-command.mjs','src/agent-install.mjs','src/project-improvements.mjs',
     'src/pattern-library.mjs','src/workspace-actions.mjs','src/badge-collaboration.mjs','src/badge-collaboration-campaign.mjs',
     'src/profile-spec-config.mjs','src/profile-references.mjs','src/profile-resources.mjs','src/public-https.mjs','src/calendar-preview.mjs']) {
     assert.ok(packed.files.some(file=>file.path===path),'Missing packaged '+path);
@@ -63,7 +63,9 @@ try {
     assert.equal(JSON.parse(command.stdout).format,format);
     if(format==='gh-aura-synthetic-calendar-v1')writeFileSync(join(directory,'calendar.json'),command.stdout);
   }
+  writeFileSync(join(directory,'editorial.json'),JSON.stringify({reviews:[{login:'fixture-review',secondaryStyles:[],purposes:[]}]}));
   const commands=[
+    [['sources','audit','--catalog',join(directory,'editorial.json'),'--json'],value=>value.supplied===1&&value.complete===0&&value.eligibleForCompilation===false],
     [['agent','capabilities','--json'],value=>value.writesExposed===false],
     [['sources','list','--json'],value=>value.count>=10],
     [['agent','spec','--direction','technical'],value=>value.format==='gh-aura-profile-spec-v1'],
@@ -98,9 +100,10 @@ try {
     {jsonrpc:'2.0',id:5,method:'tools/call',params:{name:'gh_aura_profile_resources_check',arguments:{markdown:'![Local](assets/missing.svg)'}}},
     {jsonrpc:'2.0',id:6,method:'tools/call',params:{name:'gh_aura_activity_preview',arguments:{plan:JSON.parse(readFileSync(join(directory,'calendar.json'),'utf8'))}}},
     {jsonrpc:'2.0',id:7,method:'tools/call',params:{name:'gh_aura_badges_collaboration_campaign',arguments:{repo:'example/workspace',collaborator:'helper',consent:true,kind:'coauthor',exercises:[{content:'# Reviewed private exercise'}]}}},
+    {jsonrpc:'2.0',id:8,method:'tools/call',params:{name:'gh_aura_editorial_progress',arguments:{limit:1}}},
   ];
   const mcp=spawnSync(process.execPath,[cli,'mcp'],{cwd:directory,encoding:'utf8',timeout:10000,
-    input:messages.map(x=>JSON.stringify(x)).join('\n')+'\n',env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:'',GH_AURA_APPROVED_PLAN:'',GH_AURA_APPROVED_FINGERPRINT:''}});
+    input:messages.map(x=>JSON.stringify(x)).join('\n')+'\n',env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:'',GH_AURA_APPROVED_PLAN:'',GH_AURA_APPROVED_FINGERPRINT:'',GH_AURA_EDITORIAL_FILE:join(directory,'editorial.json')}});
   assert.equal(mcp.status,0,mcp.stderr);
   const replies=mcp.stdout.trim().split('\n').map(line=>JSON.parse(line)),byId=new Map(replies.map(x=>[x.id,x]));
   assert.ok(byId.get(2).result.tools.some(t=>t.name==='gh_aura_whole_profile_context'));
@@ -110,5 +113,6 @@ try {
   assert.equal(JSON.parse(byId.get(5).result.content[0].text).results[0].state,'unresolved-relative');
   assert.equal(JSON.parse(byId.get(6).result.content[0].text).days[0].before,null);
   assert.equal(JSON.parse(byId.get(7).result.content[0].text).steps.length,1);
+  assert.equal(JSON.parse(byId.get(8).result.content[0].text).pending,1);
   console.log('Installed CLI, checksum, whole-profile handlers, Skill and MCP validated offline.');
 } finally { rmSync(directory, { recursive: true, force: true }); }

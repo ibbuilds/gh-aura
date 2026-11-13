@@ -8,7 +8,7 @@ import { findProfileSources, getProfileSource, listProfileSources } from './prof
 import { getCuratedProfile, listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
 import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
 import { installAgentSkill,agentDoctor } from './agent-install.mjs';
-import { compilePatternLibrary,readPatternLibrary } from './pattern-library.mjs';
+import { compilePatternLibrary,readPatternLibrary,auditPatternStudy } from './pattern-library.mjs';
 import { readProfileJSON } from './profile-plan.mjs';
 
 const designOptions=options=>({
@@ -19,6 +19,10 @@ const designOptions=options=>({
 export function runAgentCommand(command,options={}){
   const [action='list',id]=options.positional||[];
   if(command==='sources'){
+    if(action==='audit'){
+      if(!options.catalog)throw Error('Supply --catalog EDITORIAL-REVIEWS.json.');
+      return emit(auditPatternStudy(readProfileJSON(options.catalog,16*1024*1024),{limit:options.limit===undefined?20:Number(options.limit)}),options);
+    }
     if(action==='library')return emit(readPatternLibrary(),options);
     if(action==='compile'){
       if(!options.catalog)throw Error('Supply --catalog EDITORIAL-REVIEWS.json.');

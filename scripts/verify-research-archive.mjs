@@ -2,13 +2,14 @@
 // No network, tokens, browser, account writes or current-tree corpus required.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync,rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { ORDINARY_REFERENCE, PROFILE_REFERENCE } from '../src/reference.mjs';
 import { CURATED_PROFILE_PATTERNS } from '../src/profile-patterns.mjs';
+import { correctVisualCollector } from './research-corrections.mjs';
 
 const COMMIT = 'd978bbae0234b30390885fc17bb7f2b6d52bc21b';
 const root = dirname(fileURLToPath(new URL('../package.json', import.meta.url)));
@@ -69,6 +70,10 @@ try {
   });
   process.stdout.write(result.split('\n').filter(line => /^(ℹ |# (tests|pass|fail|skipped|duration))/.test(line)).join('\n') + '\n');
   process.stdout.write('Research checkpoint ' + COMMIT + ' and current runtime citations verified offline.\n');
+  const collector=join(directory,'scripts','visual-profile-smoke.mjs'),fixed=correctVisualCollector(readFileSync(collector,'utf8'));
+  writeFileSync(collector,fixed.source);
+  run(process.execPath,['--test','tests/holistic-visual-smoke.test.mjs'],{cwd:directory,env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:''}});
+  process.stdout.write('Corrected viewport collector passes archived summary contracts; historical observations remain unchanged.\n');
 } finally {
   rmSync(directory, { recursive: true, force: true, maxRetries: 4, retryDelay: 100 });
 }
