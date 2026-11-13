@@ -2,6 +2,8 @@
 
 **Estado de investigación (12 de noviembre de 2026, Sinaloa; registros UTC del día 13):** 600 candidatos distintos, **561 perfiles con datos públicos GraphQL y HTML**, 526 secciones de achievements visibles y 385 estructuras de README renderizado. Los 561 están en la [cola por categoría](HOLISTIC_CATEGORY_TRIAGE.md) y su [plantilla de revisión](holistic-editorial-review-template.json). **Aún no son 500 perfiles completos visual/editorialmente aprobados**; 0 ganadores. Objetivo: al menos 500 revisiones integrales con comparación por estilo. Ver [comprobaciones visuales de muestra](HOLISTIC_VISUAL_SPOTCHECKS.md).
 
+**Evidencia incorporada después:** de 600 candidatos se recuperaron 561 cuentas mediante GraphQL, 561 páginas de HTML, 526 secciones de achievements visibles y 385 estructuras de README renderizado. La [prueba posterior de escritorio/móvil claro/oscuro](VISUAL_RENDER_SMOKE.md) completó los cuatro modos en **562 perfiles** e identificó 91 posibles problemas de carga de imágenes visibles. Esto es **verificación técnica automatizada**, no evaluación editorial integral: permanecen **0 perfiles completamente aprobados** y **0 ganadores definitivos**.
+
 ## Qué constituye un perfil
 
 Cada ficha representa lo que un visitante real puede ver en la página de perfil de GitHub:
