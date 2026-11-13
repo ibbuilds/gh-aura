@@ -260,6 +260,2708 @@
       ],
       "originalWorkRequired": true,
       "assetsCopied": false
+    },
+    {
+      "id": "addyosmani",
+      "profileUrl": "https://github.com/addyosmani",
+      "readmeUrl": "https://github.com/addyosmani/addyosmani/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Readme concise; inspect how the author relies on native GitHub project links",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0d9aade37dfeacce303ea20803917d1c792aab3a",
+        "characters": 438,
+        "approximateWords": 40,
+        "images": 0,
+        "links": 0,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cassidoo",
+      "profileUrl": "https://github.com/cassidoo",
+      "readmeUrl": "https://github.com/cassidoo/cassidoo/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "87615a73a41e894ea411446e3b93f9820d10e319",
+        "characters": 1703,
+        "approximateWords": 202,
+        "images": 0,
+        "links": 20,
+        "headings": 1,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "antfu",
+      "profileUrl": "https://github.com/antfu",
+      "readmeUrl": "https://github.com/antfu/antfu/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Readme concise; inspect how the author relies on native GitHub project links",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "5d5480d128ece9c36160a7bb3f2671a5263b55be",
+        "characters": 617,
+        "approximateWords": 21,
+        "images": 0,
+        "links": 11,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "tannerlinsley",
+      "profileUrl": "https://github.com/tannerlinsley",
+      "readmeUrl": "https://github.com/tannerlinsley/tannerlinsley/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "2f6167ffce5086ee6c865cc7d29d4548c158ede9",
+        "characters": 1300,
+        "approximateWords": 153,
+        "images": 0,
+        "links": 15,
+        "headings": 3,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "rasbt",
+      "profileUrl": "https://github.com/rasbt",
+      "readmeUrl": "https://github.com/rasbt/rasbt/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "490c0a91003028a311831dacbc247529f42f355c",
+        "characters": 580,
+        "approximateWords": 58,
+        "images": 0,
+        "links": 5,
+        "headings": 2,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jxnl",
+      "profileUrl": "https://github.com/jxnl",
+      "readmeUrl": "https://github.com/jxnl/jxnl/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "21c9fe5a1705318a1721c41fc4305c030111d8c8",
+        "characters": 996,
+        "approximateWords": 126,
+        "images": 0,
+        "links": 7,
+        "headings": 3,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "eugeneyan",
+      "profileUrl": "https://github.com/eugeneyan",
+      "readmeUrl": "https://github.com/eugeneyan/eugeneyan/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Observe the relationship between images and technical content"
+      ],
+      "avoidCopying": [
+        "Never reuse profile graphics or badges without permission",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d7b5d702d288ba8c52f3fe8a7f77185954cf2d0a",
+        "characters": 1821,
+        "approximateWords": 180,
+        "images": 1,
+        "links": 16,
+        "headings": 2,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "hamelsmu",
+      "profileUrl": "https://github.com/hamelsmu",
+      "readmeUrl": "https://github.com/hamelsmu/hamelsmu/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Observe the relationship between images and technical content"
+      ],
+      "avoidCopying": [
+        "Never reuse profile graphics or badges without permission",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f403c734d46d6178369576c54d66ea29e327b6b7",
+        "characters": 2281,
+        "approximateWords": 235,
+        "images": 1,
+        "links": 16,
+        "headings": 3,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jonhoo",
+      "profileUrl": "https://github.com/jonhoo",
+      "readmeUrl": "https://github.com/jonhoo/jonhoo/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Inspect the organization of work, projects and contact information",
+        "Text-first communication without a wall of decorative images"
+      ],
+      "avoidCopying": [
+        "Never copy the subject's wording, employer claims or identity",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a6eb6057f3c6fe03549a22204e836b934beca5e1",
+        "characters": 1002,
+        "approximateWords": 133,
+        "images": 0,
+        "links": 9,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "kentcdodds",
+      "profileUrl": "https://github.com/kentcdodds",
+      "readmeUrl": "https://github.com/kentcdodds/kentcdodds/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "direct-engineering-research",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Readme concise; inspect how the author relies on native GitHub project links",
+        "Observe the relationship between images and technical content"
+      ],
+      "avoidCopying": [
+        "Never reuse profile graphics or badges without permission",
+        "Do not equate individual popularity or engineering reputation with README design quality"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "c98708116ea7e6b01e198d9ad5940d319729bdb3",
+        "characters": 265,
+        "approximateWords": 5,
+        "images": 1,
+        "links": 3,
+        "headings": 0,
+        "codeFenceLines": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "alloydwhitlock",
+      "profileUrl": "https://github.com/alloydwhitlock",
+      "readmeUrl": "https://github.com/alloydwhitlock/alloydwhitlock/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "supabase",
+      "readmeObservation": {
+        "blobSha": "0f38a78c1826dd0c6729e2bfae6649f56b237338",
+        "characters": 2772,
+        "approximateWords": 407,
+        "images": 0,
+        "links": 5,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "axelavargas",
+      "profileUrl": "https://github.com/axelavargas",
+      "readmeUrl": "https://github.com/axelavargas/axelavargas/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "grafana",
+      "readmeObservation": {
+        "blobSha": "b753c36f21ae7a8fe9beec0b6b962a2409b20c09",
+        "characters": 2367,
+        "approximateWords": 254,
+        "images": 0,
+        "links": 14,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ATechAdventurer",
+      "profileUrl": "https://github.com/ATechAdventurer",
+      "readmeUrl": "https://github.com/ATechAdventurer/ATechAdventurer/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "postmanlabs",
+      "readmeObservation": {
+        "blobSha": "1b03374e15df72d4f2b6f3becd9e90c87f7ee747",
+        "characters": 480,
+        "approximateWords": 78,
+        "images": 0,
+        "links": 0,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "247arjun",
+      "profileUrl": "https://github.com/247arjun",
+      "readmeUrl": "https://github.com/247arjun/247arjun/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "microsoft",
+      "readmeObservation": {
+        "blobSha": "1e94f25d4f9bee89e8bd35de736f5348737fd451",
+        "characters": 3583,
+        "approximateWords": 358,
+        "images": 0,
+        "links": 17,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jadametz",
+      "profileUrl": "https://github.com/jadametz",
+      "readmeUrl": "https://github.com/jadametz/jadametz/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "twilio",
+      "readmeObservation": {
+        "blobSha": "f3d55505d90b77fb43fdd1830a57a8d3e482a159",
+        "characters": 534,
+        "approximateWords": 76,
+        "images": 0,
+        "links": 3,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ccfelius",
+      "profileUrl": "https://github.com/ccfelius",
+      "readmeUrl": "https://github.com/ccfelius/ccfelius/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "grafana",
+      "readmeObservation": {
+        "blobSha": "f1d588b10eb6265b9f0f9c408579e802ef3c945c",
+        "characters": 1208,
+        "approximateWords": 83,
+        "images": 0,
+        "links": 5,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "alexcwatt",
+      "profileUrl": "https://github.com/alexcwatt",
+      "readmeUrl": "https://github.com/alexcwatt/alexcwatt/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "shopify",
+      "readmeObservation": {
+        "blobSha": "1a466b318a00dc3adcbcb5cda28141cc3728b0ea",
+        "characters": 792,
+        "approximateWords": 59,
+        "images": 0,
+        "links": 3,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "afender",
+      "profileUrl": "https://github.com/afender",
+      "readmeUrl": "https://github.com/afender/afender/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "nvidia",
+      "readmeObservation": {
+        "blobSha": "3d4518b90fabd8236d5757a90d4504f46744d23c",
+        "characters": 426,
+        "approximateWords": 61,
+        "images": 0,
+        "links": 1,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ferhatelmas",
+      "profileUrl": "https://github.com/ferhatelmas",
+      "readmeUrl": "https://github.com/ferhatelmas/ferhatelmas/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare concise presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "supabase",
+      "readmeObservation": {
+        "blobSha": "9b5d09e62fc6b354d9f1aefc290cc27eacaad550",
+        "characters": 697,
+        "approximateWords": 80,
+        "images": 0,
+        "links": 7,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "dieDeMiguel",
+      "profileUrl": "https://github.com/dieDeMiguel",
+      "readmeUrl": "https://github.com/dieDeMiguel/dieDeMiguel/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "vercel",
+      "readmeObservation": {
+        "blobSha": "394afe44305f7c88e416520d75267222c6437c36",
+        "characters": 2231,
+        "approximateWords": 320,
+        "images": 0,
+        "links": 1,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jeroenvervaeke",
+      "profileUrl": "https://github.com/jeroenvervaeke",
+      "readmeUrl": "https://github.com/jeroenvervaeke/jeroenvervaeke/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "mongodb",
+      "readmeObservation": {
+        "blobSha": "73ade6d624d4f082ff0cc10d013e441d7c458f80",
+        "characters": 1842,
+        "approximateWords": 213,
+        "images": 0,
+        "links": 16,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "rishavbharti",
+      "profileUrl": "https://github.com/rishavbharti",
+      "readmeUrl": "https://github.com/rishavbharti/rishavbharti/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public organization affiliations, not employer verification)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe text hierarchy and relevance of linked work",
+        "Compare detailed presentation against professional role context"
+      ],
+      "avoidCopying": [
+        "Do not repeat employer affiliations, roles or seniority without independent evidence",
+        "Do not copy personal text, project claims, logos or visual assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "evidenceCaveat": "Public organizational affiliation from research is not employment verification.",
+      "surveyOrgSource": "postmanlabs",
+      "readmeObservation": {
+        "blobSha": "3d5acea304a1ca54ebef957e90d94dddc9487289",
+        "characters": 1699,
+        "approximateWords": 201,
+        "images": 1,
+        "links": 12,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "guicaulada",
+      "profileUrl": "https://github.com/guicaulada",
+      "readmeUrl": "https://github.com/guicaulada/guicaulada/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "08935caca34955b491e4af2c821a237874f50969",
+        "characters": 1921,
+        "approximateWords": 116,
+        "images": 6,
+        "links": 10,
+        "headings": 5,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "davidgcs",
+      "profileUrl": "https://github.com/davidgcs",
+      "readmeUrl": "https://github.com/davidgcs/davidgcs/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d335cd2cac6fc74b8825426b32036d8d185a4335",
+        "characters": 6820,
+        "approximateWords": 438,
+        "images": 18,
+        "links": 33,
+        "headings": 12,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "sreeram-venkitesh",
+      "profileUrl": "https://github.com/sreeram-venkitesh",
+      "readmeUrl": "https://github.com/sreeram-venkitesh/sreeram-venkitesh/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "42ec28c1cce69b7bfc5df8c25a6d32eea0a801c2",
+        "characters": 3881,
+        "approximateWords": 267,
+        "images": 8,
+        "links": 19,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "pkosiec",
+      "profileUrl": "https://github.com/pkosiec",
+      "readmeUrl": "https://github.com/pkosiec/pkosiec/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "1384782d1ae29e0a23fceb884ce008094489f908",
+        "characters": 528,
+        "approximateWords": 52,
+        "images": 1,
+        "links": 2,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "Lykathia",
+      "profileUrl": "https://github.com/Lykathia",
+      "readmeUrl": "https://github.com/Lykathia/Lykathia/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4363dd51961f42f98cd6b249a96fc5bef1f123a5",
+        "characters": 889,
+        "approximateWords": 39,
+        "images": 4,
+        "links": 9,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "midhun1998",
+      "profileUrl": "https://github.com/midhun1998",
+      "readmeUrl": "https://github.com/midhun1998/midhun1998/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "de0beef9b8678f49050cb007f4e443c3fa046c89",
+        "characters": 1630,
+        "approximateWords": 98,
+        "images": 7,
+        "links": 10,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "viveknigam3003",
+      "profileUrl": "https://github.com/viveknigam3003",
+      "readmeUrl": "https://github.com/viveknigam3003/viveknigam3003/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b30ff437c0e33daa704c0a5a2130ec00a5164bb1",
+        "characters": 2033,
+        "approximateWords": 219,
+        "images": 1,
+        "links": 8,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "guichristovao",
+      "profileUrl": "https://github.com/guichristovao",
+      "readmeUrl": "https://github.com/guichristovao/guichristovao/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "e4bde48df121c9fcb20196f8951f886ed6673c29",
+        "characters": 746,
+        "approximateWords": 54,
+        "images": 2,
+        "links": 6,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "icyJoseph",
+      "profileUrl": "https://github.com/icyJoseph",
+      "readmeUrl": "https://github.com/icyJoseph/icyJoseph/blob/dev/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "fd4929e6cb82e96f44aa53c4481e5564659e34ce",
+        "characters": 1790,
+        "approximateWords": 162,
+        "images": 2,
+        "links": 19,
+        "headings": 10,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "gulducat",
+      "profileUrl": "https://github.com/gulducat",
+      "readmeUrl": "https://github.com/gulducat/gulducat/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ac3a2968a8b3fa1650620e7094d8456e9450b7ef",
+        "characters": 657,
+        "approximateWords": 97,
+        "images": 0,
+        "links": 2,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "james-elicx",
+      "profileUrl": "https://github.com/james-elicx",
+      "readmeUrl": "https://github.com/james-elicx/james-elicx/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ce5718e53f62dc30ff8b002e241acd549bea81dc",
+        "characters": 916,
+        "approximateWords": 80,
+        "images": 1,
+        "links": 7,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "martincostello",
+      "profileUrl": "https://github.com/martincostello",
+      "readmeUrl": "https://github.com/martincostello/martincostello/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "301ae09efa76ef7c419bf70a8a700a5f99f2ed99",
+        "characters": 1924,
+        "approximateWords": 240,
+        "images": 0,
+        "links": 9,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "macintacos",
+      "profileUrl": "https://github.com/macintacos",
+      "readmeUrl": "https://github.com/macintacos/macintacos/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "44e102bbab6067292d38d50f92a626e0de7c15a2",
+        "characters": 379,
+        "approximateWords": 63,
+        "images": 0,
+        "links": 2,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "irisgve",
+      "profileUrl": "https://github.com/irisgve",
+      "readmeUrl": "https://github.com/irisgve/irisgve/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "dd5af1d4f4a945e2eb7bc8d577f6788ad27fd68b",
+        "characters": 1111,
+        "approximateWords": 106,
+        "images": 2,
+        "links": 5,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "setu4993",
+      "profileUrl": "https://github.com/setu4993",
+      "readmeUrl": "https://github.com/setu4993/setu4993/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a1718a8bb8053358ce97d386abd6a30d6acf6485",
+        "characters": 456,
+        "approximateWords": 60,
+        "images": 0,
+        "links": 5,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cogwirrel",
+      "profileUrl": "https://github.com/cogwirrel",
+      "readmeUrl": "https://github.com/cogwirrel/cogwirrel/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4cb4df23c5c678d07fb55d8ced4ebd5a3541b936",
+        "characters": 485,
+        "approximateWords": 72,
+        "images": 0,
+        "links": 3,
+        "headings": 2,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "mohammaddaoudfarooqi",
+      "profileUrl": "https://github.com/mohammaddaoudfarooqi",
+      "readmeUrl": "https://github.com/mohammaddaoudfarooqi/mohammaddaoudfarooqi/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "fddccc5a9e6280e43a1c5f403a25f12a2248aa97",
+        "characters": 2478,
+        "approximateWords": 250,
+        "images": 0,
+        "links": 9,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "Flipez",
+      "profileUrl": "https://github.com/Flipez",
+      "readmeUrl": "https://github.com/Flipez/flipez/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "1dce57a5ce0575b798559729e88f08ae0606c2bd",
+        "characters": 7704,
+        "approximateWords": 806,
+        "images": 0,
+        "links": 71,
+        "headings": 11,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "PragTob",
+      "profileUrl": "https://github.com/PragTob",
+      "readmeUrl": "https://github.com/PragTob/PragTob/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Evaluate density and purpose of visuals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "9a69b0fef03927e030453ee5d06f21e7122af492",
+        "characters": 4661,
+        "approximateWords": 228,
+        "images": 13,
+        "links": 37,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "benjamincanac",
+      "profileUrl": "https://github.com/benjamincanac",
+      "readmeUrl": "https://github.com/benjamincanac/benjamincanac/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Review concise communication of technology and public work",
+        "Text and project links are primary design signals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0f95465494aea27c54a9279fea9aa65637c45ec4",
+        "characters": 405,
+        "approximateWords": 41,
+        "images": 1,
+        "links": 4,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "AbhJ",
+      "profileUrl": "https://github.com/AbhJ",
+      "readmeUrl": "https://github.com/AbhJ/abhj/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Review detailed communication of technology and public work",
+        "Evaluate density and purpose of visuals"
+      ],
+      "avoidCopying": [
+        "Public organization membership is not independently verified employment",
+        "Do not copy personal writing or third-party assets"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "6251ac8ec4789a5e5de7db5decea834e66848683",
+        "characters": 3026,
+        "approximateWords": 145,
+        "images": 11,
+        "links": 31,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "akasrai",
+      "profileUrl": "https://github.com/akasrai",
+      "readmeUrl": "https://github.com/akasrai/akasrai/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 25 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b84b6f43cfb1c6fbe527b0789daae3e8ee352f26",
+        "characters": 572,
+        "approximateWords": 25,
+        "images": 1,
+        "links": 4,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "alwinw",
+      "profileUrl": "https://github.com/alwinw",
+      "readmeUrl": "https://github.com/alwinw/alwinw/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 4 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "c9c197243fab87b1fe4e6d384f0bffb50ecd4a43",
+        "characters": 4113,
+        "approximateWords": 4,
+        "images": 21,
+        "links": 38,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "anuraghazra",
+      "profileUrl": "https://github.com/anuraghazra",
+      "readmeUrl": "https://github.com/anuraghazra/anuraghazra/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 56 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "65cce5c9a31811ce50ae14ddc1c3f9b91612110b",
+        "characters": 2804,
+        "approximateWords": 56,
+        "images": 12,
+        "links": 20,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "aralroca",
+      "profileUrl": "https://github.com/aralroca",
+      "readmeUrl": "https://github.com/aralroca/aralroca/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 166 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a7f6684aa26643141f5251ef858a5e4ccd6de6c2",
+        "characters": 3416,
+        "approximateWords": 166,
+        "images": 7,
+        "links": 23,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "artogahr",
+      "profileUrl": "https://github.com/artogahr",
+      "readmeUrl": "https://github.com/artogahr/artogahr/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 19 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b1beede9063ae4553014274636cc78d9b43c324a",
+        "characters": 190,
+        "approximateWords": 19,
+        "images": 0,
+        "links": 2,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "arturssmirnovs",
+      "profileUrl": "https://github.com/arturssmirnovs",
+      "readmeUrl": "https://github.com/arturssmirnovs/arturssmirnovs/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 116 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "9ded82a05dd0acc79d3aaf572520b259bde0271e",
+        "characters": 1681,
+        "approximateWords": 116,
+        "images": 6,
+        "links": 11,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "athul",
+      "profileUrl": "https://github.com/athul",
+      "readmeUrl": "https://github.com/athul/athul/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 93 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d95c60828bf7d1d8fb7db9a309bc65e8b9a83fae",
+        "characters": 1000,
+        "approximateWords": 93,
+        "images": 0,
+        "links": 9,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "benjaminsampica",
+      "profileUrl": "https://github.com/benjaminsampica",
+      "readmeUrl": "https://github.com/benjaminsampica/benjaminsampica/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 102 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "187b503bbd42b841b833880f3fb71a646157ad3b",
+        "characters": 958,
+        "approximateWords": 102,
+        "images": 0,
+        "links": 5,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "d-koppenhagen",
+      "profileUrl": "https://github.com/d-koppenhagen",
+      "readmeUrl": "https://github.com/d-koppenhagen/d-koppenhagen/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 97 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "7f151af222c63e2828b833755ece9d3403bf2c9c",
+        "characters": 4019,
+        "approximateWords": 97,
+        "images": 6,
+        "links": 20,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "FaberSanZ",
+      "profileUrl": "https://github.com/FaberSanZ",
+      "readmeUrl": "https://github.com/FaberSanZ/FaberSanZ/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 5 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f8b66bfeb61647b6d95719902cbf251d441d8d46",
+        "characters": 354,
+        "approximateWords": 5,
+        "images": 3,
+        "links": 4,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jh3y",
+      "profileUrl": "https://github.com/jh3y",
+      "readmeUrl": "https://github.com/jh3y/jh3y/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 1 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ab3b2af6e089a5e49bb66eeb1a57ca4d97503ef1",
+        "characters": 92,
+        "approximateWords": 1,
+        "images": 1,
+        "links": 2,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "KevCui",
+      "profileUrl": "https://github.com/KevCui",
+      "readmeUrl": "https://github.com/KevCui/KevCui/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 0 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "627183cd202414d2ef66634aa9e440476a41491d",
+        "characters": 502,
+        "approximateWords": 0,
+        "images": 3,
+        "links": 6,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "AlexMartinFR",
+      "profileUrl": "https://github.com/AlexMartinFR",
+      "readmeUrl": "https://github.com/alexmartinfr/AlexMartinFR/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "36c8d96885afeb1fd05f7181814b0adc1615e353",
+        "characters": 1073,
+        "approximateWords": 152,
+        "images": 0,
+        "links": 5,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "andyruwruw",
+      "profileUrl": "https://github.com/andyruwruw",
+      "readmeUrl": "https://github.com/andyruwruw/andyruwruw/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "3778e5eb4e60c597c2adf8111658294edf552a72",
+        "characters": 1850,
+        "approximateWords": 45,
+        "images": 8,
+        "links": 11,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "arthurspk",
+      "profileUrl": "https://github.com/arthurspk",
+      "readmeUrl": "https://github.com/arthurspk/arthurspk/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b68fde61d222bc748bfa22aca03a5e9414d3cce1",
+        "characters": 3453,
+        "approximateWords": 379,
+        "images": 3,
+        "links": 9,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cheesits456",
+      "profileUrl": "https://github.com/cheesits456",
+      "readmeUrl": "https://github.com/cheesits456/cheesits456/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ad1c72563f929b64d43a3b8c0edfbacaf15fcf90",
+        "characters": 9073,
+        "approximateWords": 392,
+        "images": 31,
+        "links": 69,
+        "headings": 8,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "daniakash",
+      "profileUrl": "https://github.com/daniakash",
+      "readmeUrl": "https://github.com/DaniAkash/DaniAkash/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "10d27e4370722483bdf54618a267b52ba76cee62",
+        "characters": 2866,
+        "approximateWords": 369,
+        "images": 0,
+        "links": 17,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "dayyass",
+      "profileUrl": "https://github.com/dayyass",
+      "readmeUrl": "https://github.com/dayyass/dayyass/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "27ef2dfc9d3d876c5204de581c747a3402e43c1a",
+        "characters": 5466,
+        "approximateWords": 458,
+        "images": 4,
+        "links": 35,
+        "headings": 10,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "dereknguyen269",
+      "profileUrl": "https://github.com/dereknguyen269",
+      "readmeUrl": "https://github.com/dereknguyen269/dereknguyen269/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b57edc305dfb4adfd88a06cb61b2bf031cded649",
+        "characters": 4833,
+        "approximateWords": 393,
+        "images": 6,
+        "links": 29,
+        "headings": 8,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "f",
+      "profileUrl": "https://github.com/f",
+      "readmeUrl": "https://github.com/f/f/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "076dcc3531809bf69bb2fdb9dc8aa11ae7923f6e",
+        "characters": 1134,
+        "approximateWords": 165,
+        "images": 0,
+        "links": 8,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "filiptronicek",
+      "profileUrl": "https://github.com/filiptronicek",
+      "readmeUrl": "https://github.com/filiptronicek/filiptronicek/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "27458bdcffce13083e01601a7c772a124b9a0dd4",
+        "characters": 3159,
+        "approximateWords": 255,
+        "images": 1,
+        "links": 18,
+        "headings": 11,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "garimasingh128",
+      "profileUrl": "https://github.com/garimasingh128",
+      "readmeUrl": "https://github.com/garimasingh128/garimasingh128/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "5e2d3861d79bf5889cd364eb44595563d6af66de",
+        "characters": 2787,
+        "approximateWords": 321,
+        "images": 2,
+        "links": 7,
+        "headings": 5,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "gautamkrishnar",
+      "profileUrl": "https://github.com/gautamkrishnar",
+      "readmeUrl": "https://github.com/gautamkrishnar/gautamkrishnar/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "038fac878e8e5078deb35fa379f1f81bc0ef045c",
+        "characters": 31703,
+        "approximateWords": 987,
+        "images": 56,
+        "links": 138,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "halfrost",
+      "profileUrl": "https://github.com/halfrost",
+      "readmeUrl": "https://github.com/halfrost/halfrost/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "98edbf74bc8b9361e83a1bf1b27bf0f404a9dcd9",
+        "characters": 8796,
+        "approximateWords": 302,
+        "images": 35,
+        "links": 60,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "abhisheknaiidu",
+      "profileUrl": "https://github.com/abhisheknaiidu",
+      "readmeUrl": "https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "5ddfa4430a48ea2a120c15ad06e77202aeae0c8d",
+        "characters": 835,
+        "approximateWords": 62,
+        "images": 2,
+        "links": 3,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "Aveek-Saha",
+      "profileUrl": "https://github.com/Aveek-Saha",
+      "readmeUrl": "https://github.com/Aveek-Saha/aveek-saha/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0b3e9b76fa823e9fae4530b4abc5a8192e61d636",
+        "characters": 1474,
+        "approximateWords": 0,
+        "images": 6,
+        "links": 7,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "blackcater",
+      "profileUrl": "https://github.com/blackcater",
+      "readmeUrl": "https://github.com/blackcater/blackcater/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0cbda6853d90f284607425e4ece276d751a8fb98",
+        "characters": 3823,
+        "approximateWords": 88,
+        "images": 11,
+        "links": 28,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "codestackr",
+      "profileUrl": "https://github.com/codestackr",
+      "readmeUrl": "https://github.com/codeSTACKr/codeSTACKr/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b678e7886efc7c75214cd05c799cf153fa09f862",
+        "characters": 8921,
+        "approximateWords": 344,
+        "images": 33,
+        "links": 70,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cxyfreedom",
+      "profileUrl": "https://github.com/cxyfreedom",
+      "readmeUrl": "https://github.com/cxyfreedom/cxyfreedom/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "c36af5d9c1a29f11b2a9c9ee11a85b70283ae98b",
+        "characters": 8449,
+        "approximateWords": 215,
+        "images": 35,
+        "links": 61,
+        "headings": 5,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "imskr",
+      "profileUrl": "https://github.com/imskr",
+      "readmeUrl": "https://github.com/imskr/imskr/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "95e983081298667de83bf833a497554eca5a0fe7",
+        "characters": 3111,
+        "approximateWords": 190,
+        "images": 6,
+        "links": 23,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jgphilpott",
+      "profileUrl": "https://github.com/jgphilpott",
+      "readmeUrl": "https://github.com/jgphilpott/jgphilpott/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "21cc2a60ec3963354b3364d19bc9994c4632019e",
+        "characters": 3997,
+        "approximateWords": 5,
+        "images": 16,
+        "links": 25,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "kittinan",
+      "profileUrl": "https://github.com/kittinan",
+      "readmeUrl": "https://github.com/kittinan/kittinan/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "469e9cb75ad81d5d7fdb15d9b38036f586d2f0f3",
+        "characters": 449,
+        "approximateWords": 4,
+        "images": 2,
+        "links": 3,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "metalim",
+      "profileUrl": "https://github.com/metalim",
+      "readmeUrl": "https://github.com/metalim/metalim/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f5dd534471cbf0947e1df050e7b044a3e830c68c",
+        "characters": 2038,
+        "approximateWords": 143,
+        "images": 2,
+        "links": 25,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "moepoi",
+      "profileUrl": "https://github.com/moepoi",
+      "readmeUrl": "https://github.com/moepoi/moepoi/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "1031d459d96a4f8b18e1ba6d00b7db9489470d0e",
+        "characters": 6122,
+        "approximateWords": 347,
+        "images": 13,
+        "links": 85,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "mokkapps",
+      "profileUrl": "https://github.com/mokkapps",
+      "readmeUrl": "https://github.com/Mokkapps/mokkapps/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a3dd6cb9f51f8a47ab5c08c75bbb202614690f0f",
+        "characters": 1041,
+        "approximateWords": 44,
+        "images": 4,
+        "links": 4,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "afc163",
+      "profileUrl": "https://github.com/afc163",
+      "readmeUrl": "https://github.com/afc163/afc163/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4830fa24acfc2c1394e18de0a4c2e8c2ea114d0a",
+        "characters": 107,
+        "approximateWords": 0,
+        "images": 1,
+        "links": 1,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "marcizhu",
+      "profileUrl": "https://github.com/marcizhu",
+      "readmeUrl": "https://github.com/marcizhu/marcizhu/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "88243ca79f47ab0f024258f8cbe89445679bc65d",
+        "characters": 14245,
+        "approximateWords": 396,
+        "images": 65,
+        "links": 63,
+        "headings": 2,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "natemoo-re",
+      "profileUrl": "https://github.com/natemoo-re",
+      "readmeUrl": "https://github.com/natemoo-re/natemoo-re/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "359c59b9c6a941aa91310f007fa9901535e4544a",
+        "characters": 2326,
+        "approximateWords": 128,
+        "images": 4,
+        "links": 16,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "onimur",
+      "profileUrl": "https://github.com/onimur",
+      "readmeUrl": "https://github.com/onimur/onimur/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ce5fe95bc70641a0e839c640a1e5354cee006b1f",
+        "characters": 4987,
+        "approximateWords": 100,
+        "images": 25,
+        "links": 43,
+        "headings": 2,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "swyxio",
+      "profileUrl": "https://github.com/swyxio",
+      "readmeUrl": "https://github.com/swyxio/swyxio/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Image",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study image composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d216fb786f4772b24233e31390f2557527cd5584",
+        "characters": 17703,
+        "approximateWords": 242,
+        "images": 112,
+        "links": 161,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "HwangTaehyun",
+      "profileUrl": "https://github.com/HwangTaehyun",
+      "readmeUrl": "https://github.com/HwangTaehyun/HwangTaehyun/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f7f7c9ddcf2623fe29d5a71772ee755dd11569f5",
+        "characters": 4228,
+        "approximateWords": 73,
+        "images": 22,
+        "links": 34,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "ileriayo",
+      "profileUrl": "https://github.com/ileriayo",
+      "readmeUrl": "https://github.com/Ileriayo/ileriayo/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ed96001e2cce018f32343ad8b328d8b24660de41",
+        "characters": 2778,
+        "approximateWords": 94,
+        "images": 10,
+        "links": 15,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "JessicaLim8",
+      "profileUrl": "https://github.com/JessicaLim8",
+      "readmeUrl": "https://github.com/JessicaLim8/JessicaLim8/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "66e6f5dbdd347a8760e498b3470363819d98bfa3",
+        "characters": 17938,
+        "approximateWords": 266,
+        "images": 95,
+        "links": 278,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "WaylonWalker",
+      "profileUrl": "https://github.com/WaylonWalker",
+      "readmeUrl": "https://github.com/WaylonWalker/WaylonWalker/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Innovative",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study innovative composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4b31e783735f7070b44cbde47ba777f6b01fb632",
+        "characters": 6197,
+        "approximateWords": 253,
+        "images": 21,
+        "links": 53,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "laohanme",
+      "profileUrl": "https://github.com/laohanme",
+      "readmeUrl": "https://github.com/laohanme/laohanme/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Code",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study code composition as an optional pattern rather than a default",
+        "Determine whether media clarifies genuinely inspectable engineering work"
+      ],
+      "avoidCopying": [
+        "Creative artwork may be original and must not be copied or embedded without rights",
+        "A visual-first profile can obscure real projects; do not imply it is universally recruiter-friendly"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "260dda09a6fcf40bb419b5554ef7838f457c0de3",
+        "characters": 600,
+        "approximateWords": 68,
+        "images": 0,
+        "links": 1,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
     }
-  ]
+  ],
+  "survey": {
+    "targetTotal": 100,
+    "completed": 100,
+    "curatedReadingFocus": "GitHub profile README presentation; 100 different developer accounts, not an engineering credential certification.",
+    "directReadmeChecks": 88,
+    "priorVerifiedProfileChecks": 12,
+    "originCounts": {
+      "user-supplied-reference": 8,
+      "external-curated-research": 4,
+      "independent-verified-research": 88
+    },
+    "designDirectionCounts": {
+      "expressive": 43,
+      "technical": 26,
+      "minimal": 24,
+      "barebones": 7
+    },
+    "checkingDate": "2026-11-12",
+    "primarySources": [
+      "https://github.com/ibbuilds/gh-aura/blob/main/research/ordinary-engineers-200.json",
+      "https://github.com/astra-intelligence/awesome-github-profile-readme-1",
+      "https://github.com/trending/developers?since=monthly"
+    ],
+    "trendingConstraint": "GitHub's monthly developers ranking was not accessible for verification. No candidate is labeled as ranked monthly trending; diversity comes from observed public READMEs and curated catalogs.",
+    "qualityConstraint": "Not an endorsement or hiring-quality rating. All entries require user editorial approval before influencing AI source selection.",
+    "autoApprovedCount": 0,
+    "assetPolicy": "No photos, screenshots, personal bios, readme files, or artwork copied. Only links, editorial notes, and observed count/hash metadata."
+  }
 }
