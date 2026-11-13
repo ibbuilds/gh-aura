@@ -2,7 +2,7 @@
 
 **Current published release: v1.18.0.** The [product plan](PRODUCT_PLAN.md) records implementation and acceptance separately. The owner will perform live account pilots after technical development; no real credentials are needed for fixture tests.
 
-The candidate implements the [whole-profile workflow](IMPROVE.md), including sidebar fields, README/assets, project coverage, private campaigns, two-account exercises, daily targets and owner-pinned agent execution. Local simulation is not proof of GitHub awards, private attribution or live client activation.
+The candidate implements the [whole-profile workflow](IMPROVE.md): sidebar fields, README/assets, empty profile setup, project coverage, one/two-account campaigns, calendar preview/targets and owner-pinned execution. Simulations do not prove GitHub awards, private attribution or live client activation.
 
 ## Candidate checks
 
