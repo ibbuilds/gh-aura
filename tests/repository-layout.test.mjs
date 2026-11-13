@@ -17,7 +17,6 @@ test('the first-run docs stay short and reference actual maintained files', () =
     'docs/ACTIVITY.md': 2500,
     'docs/ACHIEVEMENTS.md': 2500,
     'docs/BADGE_RUN.md': 2800,
-    'docs/PRODUCT_PLAN.md': 2700,
     'docs/ARCHITECTURE.md': 2000,
     'docs/RELEASE_READINESS.md': 2200,
     'docs/RELEASE_NOTES.md': 1200,
@@ -35,12 +34,11 @@ test('the first-run docs stay short and reference actual maintained files', () =
   }
 });
 
-test('legacy project-contributor collector is not in the current tree', () => {
-  assert.equal(existsSync(file('research/profiles.json')), false);
-  assert.equal(existsSync(file('scripts/research-profiles.mjs')), false);
-  assert.equal(existsSync(file('research/ordinary-engineers-200.json')), true);
-  assert.equal(existsSync(file('research/company-profiles.json')), true);
-  assert.equal(existsSync(file('research/employer-observations.json')), true);
+test('research evidence and collectors are archived outside the active product tree', () => {
+  assert.deepEqual(readdirSync(file('research')), ['README.md']);
+  assert.equal(existsSync(file('scripts/research-holistic-profiles.mjs')), false);
+  const manifest=JSON.parse(readFileSync(file('package.json'),'utf8'));
+  assert.equal(manifest.scripts['test:research'],'node scripts/verify-research-archive.mjs');
 });
 
 test('packaged surface is restricted to the runtime and essential documentation', () => {

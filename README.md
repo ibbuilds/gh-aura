@@ -1,69 +1,52 @@
 # GH Aura
 
-**Local-first GitHub profile toolkit, with optional AI.** Create and review original READMEs using the standalone CLI, or bring your own AI for more flexible composition. GH Aura supplies verified public context, curated patterns, technical resources and human-controlled publishing—not fixed templates.
+**Improve your GitHub profile with your preferred AI or the standalone CLI.**
 
-**Node.js 22+ · Free · Zero runtime dependencies**
+GH Aura brings together original README composition, biography guidance, relevant public projects, achievement eligibility and contribution-calendar tools. The goal is a coherent profile that communicates your actual work in your chosen style.
+
+**Node.js 22+ · Free · Zero runtime dependencies · Local-first**
 
 ## Install
 
-[Latest GitHub Release](https://github.com/ibbuilds/gh-aura/releases/latest), or:
+Download the [latest GitHub Release](https://github.com/ibbuilds/gh-aura/releases/latest), or:
 
-```bash
-git clone https://github.com/ibbuilds/gh-aura.git
-cd gh-aura
-npm link
-gh-aura init USERNAME
-```
+    git clone https://github.com/ibbuilds/gh-aura.git
+    cd gh-aura
+    npm link
+    gh-aura init USERNAME
 
-## Build a profile with or without AI
+## Use with your AI
 
-The traditional CLI works by itself; you can inspect **25 provisional README composition examples** from a preserved 100-README study. Full-profile research is expanding to 500+ candidates, including avatars, biographies, pins, contribution graphs and achievements. References inform original patterns, not copied READMEs.
+Connect a compatible MCP client to the local stdio command **gh-aura mcp**, or load the [portable Agent Skill](skills/gh-aura-profile/SKILL.md).
 
-```bash
-gh-aura sources profiles --json
-gh-aura sources patterns --query "sistemas backend" --direction technical --json
-gh-aura check --file draft.md --professional --goal general --json
-```
+    gh-aura agent capabilities --json
+    gh-aura brief --prompt --direction technical --output prompt.md
+    gh-aura sources design --query "terminal retro" --json
 
-## Optional AI connection
+Your AI can inspect public evidence, refine an editable profile specification, choose composition techniques, guide biography writing and validate an original draft. Current agent tools are read-only; full authorized execution is part of the delivery plan.
 
-Connect an MCP-compatible client to `gh-aura mcp`:
+## Use the CLI directly
 
-```json
-{"mcpServers":{"gh-aura":{"command":"gh-aura","args":["mcp"]}}}
-```
+    gh-aura readme minimal --output draft.md
+    gh-aura agent bio --voice technical --bio-words 70
+    gh-aura pins --goal "backend engineer"
+    gh-aura badges free
+    gh-aura activity 2022
 
-Alternatively, load the [Agent Skill](skills/gh-aura-profile/SKILL.md), or export a portable prompt. Tell your AI what you want in ordinary language; the layout and biography remain yours.
+Bio guidance currently targets prose; updating the account's sidebar bio is pending. Pins are recommendations. Optional synthetic Activity/Badges exercises use one owned, marked private workspace and separately reviewed plans; GitHub determines contribution attribution and awards.
 
-```bash
-gh-aura sources recommend --query "biografía minimalista" --json
-gh-aura sources design --query "terminal retro" --direction expressive --json
-gh-aura agent bio --voice technical --focus engineering --bio-words 70
-gh-aura agent spec --direction technical --visual-brief "Clean, original, 2 projects"
-gh-aura brief --prompt --direction technical --output prompt.md
-```
+## Review and publish a README
 
-**29 curated resources and 25 layout techniques**, plus optional user-supplied resources in a local JSON file. External image providers are opt-in; GitHub's Markdown rules still apply. No AI vendor, paid API or template is required.
+    gh-aura check --file draft.md --professional --goal hiring
+    gh-aura preview --file draft.md --save review.json
+    gh-aura apply --review review.json --pr
 
-## Traditional CLI
+The owner independently reviews and executes publication. A PR remains unmerged.
 
-```bash
-gh-aura activity 2022           # Observed contributions
-gh-aura badges free             # Achievement eligibility
-gh-aura readme minimal -o me.md # Deterministic draft without AI
-gh-aura pins --goal "backend"   # Public project recommendations
-```
+## Product direction and evidence
 
-## Publish only after your own review
+The [detailed delivery plan](https://github.com/ibbuilds/gh-aura/blob/main/docs/PRODUCT_PLAN.md) defines the complete profile journey, remaining work, dependencies and acceptance criteria. Historical research is [preserved at an immutable checkpoint](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research); provisional examples are reading references, not certified winners or templates.
 
-```bash
-gh-aura check --file me.md
-gh-aura preview --file me.md --save review.json
-gh-aura apply --review review.json --pr
-```
+[CLI and MCP setup](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md) · [Security](SECURITY.md) · [Release gates](https://github.com/ibbuilds/gh-aura/blob/main/docs/RELEASE_READINESS.md)
 
-The AI **cannot approve or publish**. `--pr` opens a reviewable, unmerged PR. Pins remain manual. Optional Activity/Badge exercises use one owned, marked private workspace and separate approvals; GitHub does not guarantee awards.
-
-[AI and CLI](docs/CLI.md) · [Source/biography safety](SECURITY.md) · [Product status](docs/PRODUCT_PLAN.md)
-
-Only the newest GitHub Release retains downloadable assets; historical Git tags remain. MIT.
+MIT. No paid AI service or GitHub Pages required.

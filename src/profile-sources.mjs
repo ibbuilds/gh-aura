@@ -89,7 +89,7 @@ row('github-stats-extended','GitHub Stats Extended','visual',
  example:'Prefer GitHub’s native contribution graph unless the user requests a card.',
  limitations:'Dynamic image services can fail, expose metadata or display misleading metrics.'}),
 row('gh-aura-research','GH Aura ordinary-profile research','professional',
- 'https://github.com/ibbuilds/gh-aura/blob/main/research/ORDINARY_STUDY.md',
+ 'https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/ORDINARY_STUDY.md',
  ['hiring','minimal','barebones','technical','evidence'],{
  trust:'local-research',license:'GH Aura MIT repository; do not copy individual biographies',
  externalRequests:false,maintenance:'dated structural sample; not a live hiring study',

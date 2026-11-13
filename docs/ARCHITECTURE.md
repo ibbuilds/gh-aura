@@ -7,7 +7,7 @@ Node.js 22+ · ES modules · **zero runtime dependencies** · no cloud server.
 | CLI/configuration | `src/cli.mjs`, `src/config.mjs` |
 | Local MCP/agent tools | `src/mcp-server.mjs`, `src/agent-tools.mjs` |
 | Curated and custom sources | `src/profile-sources.mjs`, `src/profile-source-extra.mjs`, `src/profile-custom-sources.mjs` |
-| 25 curated patterns (100 preserved offline) | `src/profile-patterns.mjs`, `research/SELECTED_25.md` |
+| Provisional reading references | `src/profile-patterns.mjs`; [immutable research archive](../research/README.md) |
 | Offline professional heuristics | `src/profile-review.mjs` |
 | Intent, search and layout | `src/profile-query.mjs`, `src/profile-techniques.mjs`, `src/agent-profile.mjs` |
 | Biography and public evidence | `src/profile-biography.mjs`, `src/brief.mjs` |
@@ -20,3 +20,5 @@ MCP uses bounded local stdio. It provides evidence, source references and editab
 Markdown can be authored directly or by an optional chosen AI; GitHub supports GFM, images and restricted HTML, not arbitrary web app code. Human approval is required to publish. CI covers protocol, package and offline/local safety; production private-write acceptance is separate.
 
 [Commands](CLI.md) · [Security](../SECURITY.md)
+
+The [product plan](PRODUCT_PLAN.md) defines the target shared snapshot, specification, plan and execution result across README, identity, projects, badges and calendar. Current MCP tools remain read-only until that separate implementation is accepted.

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -12,40 +12,22 @@ import { runAgentTool } from '../src/agent-tools.mjs';
 import { handleMcpMessage } from '../src/mcp-server.mjs';
 import { recommendProfileTechniques } from '../src/profile-techniques.mjs';
 
-const bank=JSON.parse(readFileSync(new URL('../research/profile-design-references.json',import.meta.url),'utf8'));
 const cli=fileURLToPath(new URL('../src/cli.mjs',import.meta.url));
 const run=(args,cwd)=>spawnSync(process.execPath,[cli,...args],{
   cwd,encoding:'utf8',timeout:12000,maxBuffer:512*1024,
   env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:''},
 });
 
-test('all 100 unique original records remain unapproved and exactly 25 curated patterns are a safe subset',()=>{
-  assert.equal(bank.entries.length,100);
-  assert.equal(new Set(bank.entries.map(x=>x.id.toLowerCase())).size,100);
+test('runtime references remain bounded, distinct, provisional and attributed',()=>{
   assert.equal(CURATED_PROFILE_PATTERNS.length,25);
   assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(x=>x.id.toLowerCase())).size,25);
-  const original=new Map(bank.entries.map(x=>[x.id.toLowerCase(),x]));
-  const styles={barebones:0,minimal:0,technical:0,expressive:0};
   for(const row of CURATED_PROFILE_PATTERNS){
-    const source=original.get(row.id.toLowerCase());
-    assert.ok(source,row.id);
-    assert.equal(source.readmeUrl,row.readmeUrl);
-    assert.equal(source.reviewStatus,'pending-user-editorial-approval');
-    assert.equal(row.status.includes('provisional'),true);
-    assert.match(row.profileUrl,/^https:\/\/github\.com\//);
-    assert.match(row.readmeUrl,/\/README\.md$/);
+    assert.ok(row.status.includes('provisional'));
+    assert.equal(row.profileUrl,'https://github.com/'+row.id);
+    assert.ok(row.readmeUrl.toLowerCase().startsWith((row.profileUrl+'/'+row.id+'/blob/').toLowerCase()));
     assert.ok(row.learn&&row.avoid&&row.when);
-    assert.equal(row.license.includes('never copy'),true);
-    styles[row.direction]++;
+    assert.ok(row.license.includes('never copy'));
   }
-  assert.deepEqual(styles,{barebones:2,minimal:6,technical:8,expressive:9});
-  assert.equal(bank.entries.filter(x=>x.origin==='user-supplied-reference').length,8);
-  for(const id of ['yetone','poteto']){
-    assert.ok(original.has(id));
-    assert.ok(!CURATED_PROFILE_PATTERNS.some(x=>x.id===id));
-  }
-  const doc=readFileSync(new URL('../research/SELECTED_25.md',import.meta.url),'utf8');
-  assert.equal((doc.match(/^\| \[[^\]]+\]\(https:\/\/github\.com\//gm)||[]).length,25);
 });
 
 test('patterns are bounded and selected by intent, never copied from all 100',()=>{

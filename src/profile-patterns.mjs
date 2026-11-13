@@ -2,7 +2,7 @@ import { intentWords, intentMatchScore } from './profile-query.mjs';
 
 // Editorially curated *composition references*, not reusable templates or an endorsement
 // of any person's claims, employers, drawings, badges or online reputation.
-// The full 100-profile research corpus stays in research/ (not the installed CLI).
+// The full corpus is preserved at the immutable checkpoint linked in research/README.md.
 export const PROFILE_SHORTLIST_VERSION='2026-11-12.v1';
 export const PROFILE_SHORTLIST_STATUS='provisional-readme-only; holistic avatar/bio/pins/calendar/achievements/visual review missing';
 const candidates=[

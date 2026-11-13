@@ -13,7 +13,10 @@ function run(args, cwd = process.cwd()) {
   return result.stdout;
 }
 try {
-  const [packed] = JSON.parse(run(['pack', '--json', '--ignore-scripts', '--pack-destination', directory]));
+  const packing = JSON.parse(run(['pack', '--json', '--ignore-scripts', '--pack-destination', directory]));
+  // npm 10/11 return an array; npm 12 returns an object keyed by package name.
+  const packed = Array.isArray(packing) ? packing[0] : packing['gh-aura'];
+  assert.ok(packed && Array.isArray(packed.files), 'Unexpected npm pack JSON response.');
   assert.ok(packed.files.some((file) => file.path === 'src/cli.mjs'));
   for(const path of ['AGENTS.md','llms.txt','skills/gh-aura-profile/SKILL.md',
     'src/mcp-server.mjs','src/agent-tools.mjs','src/agent-profile.mjs',
