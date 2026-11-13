@@ -30,11 +30,11 @@ jobs:
           const body=await r.json();console.log(JSON.stringify({http:r.status,hasUser:!!body.data?.user,
             errors:(body.errors||[]).map(x=>({type:x.type,message:String(x.message||'').slice(0,180)}))}));
           JS
-      - name: Collect five public profile snapshots with bounded read-only queries
+      - name: Collect one public profile snapshot with bounded read-only queries
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/research-holistic-profiles.mjs --start 0 --limit 5 --batch-size 5 --budget 2 --output pilot.json
+          node scripts/research-holistic-profiles.mjs --start 0 --limit 1 --batch-size 1 --budget 2 --output pilot.json
           node -e "const j=require('./pilot.json'); console.log(JSON.stringify({responded:j.responded,requested:j.requested,requests:j.requests,completeVisualReviews:0}))"
