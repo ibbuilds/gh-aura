@@ -1,6 +1,6 @@
 # GH Aura — 25 selected composition references
 
-**Scope:** 25 editorial examples chosen from [100 distinct public profile READMEs](PROFILE_REFERENCES.md) checked on 2026-11-12. The original eight user-provided examples remain in the 100-entry research bank. This is a **curated pattern shortlist**, not a ranking of technical ability, hiring outcomes or verified professional identity.
+**SUPERSEDED AS FINAL SELECTION:** This is a provisional README-only pilot; **not** 25 fully analyzed GitHub profiles. See [holistic profile study](HOLISTIC_PROFILE_STUDY.md). No automatic pattern insertion until the complete profile (avatar, sidebar, links, pins, activity, achievements and rendered README) is audited.\n\n**Scope:** 25 editorial examples chosen from [100 distinct public profile READMEs](PROFILE_REFERENCES.md) checked on 2026-11-12. The original eight user-provided examples remain in the 100-entry research bank. This is a **curated pattern shortlist**, not a ranking of technical ability, hiring outcomes or verified professional identity.
 
 The selection prioritizes work evidence, legible structure, distinct purposes and restrained dependence on third-party assets. Read-only GitHub links are references: **do not copy biography text, artwork, GIFs, photos, badges or personal claims**. Full rendered desktop/mobile and light/dark acceptance remains pending.
 
