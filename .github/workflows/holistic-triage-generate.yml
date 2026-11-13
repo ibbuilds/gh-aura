@@ -1,4 +1,4 @@
-name: Temporary offline holistic category report generation
+name: Temporary offline holistic category report generation (schema repaired)
 on:
   push:
     branches: [research/holistic-category-triage]
