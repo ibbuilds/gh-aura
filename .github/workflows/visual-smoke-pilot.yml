@@ -1,4 +1,4 @@
-name: Temporary GH Aura 4-view visual smoke pilot
+name: Temporary GH Aura 4-view visual smoke pilot (Chrome retry)
 on:
   push:
     branches: [research/holistic-visual-render-smoke]
@@ -18,6 +18,8 @@ jobs:
           node-version: '22'
           package-manager-cache: false
       - name: Verify four modes without retaining screenshots
+        env:
+          GH_AURA_CHROME: google-chrome
         shell: bash
         run: |
           set -euo pipefail
