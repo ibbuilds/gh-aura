@@ -1,0 +1,1371 @@
+{
+  "schema": "gh-aura-public-profile-page-observations-v1",
+  "start": 320,
+  "count": 20,
+  "note": "Partial third-party page extract from public GitHub user profiles. Not holistic audit; unknown facets intentionally unobserved.",
+  "observations": [
+    {
+      "login": "harkiratsm",
+      "url": "https://github.com/harkiratsm",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-10-23T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 3
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 5,
+        "items": [
+          {
+            "repo": "harkiratsm/daytona",
+            "url": "https://github.com/harkiratsm/daytona",
+            "descriptionPresent": true,
+            "lang": "Go"
+          },
+          {
+            "repo": "harkiratsm/meshery",
+            "url": "https://github.com/harkiratsm/meshery",
+            "descriptionPresent": true,
+            "lang": "Go"
+          },
+          {
+            "repo": "harkiratsm/meshkit",
+            "url": "https://github.com/harkiratsm/meshkit",
+            "descriptionPresent": true,
+            "lang": "Go"
+          },
+          {
+            "repo": "harkiratsm/documenso",
+            "url": "https://github.com/harkiratsm/documenso",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "harkiratsm/wheels-server",
+            "url": "https://github.com/harkiratsm/wheels-server",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Sarthak2143",
+      "url": "https://github.com/Sarthak2143",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2025-08-20T00:00:00Z",
+      "state": "incomplete-extraction",
+      "bio": {
+        "state": "not-observed",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "not-observed",
+        "hasWebsite": false,
+        "hasCompany": false,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "not-observed",
+        "countObserved": null,
+        "items": []
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Sagar0-0",
+      "url": "https://github.com/Sagar0-0",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-08-17T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": false,
+        "socialLinkCount": 4
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 6,
+        "items": [
+          {
+            "repo": "signalapp/Signal-Android",
+            "url": "https://github.com/signalapp/Signal-Android",
+            "descriptionPresent": true,
+            "lang": "Kotlin"
+          },
+          {
+            "repo": "GetStream/stream-chat-android",
+            "url": "https://github.com/GetStream/stream-chat-android",
+            "descriptionPresent": true,
+            "lang": "Kotlin"
+          },
+          {
+            "repo": "Sagar0-0/neopop-compose",
+            "url": "https://github.com/Sagar0-0/neopop-compose",
+            "descriptionPresent": true,
+            "lang": "Kotlin"
+          },
+          {
+            "repo": "Sagar0-0/Fluenty",
+            "url": "https://github.com/Sagar0-0/Fluenty",
+            "descriptionPresent": true,
+            "lang": "Kotlin"
+          },
+          {
+            "repo": "Sagar0-0/blurkit-compose",
+            "url": "https://github.com/Sagar0-0/blurkit-compose",
+            "descriptionPresent": true,
+            "lang": "Kotlin"
+          },
+          {
+            "repo": "kiwix/kiwix-android",
+            "url": "https://github.com/kiwix/kiwix-android",
+            "descriptionPresent": true,
+            "lang": "Kotlin"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "alexmihalache99",
+      "url": "https://github.com/alexmihalache99",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-11-13T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": false,
+        "socialLinkCount": 2
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 6,
+        "items": [
+          {
+            "repo": "AlexMihalache99/Workout-Tracker-iOS",
+            "url": "https://github.com/AlexMihalache99/Workout-Tracker-iOS",
+            "descriptionPresent": true,
+            "lang": "Swift"
+          },
+          {
+            "repo": "AlexMihalache99/AI_Agent",
+            "url": "https://github.com/AlexMihalache99/AI_Agent",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "AlexMihalache99/Ethereum-wallets-tracker",
+            "url": "https://github.com/AlexMihalache99/Ethereum-wallets-tracker",
+            "descriptionPresent": true,
+            "lang": "Python"
+          },
+          {
+            "repo": "AlexMihalache99/Sorting-Visualizer",
+            "url": "https://github.com/AlexMihalache99/Sorting-Visualizer",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "AlexMihalache99/Car-Price-Prediction",
+            "url": "https://github.com/AlexMihalache99/Car-Price-Prediction",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          },
+          {
+            "repo": "AlexMihalache99/Low-power-IoT-sensor",
+            "url": "https://github.com/AlexMihalache99/Low-power-IoT-sensor",
+            "descriptionPresent": true,
+            "lang": "C++"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Olanetsoft",
+      "url": "https://github.com/Olanetsoft",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-06-29T00:00:00Z",
+      "state": "incomplete-extraction",
+      "bio": {
+        "state": "not-observed",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "not-observed",
+        "hasWebsite": false,
+        "hasCompany": false,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "not-observed",
+        "countObserved": null,
+        "items": []
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Abdulwahid7027",
+      "url": "https://github.com/Abdulwahid7027",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-10-23T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": false,
+        "socialLinkCount": 1
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 5,
+        "items": [
+          {
+            "repo": "Abdulwahid7027/Book-Recommendation-System",
+            "url": "https://github.com/Abdulwahid7027/Book-Recommendation-System",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          },
+          {
+            "repo": "Abdulwahid7027/Medical-Cost-Prediction-Insurance-",
+            "url": "https://github.com/Abdulwahid7027/Medical-Cost-Prediction-Insurance-",
+            "descriptionPresent": true,
+            "lang": "Python"
+          },
+          {
+            "repo": "Abdulwahid7027/Klarzo_Website",
+            "url": "https://github.com/Abdulwahid7027/Klarzo_Website",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "Abdulwahid7027/CalmMind-AI",
+            "url": "https://github.com/Abdulwahid7027/CalmMind-AI",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "Abdulwahid7027/Frontend-Mini-Projects",
+            "url": "https://github.com/Abdulwahid7027/Frontend-Mini-Projects",
+            "descriptionPresent": true,
+            "lang": "CSS"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Rishabhrathore055",
+      "url": "https://github.com/Rishabhrathore055",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-11-13T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 4
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 5,
+        "items": [
+          {
+            "repo": "rishabhrathore055/DataScience",
+            "url": "https://github.com/rishabhrathore055/DataScience",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          },
+          {
+            "repo": "rishabhrathore055/DSA.",
+            "url": "https://github.com/rishabhrathore055/DSA.",
+            "descriptionPresent": true,
+            "lang": "Python"
+          },
+          {
+            "repo": "rishabhrathore055/Movie-Recommendation-app",
+            "url": "https://github.com/rishabhrathore055/Movie-Recommendation-app",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          },
+          {
+            "repo": "rishabhrathore055/end_to_end_ml_project",
+            "url": "https://github.com/rishabhrathore055/end_to_end_ml_project",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          },
+          {
+            "repo": "rishabhrathore055/Fake-News-Detection",
+            "url": "https://github.com/rishabhrathore055/Fake-News-Detection",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "tinoschroeter",
+      "url": "https://github.com/tinoschroeter",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-08-06T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": false
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 1
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 6,
+        "items": [
+          {
+            "repo": "tinoschroeter/asteroids",
+            "url": "https://github.com/tinoschroeter/asteroids",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "tinoschroeter/bash_on_steroids",
+            "url": "https://github.com/tinoschroeter/bash_on_steroids",
+            "descriptionPresent": true,
+            "lang": "CSS"
+          },
+          {
+            "repo": "tinoschroeter/k8s.homelab",
+            "url": "https://github.com/tinoschroeter/k8s.homelab",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "tinoschroeter/spacePods",
+            "url": "https://github.com/tinoschroeter/spacePods",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "tinoschroeter/Jirator",
+            "url": "https://github.com/tinoschroeter/Jirator",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "tinoschroeter/sealed-secrets.nvim",
+            "url": "https://github.com/tinoschroeter/sealed-secrets.nvim",
+            "descriptionPresent": true,
+            "lang": "Lua"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "SohamRatnaparkhi",
+      "url": "https://github.com/SohamRatnaparkhi",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-11-12T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": false,
+        "socialLinkCount": 3
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 5,
+        "items": [
+          {
+            "repo": "SohamRatnaparkhi/navigator-ai",
+            "url": "https://github.com/SohamRatnaparkhi/navigator-ai",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "SohamRatnaparkhi/blogx",
+            "url": "https://github.com/SohamRatnaparkhi/blogx",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "Blog-X/deca-org",
+            "url": "https://github.com/Blog-X/deca-org",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "SohamRatnaparkhi/Voice-Assistant",
+            "url": "https://github.com/SohamRatnaparkhi/Voice-Assistant",
+            "descriptionPresent": true,
+            "lang": "Python"
+          },
+          {
+            "repo": "SohamRatnaparkhi/gen-ai-hacs",
+            "url": "https://github.com/SohamRatnaparkhi/gen-ai-hacs",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Chayan-11",
+      "url": "https://github.com/Chayan-11",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2025-09-18T00:00:00Z",
+      "state": "incomplete-extraction",
+      "bio": {
+        "state": "not-observed",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "not-observed",
+        "hasWebsite": false,
+        "hasCompany": false,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "not-observed",
+        "countObserved": null,
+        "items": []
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "AnuragThePathak",
+      "url": "https://github.com/AnuragThePathak",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-10-11T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 3
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 2,
+        "items": [
+          {
+            "repo": "AnuragThePathak/subscription-management",
+            "url": "https://github.com/AnuragThePathak/subscription-management",
+            "descriptionPresent": true,
+            "lang": "Go"
+          },
+          {
+            "repo": "AnuragThePathak/darcula-theme",
+            "url": "https://github.com/AnuragThePathak/darcula-theme",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "charan-web",
+      "url": "https://github.com/charan-web",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2025-08-05T00:00:00Z",
+      "state": "incomplete-extraction",
+      "bio": {
+        "state": "not-observed",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "not-observed",
+        "hasWebsite": false,
+        "hasCompany": false,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "not-observed",
+        "countObserved": null,
+        "items": []
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "Pal-Sandeep",
+      "url": "https://github.com/Pal-Sandeep",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": null,
+      "state": "unavailable",
+      "bio": {
+        "state": "not-observed",
+        "hasFreeText": false
+      },
+      "sidebar": {
+        "state": "not-observed",
+        "hasWebsite": false,
+        "hasCompany": false,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "not-observed",
+        "countObserved": null,
+        "items": []
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": {
+        "type": "http_error",
+        "status": 404
+      }
+    },
+    {
+      "login": "victor-cody",
+      "url": "https://github.com/victor-cody",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-10-08T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 3
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 4,
+        "items": [
+          {
+            "repo": "victor-cody/cryptoranking",
+            "url": "https://github.com/victor-cody/cryptoranking",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "victor-cody/Shop-TM-e-commerce-store",
+            "url": "https://github.com/victor-cody/Shop-TM-e-commerce-store",
+            "descriptionPresent": true,
+            "lang": "Vue"
+          },
+          {
+            "repo": "victor-cody/plants-world-ecommerce",
+            "url": "https://github.com/victor-cody/plants-world-ecommerce",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "malgamves/CommunityWriterPrograms",
+            "url": "https://github.com/malgamves/CommunityWriterPrograms",
+            "descriptionPresent": true,
+            "lang": null
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "ifeanyichukwuOtiwa-sports",
+      "url": "https://github.com/ifeanyichukwuOtiwa-sports",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-11-13T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": false
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": false,
+        "hasCompany": true,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 4,
+        "items": [
+          {
+            "repo": "ifeanyichukwuOtiwa-sports/NigerianFinancialCalculator",
+            "url": "https://github.com/ifeanyichukwuOtiwa-sports/NigerianFinancialCalculator",
+            "descriptionPresent": true,
+            "lang": "Java"
+          },
+          {
+            "repo": "ifeanyichukwuOtiwa-sports/PawaTask",
+            "url": "https://github.com/ifeanyichukwuOtiwa-sports/PawaTask",
+            "descriptionPresent": true,
+            "lang": "Java"
+          },
+          {
+            "repo": "ifeanyichukwuOtiwa-sports/random-data-microservice",
+            "url": "https://github.com/ifeanyichukwuOtiwa-sports/random-data-microservice",
+            "descriptionPresent": true,
+            "lang": "Java"
+          },
+          {
+            "repo": "ifeanyichukwuOtiwa-sports/sample-spring-security-jwt-auth-application",
+            "url": "https://github.com/ifeanyichukwuOtiwa-sports/sample-spring-security-jwt-auth-application",
+            "descriptionPresent": true,
+            "lang": "Java"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "motasimmakki",
+      "url": "https://github.com/motasimmakki",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2025-09-18T00:00:00Z",
+      "state": "incomplete-extraction",
+      "bio": {
+        "state": "not-observed",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "not-observed",
+        "hasWebsite": false,
+        "hasCompany": false,
+        "socialLinkCount": 0
+      },
+      "pinned": {
+        "state": "not-observed",
+        "countObserved": null,
+        "items": []
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "oluwatobiss",
+      "url": "https://github.com/oluwatobiss",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-11-02T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 3
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 6,
+        "items": [
+          {
+            "repo": "release-it/conventional-changelog",
+            "url": "https://github.com/release-it/conventional-changelog",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "codesweetly/react-image-grid-gallery",
+            "url": "https://github.com/codesweetly/react-image-grid-gallery",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "ChurchApps/B1Admin",
+            "url": "https://github.com/ChurchApps/B1Admin",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "oluwatobiss/quote-otd",
+            "url": "https://github.com/oluwatobiss/quote-otd",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "oluwatobiss/zip-midnight-mlh-202605-hack",
+            "url": "https://github.com/oluwatobiss/zip-midnight-mlh-202605-hack",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          },
+          {
+            "repo": "oluwatobiss/postss-frontend",
+            "url": "https://github.com/oluwatobiss/postss-frontend",
+            "descriptionPresent": true,
+            "lang": "TypeScript"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "ShubhamJagtap2000",
+      "url": "https://github.com/ShubhamJagtap2000",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-10-07T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": false,
+        "hasCompany": true,
+        "socialLinkCount": 4
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 6,
+        "items": [
+          {
+            "repo": "ShubhamJagtap2000/Metasploit-Tutorial",
+            "url": "https://github.com/ShubhamJagtap2000/Metasploit-Tutorial",
+            "descriptionPresent": true,
+            "lang": null
+          },
+          {
+            "repo": "ShubhamJagtap2000/Networking-Essentials",
+            "url": "https://github.com/ShubhamJagtap2000/Networking-Essentials",
+            "descriptionPresent": true,
+            "lang": "CSS"
+          },
+          {
+            "repo": "ShubhamJagtap2000/Cross-site-Scripting",
+            "url": "https://github.com/ShubhamJagtap2000/Cross-site-Scripting",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "ShubhamJagtap2000/JavaScript-Basics",
+            "url": "https://github.com/ShubhamJagtap2000/JavaScript-Basics",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "ShubhamJagtap2000/Bash-Scripting",
+            "url": "https://github.com/ShubhamJagtap2000/Bash-Scripting",
+            "descriptionPresent": true,
+            "lang": "Shell"
+          },
+          {
+            "repo": "ShubhamJagtap2000/Crypto101",
+            "url": "https://github.com/ShubhamJagtap2000/Crypto101",
+            "descriptionPresent": true,
+            "lang": null
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "hossainrabbi",
+      "url": "https://github.com/hossainrabbi",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2025-12-23T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": true
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": false,
+        "socialLinkCount": 1
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 6,
+        "items": [
+          {
+            "repo": "hossainrabbi/smart-shopping",
+            "url": "https://github.com/hossainrabbi/smart-shopping",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "hossainrabbi/pin-matcher",
+            "url": "https://github.com/hossainrabbi/pin-matcher",
+            "descriptionPresent": true,
+            "lang": "HTML"
+          },
+          {
+            "repo": "hossainrabbi/my-tube",
+            "url": "https://github.com/hossainrabbi/my-tube",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "hossainrabbi/programming-hero-clone",
+            "url": "https://github.com/hossainrabbi/programming-hero-clone",
+            "descriptionPresent": true,
+            "lang": "HTML"
+          },
+          {
+            "repo": "hossainrabbi/calculator",
+            "url": "https://github.com/hossainrabbi/calculator",
+            "descriptionPresent": true,
+            "lang": "HTML"
+          },
+          {
+            "repo": "hossainrabbi/tailwind-css-landing-page",
+            "url": "https://github.com/hossainrabbi/tailwind-css-landing-page",
+            "descriptionPresent": true,
+            "lang": "CSS"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    },
+    {
+      "login": "rohansaini886",
+      "url": "https://github.com/rohansaini886",
+      "source": "public-github-profile-page-extraction",
+      "acquiredAt": "2026-07-12T00:00:00Z",
+      "state": "observed-partial-sidebar-and-pins",
+      "bio": {
+        "state": "partial-page-extract",
+        "hasFreeText": false
+      },
+      "sidebar": {
+        "state": "partial-observed",
+        "hasWebsite": true,
+        "hasCompany": true,
+        "socialLinkCount": 1
+      },
+      "pinned": {
+        "state": "page-pins-observed",
+        "countObserved": 5,
+        "items": [
+          {
+            "repo": "rohansaini886/rohansaini886",
+            "url": "https://github.com/rohansaini886/rohansaini886",
+            "descriptionPresent": true,
+            "lang": "Python"
+          },
+          {
+            "repo": "rohansaini886/Data-Science-For-Beginners",
+            "url": "https://github.com/rohansaini886/Data-Science-For-Beginners",
+            "descriptionPresent": true,
+            "lang": "Jupyter Notebook"
+          },
+          {
+            "repo": "rohansaini886/daily-dose-codeforces",
+            "url": "https://github.com/rohansaini886/daily-dose-codeforces",
+            "descriptionPresent": true,
+            "lang": "Python"
+          },
+          {
+            "repo": "rohansaini886/Web-Dev-For-Beginners",
+            "url": "https://github.com/rohansaini886/Web-Dev-For-Beginners",
+            "descriptionPresent": true,
+            "lang": "JavaScript"
+          },
+          {
+            "repo": "rohansaini886/Peer-Programming-Hub-CP-Winter_Camp",
+            "url": "https://github.com/rohansaini886/Peer-Programming-Hub-CP-Winter_Camp",
+            "descriptionPresent": true,
+            "lang": "C++"
+          }
+        ]
+      },
+      "avatar": {
+        "state": "not-observed"
+      },
+      "readme": {
+        "state": "not-observed-in-profile-extract"
+      },
+      "contributionCalendar": {
+        "state": "not-observed"
+      },
+      "achievements": {
+        "state": "not-observed"
+      },
+      "visualChecks": {
+        "desktopLight": false,
+        "desktopDark": false,
+        "mobileLight": false,
+        "mobileDark": false
+      },
+      "category": {
+        "primary": null,
+        "secondary": [],
+        "status": "unclassified-awaits-complete-evidence"
+      },
+      "error": null
+    }
+  ]
+}
