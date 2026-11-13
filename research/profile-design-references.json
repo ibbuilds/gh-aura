@@ -1944,12 +1944,372 @@
         "headings": 0,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "AlexMartinFR",
+      "profileUrl": "https://github.com/AlexMartinFR",
+      "readmeUrl": "https://github.com/alexmartinfr/AlexMartinFR/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "36c8d96885afeb1fd05f7181814b0adc1615e353",
+        "characters": 1073,
+        "approximateWords": 152,
+        "images": 0,
+        "links": 5,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "andyruwruw",
+      "profileUrl": "https://github.com/andyruwruw",
+      "readmeUrl": "https://github.com/andyruwruw/andyruwruw/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "3778e5eb4e60c597c2adf8111658294edf552a72",
+        "characters": 1850,
+        "approximateWords": 45,
+        "images": 8,
+        "links": 11,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "arthurspk",
+      "profileUrl": "https://github.com/arthurspk",
+      "readmeUrl": "https://github.com/arthurspk/arthurspk/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b68fde61d222bc748bfa22aca03a5e9414d3cce1",
+        "characters": 3453,
+        "approximateWords": 379,
+        "images": 3,
+        "links": 9,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cheesits456",
+      "profileUrl": "https://github.com/cheesits456",
+      "readmeUrl": "https://github.com/cheesits456/cheesits456/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ad1c72563f929b64d43a3b8c0edfbacaf15fcf90",
+        "characters": 9073,
+        "approximateWords": 392,
+        "images": 31,
+        "links": 69,
+        "headings": 8,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "daniakash",
+      "profileUrl": "https://github.com/daniakash",
+      "readmeUrl": "https://github.com/DaniAkash/DaniAkash/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "10d27e4370722483bdf54618a267b52ba76cee62",
+        "characters": 2866,
+        "approximateWords": 369,
+        "images": 0,
+        "links": 17,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "dayyass",
+      "profileUrl": "https://github.com/dayyass",
+      "readmeUrl": "https://github.com/dayyass/dayyass/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "27ef2dfc9d3d876c5204de581c747a3402e43c1a",
+        "characters": 5466,
+        "approximateWords": 458,
+        "images": 4,
+        "links": 35,
+        "headings": 10,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "dereknguyen269",
+      "profileUrl": "https://github.com/dereknguyen269",
+      "readmeUrl": "https://github.com/dereknguyen269/dereknguyen269/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b57edc305dfb4adfd88a06cb61b2bf031cded649",
+        "characters": 4833,
+        "approximateWords": 393,
+        "images": 6,
+        "links": 29,
+        "headings": 8,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "f",
+      "profileUrl": "https://github.com/f",
+      "readmeUrl": "https://github.com/f/f/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "076dcc3531809bf69bb2fdb9dc8aa11ae7923f6e",
+        "characters": 1134,
+        "approximateWords": 165,
+        "images": 0,
+        "links": 8,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "filiptronicek",
+      "profileUrl": "https://github.com/filiptronicek",
+      "readmeUrl": "https://github.com/filiptronicek/filiptronicek/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "27458bdcffce13083e01601a7c772a124b9a0dd4",
+        "characters": 3159,
+        "approximateWords": 255,
+        "images": 1,
+        "links": 18,
+        "headings": 11,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "garimasingh128",
+      "profileUrl": "https://github.com/garimasingh128",
+      "readmeUrl": "https://github.com/garimasingh128/garimasingh128/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "5e2d3861d79bf5889cd364eb44595563d6af66de",
+        "characters": 2787,
+        "approximateWords": 321,
+        "images": 2,
+        "links": 7,
+        "headings": 5,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "gautamkrishnar",
+      "profileUrl": "https://github.com/gautamkrishnar",
+      "readmeUrl": "https://github.com/gautamkrishnar/gautamkrishnar/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "038fac878e8e5078deb35fa379f1f81bc0ef045c",
+        "characters": 31703,
+        "approximateWords": 987,
+        "images": 56,
+        "links": 138,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "halfrost",
+      "profileUrl": "https://github.com/halfrost",
+      "readmeUrl": "https://github.com/halfrost/halfrost/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Descriptive",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Study how written explanations orient a visitor",
+        "Compare prose and project evidence against visual decoration"
+      ],
+      "avoidCopying": [
+        "Longer self-description is not automatically better",
+        "Do not import career claims, prose or imagery from another account"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "98edbf74bc8b9361e83a1bf1b27bf0f404a9dcd9",
+        "characters": 8796,
+        "approximateWords": 302,
+        "images": 35,
+        "links": 60,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 67,
+    "completed": 79,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
