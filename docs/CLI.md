@@ -5,6 +5,7 @@
 ## Works without AI
 
 ```bash
+gh-aura sources categories --json
 gh-aura sources profiles --json
 gh-aura sources profile SamuelSchlesinger --json
 gh-aura sources patterns --query "terminal retro" --direction expressive --json

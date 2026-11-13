@@ -4,7 +4,7 @@ import { intentWords, intentMatchScore } from './profile-query.mjs';
 // of any person's claims, employers, drawings, badges or online reputation.
 // The full 100-profile research corpus stays in research/ (not the installed CLI).
 export const PROFILE_SHORTLIST_VERSION='2026-11-12.v1';
-export const PROFILE_SHORTLIST_STATUS='editorial-shortlist; rendered light/dark/mobile acceptance pending';
+export const PROFILE_SHORTLIST_STATUS='provisional-readme-only; holistic avatar/bio/pins/calendar/achievements/visual review missing';
 const candidates=[
   {
     "id": "mattabate",
@@ -506,7 +506,7 @@ export function listCuratedProfiles({direction='',query=''}={}){
   const profiles=CURATED_PROFILE_PATTERNS.filter(item=>
     (!direction||item.direction===direction) && (!words.length||score(item)>0));
   return {version:PROFILE_SHORTLIST_VERSION, total:profiles.length,
-    corpusCount:100,approval:'editorially selected patterns; visual and independent-user acceptance pending',
+    corpusCount:100,approval:'Legacy 25 examples are provisional README-only choices, NOT best full profiles; holistic 500-profile curation pending',
     profiles, notice:'Original READMEs and claims are not templates or verified credentials.'};
 }
 // For briefs and agents, expose at most two *relevant* composition records. Never
@@ -525,5 +525,5 @@ export function recommendCuratedPatterns({query='',direction='minimal',limit=2}=
     profiles:matches.slice(0,limit).map(({item})=>({
       id:item.id,readmeUrl:item.readmeUrl,title:item.title,learn:item.learn,
       when:item.when,avoid:item.avoid,status:item.status,
-    })),note:'Read-only editorial patterns; not templates, code, artwork or professional endorsements. Verify GitHub rendering and rights before using visuals.'};
+    })),note:'LEGACY README-only pilot, not 25 best full profiles. Examples require avatar, bio, pins, contribution graph, achievements and rendered-layout review. Never copy source text or art.'};
 }

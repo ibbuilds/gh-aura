@@ -1,5 +1,7 @@
 # Research
 
+- [600 unique candidate accounts, not yet fully audited](profile-candidates-600.json) · [complete-profile methodology, eight style categories and evidence gates](HOLISTIC_PROFILE_STUDY.md). Target: at least 500 fully reviewed profiles with avatar, sidebar, READMEs, pins, contribution graphs and visible achievements. The earlier 25 selection is a provisional README-only pilot, not category winners.
+
 GH Aura uses versioned, **offline** structural references to inform profile presentation. Research is never collected in normal CLI use, and **no biography or README prose is copied**.
 
 - [100 verified public profile README examples](PROFILE_REFERENCES.md) · [structured reference bank](profile-design-references.json) (8 user supplied + 4 earlier + 88 newly checked; **all pending approval**, no copied assets).

@@ -6,6 +6,7 @@ import { makeBiographyGuide } from './profile-biography.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { findProfileSources, getProfileSource, listProfileSources } from './profile-sources.mjs';
 import { getCuratedProfile, listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
+import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
 
 const designOptions=options=>({
   query:options.query||'',direction:options.direction||'minimal',
@@ -16,6 +17,8 @@ export function runAgentCommand(command,options={}){
   const [action='list',id]=options.positional||[];
   if(command==='sources'){
     const sourceFile=options.catalog;
+    if(action==='categories')return emit({styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,
+      purposes:PROFILE_PURPOSES,status:'600 candidates discovered, not 500 full-profile audits; legacy 25 README-only samples remain provisional'},options);
     if(action==='profiles')return emit(listCuratedProfiles({
       direction:options.direction||'',query:options.query||'',
     }),options);
@@ -48,7 +51,7 @@ export function runAgentCommand(command,options={}){
           trust:item.trust,license:item.license,limitations:item.limitations}));
       return emit({...techniques,sources},options);
     }
-    throw Error('Use sources list, show ID, recommend, design, profiles, profile ID or patterns --query TEXT.');
+    throw Error('Use sources list, show ID, recommend, design, categories, profiles, profile ID or patterns --query TEXT.');
   }
   if(command==='agent'){
     if(action==='capabilities')return emit(agentCapabilities(),options);
