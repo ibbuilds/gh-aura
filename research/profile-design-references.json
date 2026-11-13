@@ -954,12 +954,342 @@
         "headings": 4,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "guicaulada",
+      "profileUrl": "https://github.com/guicaulada",
+      "readmeUrl": "https://github.com/guicaulada/guicaulada/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "08935caca34955b491e4af2c821a237874f50969",
+        "characters": 1921,
+        "approximateWords": 116,
+        "images": 6,
+        "links": 10,
+        "headings": 5,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "davidgcs",
+      "profileUrl": "https://github.com/davidgcs",
+      "readmeUrl": "https://github.com/davidgcs/davidgcs/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d335cd2cac6fc74b8825426b32036d8d185a4335",
+        "characters": 6820,
+        "approximateWords": 438,
+        "images": 18,
+        "links": 33,
+        "headings": 12,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "sreeram-venkitesh",
+      "profileUrl": "https://github.com/sreeram-venkitesh",
+      "readmeUrl": "https://github.com/sreeram-venkitesh/sreeram-venkitesh/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "42ec28c1cce69b7bfc5df8c25a6d32eea0a801c2",
+        "characters": 3881,
+        "approximateWords": 267,
+        "images": 8,
+        "links": 19,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "pkosiec",
+      "profileUrl": "https://github.com/pkosiec",
+      "readmeUrl": "https://github.com/pkosiec/pkosiec/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "1384782d1ae29e0a23fceb884ce008094489f908",
+        "characters": 528,
+        "approximateWords": 52,
+        "images": 1,
+        "links": 2,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "Lykathia",
+      "profileUrl": "https://github.com/Lykathia",
+      "readmeUrl": "https://github.com/Lykathia/Lykathia/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "4363dd51961f42f98cd6b249a96fc5bef1f123a5",
+        "characters": 889,
+        "approximateWords": 39,
+        "images": 4,
+        "links": 9,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "midhun1998",
+      "profileUrl": "https://github.com/midhun1998",
+      "readmeUrl": "https://github.com/midhun1998/midhun1998/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Evaluate whether imagery supports or distracts from project evidence"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "de0beef9b8678f49050cb007f4e443c3fa046c89",
+        "characters": 1630,
+        "approximateWords": 98,
+        "images": 7,
+        "links": 10,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "viveknigam3003",
+      "profileUrl": "https://github.com/viveknigam3003",
+      "readmeUrl": "https://github.com/viveknigam3003/viveknigam3003/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b30ff437c0e33daa704c0a5a2130ec00a5164bb1",
+        "characters": 2033,
+        "approximateWords": 219,
+        "images": 1,
+        "links": 8,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "guichristovao",
+      "profileUrl": "https://github.com/guichristovao",
+      "readmeUrl": "https://github.com/guichristovao/guichristovao/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "e4bde48df121c9fcb20196f8951f886ed6673c29",
+        "characters": 746,
+        "approximateWords": 54,
+        "images": 2,
+        "links": 6,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "icyJoseph",
+      "profileUrl": "https://github.com/icyJoseph",
+      "readmeUrl": "https://github.com/icyJoseph/icyJoseph/blob/dev/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a more explanatory GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "fd4929e6cb82e96f44aa53c4481e5564659e34ce",
+        "characters": 1790,
+        "approximateWords": 162,
+        "images": 2,
+        "links": 19,
+        "headings": 10,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "gulducat",
+      "profileUrl": "https://github.com/gulducat",
+      "readmeUrl": "https://github.com/gulducat/gulducat/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ac3a2968a8b3fa1650620e7094d8456e9450b7ef",
+        "characters": 657,
+        "approximateWords": 97,
+        "images": 0,
+        "links": 2,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "james-elicx",
+      "profileUrl": "https://github.com/james-elicx",
+      "readmeUrl": "https://github.com/james-elicx/james-elicx/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "GH Aura ordinary-engineering cohort (public affiliations not verified employment)",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "core",
+      "favorablePatterns": [
+        "Observe a compact GitHub README composition",
+        "Inspect link hierarchy and evidence presentation"
+      ],
+      "avoidCopying": [
+        "Do not infer verified employment from public organization signals",
+        "Do not copy biographies, styling assets, project achievements or personal facts"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ce5718e53f62dc30ff8b002e241acd549bea81dc",
+        "characters": 916,
+        "approximateWords": 80,
+        "images": 1,
+        "links": 7,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 34,
+    "completed": 45,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
