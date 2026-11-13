@@ -2304,12 +2304,342 @@
         "headings": 4,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "abhisheknaiidu",
+      "profileUrl": "https://github.com/abhisheknaiidu",
+      "readmeUrl": "https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "5ddfa4430a48ea2a120c15ad06e77202aeae0c8d",
+        "characters": 835,
+        "approximateWords": 62,
+        "images": 2,
+        "links": 3,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "Aveek-Saha",
+      "profileUrl": "https://github.com/Aveek-Saha",
+      "readmeUrl": "https://github.com/Aveek-Saha/aveek-saha/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0b3e9b76fa823e9fae4530b4abc5a8192e61d636",
+        "characters": 1474,
+        "approximateWords": 0,
+        "images": 6,
+        "links": 7,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "blackcater",
+      "profileUrl": "https://github.com/blackcater",
+      "readmeUrl": "https://github.com/blackcater/blackcater/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "0cbda6853d90f284607425e4ece276d751a8fb98",
+        "characters": 3823,
+        "approximateWords": 88,
+        "images": 11,
+        "links": 28,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "codestackr",
+      "profileUrl": "https://github.com/codestackr",
+      "readmeUrl": "https://github.com/codeSTACKr/codeSTACKr/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b678e7886efc7c75214cd05c799cf153fa09f862",
+        "characters": 8921,
+        "approximateWords": 344,
+        "images": 33,
+        "links": 70,
+        "headings": 6,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "cxyfreedom",
+      "profileUrl": "https://github.com/cxyfreedom",
+      "readmeUrl": "https://github.com/cxyfreedom/cxyfreedom/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "c36af5d9c1a29f11b2a9c9ee11a85b70283ae98b",
+        "characters": 8449,
+        "approximateWords": 215,
+        "images": 35,
+        "links": 61,
+        "headings": 5,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "imskr",
+      "profileUrl": "https://github.com/imskr",
+      "readmeUrl": "https://github.com/imskr/imskr/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "95e983081298667de83bf833a497554eca5a0fe7",
+        "characters": 3111,
+        "approximateWords": 190,
+        "images": 6,
+        "links": 23,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jgphilpott",
+      "profileUrl": "https://github.com/jgphilpott",
+      "readmeUrl": "https://github.com/jgphilpott/jgphilpott/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "21cc2a60ec3963354b3364d19bc9994c4632019e",
+        "characters": 3997,
+        "approximateWords": 5,
+        "images": 16,
+        "links": 25,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "kittinan",
+      "profileUrl": "https://github.com/kittinan",
+      "readmeUrl": "https://github.com/kittinan/kittinan/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "469e9cb75ad81d5d7fdb15d9b38036f586d2f0f3",
+        "characters": 449,
+        "approximateWords": 4,
+        "images": 2,
+        "links": 3,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "metalim",
+      "profileUrl": "https://github.com/metalim",
+      "readmeUrl": "https://github.com/metalim/metalim/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "technical",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f5dd534471cbf0947e1df050e7b044a3e830c68c",
+        "characters": 2038,
+        "approximateWords": 143,
+        "images": 2,
+        "links": 25,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "moepoi",
+      "profileUrl": "https://github.com/moepoi",
+      "readmeUrl": "https://github.com/moepoi/moepoi/blob/main/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "1031d459d96a4f8b18e1ba6d00b7db9489470d0e",
+        "characters": 6122,
+        "approximateWords": 347,
+        "images": 13,
+        "links": 85,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "mokkapps",
+      "profileUrl": "https://github.com/mokkapps",
+      "readmeUrl": "https://github.com/Mokkapps/mokkapps/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Dynamic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Investigate whether automatically refreshed information serves a clear reader need",
+        "Compare maintainability and information density with a static README"
+      ],
+      "avoidCopying": [
+        "Dynamic widgets and engagement counters are not default professional evidence",
+        "Never clone scripts, images, badges, text or automation workflows without permission"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a3dd6cb9f51f8a47ab5c08c75bbb202614690f0f",
+        "characters": 1041,
+        "approximateWords": 44,
+        "images": 4,
+        "links": 4,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 79,
+    "completed": 90,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
