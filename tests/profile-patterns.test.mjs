@@ -10,6 +10,7 @@ import { CURATED_PROFILE_PATTERNS, listCuratedProfiles, getCuratedProfile,
 import { professionalReview } from '../src/profile-review.mjs';
 import { runAgentTool } from '../src/agent-tools.mjs';
 import { handleMcpMessage } from '../src/mcp-server.mjs';
+import { recommendProfileTechniques } from '../src/profile-techniques.mjs';
 
 const bank=JSON.parse(readFileSync(new URL('../research/profile-design-references.json',import.meta.url),'utf8'));
 const cli=fileURLToPath(new URL('../src/cli.mjs',import.meta.url));
@@ -73,6 +74,15 @@ test('professional review gives specific, bounded observations instead of a made
   assert.equal(specific.goal,'research');
   assert.ok(specific.metrics.githubProjectLinks>=1);
   assert.throws(()=>professionalReview('# Any',{goal:'fake'}),/Unknown/);
+});
+
+test('third-party visual resources require both opt-in and a specific media request',()=>{
+  const general=recommendProfileTechniques({query:'backend engineer',direction:'technical',includeExternal:true});
+  assert.ok(general.techniques.every(x=>!x.thirdParty));
+  const icons=recommendProfileTechniques({query:'iconos',direction:'expressive',includeExternal:true});
+  assert.ok(icons.techniques.some(x=>x.thirdParty));
+  const blocked=recommendProfileTechniques({query:'iconos',direction:'expressive'});
+  assert.ok(blocked.techniques.every(x=>!x.thirdParty));
 });
 
 test('standalone offline CLI lists 25 and reviews without any agent',()=>{
