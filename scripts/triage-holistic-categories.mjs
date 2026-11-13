@@ -32,7 +32,7 @@ export function styleHypotheses(g,h,ref=null){
     if(words>=100&&imgs<=2)
       add('technical-editorial',2,'Text-first README merits detailed editorial inspection.');
     if(imgs>=3||(imgs>0&&words<35)){
-      add('visual-illustrated',11,imgs+' README image references; the visual meaning and rights remain unreviewed.');
+      add('visual-illustrated',13,imgs+' README image references; the visual meaning and rights remain unreviewed.');
       if(r.themeAwareImages>0)add('visual-illustrated',2,'Theme-aware images detected.');
     }
     if(r.remoteStatsImages>=2)
