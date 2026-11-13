@@ -1,4 +1,4 @@
-name: GH Aura profile research pilot (temporary, schema validation)
+name: GH Aura profile research pilot (public GraphQL)
 on:
   push:
     branches: [research/public-profile-observations-500]
@@ -17,36 +17,11 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
-      - name: Isolate GraphQL profile facet that fails (read-only)
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          node --input-type=module - <<'JS'
-          const parts=[
-            ['basic','login url name avatarUrl'],
-            ['sidebar','login url name avatarUrl bio company location websiteUrl status{message} socialAccounts(first:10){nodes{provider}}'],
-            ['pins','login pinnedItems(first:6,types:[REPOSITORY]){nodes{... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}}}}'],
-            ['gist','login pinnedItems(first:6,types:[REPOSITORY,GIST]){nodes{... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}} ... on Gist{name url description}}}'],
-            ['contributions','login contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}}'],
-            ['readme','login repository(name:$u){isPrivate object(expression:"HEAD:README.md"){... on Blob{oid byteSize text}}}'],
-            ['combined-minus-gist','login url avatarUrl name bio company location websiteUrl status{message} socialAccounts(first:10){nodes{provider}} pinnedItems(first:6,types:[REPOSITORY]){nodes{... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}}}} contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}} repository(name:$u){isPrivate object(expression:"HEAD:README.md"){... on Blob{oid byteSize text}}}']
-          ];
-          for(const [label,fields] of parts){
-            const q='query($u:String!){user(login:$u){'+fields+'}}';
-            const r=await fetch('https://api.github.com/graphql',{method:'POST',
-              headers:{Authorization:'Bearer '+process.env.GH_TOKEN,'Content-Type':'application/json',
-                Accept:'application/vnd.github+json','User-Agent':'gh-aura-research-pilot'},
-              body:JSON.stringify({query:q,variables:{u:'aaronccasanova'}})});
-            const body=await r.json();
-            console.log(JSON.stringify({label,http:r.status,hasUser:!!body.data?.user,
-              errors:(body.errors||[]).map(x=>({type:x.type,message:String(x.message||'').slice(0,110)}))}));
-          }
-          JS
-      - name: Collect one public profile snapshot with bounded read-only queries
+      - name: Collect five public profile snapshots with bounded read-only queries
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          node scripts/research-holistic-profiles.mjs --start 0 --limit 1 --batch-size 1 --budget 2 --output pilot.json
+          node scripts/research-holistic-profiles.mjs --start 0 --limit 5 --batch-size 5 --budget 2 --output pilot.json
           node -e "const j=require('./pilot.json'); console.log(JSON.stringify({responded:j.responded,requested:j.requested,requests:j.requests,completeVisualReviews:0}))"
