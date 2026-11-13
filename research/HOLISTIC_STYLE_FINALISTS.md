@@ -15,6 +15,10 @@ La comparación debe valorar el **conjunto del perfil**: avatar/identidad, biogr
 | Dashboard de datos | [gautamkrishnar](https://github.com/gautamkrishnar), [anuraghazra](https://github.com/anuraghazra), [Abiola-Farounbi](https://github.com/Abiola-Farounbi) | Casos contrastantes de métricas y widgets, **no recomendados aún como patrones predeterminados** | Contadores rotos, información irrelevante, dependencias frágiles o métricas engañosas |
 | Contenido dinámico | [simonw](https://github.com/simonw), [eugeneyan](https://github.com/eugeneyan), [Flipez](https://github.com/Flipez), [athul](https://github.com/athul) | Actualizaciones de releases, trabajo y publicaciones; en Simon se vio una presentación completa y unificada con sus pins y logros | Actualizaciones abandonadas, sobrecarga de bloques o mantenibilidad insuficiente |
 
+## Evidencia adicional tras las 600 pruebas de renderizado
+
+La [prueba técnica de cuatro vistas](VISUAL_RENDER_SMOKE.md) consiguió imágenes en escritorio/móvil y claro/oscuro para **562 cuentas**. Se identificaron **91 indicadores de imágenes visibles no cargadas**; **64** pertenecen al grupo provisional de dashboards. Por tanto, la presencia de contadores y gráficos **no** será una señal de elegibilidad profesional por sí sola. El orden de esta tabla sigue siendo una lista de finalistas para comparar, no una lista de ganadores. El informe no contiene licencias verificadas ni valoraciones individuales completas.
+
 ## Juicios editoriales comparables y límites
 
 **Direcciones con ejemplos especialmente informativos:** `minimal-text`, `technical-editorial`, `project-showcase`, `visual-illustrated` y `dynamic-content`. La diversidad es importante: una imagen o dashboard no deben imponerse a todo usuario.
