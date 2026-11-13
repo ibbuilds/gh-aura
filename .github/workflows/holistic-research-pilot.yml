@@ -17,18 +17,30 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
-      - name: Minimal authenticated public GraphQL user test (diagnostic only)
+      - name: Isolate GraphQL profile facet that fails (read-only)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           node --input-type=module - <<'JS'
-          const q='query($u:String!){user(login:$u){login url name avatarUrl}}';
-          const r=await fetch('https://api.github.com/graphql',{method:'POST',headers:{
-            Authorization:'Bearer '+process.env.GH_TOKEN,'Content-Type':'application/json',
-            Accept:'application/vnd.github+json','User-Agent':'gh-aura-research-pilot'},
-            body:JSON.stringify({query:q,variables:{u:'aaronccasanova'}})});
-          const body=await r.json();console.log(JSON.stringify({http:r.status,hasUser:!!body.data?.user,
-            errors:(body.errors||[]).map(x=>({type:x.type,message:String(x.message||'').slice(0,180)}))}));
+          const parts=[
+            ['basic','login url name avatarUrl'],
+            ['sidebar','login url name avatarUrl bio company location websiteUrl status{message} socialAccounts(first:10){nodes{provider}}'],
+            ['pins','login pinnedItems(first:6,types:[REPOSITORY]){nodes{... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}}}}'],
+            ['gist','login pinnedItems(first:6,types:[REPOSITORY,GIST]){nodes{... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}} ... on Gist{name url description}}}'],
+            ['contributions','login contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}}'],
+            ['readme','login repository(name:$u){isPrivate object(expression:"HEAD:README.md"){... on Blob{oid byteSize text}}}'],
+            ['combined-minus-gist','login url avatarUrl name bio company location websiteUrl status{message} socialAccounts(first:10){nodes{provider}} pinnedItems(first:6,types:[REPOSITORY]){nodes{... on Repository{nameWithOwner url description isPrivate isArchived isFork primaryLanguage{name}}}} contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount}}}} repository(name:$u){isPrivate object(expression:"HEAD:README.md"){... on Blob{oid byteSize text}}}']
+          ];
+          for(const [label,fields] of parts){
+            const q='query($u:String!){user(login:$u){'+fields+'}}';
+            const r=await fetch('https://api.github.com/graphql',{method:'POST',
+              headers:{Authorization:'Bearer '+process.env.GH_TOKEN,'Content-Type':'application/json',
+                Accept:'application/vnd.github+json','User-Agent':'gh-aura-research-pilot'},
+              body:JSON.stringify({query:q,variables:{u:'aaronccasanova'}})});
+            const body=await r.json();
+            console.log(JSON.stringify({label,http:r.status,hasUser:!!body.data?.user,
+              errors:(body.errors||[]).map(x=>({type:x.type,message:String(x.message||'').slice(0,110)}))}));
+          }
           JS
       - name: Collect one public profile snapshot with bounded read-only queries
         env:
