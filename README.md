@@ -17,7 +17,7 @@ gh-aura init USERNAME
 
 ## Build a profile with or without AI
 
-The traditional CLI works by itself; you can also inspect **25 curated composition references** selected from a preserved 100-profile study. References inform original patterns, not copied READMEs.
+The traditional CLI works by itself; you can inspect **25 provisional README composition examples** from a preserved 100-README study. Full-profile research is expanding to 500+ candidates, including avatars, biographies, pins, contribution graphs and achievements. References inform original patterns, not copied READMEs.
 
 ```bash
 gh-aura sources profiles --json
