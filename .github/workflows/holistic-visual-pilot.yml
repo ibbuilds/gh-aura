@@ -25,13 +25,5 @@ jobs:
             else
               cp "/tmp/${user}.png" "/tmp/${user}.jpg"
             fi
-            IMAGEUSER="$user" node --input-type=module - <<'JS'
-            import {readFileSync,statSync} from 'node:fs';
-            const name=process.env.IMAGEUSER;
-            const buf=readFileSync('/tmp/'+name+'.jpg');
-            const b64=buf.toString('base64');
-            const parts=b64.match(/.{1,6000}/g)||[];
-            console.log('GH_AURA_IMAGE_INFO:'+JSON.stringify({name,bytes:buf.length,parts:parts.length}));
-            for(let i=0;i<parts.length;i++)console.log('GH_AURA_IMAGE_PART_'+name+'_'+(i+1)+'_'+parts.length+':'+parts[i]);
-            JS
+            IMAGEUSER="$user" node -e 'const fs=require("fs");const name=process.env.IMAGEUSER;const buf=fs.readFileSync("/tmp/"+name+".jpg");const p=buf.toString("base64").match(/.{1,6000}/g)||[];console.log("GH_AURA_IMAGE_INFO:"+JSON.stringify({name,bytes:buf.length,parts:p.length}));p.forEach((v,i)=>console.log("GH_AURA_IMAGE_PART_"+name+"_"+(i+1)+"_"+p.length+":"+v));'
           done
