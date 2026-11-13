@@ -5,6 +5,7 @@ import { makeProfileSpec } from './agent-profile.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { findProfileSources, getProfileSource, listProfileSources } from './profile-sources.mjs';
+import { getCuratedProfile, listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
 
 const designOptions=options=>({
   query:options.query||'',direction:options.direction||'minimal',
@@ -15,6 +16,14 @@ export function runAgentCommand(command,options={}){
   const [action='list',id]=options.positional||[];
   if(command==='sources'){
     const sourceFile=options.catalog;
+    if(action==='profiles')return emit(listCuratedProfiles({
+      direction:options.direction||'',query:options.query||'',
+    }),options);
+    if(action==='profile')return emit(getCuratedProfile(id),options);
+    if(action==='patterns')return emit(recommendCuratedPatterns({
+      query:options.query||'',direction:options.direction||'minimal',
+      limit:options.limit===undefined?2:Number(options.limit),
+    }),options);
     if(action==='list'){
       const list=listProfileSources({sourceFile});
       if(options.format==='json'||options.output)return emit(list,options);
@@ -39,7 +48,7 @@ export function runAgentCommand(command,options={}){
           trust:item.trust,license:item.license,limitations:item.limitations}));
       return emit({...techniques,sources},options);
     }
-    throw Error('Use sources list, show ID, recommend --query TEXT or design --query TEXT.');
+    throw Error('Use sources list, show ID, recommend, design, profiles, profile ID or patterns --query TEXT.');
   }
   if(command==='agent'){
     if(action==='capabilities')return emit(agentCapabilities(),options);

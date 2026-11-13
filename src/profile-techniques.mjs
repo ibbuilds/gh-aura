@@ -7,6 +7,10 @@ const t=(id,title,medium,tags,opts={})=>Object.freeze({
   constraints:'Must remain legible on desktop/mobile and respect GitHub Markdown sanitization.',
   accessibility:'Use meaningful text links and alt text for non-decorative images.',
   thirdParty:false,risk:'low',sourceIds:['github-markdown'],
+  recommendationTier:opts.thirdParty?'explicit-request-only':
+    ['one-hero-image','small-project-screenshot','ascii-art','architecture-diagram',
+      'custom-svg','light-dark-image','code-portrait','project-table'].includes(id)?
+      'contextual':'recommended-by-default',
   ...opts,
 });
 export const PROFILE_TECHNIQUES=Object.freeze([
@@ -120,7 +124,14 @@ export function recommendProfileTechniques({query='',direction='minimal',include
   if(!Number.isInteger(limit)||limit<1||limit>25)
     throw Error('Technique limit must be 1..25.');
   const words=intentWords(query);
-  const ranked=PROFILE_TECHNIQUES.filter(t=>includeExternal||!t.thirdParty)
+  const specificMediaTerms=new Set(['icon','icons','iconos','logo','logos','logotipos','insignia',
+    'insignias','badge','badges','streak','estadistica','estadisticas','statistics','stats',
+    'tarjetas','cards','chart','graph','gif','typing','animacion','animation','banner','cabecera',
+    'capsule','header','gradient','gradiente']);
+  const explicitMediaRequest=query.normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase().split(/[^a-z0-9]+/).some(word=>specificMediaTerms.has(word));
+  const ranked=PROFILE_TECHNIQUES.filter(t=>!t.thirdParty||
+    (includeExternal&&explicitMediaRequest))
     .map(item=>{const match=intentMatchScore(item,words);
       return {item,match,score:match+(item.tags.includes(direction)?4:0)+
         (item.risk==='low'?2:0)};})

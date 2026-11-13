@@ -56,12 +56,6 @@ row('github-actions','GitHub Actions status checks','engineering',
  use:'Link to genuinely passing automated checks, when they exist.',
  example:'Add a CI status link for one verified project, not a fabricated green badge.',
  limitations:'A workflow file alone does not prove tests pass.'}),
-row('github-pages','GitHub Pages','engineering',
- 'https://docs.github.com/en/pages',
- ['demo','website','project','portfolio','technical'],{
- use:'Link an independently published, relevant live demo if it exists.',
- example:'Provide the demo URL beside the GitHub repository.',
- limitations:'A deployed page is optional; content may be outdated or unavailable.'}),
 row('shields','Shields.io','visual',
  'https://shields.io/docs/',
  ['badge','status','ci','visual','expressive','technical'],{

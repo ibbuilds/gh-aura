@@ -90,7 +90,7 @@ export function makeProfileSpec(options={},config=DEFAULT_CONFIG){
     findProfileSources({direction,includeExternal,limit:6}).sources;
   return {
     format:PROFILE_SPEC_FORMAT,
-    purpose:'Create a custom, evidence-grounded, hiring-oriented GitHub README. This is an editable intent, not a Markdown template.',
+    purpose:'Create a custom, evidence-grounded GitHub README for the owner’s chosen goal. This is editable intent, not a Markdown template or a hiring-only workflow.',
     direction:intent.name,language,goal:role,maxWords,sections,maxProjects,featured,links,
     visualBrief,mediaReferences,biography,
     includeExternal,sourceIds:fallbacks.map(x=>x.id),notes,

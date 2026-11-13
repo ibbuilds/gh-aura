@@ -2,20 +2,24 @@
 
 **Current release:** v1.18.0
 
-GH Aura is an **AI-first, model-agnostic GitHub profile toolkit** with a traditional dependency-free CLI. It helps people show genuine work clearly, in their own style.
+GH Aura is a **local-first, model-agnostic GitHub profile toolkit** with a complete dependency-free CLI and optional AI integrations. It helps people show genuine work clearly, in their own style.
 
 | Area | Delivered | Still unverified |
 | --- | --- | --- |
-| README | Original AI briefs, editable composition, **30 curated sources**, **25 techniques**, optional custom resources, biography voice and evidence, safe local preview | Real-agent and user usability |
+| README | Original AI briefs, editable composition, **29 active sources**, **25 techniques**, optional custom resources, biography voice and evidence, safe local preview | Real-agent and user usability |
 | Pins | Rank real public projects against target roles | Owner manually pins |
 | Activity | Read contribution history; bounded synthetic private plans | Real contribution attribution |
 | Badges | Catalog, three private event candidates, verified-access preflight, atomic PR batching | GitHub awards on real accounts |
 
-## AI-first capabilities
+## Offline-first composition and optional AI
 
 The local MCP and Agent Skill expose read-only context, source/license discovery, original biography guidance, project evidence, independent visual controls, Markdown checks and diffs. Models can request arbitrary compositions within GitHub's Markdown limits: from plain text to custom original imagery. External services and user-provided source JSON are **opt-in**. No AI vendor or fixed README template is required.
 
 No AI tool can mint a publication approval or write to GitHub. The person independently saves the result and authorizes `preview` followed by `apply`.
+
+## Curated design research
+
+The 100-profile archive remains available; a **25-reference editorial shortlist** is packaged as small, original composition guidance for CLI and optional agents. It is not a collection of templates. Desktop/mobile light/dark and independent user validation are still pending. No GitHub Pages product surface is planned.
 
 ## External acceptance
 

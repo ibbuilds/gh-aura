@@ -1,6 +1,6 @@
 # GH Aura
 
-**AI-first GitHub profile toolkit.** Create an original, professional README with your own AI. GH Aura provides real project context, composition techniques, curated resources, biography controls and read-only previews—not fixed templates.
+**Local-first GitHub profile toolkit, with optional AI.** Create and review original READMEs using the standalone CLI, or bring your own AI for more flexible composition. GH Aura supplies verified public context, curated patterns, technical resources and human-controlled publishing—not fixed templates.
 
 **Node.js 22+ · Free · Zero runtime dependencies**
 
@@ -15,7 +15,17 @@ npm link
 gh-aura init USERNAME
 ```
 
-## Build with any AI
+## Build a profile with or without AI
+
+The traditional CLI works by itself; you can also inspect **25 curated composition references** selected from a preserved 100-profile study. References inform original patterns, not copied READMEs.
+
+```bash
+gh-aura sources profiles --json
+gh-aura sources patterns --query "sistemas backend" --direction technical --json
+gh-aura check --file draft.md --professional --goal general --json
+```
+
+## Optional AI connection
 
 Connect an MCP-compatible client to `gh-aura mcp`:
 
@@ -33,7 +43,7 @@ gh-aura agent spec --direction technical --visual-brief "Clean, original, 2 proj
 gh-aura brief --prompt --direction technical --output prompt.md
 ```
 
-**30 curated references and 25 layout techniques**, plus optional user-supplied resources in a local JSON file. External image providers are opt-in; GitHub's Markdown rules still apply. No AI vendor, paid API or template is required.
+**29 curated resources and 25 layout techniques**, plus optional user-supplied resources in a local JSON file. External image providers are opt-in; GitHub's Markdown rules still apply. No AI vendor, paid API or template is required.
 
 ## Traditional CLI
 

@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url';
 import { loadConfig } from './config.mjs';
 import { findProfileSources, getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
+import { listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
+import { professionalReview } from './profile-review.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
@@ -25,6 +27,15 @@ const tools=[
   ['gh_aura_design_recommend','Combine GitHub-compatible layout techniques with source links for a natural-language design request; no template or image is downloaded.',
     properties({query:str('Requested visual effect, density, biography, or composition (Spanish or English)',400),...art,
       includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:25}})],
+  ['gh_aura_profiles_list','List the 25 selected public README references for human inspection; no copies or external fetch.',
+    properties({query:str('Filter references by theme or role',400),
+      direction:{type:'string',enum:['barebones','minimal','technical','expressive']}})],
+  ['gh_aura_patterns_recommend','Recommend at most two original composition patterns from selected references. Read-only.',
+    properties({query:str('User design intent or role',400),...art,
+      limit:{type:'integer',minimum:1,maximum:2}})],
+  ['gh_aura_profile_professional_review','Run offline, goal-aware README quality heuristics without an invented recruiter score.',
+    properties({markdown:str('Proposed profile README',100000),
+      goal:{type:'string',enum:['general','hiring','research','open-source','creative']}},['markdown'])],
   ['gh_aura_biography_guide','Develop a unique professional biography from declared voice, perspective and evidence without inventing career claims.',
     properties({spec:{type:'object'},context:{type:'object'}})],
   ['gh_aura_profile_plan','Create a customizable profile intent specification, not a fixed Markdown template.',
@@ -79,7 +90,7 @@ export const AGENT_TOOL_DEFINITIONS=Object.freeze(tools.map(([name,description,i
 export function agentCapabilities(){
   return {format:AGENT_INTERFACE_VERSION,transport:['CLI','Agent Skills','MCP stdio 2026-07-28 and legacy 2025-11-25'],
     tools:AGENT_TOOL_DEFINITIONS,resources:[
-      'gh-aura://sources/catalog','gh-aura://techniques/catalog',
+      'gh-aura://sources/catalog','gh-aura://techniques/catalog','gh-aura://profiles/selected',
       'gh-aura://guide/profile','gh-aura://guide/biography',
       'gh-aura://capabilities'],
     prompts:['create_professional_profile','refine_existing_profile',
@@ -136,6 +147,12 @@ export async function runAgentTool(name,args={}){
         limitations:x.limitations}));
     return {...options,sources};
   }
+  if(name==='gh_aura_profiles_list')
+    return listCuratedProfiles(args);
+  if(name==='gh_aura_patterns_recommend')
+    return recommendCuratedPatterns(args);
+  if(name==='gh_aura_profile_professional_review')
+    return professionalReview(args.markdown,{goal:args.goal||'general'});
   if(name==='gh_aura_biography_guide'){
     const spec=args.spec?validateProfileSpec(args.spec):makeProfileSpec({},loadConfig());
     return makeBiographyGuide(spec.biography,args.context??null);
