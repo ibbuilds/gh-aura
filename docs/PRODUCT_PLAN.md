@@ -19,7 +19,7 @@ No AI tool can mint a publication approval or write to GitHub. The person indepe
 
 ## Curated design research
 
-The 100-README archive remains available, but its former **25-reference shortlist is provisional and no longer enters generated briefs by default**. A 600-candidate deduplicated pool targets 500 complete-profile reviews across avatar, bio, links, README, pinned work, visible contribution graph and achievements. Category winners require full editorial and visual validation. No GitHub Pages product surface is planned.
+The 100-README archive remains available, but its former **25-reference shortlist is provisional and no longer enters generated briefs by default**. Of 600 candidates, 561 have public GraphQL + HTML observations; 500 complete-profile reviews across avatar, bio, links, README, pins, activity and achievements still require editorial and mobile/theme checks. Category winners require full editorial and visual validation. No GitHub Pages product surface is planned.
 
 ## External acceptance
 
