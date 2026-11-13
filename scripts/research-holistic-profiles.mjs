@@ -131,21 +131,37 @@ export async function runResearch(argv=process.argv.slice(2)){
     throw Error('Requested batch exceeds the available candidates.');
   const subset=input.candidates.slice(opts.start,opts.start+opts.limit);
   const profiles=[],observedAt=new Date().toISOString();let requests=0;
-  for(let i=0;i<subset.length;i+=opts.batchSize){
-    const group=subset.slice(i,i+opts.batchSize);
+  async function collectGroup(group){
     const query=buildBatchQuery(group.map(x=>x.login));
-    let result;
-    for(let attempt=0;attempt<3;attempt++){
+    for(let attempt=0;attempt<2;attempt++){
       if(++requests>opts.budget)throw Error('Bounded research budget exhausted; no file written.');
-      try{result=await graphql(token,query);break;}
-      catch(error){
+      try{
+        const result=await graphql(token,query);
+        return group.map((candidate,n)=>
+          normalizePublicProfile(candidate.login,result['p'+n]||null,observedAt));
+      }catch(error){
         const transient=/HTTP (?:429|502|503|504)|Something went wrong while executing your query/.test(error.message);
-        if(!transient||attempt===2)throw error;
-        await new Promise(resolve=>setTimeout(resolve,(attempt+1)*1000));
+        if(!transient)throw error;
+        if(attempt===0){
+          await new Promise(resolve=>setTimeout(resolve,1000));
+          continue;
+        }
+        if(group.length===1)return [{login:group[0].login,
+          profileUrl:'https://github.com/'+group[0].login,
+          availability:'transient-github-api-unavailable',observedAt,complete:false,
+          missing:['avatar','biography','links','profileReadme','pinnedRepositories',
+            'contributionCalendar','achievements','visual review'],
+          note:'GitHub public GraphQL repeatedly returned a temporary error; no account state was inferred.'}];
+        const mid=Math.ceil(group.length/2);
+        return [...await collectGroup(group.slice(0,mid)),
+          ...await collectGroup(group.slice(mid))];
       }
     }
-    group.forEach((candidate,n)=>profiles.push(
-      normalizePublicProfile(candidate.login,result['p'+n]||null,observedAt)));
+    throw Error('Unreachable bounded research attempt.');
+  }
+  for(let i=0;i<subset.length;i+=opts.batchSize){
+    const group=subset.slice(i,i+opts.batchSize);
+    profiles.push(...await collectGroup(group));
   }
   const output={schema:'gh-aura-holistic-api-observation-batch-v1',observedAt,
     sourceRoster:'profile-candidates-600.json',start:opts.start,requested:subset.length,
