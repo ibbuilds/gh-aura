@@ -20,11 +20,11 @@ export const SPECS = {
   achievements: { usage: 'achievements [USER] [--scope all|free|attainable] [--plan] [--badge ID] [--private] [--prepare ID --repo OWNER/NAME]', flags: [...READ, 'format', 'output', 'force', 'scope', 'plan', 'badge', 'private', 'prepare', 'repo'], max: 1 },
   contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--local PATH --emails-file FILE] [--days] [--recover] [--plan]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'plan', 'local', 'emails-file', 'format', 'output', 'force', 'details'], max: 1 },
   brief: { usage: 'brief [USER] [--prompt] [--direction barebones|minimal|technical|expressive] [--external] [-o prompt.md]', flags: [...DATA, 'style', 'visual', 'direction', 'language', 'prompt', 'checks', 'external'], max: 1 },
-  check: { usage: 'check --file draft.md [--brief brief.json] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict'], max: 0 },
+  check: { usage: 'check --file draft.md [--professional --goal general|hiring|research|open-source|creative] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict', 'professional', 'goal'], max: 0 },
   diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
 };
 const VALUES = new Set(['catalog','visual-brief','voice','perspective','focus','bio-words','notes','category','query','max-words','max-projects','direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
-const FLAGS = new Set(['external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
+const FLAGS = new Set(['professional','external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
   'One-time setup:',
@@ -243,5 +243,8 @@ export function validateOptions(command, options) {
     if(options.focus&&!['engineering','research','products','open-source','learning','creative','custom'].includes(options.focus))
       throw Error('Invalid --focus value.');
   }
+  if (command === 'check' && (options.goal&&!options.professional ||
+      options.professional&&options.brief))
+    throw Error('Use --goal with --professional; a profile brief is not accepted in professional review mode.');
   if (command === 'brief' && ((options.prompt && options.format === 'json') || (!options.prompt && options.format === 'markdown'))) throw new Error('brief exports JSON; use --prompt for writing instructions, without --json.');
 }
