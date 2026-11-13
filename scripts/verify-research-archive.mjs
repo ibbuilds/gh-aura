@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { ORDINARY_REFERENCE, PROFILE_REFERENCE } from '../src/reference.mjs';
 import { CURATED_PROFILE_PATTERNS } from '../src/profile-patterns.mjs';
-import { correctVisualCollector } from './research-corrections.mjs';
+import { correctVisualCollector,RESEARCH_EXPORT_PATHS } from './research-corrections.mjs';
 
 const COMMIT = 'd978bbae0234b30390885fc17bb7f2b6d52bc21b';
 const root = dirname(fileURLToPath(new URL('../package.json', import.meta.url)));
@@ -31,7 +31,7 @@ catch {
 const directory = mkdtempSync(join(tmpdir(), 'gh-aura-research-verify-'));
 try {
   const archive = join(directory, 'checkpoint.tar');
-  run('git', ['archive', '--format=tar', '--output', archive, COMMIT]);
+  run('git', ['archive', '--format=tar', '--output', archive, COMMIT,...RESEARCH_EXPORT_PATHS]);
   run('tar', ['-xf', archive, '-C', directory]);
   const read = name => {
     const raw = readFileSync(join(directory, 'research', name));

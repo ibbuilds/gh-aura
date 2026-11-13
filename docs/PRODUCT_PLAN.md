@@ -27,6 +27,10 @@ Incremento posterior: el render nativo y los comandos README/brief/diff aceptan 
 
 El calendario conserva además el baseline diario suministrado y ofrece preview JSON/SVG por año mediante CLI/MCP. Distingue conteos conocidos, desconocidos, aportes y proyección; no garantiza colores ni atribución de GitHub.
 
+Reobservación corregida del 13-11-2026: **600 intentos, 562 capturas completas en cuatro vistas y 38 no disponibles**. Los 562 verificaron anchos 1200/390 y cambios de fondo claro/oscuro. **100 perfiles** mostraron imágenes visibles rotas; 71 pertenecen al triage histórico provisional de dashboard. Son observaciones nuevas en Edge 157 para Windows, no una atribución causal frente a los 91 avisos antiguos. Los datos y hashes quedan fuera del producto; [seguimiento #69](https://github.com/ibbuilds/gh-aura/issues/69).
+
+Se prepararon fuera del repositorio una cola de 600 fichas, ocho notas editoriales asistidas y dos principios candidatos. Ninguna ficha se convirtió en revisión integral aprobada: faltan comprobaciones de vistas, accesibilidad, derechos y atribución. `sources audit` muestra esas carencias; el compilador sigue bloqueando la activación. Las pruebas locales del incremento pasan **385/385**, además de 46/46 históricas, paquete instalado y regresión de navegador.
+
 ## 1. Objetivo acordado
 
 GH Aura debe permitir que una persona o su agente mejoren el **perfil completo de GitHub** de acuerdo con su rol, propósito y estilo: README, biografía y datos públicos, identidad visual, proyectos/pins, achievements disponibles y mapa de contribuciones.

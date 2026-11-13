@@ -2,6 +2,7 @@
 import { createHash } from 'node:crypto';
 
 export const RESEARCH_CHECKPOINT='d978bbae0234b30390885fc17bb7f2b6d52bc21b';
+export const RESEARCH_EXPORT_PATHS=Object.freeze(['research','scripts','src','tests','package.json','README.md','LICENSE']);
 export const VIEWPORT_CORRECTION='visible-image-height-v1';
 const before='r.top<innerWidth&&r.left<innerWidth&&r.right>0&&r.top<innerHeight';
 const after='r.top<innerHeight&&r.left<innerWidth&&r.right>0';

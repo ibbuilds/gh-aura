@@ -1,23 +1,24 @@
 // Export research OUTSIDE the product tree. Never edit the original checkpoint.
-import { mkdtempSync,readFileSync,writeFileSync,rmSync } from 'node:fs';
+import { mkdtempSync,readFileSync,writeFileSync,rmSync,realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname,join,resolve } from 'node:path';
+import { dirname,join,resolve,relative,isAbsolute,sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { RESEARCH_CHECKPOINT,correctVisualCollector } from './research-corrections.mjs';
+import { RESEARCH_CHECKPOINT,RESEARCH_EXPORT_PATHS,correctVisualCollector } from './research-corrections.mjs';
 
 export function prepareResearchWorkspace(){
-  const root=fileURLToPath(new URL('../',import.meta.url));
+  const root=realpathSync(fileURLToPath(new URL('../',import.meta.url))),scratchRoot=realpathSync(tmpdir()),location=relative(root,scratchRoot);
+  if(!isAbsolute(location)&&location.split(sep)[0]!=='..')throw Error('Research temporary storage must be outside the product checkout.');
   const run=(cmd,args)=>{
     const result=spawnSync(cmd,args,{cwd:root,encoding:'utf8',windowsHide:true,timeout:120000,maxBuffer:1024*1024});
     if(result.status!==0||result.error)throw Error('Research export failed: '+(result.error?.message||result.stderr||cmd));
   };
   run('git',['cat-file','-e',RESEARCH_CHECKPOINT+'^{commit}']);
-  const directory=mkdtempSync(join(tmpdir(),'gh-aura-research-work-'));
+  const directory=mkdtempSync(join(scratchRoot,'gh-aura-research-work-'));
   try{
     const archive=join(directory,'checkpoint.tar');
-    run('git',['archive','--format=tar','--output',archive,RESEARCH_CHECKPOINT]);run('tar',['-xf',archive,'-C',directory]);rmSync(archive);
+    run('git',['archive','--format=tar','--output',archive,RESEARCH_CHECKPOINT,...RESEARCH_EXPORT_PATHS]);run('tar',['-xf',archive,'-C',directory]);rmSync(archive);
     const script=join(directory,'scripts','visual-profile-smoke.mjs'),fixed=correctVisualCollector(readFileSync(script,'utf8'));
     const isolated=fixed.source.replace("'--headless','--no-sandbox',","'--headless',").replace("],{stdio:['ignore','ignore','pipe']});", "],{windowsHide:true,stdio:['ignore','ignore','pipe']});");
     if(isolated===fixed.source||isolated.includes("'--no-sandbox'"))throw Error('Unexpected archived browser launch contract.');
@@ -32,7 +33,7 @@ export function prepareResearchWorkspace(){
     writeFileSync(join(directory,'RESEARCH_CORRECTIONS.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx',mode:0o600});
     return result;
   }catch(error){
-    if(dirname(resolve(directory))!==resolve(tmpdir()))throw Error('Unexpected research scratch location.');
+    if(dirname(resolve(directory))!==scratchRoot)throw Error('Unexpected research scratch location.');
     rmSync(directory,{recursive:true,force:true,maxRetries:4,retryDelay:100});throw error;
   }
 }

@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync,rmSync } from 'node:fs';
+import { join } from 'node:path';
 import { correctVisualCollector,collectorExpression } from '../scripts/research-corrections.mjs';
 
 const expression=`(()=>{const imgs=[...document.querySelectorAll('img')].filter(x=>{const r=x.getBoundingClientRect();return r.width>2&&r.height>2&&r.bottom>0&&r.top<innerWidth&&r.left<innerWidth&&r.right>0&&r.top<innerHeight;});return {visibleImages:imgs.length,brokenVisibleImages:imgs.filter(x=>x.complete&&x.naturalWidth===0).length};})()`;
@@ -20,4 +23,13 @@ test('the repaired predicate retains width, height and viewport intersection gua
   assert.equal(runInNewContext(collectorExpression(fixed.source),context).visibleImages,1);
   assert.notEqual(fixed.correction.beforeSha256,fixed.correction.afterSha256);
   assert.throws(()=>correctVisualCollector(fixed.source),/Unexpected/);assert.throws(()=>correctVisualCollector(source+source),/Unexpected/);
+});
+
+test('research preparation rejects a temporary directory configured inside the product checkout before export',()=>{
+  const nested=mkdtempSync(join(process.cwd(),'..gh-aura-test-'));
+  try{for(const directory of [process.cwd(),nested]){
+    const result=spawnSync(process.execPath,['--input-type=module','-e',"import {prepareResearchWorkspace} from './scripts/prepare-research-workspace.mjs'; prepareResearchWorkspace();"],
+      {encoding:'utf8',windowsHide:true,env:{...process.env,TEMP:directory,TMP:directory,TMPDIR:directory}});
+    assert.notEqual(result.status,0);assert.match(result.stderr,/outside the product checkout/);
+  }}finally{rmSync(nested,{recursive:true,force:true});}
 });
