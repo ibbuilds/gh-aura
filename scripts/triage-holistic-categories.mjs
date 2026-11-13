@@ -17,10 +17,17 @@ export function styleHypotheses(g,h,ref=null){
     described=(g.pinnedRepositories?.items||[]).filter(x=>x.descriptionPresent).length;
   const cues=new Map(IDS.map(x=>[x,{weight:0,reasons:[]}]));
   const add=(id,w,why)=>{const c=cues.get(id);c.weight+=w;c.reasons.push(why);};
-  if(r.state!=='observed'&&pins>=2)
-    add('native-no-readme',12,'No root README observed; '+pins+' pinned items. Missing is not proof of absence.');
-  else if(r.state!=='observed'&&g.biography?.present)
-    add('native-no-readme',6,'Sidebar supplies identity without a root README observed.');
+  const hasRenderedReadme=hr.state==='github-rendered-html-observed';
+  const hasAnyReadme=r.state==='observed'||hasRenderedReadme;
+  if(!hasAnyReadme&&pins>=2)
+    add('native-no-readme',12,'No root README in API OR rendered GitHub page; '+pins+' pinned items (not proof of permanent absence).');
+  else if(!hasAnyReadme&&g.biography?.present)
+    add('native-no-readme',6,'Sidebar supplies identity; root README was not observed in API or rendered page.');
+  if(r.state!=='observed'&&hasRenderedReadme){
+    if(hr.images>=3)add('visual-illustrated',13,'GitHub renders '+hr.images+' README images not returned by the earlier API observation.');
+    if(hr.headings>=2&&hr.links>=4)add('technical-editorial',8,'GitHub renders headings and links despite absent raw README metadata.');
+    if(hr.images<=1&&hr.headings<=2)add('minimal-text',6,'GitHub renders a low-image README; exact text and quality still need review.');
+  }
   if(r.state==='observed'){
     const words=r.approxWords??0,imgs=r.imageCount??0,heads=r.headings??0;
     if(words>=18&&words<=110&&imgs===0)
@@ -54,7 +61,7 @@ export function styleHypotheses(g,h,ref=null){
   }
   if(ref?.origin==='user-supplied-reference'&&r.state==='observed'){
     const hint=ref.designDirection;
-    if(hint==='technical')add('technical-editorial',12,'User-provided README was previously studied as technical; entire profile is not yet approved.');
+    if(hint==='technical')add('technical-editorial',15,'User-provided README was previously studied as technical; entire profile is not yet approved.');
     if(hint==='minimal'||hint==='barebones')add('minimal-text',12,'User-provided README was described as minimal/link-first; verify the whole profile.');
     if(hint==='expressive')add('visual-illustrated',6,'User-provided README was described as expressive; verify originality and profile-wide coherence.');
   }
