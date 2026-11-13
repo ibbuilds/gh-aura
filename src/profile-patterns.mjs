@@ -525,5 +525,5 @@ export function recommendCuratedPatterns({query='',direction='minimal',limit=2}=
     profiles:matches.slice(0,limit).map(({item})=>({
       id:item.id,readmeUrl:item.readmeUrl,title:item.title,learn:item.learn,
       when:item.when,avoid:item.avoid,status:item.status,
-    })),note:'Read-only editorial patterns; not templates, code, artwork or professional endorsements. Verify GitHub rendering and rights before using visuals.'};
+    })),note:'LEGACY README-only pilot, not 25 best full profiles. Examples require avatar, bio, pins, contribution graph, achievements and rendered-layout review. Never copy source text or art.'};
 }
