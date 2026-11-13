@@ -172,7 +172,7 @@ function main(argv){
   const roster=read(resolve(ROOT,'profile-candidates-600.json')),
     old=read(resolve(ROOT,'profile-design-references.json'));
   const result=buildHolisticTriage(roster,batchFiles('graphql-observations'),batchFiles('html-facets'),old);
-  writeFileSync(vals['--json'],JSON.stringify(result,null,2)+'\n',{flag:'wx',mode:0o600});
+  writeFileSync(vals['--json'],JSON.stringify(result)+'\n',{flag:'wx',mode:0o600});
   writeFileSync(vals['--markdown'],renderTriageReport(result),{flag:'wx',mode:0o600});
   process.stdout.write(JSON.stringify({counts:result.counts,
     groups:Object.fromEntries(Object.entries(result.groups).map(([k,v])=>[k,v.count]))})+'\n');
