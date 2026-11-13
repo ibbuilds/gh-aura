@@ -90,6 +90,31 @@ export function analyzeFourModeEvidence(roster,batches){
     records:accounts};
   return summary;
 }
+export function summarizeByProvisionalStyle(summary,triage){
+  if(summary.schema!=='gh-aura-public-render-smoke-summary-v1'||
+    triage.schema!=='gh-aura-holistic-category-triage-v1'||
+    summary.records.length!==600||triage.accounts.length!==600)
+    throw Error('Expected complete public profile visual smoke and provisional style corpora.');
+  const rows=new Map(summary.records.map(x=>[x.login.toLowerCase(),x]));
+  const groups={};
+  for(const account of triage.accounts){
+    const key=account.login.toLowerCase(),s=rows.get(key);
+    if(!s)throw Error('Missing profile from style analysis.');
+    const style=account.category?.primary||'unclassified';
+    const group=groups[style]||{candidates:0,fourViews:0,themeChanges:0,mobileOverflow:0,visibleBrokenImages:0,
+      incompleteSample:[]};
+    group.candidates++;
+    if(s.allFour)group.fourViews++;
+    if(s.themeChanged)group.themeChanges++;
+    if(s.mobileOverflow)group.mobileOverflow++;
+    if(s.visibleBrokenImages)group.visibleBrokenImages++;
+    if(!s.allFour&&group.incompleteSample.length<10)group.incompleteSample.push(account.login);
+    groups[style]=group;
+  }
+  return {schema:'gh-aura-technical-render-by-provisional-category-v1',
+    categories:groups,
+    caveat:'Styles are hypotheses; counts represent first-fold technical screenshot checks, not visual merit or reviewed final category winners.'};
+}
 function main(args){
   if(args.length!==1||!args[0].endsWith('.json')||existsSync(resolve(args[0])))
     throw Error('Supply one new .json output file');
@@ -100,6 +125,8 @@ function main(args){
   const files=readdirSync(dir).filter(x=>/^batch-\d{3}\.json$/.test(x)).sort();
   const batches=files.map(x=>read(resolve(dir,x)));
   const data=analyzeFourModeEvidence(roster,batches);
+  const triage=read(resolve(ROOT,'holistic-category-triage.json'));
+  data.styleDiagnostics=summarizeByProvisionalStyle(data,triage);
   writeFileSync(resolve(args[0]),JSON.stringify(data)+'\n',{flag:'wx',mode:0o600});
   process.stdout.write(JSON.stringify({counts:data.counts,
     incomplete:data.incomplete.length,overflows:data.overflowCandidates.length})+'\n');
