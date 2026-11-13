@@ -6,7 +6,7 @@ import {readFileSync,writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
 
-const URL='https://api.github.com/graphql';
+const API_URL='https://api.github.com/graphql';
 const DEFAULT_INPUT=new URL('../research/profile-candidates-600.json',import.meta.url);
 const cap=(v,n)=>String(v||'').slice(0,n);
 const count=(text,re)=>(text.match(re)||[]).length;
@@ -102,7 +102,7 @@ export function buildBatchQuery(logins){
   return {query:'query('+declarations+'){'+parts+'}',variables:Object.fromEntries(logins.map((x,i)=>['u'+i,x]))};
 }
 async function graphql(token,payload){
-  const res=await fetch(URL,{method:'POST',redirect:'error',signal:AbortSignal.timeout(25000),
+  const res=await fetch(API_URL,{method:'POST',redirect:'error',signal:AbortSignal.timeout(25000),
     headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',
       'User-Agent':'gh-aura-holistic-research','Accept':'application/vnd.github+json'},
     body:JSON.stringify(payload)});
