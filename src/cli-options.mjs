@@ -2,7 +2,7 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  sources: { usage: 'sources list | sources show ID | sources recommend --query "biografía" | sources design --query "terminal" [--external] [--catalog sources.json]', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
+  sources: { usage: 'sources list | show ID | recommend | design | profiles | profile ID | patterns --query TEXT [--direction minimal]', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
   agent: { usage: 'agent capabilities | agent spec [--direction technical] [--visual-brief TEXT] | agent bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
   mcp: { usage: 'mcp (local stdio, read-only tools only)', flags:[], max:0 },
   'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
@@ -42,7 +42,8 @@ export const HELP = [
   '  gh-aura readme minimal --output draft.md',
   '  gh-aura preview --file draft.md --save review.json',
   '  gh-aura apply --review review.json --pr', '',
-  'AI-first: gh-aura mcp | agent capabilities | sources recommend --query TEXT',
+  'Optional AI: gh-aura mcp | agent capabilities | sources recommend --query TEXT',
+  'Curated design: gh-aura sources profiles | sources patterns --direction technical',
   'More: audit, work, story, check, brief, config, references.',
   'Details: gh-aura COMMAND --help. No background jobs or automatic profile writes.',
 ].join('\n') + '\n';
@@ -204,17 +205,21 @@ export function validateOptions(command, options) {
 
   if (command === 'sources') {
     const [action,id]=options.positional;
-    if (!['list','show','recommend','design'].includes(action)||
-        (action==='show'&&!id)||(action!=='show'&&id)||
-        (!['recommend','design'].includes(action)&&
-          ['query','category','direction','limit','external'].some(k=>options[k]!==undefined))||
-        (action==='design'&&options.category!==undefined))
-      throw Error('Use sources list, sources show ID, sources recommend or sources design --query TEXT.');
-    if(options.direction&&!['barebones','minimal','technical','expressive'].includes(options.direction))
+    const detail=['show','profile'].includes(action);
+    const search=['recommend','design','profiles','patterns'].includes(action);
+    if (!['list','show','recommend','design','profiles','profile','patterns'].includes(action) ||
+        (detail&&!id)||(!detail&&id)||
+        (!search&&['query','category','direction','limit','external'].some(k=>options[k]!==undefined))||
+        (['design','profiles','patterns','profile'].includes(action)&&options.category!==undefined)||
+        (['profiles','patterns','profile'].includes(action)&&(options.catalog!==undefined||options.external!==undefined))||
+        (action==='profiles'&&options.limit!==undefined))
+      throw Error('Use sources list, show ID, recommend, design, profiles, profile ID or patterns --query TEXT.');
+    if (options.direction&&!['barebones','minimal','technical','expressive'].includes(options.direction))
       throw Error('Invalid source art direction.');
-    if(options.limit!==undefined&&(!/^\d+$/.test(options.limit)||
-        Number(options.limit) < 1 || Number(options.limit) > (action==='design'?25:50)))
-      throw Error('--limit exceeds the allowed source or design bound.');
+    const max=action==='patterns'?2:action==='design'?25:50;
+    if (options.limit!==undefined&&(!/^\\d+$/.test(options.limit)||
+        Number(options.limit)<1||Number(options.limit)>max))
+      throw Error('--limit exceeds the allowed source, design or pattern bound.');
   }
   if (command === 'agent') {
     const [action]=options.positional;
