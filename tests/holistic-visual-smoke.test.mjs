@@ -72,3 +72,26 @@ test('technical render diagnostics are grouped within provisional styles, never 
   assert.ok(!Object.hasOwn(grouped,'qualityScore'));
   assert.ok(!Object.hasOwn(grouped,'winners'));
 });
+
+test('600 real GitHub public screenshots retain reproducible coverage and no editorial approvals',()=>{
+  const starts=Array.from({length:12},(_,i)=>i*50);
+  const batches=starts.map(i=>JSON.parse(readFileSync(
+    new URL('../research/render-smokes/batch-'+String(i).padStart(3,'0')+'.json',import.meta.url),'utf8')));
+  const recomputed=analyzeFourModeEvidence(roster,batches);
+  const published=JSON.parse(readFileSync(
+    new URL('../research/visual-render-smoke-summary.json',import.meta.url),'utf8'));
+  const triage=JSON.parse(readFileSync(
+    new URL('../research/holistic-category-triage.json',import.meta.url),'utf8'));
+  assert.deepEqual(recomputed.counts,published.counts);
+  assert.equal(recomputed.counts.candidates,600);
+  assert.equal(recomputed.counts.screenshot4Modes,562);
+  assert.equal(recomputed.counts.noScreenshots,38);
+  assert.equal(recomputed.counts.bothThemesObserved,562);
+  assert.equal(recomputed.counts.visibleBrokenImageFlags,91);
+  assert.equal(recomputed.counts.completeHumanVisualReviews,0);
+  assert.equal(recomputed.counts.categoryWinners,0);
+  const groups=summarizeByProvisionalStyle(recomputed,triage);
+  assert.deepEqual(groups,published.styleDiagnostics);
+  assert.equal(groups.categories['data-dashboard'].visibleBrokenImages,64);
+  assert.equal(published.records.filter(x=>x.humanVisualReview==='NOT_PERFORMED').length,600);
+});
