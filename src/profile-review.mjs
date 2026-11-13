@@ -51,3 +51,12 @@ export function professionalReview(markdown,{goal='general',maxWords=220}={}){
     observations,
     caveat:'Offline structural checks only: no verified authorship, hiring score, external link check, image licensing check or actual GitHub desktop/mobile rendering test. A human must review the draft.'};
 }
+
+export function renderProfessionalReview(report){
+  const lines=['# Professional README review', '',
+    'Goal: '+report.goal+'; '+report.metrics.approximateWords+' approximate words', '',
+    ...(report.observations.length?report.observations.map(x=>'- '+x.severity+': '+x.message):
+      ['No structural findings from these heuristics. Human review is still required.']),
+    '',report.caveat,''];
+  return lines.join('\n');
+}
