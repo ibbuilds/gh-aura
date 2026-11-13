@@ -57,13 +57,13 @@ async function chrome(){
   ],{stdio:['ignore','ignore','pipe']});
   try{
     const uri=await new Promise((resolve,reject)=>{
-      let buf='',ended=false;const timer=setTimeout(()=>{if(!ended){ended=true;reject(Error('No Chrome debugger'))}},12000);
+      let buf='',ended=false;const timer=setTimeout(()=>{if(!ended){ended=true;reject(Error('No Chrome debugger; stderr: '+buf.slice(-360).replace(/\\s+/g,' ')))}} ,45000);
       proc.on('error',e=>{if(!ended){ended=true;clearTimeout(timer);reject(e);}});
       proc.on('exit',()=>{if(!ended){ended=true;clearTimeout(timer);reject(Error('Chrome exited'));}});
       proc.stderr.on('data',chunk=>{
         if(ended)return;
         buf=(buf+chunk.toString()).slice(-5000);
-        const m=buf.match(/DevTools listening on (ws:\/\/127\.0\.0\.1:\d+\/devtools\/browser\/[^\s]+)/);
+        const m=buf.match(/DevTools listening on (ws:\/\/[^\s/]+\/devtools\/browser\/[^\s]+)/);
         if(m){ended=true;clearTimeout(timer);resolve(m[1]);}
       });
     });
