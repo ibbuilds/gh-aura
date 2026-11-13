@@ -1584,12 +1584,372 @@
         "headings": 4,
         "observationType": "direct-public-profile-readme"
       }
+    },
+    {
+      "id": "akasrai",
+      "profileUrl": "https://github.com/akasrai",
+      "readmeUrl": "https://github.com/akasrai/akasrai/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 25 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b84b6f43cfb1c6fbe527b0789daae3e8ee352f26",
+        "characters": 572,
+        "approximateWords": 25,
+        "images": 1,
+        "links": 4,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "alwinw",
+      "profileUrl": "https://github.com/alwinw",
+      "readmeUrl": "https://github.com/alwinw/alwinw/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 4 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "c9c197243fab87b1fe4e6d384f0bffb50ecd4a43",
+        "characters": 4113,
+        "approximateWords": 4,
+        "images": 21,
+        "links": 38,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "anuraghazra",
+      "profileUrl": "https://github.com/anuraghazra",
+      "readmeUrl": "https://github.com/anuraghazra/anuraghazra/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 56 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "65cce5c9a31811ce50ae14ddc1c3f9b91612110b",
+        "characters": 2804,
+        "approximateWords": 56,
+        "images": 12,
+        "links": 20,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "aralroca",
+      "profileUrl": "https://github.com/aralroca",
+      "readmeUrl": "https://github.com/aralroca/aralroca/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 166 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "a7f6684aa26643141f5251ef858a5e4ccd6de6c2",
+        "characters": 3416,
+        "approximateWords": 166,
+        "images": 7,
+        "links": 23,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "artogahr",
+      "profileUrl": "https://github.com/artogahr",
+      "readmeUrl": "https://github.com/artogahr/artogahr/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 19 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "b1beede9063ae4553014274636cc78d9b43c324a",
+        "characters": 190,
+        "approximateWords": 19,
+        "images": 0,
+        "links": 2,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "arturssmirnovs",
+      "profileUrl": "https://github.com/arturssmirnovs",
+      "readmeUrl": "https://github.com/arturssmirnovs/arturssmirnovs/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 116 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "9ded82a05dd0acc79d3aaf572520b259bde0271e",
+        "characters": 1681,
+        "approximateWords": 116,
+        "images": 6,
+        "links": 11,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "athul",
+      "profileUrl": "https://github.com/athul",
+      "readmeUrl": "https://github.com/athul/athul/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 93 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "d95c60828bf7d1d8fb7db9a309bc65e8b9a83fae",
+        "characters": 1000,
+        "approximateWords": 93,
+        "images": 0,
+        "links": 9,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "benjaminsampica",
+      "profileUrl": "https://github.com/benjaminsampica",
+      "readmeUrl": "https://github.com/benjaminsampica/benjaminsampica/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "minimal",
+      "suggestedUse": "selective",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 102 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "187b503bbd42b841b833880f3fb71a646157ad3b",
+        "characters": 958,
+        "approximateWords": 102,
+        "images": 0,
+        "links": 5,
+        "headings": 3,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "d-koppenhagen",
+      "profileUrl": "https://github.com/d-koppenhagen",
+      "readmeUrl": "https://github.com/d-koppenhagen/d-koppenhagen/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 97 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "7f151af222c63e2828b833755ece9d3403bf2c9c",
+        "characters": 4019,
+        "approximateWords": 97,
+        "images": 6,
+        "links": 20,
+        "headings": 4,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "FaberSanZ",
+      "profileUrl": "https://github.com/FaberSanZ",
+      "readmeUrl": "https://github.com/FaberSanZ/FaberSanZ/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 5 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "f8b66bfeb61647b6d95719902cbf251d441d8d46",
+        "characters": 354,
+        "approximateWords": 5,
+        "images": 3,
+        "links": 4,
+        "headings": 1,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "jh3y",
+      "profileUrl": "https://github.com/jh3y",
+      "readmeUrl": "https://github.com/jh3y/jh3y/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "barebones",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for minimal hierarchy comparison",
+        "Observe what is communicated within approximately 1 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "ab3b2af6e089a5e49bb66eeb1a57ca4d97503ef1",
+        "characters": 92,
+        "approximateWords": 1,
+        "images": 1,
+        "links": 2,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
+    },
+    {
+      "id": "KevCui",
+      "profileUrl": "https://github.com/KevCui",
+      "readmeUrl": "https://github.com/KevCui/KevCui/blob/master/README.md",
+      "origin": "independent-verified-research",
+      "discoverySource": "astra-intelligence/awesome-github-profile-readme-1: Minimalistic",
+      "verifiedAt": "2026-11-12",
+      "reviewStatus": "pending-user-editorial-approval",
+      "designDirection": "expressive",
+      "suggestedUse": "edge-case",
+      "favorablePatterns": [
+        "Candidate for visual restraint comparison",
+        "Observe what is communicated within approximately 0 README words"
+      ],
+      "avoidCopying": [
+        "Minimalistic gallery categorization does not establish professional quality",
+        "Do not copy prose, identity, badges or graphics"
+      ],
+      "originalWorkRequired": true,
+      "assetsCopied": false,
+      "readmeObservation": {
+        "blobSha": "627183cd202414d2ef66634aa9e440476a41491d",
+        "characters": 502,
+        "approximateWords": 0,
+        "images": 3,
+        "links": 6,
+        "headings": 0,
+        "observationType": "direct-public-profile-readme"
+      }
     }
   ],
   "survey": {
     "targetTotal": 100,
     "method": "Public username-matched GitHub READMEs verified directly or from prior 200-engineer observed readme research. No evaluation of credentials, skills or hiring results.",
-    "completed": 55,
+    "completed": 67,
     "pendingApproval": true,
     "countsAreHeuristics": true,
     "verifiedSnapshotDate": "2026-11-12"
