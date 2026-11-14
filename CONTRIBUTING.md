@@ -2,6 +2,8 @@
 
 Node.js 22+, no runtime dependencies. Keep GH Aura small, explicit and secure.
 
+Use English for repository documentation, code comments, CLI help and examples. Keep other languages in intentional localization data and multilingual tests.
+
 ```bash
 npm run check
 npm test

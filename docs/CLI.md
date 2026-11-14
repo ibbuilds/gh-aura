@@ -32,10 +32,10 @@ Or use the [portable Agent Skill](../skills/gh-aura-profile/SKILL.md) in an agen
 
 ```bash
 gh-aura sources list --json
-gh-aura sources recommend --query "biografía sobria" --json
-gh-aura sources design --query "terminal y pixel art" --direction expressive --json
+gh-aura sources recommend --query "concise biography" --json
+gh-aura sources design --query "terminal and pixel art" --direction expressive --json
 gh-aura sources show github-diagrams --json
-gh-aura sources recommend --query "iconos" --external --json
+gh-aura sources recommend --query "icons" --external --json
 ```
 
 Sources have URLs, licensing and maintenance caveats; techniques are **composable building blocks, not READMEs to paste**. Third-party and user-supplied sources require `--external` to be recommended.

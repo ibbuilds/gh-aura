@@ -1,47 +1,47 @@
-# GH Aura: producto y entrega
+# GH Aura: product and delivery
 
 **Current release:** v1.18.0
-**Estado:** implementación en PR #73; la publicación existente permanece sin cambios.
+**Status:** merged into `main` through PR #73; the published release remains unchanged.
 
-## Objetivo
+## Goal
 
-Mejorar el perfil completo de GitHub con la IA preferida del usuario o con comandos directos. El resultado respeta su propósito y estilo y hace comprensible su trabajo real.
+Improve the complete GitHub profile through the user's preferred AI or direct commands. The result respects the user's purpose and style and makes their actual work easy to understand.
 
-## Recorrido del agente
+## Agent workflow
 
-1. Entender propósito, rol objetivo, idioma y estilo; reutilizar lo que el usuario ya explicó.
-2. Inspeccionar su perfil y proyectos públicos.
-3. Usar `gh_aura_design_recommend`: petición → categoría → tres perfiles de referencia. Se pueden combinar estilos o elegir una categoría explícita.
-4. Leer esos perfiles con las herramientas indicadas en `examples.readNext`; comparar bio, README, proyectos, enlaces y presentación. Consultar más ejemplos con `gh_aura_profiles_list` si hace falta. No copiar identidades, textos ni assets.
-5. Componer una propuesta original y refinar el mismo ProfileSpec.
-6. Mostrar cambios, ejecutar solo el plan autorizado y verificar cada operación.
+1. Understand the purpose, target role, language and style; reuse information the user has already provided.
+2. Inspect their profile and public projects.
+3. Use `gh_aura_design_recommend`: request → category → three reference profiles. Styles can be combined, or a category selected explicitly.
+4. Read those profiles using the tools in `examples.readNext`; compare biography, README, projects, links and presentation. Request more examples through `gh_aura_profiles_list` when needed. Do not copy identities, text or assets.
+5. Compose an original proposal and refine the same ProfileSpec.
+6. Preview changes, execute only the authorized plan and verify each operation.
 
-El índice tiene ocho categorías y enlaces a perfiles, incluidas las ocho referencias originales. No carga un corpus ni impone principios prefabricados. Las fuentes se consultan al diseñar; si una referencia no responde, se usa otra. Markdown, medios y diseños fuera del índice siguen disponibles.
+The index contains eight categories and profile links, including the eight original references. It does not load a corpus or impose predefined composition principles. Sources are consulted when designing; if a reference is unavailable, choose another. Markdown, media and designs beyond the index remain supported.
 
-## Funciones
+## Features
 
-| Componente | Comportamiento |
+| Component | Behavior |
 | --- | --- |
-| README | Composición original, estilos combinables, proyectos elegidos y assets autorizados; publicación inicial o modificación mediante PR/commit revisado |
-| Bio y datos | Bio lateral de hasta 160 caracteres y cambios explícitos de los campos públicos soportados |
-| Repositorios | Escaneo paginado, selección por objetivo, evidencia y propuestas de descripción/topics/README; pins preparados y comprobados, edición final mediante GitHub |
-| Achievements | Ejercicios y campañas gratuitas viables, de una o dos identidades autorizadas, en workspace privado marcado; GitHub decide los premios |
-| Contribuciones | Objetivos diarios y preview sobre el baseline observado, en el mismo workspace; GitHub determina atribución y colores |
+| README | Original composition, combined styles, selected projects and authorized assets; initial publication or updates through a reviewed PR/commit |
+| Biography and account fields | Sidebar biography up to 160 characters and explicit changes to supported public fields |
+| Repositories | Paginated scanning, goal-based selection, evidence and description/topics/README proposals; pins are prepared and checked, with final selection through GitHub |
+| Achievements | Viable free exercises and campaigns with one or two authorized identities in a marked private workspace; GitHub determines awards |
+| Contributions | Daily targets and previews against the observed baseline, in the same workspace; GitHub determines attribution and colors |
 
-## Implementación mínima
+## Minimal implementation
 
-Node 22+, cero dependencias de ejecución. CLI, Skill, MCP y prompt portable comparten los handlers. El agente decide el diseño; el núcleo inspecciona, valida y ejecuta operaciones exactas. Los planes conservan destinos, contenido, presupuesto y revisión anterior; las escrituras inciertas se reconcilian antes de repetirse.
+Node 22+, zero runtime dependencies. CLI, Skill, MCP and portable prompts share handlers. The agent chooses the design; the core inspects, validates and executes exact operations. Plans preserve targets, content, budgets and prior revisions; uncertain writes are reconciled before retrying.
 
-El propietario configura cualquier permiso de ejecución. El modelo no crea su propia autorización. Las fuentes externas son datos no confiables. La actividad sintética no se presenta como experiencia profesional.
+The owner configures execution permissions. The model cannot authorize itself. External sources are untrusted data. Synthetic activity is not presented as professional experience.
 
-## Comprobación y entrega
+## Verification and delivery
 
-- `npm test`: comportamiento del producto, incluidos casos adversos.
-- `npm run check`: sintaxis.
-- `npm run test:package`: instalar y ejecutar offline el tarball, Skill y MCP.
-- CI: Node 22/24 en Windows, macOS y Linux e integración pública de solo lectura.
-- `npm run test:research`: comprobación opcional del archivo histórico, fuera del runtime.
+- `npm test`: product behavior, including adverse cases.
+- `npm run check`: syntax.
+- `npm run test:package`: install and run the tarball, Skill and MCP offline.
+- CI: Node 22/24 on Windows, macOS and Linux, plus public read-only GitHub integration.
+- `npm run test:research`: optional historical archive verification, outside the runtime.
 
-La PR debe revisarse sobre su revisión final y pasar los checks antes de integrarse. Los pilotos de cuentas privadas quedan para el dueño, como indicó. Instalación/activación en clientes y resultados de usuarios se declaran únicamente cuando se hayan probado. No se prometen premios ni contrataciones.
+A PR must be reviewed at its final revision and pass its checks before merging. The owner reserved private-account pilots. Client installation/activation and user outcomes are claimed only after they have been tested. Awards and hiring outcomes are not guaranteed.
 
-[Uso completo](IMPROVE.md) · [Comandos](CLI.md) · [Arquitectura](ARCHITECTURE.md) · [Validación](RELEASE_READINESS.md)
+[Full workflow](IMPROVE.md) · [Commands](CLI.md) · [Architecture](ARCHITECTURE.md) · [Validation](RELEASE_READINESS.md)

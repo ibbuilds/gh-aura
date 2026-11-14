@@ -10,7 +10,7 @@
 
 ## Tools
 - `gh-aura mcp`: local stdio; source search, layout techniques, biography guidance, profile plans/refinement, Markdown validation, read-only GitHub context and previews.
-- `gh-aura sources recommend --query "biografía" --json`: curated references.
+- `gh-aura sources recommend --query "biography" --json`: curated references.
 - `gh-aura sources design --query "terminal retro" --json`: GitHub-compatible visual techniques and source links.
 - `gh-aura agent bio --voice technical --focus engineering`: biography guide.
 - `gh-aura agent spec --direction expressive --visual-brief "..."`: editable original design intent.
