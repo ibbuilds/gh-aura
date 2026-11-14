@@ -35,7 +35,7 @@ Cada ficha externa contiene fecha, fuentes, hashes cuando están disponibles, ID
 
 SHA-256 del archivo externo `AI_SOURCE_REVIEWS.json`:
 
-`724f180434677bbdd805167284a43d9fee222350f15fed117363210043b6ce37`
+`e158f43e8f698e591f36dfa5524269fdf0390695a69f94502a9b544a746efadf`
 
 Clasificación preliminar por fuente: 60 native, 99 minimal, 64 technical, 99 showcase, 96 visual, 7 terminal, 18 dashboard, 39 dynamic y 18 sin clasificación suficiente. Son inferencias sobre presentación en fuentes; una marca de feed no prueba mantenimiento y una referencia a imagen no acredita su aspecto o licencia.
 

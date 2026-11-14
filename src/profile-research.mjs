@@ -7,7 +7,7 @@ export const PROFILE_SOURCE_STUDY=freeze({
   id:'public-source-study-2026-11-13',observedAt:'2026-11-13',
   profilesAssessed:500,availablePublicUsers:499,readmeSources:376,
   sourceCheckedForPrinciples:23,humanReviews:0,visualCertifications:0,rightsCertifications:0,
-  datasetSHA256:'724f180434677bbdd805167284a43d9fee222350f15fed117363210043b6ce37',
+  datasetSHA256:'e158f43e8f698e591f36dfa5524269fdf0390695a69f94502a9b544a746efadf',
   method:'AI analysis of public metadata and README source excerpts; selected principle evidence checked against collected sources.',
   limitations:'Source composition only. No verified qualifications, authorship, image rights, full visual/accessibility review or hiring outcomes. No category winners. Selection is not representative of GitHub.',
 });
