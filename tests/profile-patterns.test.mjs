@@ -19,7 +19,7 @@ const run=(args,cwd)=>spawnSync(process.execPath,[cli,...args],{
 });
 
 test('reading index preserves originals and gives every category actual references',()=>{
-  assert.ok(CURATED_PROFILE_PATTERNS.length>=25);
+  assert.equal(CURATED_PROFILE_PATTERNS.length,100);
   assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(x=>x.id.toLowerCase())).size,CURATED_PROFILE_PATTERNS.length);
   for(const row of CURATED_PROFILE_PATTERNS){
     assert.equal(row.profileUrl,'https://github.com/'+row.id);
