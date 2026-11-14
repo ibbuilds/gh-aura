@@ -6,7 +6,7 @@ The candidate implements the [whole-profile workflow](IMPROVE.md): sidebar field
 
 ## Candidate checks
 
-- [ ] Complete P1 research/pattern acceptance; retain dated evidence and original references.
+- [x] Analyze 500 candidates with AI; integrate eight source-informed principles and preserve original references. [Scope](PROFILE_SOURCE_STUDY.md), without full-profile certification.
 - [x] P2 intent, plans, authorization and recovery covered by regression tests.
 - [ ] Verify P3 README/assets and actual account bio updates for new/existing profiles.
 - [ ] Verify P4 project selection, coverage and actual pin status.
@@ -19,6 +19,6 @@ The candidate implements the [whole-profile workflow](IMPROVE.md): sidebar field
 - [x] Install the exact tarball offline; verify resources, commands, MCP and checksum.
 - [ ] Align version/tag/notes and obtain external publication authorization.
 
-The six Node 22/24 Linux/macOS/Windows checks and public read-only GitHub integration establish the exercised technical behavior. Private writes, actual awards and user outcomes need separate evidence. Historical corpus checks run with **npm run test:research** and are not claims about completed editorial reviews.
+The six Node 22/24 Linux/macOS/Windows checks and public read-only integration establish exercised technical behavior. Private writes, awards and user outcomes need separate evidence. **npm run test:research** checks the archive, without establishing editorial approval.
 
 Release requires CI and a new version. Historical tags survive; npm publication is a separate owner decision. Unknown external results stay pending.

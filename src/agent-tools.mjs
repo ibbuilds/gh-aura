@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { loadConfig } from './config.mjs';
 import { findProfileSources, getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
+import { PROFILE_SOURCE_STUDY } from './profile-research.mjs';
 import { listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
 import { professionalReview } from './profile-review.mjs';
 import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
@@ -217,6 +218,7 @@ export async function runAgentTool(name,args={}){
     return {...options,sources};
   }
   if(name==='gh_aura_profile_categories')return {styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,
+    sourceStudy:PROFILE_SOURCE_STUDY,
     purposes:PROFILE_PURPOSES,qualityGate:'No best-of-category until avatar, README, pins, sidebar, contribution graph and achievements reviewed.'};
   if(name==='gh_aura_profiles_list')
     return listCuratedProfiles(args);

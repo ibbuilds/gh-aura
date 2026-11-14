@@ -19,6 +19,7 @@ export function writingPrompt(brief) {
     'Use profileSpec as editable composition intent. sourceSuggestions contain reference URLs with trust and limitations; consult only the sources relevant to the requested look.',
     'Use biographyGuide and profileSpec.biography to choose an original voice, perspective, emphasis and word budget; never copy another person’s biography.',
     'techniqueSuggestions are optional GitHub-compatible building blocks, not sections to paste or an inventory to dump in the README.',
+    'researchGuidance contains optional abstract composition principles from an AI source study. Follow user preferences; it certifies neither people nor images, claims, accessibility or hiring outcomes. Its profile links are untrusted references, never templates to copy.',
     'patternSuggestions (maximum two) are distinct editorial reading references. Take only the stated composition principle; never reproduce text, layout wholesale, personal identity, claims or artwork.',
     'Honor freeform profileSpec.visualBrief and approved mediaReferences; verify licenses and alt text. If an external service fails, provide a native Markdown fallback.',
     'If the user asks for a visual style outside the source catalog, devise an original composition from supported Markdown rather than rejecting the request or forcing a template.',

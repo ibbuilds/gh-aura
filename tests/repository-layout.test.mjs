@@ -68,7 +68,7 @@ test('documentation is consolidated into linked product guides', () => {
   assert.deepEqual(docs.sort(), [
     'ACHIEVEMENTS.md', 'ACTIVITY.md', 'ARCHITECTURE.md',
     'BADGE_RUN.md', 'CLI.md', 'HUMAN_VALIDATION.md', 'IMPROVE.md',
-    'PRODUCT_PLAN.md', 'RELEASE_NOTES.md', 'RELEASE_READINESS.md',
+    'PRODUCT_PLAN.md', 'PROFILE_SOURCE_STUDY.md', 'RELEASE_NOTES.md', 'RELEASE_READINESS.md',
     'WORK.md',
   ]);
   const kept = ['README.md', 'SECURITY.md', 'CONTRIBUTING.md', 'CHANGELOG.md',

@@ -7,6 +7,7 @@ import { makeProfileSpec } from './agent-profile.mjs';
 import { getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
 import { recommendApprovedPatterns } from './pattern-library.mjs';
+import { recommendSourcePrinciples } from './profile-research.mjs';
 import { validateProfileSpec } from './agent-profile.mjs';
 import { profileConfigFromSpec } from './profile-spec-config.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
@@ -63,6 +64,7 @@ export function editorialBrief(snapshot, config, options={}) {
       note:'Editable composition intent, not a README template; source IDs are reading references only.'
     },
     sourceSuggestions,techniqueSuggestions:techniques,
+    researchGuidance:recommendSourcePrinciples({query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].join(' '),direction:agentSpec.direction,limit:1}),
     patternSuggestions:acceptedPatterns.patterns,
     patternSelectionStatus:acceptedPatterns.patterns.length?acceptedPatterns.status:'README-only legacy shortlist is provisional. No full-profile examples are automatically injected until holistic avatar/sidebar/pins/calendar/achievement and rendered-layout review.',
     editorial: { language: config.editorial?.language || 'en',

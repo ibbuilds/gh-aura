@@ -10,6 +10,7 @@ import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-prof
 import { installAgentSkill,agentDoctor } from './agent-install.mjs';
 import { compilePatternLibrary,readPatternLibrary,auditPatternStudy } from './pattern-library.mjs';
 import { readProfileJSON } from './profile-plan.mjs';
+import { PROFILE_SOURCE_STUDY,SOURCE_COMPOSITION_PRINCIPLES } from './profile-research.mjs';
 
 const designOptions=options=>({
   query:options.query||'',direction:options.direction||'minimal',
@@ -19,6 +20,7 @@ const designOptions=options=>({
 export function runAgentCommand(command,options={}){
   const [action='list',id]=options.positional||[];
   if(command==='sources'){
+    if(action==='study')return emit({study:PROFILE_SOURCE_STUDY,principles:SOURCE_COMPOSITION_PRINCIPLES,readOnly:true,writesPerformed:0},options);
     if(action==='audit'){
       if(!options.catalog)throw Error('Supply --catalog EDITORIAL-REVIEWS.json.');
       return emit(auditPatternStudy(readProfileJSON(options.catalog,16*1024*1024),{limit:options.limit===undefined?20:Number(options.limit)}),options);
@@ -30,7 +32,7 @@ export function runAgentCommand(command,options={}){
     }
     const sourceFile=options.catalog;
     if(action==='categories')return emit({styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,
-      purposes:PROFILE_PURPOSES,status:'600 candidates discovered, not 500 full-profile audits; legacy 25 README-only samples remain provisional'},options);
+      purposes:PROFILE_PURPOSES,sourceStudy:PROFILE_SOURCE_STUDY,status:'500 AI source assessments inform eight composition principles. No full-profile certifications or category winners; legacy 25 examples remain provisional.'},options);
     if(action==='profiles')return emit(listCuratedProfiles({
       direction:options.direction||'',query:options.query||'',
     }),options);
@@ -63,7 +65,7 @@ export function runAgentCommand(command,options={}){
           trust:item.trust,license:item.license,limitations:item.limitations}));
       return emit({...techniques,sources},options);
     }
-    throw Error('Use sources list, show ID, recommend, design, categories, profiles, profile ID or patterns --query TEXT.');
+    throw Error('Use sources list, show ID, recommend, design, study, categories, profiles, profile ID or patterns --query TEXT.');
   }
   if(command==='agent'){
     if(action==='install')return emit(installAgentSkill({client:options.client,directory:options.directory,force:options.force}),{format:'json'});

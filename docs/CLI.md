@@ -10,6 +10,7 @@ The [whole-profile guide](IMPROVE.md) covers account fields, README/assets, proj
 
 ```bash
 gh-aura sources categories --json
+gh-aura sources study --json
 gh-aura sources profiles --json
 gh-aura sources profile SamuelSchlesinger --json
 gh-aura sources patterns --query "terminal retro" --direction expressive --json

@@ -4,6 +4,8 @@
 
 GH Aura combines original READMEs, biography, relevant public projects, achievements and contribution-calendar tools to communicate your actual work in your chosen style.
 
+Design tools use eight flexible principles from a 500-candidate AI source study: `gh-aura sources study --json`.
+
 **Node.js 22+ · Free · Zero runtime dependencies · Local-first**
 
 ## Install
@@ -33,7 +35,7 @@ Your AI can inspect evidence, preserve your style and project choices, compose a
     gh-aura badges free
     gh-aura activity 2022
 
-The shared workflow updates the actual sidebar bio (160 characters), selected account fields, README and owned assets. It scans public projects with explicit coverage and prepares up to six pins; GitHub's pin editor remains a manual step. Optional Activity/Badges use one marked private workspace. GitHub determines attribution and awards.
+The workflow updates bio (160 characters), account fields, README and owned assets. Public scans declare coverage and prepare six pins; pinning uses GitHub's UI. Activity/Badges share a marked private workspace. GitHub determines attribution and awards.
 
 ## Review the complete profile
 

@@ -25,7 +25,7 @@ try {
     'src/profile-sources.mjs','src/agent-command.mjs',
     'src/profile-query.mjs','src/profile-source-extra.mjs',
     'src/profile-custom-sources.mjs','src/profile-techniques.mjs',
-    'src/profile-biography.mjs','src/profile-plan.mjs','src/profile-context.mjs',
+    'src/profile-biography.mjs','src/profile-plan.mjs','src/profile-context.mjs','src/profile-research.mjs',
     'src/profile-projects.mjs','src/improve-command.mjs','src/agent-install.mjs','src/project-improvements.mjs',
     'src/pattern-library.mjs','src/workspace-actions.mjs','src/badge-collaboration.mjs','src/badge-collaboration-campaign.mjs',
     'src/profile-spec-config.mjs','src/profile-references.mjs','src/profile-resources.mjs','src/public-https.mjs','src/calendar-preview.mjs']) {
@@ -65,6 +65,7 @@ try {
   }
   writeFileSync(join(directory,'editorial.json'),JSON.stringify({reviews:[{login:'fixture-review',secondaryStyles:[],purposes:[]}]}));
   const commands=[
+    [['sources','study','--json'],value=>value.study.profilesAssessed===500&&value.study.humanReviews===0&&value.principles.length===8],
     [['sources','audit','--catalog',join(directory,'editorial.json'),'--json'],value=>value.supplied===1&&value.complete===0&&value.eligibleForCompilation===false],
     [['agent','capabilities','--json'],value=>value.writesExposed===false],
     [['sources','list','--json'],value=>value.count>=10],
