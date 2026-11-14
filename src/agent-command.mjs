@@ -34,7 +34,7 @@ export function runAgentCommand(command,options={}){
       const lines=['GH Aura sources ('+list.count+') — offline, source-attributed references'];
       for(const source of list.sources)
         lines.push('  '+source.id+' ['+source.category+'] — '+source.title);
-      lines.push('More: sources show ID, sources recommend --query "biografía", sources design --query "terminal".');
+      lines.push('More: sources show ID, sources recommend --query "biography", sources design --query "terminal".');
       return emit(lines.join('\n'),options);
     }
     if(action==='show')return emit(getProfileSource(id,{sourceFile}),options);

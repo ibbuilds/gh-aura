@@ -1,15 +1,15 @@
-# Referencias de diseño
+# Design references
 
-La investigación sirve para encontrar ejemplos, no para añadir un corpus al producto.
+Research helps find examples; it does not add a corpus to the product.
 
-1. `gh-aura sources categories --json` muestra las ocho categorías.
-2. `gh-aura sources profiles --category terminal-code --json` devuelve perfiles concretos.
-3. La IA consulta esos perfiles y compone un diseño original para el usuario. `sources design --query "terminal sobrio" --json` selecciona categoría, ejemplos y técnicas compatibles en una llamada.
+1. `gh-aura sources categories --json` lists the eight categories.
+2. `gh-aura sources profiles --category terminal-code --json` returns specific profiles.
+3. The AI reads those profiles and composes an original design for the user. `sources design --query "restrained terminal" --json` selects a category, examples and compatible techniques in one call.
 
-El índice compacto vive en [profile-patterns.mjs](../src/profile-patterns.mjs). Conserva las ocho referencias originales y admite categorías secundarias. Los enlaces son referencias de lectura; no otorgan derechos sobre textos, imágenes o credenciales. El estado actual se comprueba al utilizarlos.
+The compact index lives in [profile-patterns.mjs](../src/profile-patterns.mjs). It preserves the eight original references and supports secondary categories. Links are reading references; they do not grant rights to text, images or credentials. Inspect the current profiles when using them.
 
-Los datasets, recolectores y reportes históricos permanecen recuperables en el commit [d978bbae0234b30390885fc17bb7f2b6d52bc21b](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research). `npm run test:research` verifica ese archivo temporalmente, sin red, sin añadirlo al paquete y retirando su exportación. En un clon que no tenga el checkpoint:
+Historical datasets, collectors and reports remain recoverable at commit [d978bbae0234b30390885fc17bb7f2b6d52bc21b](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research). `npm run test:research` verifies that archive in a temporary directory, without network access or packaging it, then removes the export. If a clone is missing the checkpoint:
 
     git fetch origin d978bbae0234b30390885fc17bb7f2b6d52bc21b
 
-El corpus de análisis por IA se conserva localmente por decisión del dueño y no interviene en la generación de perfiles.
+The AI analysis corpus remains local by the owner's decision and is not used in profile generation.
