@@ -12,6 +12,8 @@ export function rankRepositories(snapshot, config, options = {}) {
   const total = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
   const candidates = snapshot.repos.filter((repo) => !matches(excluded, repo) &&
     lower(repo.full_name) !== lower(snapshot.username + '/' + snapshot.username)).map((repo) => {
+    const confirmedContribution=config.profile.projectStories.some(story=>
+      [lower(repo.full_name),lower(repo.name)].includes(lower(story.repo))&&story.contribution?.trim()&&story.proof);
     const searchable = lower([repo.name, repo.description, repo.language, ...(repo.topics || [])].join(' '));
     const relevant = terms.filter((term) => searchable.includes(term));
     const inspected = repo.inspection;
@@ -26,7 +28,7 @@ export function rankRepositories(snapshot, config, options = {}) {
       relevance: terms.length ? clamp(relevant.length / Math.min(terms.length, 3)) : 0.5,
       // File presence is a stronger observable proxy than stars/size, but it
       // does not certify that tests pass or that the owner wrote the code.
-      substance: clamp((repo.fork ? 0.05 : 0.35) + (repo.language ? 0.12 : 0) +
+      substance: clamp((repo.fork&&!confirmedContribution ? 0.05 : 0.35) + (repo.language ? 0.12 : 0) +
         (repo.size > 0 ? 0.12 : 0) +
         (repo.evidence?.categories?.tests?.status === 'observed' ? 0.13 : 0) +
         (repo.evidence?.categories?.ci?.status === 'observed' ? 0.10 : 0) +
@@ -39,7 +41,7 @@ export function rankRepositories(snapshot, config, options = {}) {
     };
     let score = Object.entries(weights).reduce((sum, [key, weight]) => sum + factors[key] * weight, 0) / total;
     if (repo.archived) score *= 0.35;
-    if (repo.fork) score *= 0.5;
+    if (repo.fork&&!confirmedContribution) score *= 0.5;
     if (repo.size === 0) score *= 0.1;
     if (matches(preferred, repo)) score += 0.1;
     const reasons = [];
@@ -61,6 +63,7 @@ export function rankRepositories(snapshot, config, options = {}) {
     if (!repo.description) reasons.push('Improve: add a one-line description');
     if (repo.archived) reasons.push('Archived project');
     if (repo.fork) reasons.push('Fork: review your own contribution before showcasing');
+    if (repo.fork&&confirmedContribution) reasons.push('Owner supplied a contribution story with a proof link; authorship is not independently verified');
     if (repo.size === 0) reasons.push('Empty repository');
     return { repo, score: Math.round(clamp(score) * 1000) / 10, factors, reasons,
       limitations: [
@@ -91,8 +94,8 @@ export function auditProfile(snapshot, config) {
   const root = 'https://github.com/' + snapshot.username;
   const add = (severity, title, observed, action, source = root) => findings.push({ severity, title, observed, action, source, confidence: 'observed', requiresUserAction: true });
   if (!snapshot.user.bio) add('high', 'Missing profile bio', 'The public bio is empty.', 'Add one clear sentence describing what you build.');
-  if (!snapshot.profileReadme) add('high', 'No profile README', 'No root README.md was found in the profile repository.',
-    'Create a public ' + snapshot.username + '/' + snapshot.username + ' repository with a root README.md.');
+  if (!snapshot.profileReadme) add('info', 'Profile presentation without a README', 'No root README.md was observed in the profile repository.',
+    'Review whether your bio, links and selected projects already communicate your work; add a README only when it serves your goal.');
   else if (snapshot.profileReadme.unknown) add('info', 'Profile README could not be inspected', 'Content is unavailable, not necessarily absent.', 'Review the file manually before generating a replacement.');
   else if (snapshot.profileReadme.content.trim().split(/\s+/).length < 40) add('info', 'Concise profile README',
     'The README contains fewer than 40 words. This can be intentional.', 'Keep it concise; ensure your focus and strongest work are easy to find.');

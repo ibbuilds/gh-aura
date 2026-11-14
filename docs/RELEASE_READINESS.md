@@ -1,20 +1,24 @@
-# Release and independent validation
+# Release acceptance
 
-**v1.18.0** — Tests cover Node 22/24 on Linux, Windows and macOS, offline installed CLI, local MCP, real bare Git/mocked GitHub and **read-only** public GitHub integration.
+**Current published release: v1.18.0.** The [product plan](PRODUCT_PLAN.md) records implementation and acceptance separately. The owner will perform live account pilots after technical development; no real credentials are needed for fixture tests.
 
-## Product gates
+The candidate implements the [whole-profile workflow](IMPROVE.md): sidebar fields, README/assets, empty profile setup, project coverage, one/two-account campaigns, calendar preview/targets and owner-pinned execution. Simulations do not prove GitHub awards, private attribution or live client activation.
 
-- [x] Source library, bilingual search and an explicitly opt-in, bounded user catalog.
-- [x] Composable techniques with GitHub rendering, licensing and accessibility notes.
-- [x] Original biography voice, perspective, focus, owner claims and verified-evidence caveats.
-- [x] ProfileSpec refinements, portable AI briefs, MCP read-only tools and user-gated publishing.
-- [ ] Test complete tasks in three actual MCP/Skill agent clients and five independent users — [#61](https://github.com/ibbuilds/gh-aura/issues/61), [#49](https://github.com/ibbuilds/gh-aura/issues/49).
-- [ ] Test a rendered README for each design direction against GitHub desktop/mobile themes and verify external URLs/licenses.
+## Candidate checks
 
-## GitHub gates
+- [x] Route design requests to eight categories and actual profile references, preserving the original eight; no corpus or approval compiler in the agent flow.
+- [x] P2 intent, plans, authorization and recovery covered by regression tests.
+- [ ] Verify P3 README/assets and actual account bio updates for new/existing profiles.
+- [ ] Verify P4 project selection, coverage and actual pin status.
+- [ ] Validate P5 achievements on authorized real accounts, including each supported two-account route.
+- [ ] Validate P6 contribution attribution and coexistence with badge operations.
+- [ ] Complete P7 journeys in three actual clients; verify installation and activation.
+- [ ] Complete P8 independent user/professional evaluation and resolve important findings.
+- [x] Main protection verified: one review, seven Actions checks, fresh status, no force-push/deletion, admins included.
+- [x] Syntax, product, package and public integration checks pass on the candidate.
+- [x] Install the exact tarball offline; verify resources, commands, MCP and checksum.
+- [ ] Align version/tag/notes and obtain external publication authorization.
 
-- [ ] Protect `main` with required CI/PR checks — [#47](https://github.com/ibbuilds/gh-aura/issues/47).
-- [ ] Validate one real, marked private Activity/Badges workspace — [#48](https://github.com/ibbuilds/gh-aura/issues/48).
-- [ ] Verify actual awarded achievements — [#53](https://github.com/ibbuilds/gh-aura/issues/53).
+The six Node 22/24 Linux/macOS/Windows checks and public read-only integration establish exercised technical behavior. Private writes, awards and user outcomes need separate evidence. **npm run test:research** checks the archive, without establishing editorial approval.
 
-The release job publishes a verified tarball/checksum only after green CI, then deletes older published release *objects*, preserving Git tags and commits. No npm registry publication or paid AI service.
+Release requires CI and a new version. Historical tags survive; npm publication is a separate owner decision. Unknown external results stay pending.

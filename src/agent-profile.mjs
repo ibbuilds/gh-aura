@@ -5,6 +5,7 @@ import { checkDraft } from './editorial.mjs';
 import { diffText } from './diff.mjs';
 import { normalizeBiography } from './profile-biography.mjs';
 import { plain, httpsUrl } from './text.mjs';
+import { extractProfileReferences } from './profile-references.mjs';
 
 export const PROFILE_SPEC_FORMAT='gh-aura-profile-spec-v1';
 const DIRECTION_NAMES=['barebones','minimal','technical','expressive'];
@@ -149,12 +150,38 @@ export function refineProfileSpec(input,changes={}){
   }
   return validateProfileSpec(next);
 }
-export function validateProfileDraft(markdown,spec){
+export function compositionFromSpec(input){
+  if(input?.composition){
+    if(input.format&&input.format!=='gh-aura-whole-profile-v1')throw Error('Unsupported whole-profile version.');
+    return validateProfileSpec(input.composition);
+  }
+  return validateProfileSpec(input);
+}
+export function validateProfileDraft(markdown,spec,options={}){
   if(typeof markdown!=='string'||Buffer.byteLength(markdown,'utf8')>256*1024)
     throw Error('Profile draft must be <=256 KiB.');
   if(plain(markdown)!==markdown)throw Error('Profile draft has control characters.');
-  const validated=spec?validateProfileSpec(spec):null;
+  const validated=spec?compositionFromSpec(spec):null;
   const report=checkDraft(markdown,null,{maxWords:validated?.maxWords??220});
+  if(validated){
+    const refs=extractProfileReferences(markdown),links=refs.filter(r=>r.kind==='link');
+    const parsed=links.flatMap(r=>{try{return [new URL(r.url)];}catch{return [];}});
+    const add=(id,message,severity='error')=>report.findings.push({id,message,severity});
+    if(validated.sections.projects!==false)for(const name of validated.featured.slice(0,validated.maxProjects)){
+      const wanted=(name.includes('/')?name:options.username?options.username+'/'+name:null)?.toLowerCase();
+      const found=parsed.some(u=>u.hostname==='github.com'&&(wanted?u.pathname.toLowerCase().replace(/^\//,'').split('/').slice(0,2).join('/')===wanted:u.pathname.split('/')[2]?.toLowerCase()===name.toLowerCase()));
+      if(!found)add('selected-project-missing','Selected project is missing from visible links: '+name+'.');
+    }
+    if(validated.sections.links!==false)for(const link of validated.links){
+      if(!parsed.some(u=>u.href===new URL(link.url).href))add('selected-link-missing','Selected contact link is missing: '+link.label+'.');
+    }
+    for(const ref of refs)if(ref.kind==='image'&&/^(?:javascript|data|file):/i.test(ref.url))add('unsafe-image','Remove executable, inline-data or local-file image references.');
+    const headings=markdown.replace(/<!--[\s\S]*?-->/g,'').split('\n').filter(l=>/^#{1,6}\s/.test(l));
+    const labels={projects:/^#{1,6}\s+(?:selected work|featured work|projects|proyectos(?: destacados)?|trabajo seleccionado)\s*$/i,
+      technologies:/^#{1,6}\s+(?:technologies|tech stack|tecnolog[ií]as)\s*$/i,stats:/^#{1,6}\s+(?:stats|statistics|estad[ií]sticas|public repository snapshot|resumen de repositorios p[uú]blicos)\s*$/i};
+    for(const [section,pattern] of Object.entries(labels))if(validated.sections[section]===false&&headings.some(h=>pattern.test(h)))add('disabled-section','Review the disabled '+section+' section still present in the draft.','review');
+    report.status=report.findings.length?'needs-review':'no-heuristic-findings';
+  }
   return {format:'gh-aura-draft-validation-v1',...report,
     direction:validated?.direction??null,
     note:'Heuristic checks cannot prove originality, personal ownership or GitHub rendering. Review the draft yourself.'};

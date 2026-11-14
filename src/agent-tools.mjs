@@ -3,14 +3,22 @@ import { fileURLToPath } from 'node:url';
 import { loadConfig } from './config.mjs';
 import { findProfileSources, getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
-import { listCuratedProfiles, recommendCuratedPatterns } from './profile-patterns.mjs';
+import { listCuratedProfiles, recommendCuratedPatterns,profileCategories } from './profile-patterns.mjs';
 import { professionalReview } from './profile-review.mjs';
-import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
+import { HOLISTIC_STYLES } from './holistic-profile-taxonomy.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
 import { makeProfileSpec, refineProfileSpec, validateProfileSpec, validateProfileDraft, previewProfileDiff } from './agent-profile.mjs';
 import { ACHIEVEMENT_MATRIX } from './achievement-matrix.mjs';
+import { planCollaborationCampaign } from './badge-collaboration-campaign.mjs';
+import { projectImprovements } from './project-improvements.mjs';
 import { profileTarget } from './workflow.mjs';
-import { validateLogin } from './github.mjs';
+import { validateLogin,getJSON,decodeReadme } from './github.mjs';
+import { makeWholeProfileSpec, refineWholeProfileSpec, inspectWholeProfile, prepareProfilePlan,
+  previewWholeProfilePlan, executeProfilePlan, approvedPlanFromHost,profileExecutionStatus } from './profile-plan.mjs';
+import { scanPublicProjects, inspectPublicProject, inspectCurrentPins } from './profile-projects.mjs';
+import { wholeProfileContext,nativeProfileDraft } from './profile-context.mjs';
+import { checkProfileResources } from './profile-resources.mjs';
+import { previewCalendar } from './calendar-preview.mjs';
 
 export const AGENT_INTERFACE_VERSION='gh-aura-agent-v1';
 const properties=(shape,required=[])=>({
@@ -19,21 +27,43 @@ const properties=(shape,required=[])=>({
 const str=(description,maxLength=160)=>({type:'string',description,maxLength});
 const optUser={user:str('Public GitHub username; omit to use local config.',39)};
 const art={direction:{type:'string',enum:['barebones','minimal','technical','expressive']}};
+const profileCategory={category:{type:'string',enum:HOLISTIC_STYLES.map(c=>c.id),description:'Explicit profile style; overrides the default direction for hybrids.'}};
 const tools=[
+  ['gh_aura_project_improvements','Read bounded public project writing context, or supply exact description/topics/README changes and per-field reasons for separate reviewable proposals. Never publishes or authorizes changes.',
+    properties({repo:str('Public project OWNER/REPO',140),changes:{type:'object'}},['repo'])],
+  ['gh_aura_activity_preview','Compare supplied/unknown baseline counts and projected synthetic additions for one UTC year. Optional original SVG is illustrative, not a GitHub color guarantee.',
+    properties({plan:{type:'object'},year:{type:'integer',minimum:2008,maximum:2100},svg:{type:'boolean'}},['plan'])],
+  ['gh_aura_profile_native_draft','Generate native GitHub Markdown using the shared whole-profile intent and observed public projects; no publication or AI service.',
+    properties({...optUser,spec:{type:'object'}},['spec'])],
+  ['gh_aura_profile_resources_check','Check README resource metadata through bounded anonymous public HTTPS requests. Blocks private/local destinations; retains no remote body or credentials.',
+    properties({markdown:str('README to check',100000),baseUrl:str('Public README URL used to resolve relative paths',2000),spec:{type:'object'}},['markdown'])],
+  ['gh_aura_whole_profile_context','Build compact public evidence and writing guidance honoring the full shared intent, explicit projects and style.',
+    properties({...optUser,spec:{type:'object'}},['spec'])],
+  ['gh_aura_whole_profile_spec','Create or refine shared intent for README, sidebar account fields, assets, pins and optional workspace goals.',
+    properties({spec:{type:'object'},changes:{type:'object'}})],
+  ['gh_aura_whole_profile_inspect','Inspect public sidebar fields, profile repository and exact README/default branch revisions. Set readmeLimit when reading examples to keep context compact.',properties({...optUser,readmeLimit:{type:'integer',minimum:200,maximum:12000}})],
+  ['gh_aura_whole_profile_plan','Build an exact read-only change plan from shared intent and original Markdown; never authorize it.',
+    properties({...optUser,spec:{type:'object'},markdown:str('Original README; omit to leave it unchanged',100000),resources:{type:'boolean',description:'Opt into anonymous checks of public link/image metadata'},delivery:{type:'string',enum:['pr','commit']}},['spec'])],
+  ['gh_aura_whole_profile_preview','Show reviewed field differences and file diffs from a plan without any remote writes.',properties({plan:{type:'object'}},['plan'])],
+  ['gh_aura_projects_scan','Rank a bounded page range of public projects for a goal. Continue with nextCursor until coverage is complete.',
+    properties({...optUser,goal:str('Target role',160),cursor:{type:'integer',minimum:1,maximum:100},pages:{type:'integer',minimum:1,maximum:20},inspect:{type:'integer',minimum:0,maximum:6}})],
+  ['gh_aura_project_evidence','Inspect one explicitly chosen public repository, its README and source/test structure; does not execute code.',
+    properties({repository:str('Public OWNER/REPO',140)},['repository'])],
+  ['gh_aura_pins_current','Read currently visible pinned repositories/gists using public GraphQL; does not change them.',properties({...optUser})],
   ['gh_aura_sources_search','Search curated GitHub README resources; no links are embedded or fetched automatically.',
     properties({query:str('Goal, keyword or resource to find (Spanish or English)',400),category:str('Source category',40),...art,
       includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:50}})],
   ['gh_aura_sources_get','Inspect attribution, licensing, trust and usage limitations for one source.',
     properties({id:str('Source ID',80)},['id'])],
-  ['gh_aura_design_recommend','Combine GitHub-compatible layout techniques with source links for a natural-language design request; no template or image is downloaded.',
-    properties({query:str('Requested visual effect, density, biography, or composition (Spanish or English)',400),...art,
+  ['gh_aura_design_recommend','Match the request to a category and actual example profiles. Follow examples.readNext to inspect them before composing; techniques are optional building blocks, not a template.',
+    properties({query:str('Requested visual effect, density, biography, or composition (Spanish or English)',400),...art,...profileCategory,
       includeExternal:{type:'boolean'},limit:{type:'integer',minimum:1,maximum:25}})],
-  ['gh_aura_profile_categories','Describe eight whole-profile styles and facets; the old 25 list is provisional, not category winners.',properties({})],
-  ['gh_aura_profiles_list','List the 25 selected public README references for human inspection; no copies or external fetch.',
+  ['gh_aura_profile_categories','List eight style categories and example counts. Choose a category, then read its profiles with gh_aura_profiles_list.',properties({})],
+  ['gh_aura_profiles_list','Return current profile URLs in the chosen category and the tools to inspect them. Read these profiles before designing; no corpus, scores or copied assets.',
     properties({query:str('Filter references by theme or role',400),
-      direction:{type:'string',enum:['barebones','minimal','technical','expressive']}})],
-  ['gh_aura_patterns_recommend','Recommend at most two original composition patterns from selected references. Read-only.',
-    properties({query:str('User design intent or role',400),...art,
+      ...profileCategory,limit:{type:'integer',minimum:1,maximum:50},direction:{type:'string',enum:['barebones','minimal','technical','expressive']}})],
+  ['gh_aura_patterns_recommend','Select at most two profile reading references by category; inspect current sources rather than copying a pattern.',
+    properties({query:str('User design intent or role',400),...art,...profileCategory,
       limit:{type:'integer',minimum:1,maximum:2}})],
   ['gh_aura_profile_professional_review','Run offline, goal-aware README quality heuristics without an invented recruiter score.',
     properties({markdown:str('Proposed profile README',100000),
@@ -63,7 +93,7 @@ const tools=[
   ['gh_aura_profile_prompt','Produce an original writing brief usable by any AI model. No AI service is called.',
     properties({...optUser,...art,includeExternal:{type:'boolean'}})],
   ['gh_aura_profile_validate','Run local heuristic checks on a Markdown draft; not a factuality certificate.',
-    properties({markdown:str('Proposed original Markdown',100000),spec:{type:'object'}},['markdown'])],
+    properties({...optUser,markdown:str('Proposed original Markdown',100000),spec:{type:'object'}},['markdown'])],
   ['gh_aura_profile_diff','Compare two Markdown drafts locally; produces no approval token.',
     properties({before:str('Existing Markdown',100000),after:str('Proposed Markdown',100000)},['before','after'])],
   ['gh_aura_profile_preview','Read the public USER/USER README live and show a diff; never produce an approval token.',
@@ -79,6 +109,10 @@ const tools=[
       density:{type:'integer',minimum:0,maximum:100}},['year'])],
   ['gh_aura_badges_catalog','Inspect the source-attributed achievement catalog and eligibility caveats.',
     properties({})],
+  ['gh_aura_badges_collaboration_campaign','Plan exact coauthor or Q&A exercises for two consenting accounts. One owner-authorized whole-profile plan can run the campaign; actual awards gate tiers. Offline and read-only.',
+    properties({repo:str('Existing owned marked private workspace OWNER/REPO',120),collaborator:str('Distinct authorized second account',39),consent:{type:'boolean'},
+      kind:{type:'string',enum:['coauthor','discussion-answer']},tier:{type:'string',enum:['base','bronze','silver','gold']},
+      exercises:{type:'array',minItems:1,maxItems:48,items:properties({content:str('Exact coauthor exercise content',12000),question:str('Exact private question',4000),answer:str('Exact reviewed answer',8000)})}},['repo','collaborator','consent','kind','exercises'])],
   ['gh_aura_badges_plan','Plan bounded private workspace exercise attempts offline; never apply.',
     properties({tier:{type:'string',enum:['base','bronze','silver','gold']},
       strategy:{type:'string',enum:['rest','git-batch']},repo:str('Owned private GH Aura workspace OWNER/NAME',120)})],
@@ -87,18 +121,28 @@ const tools=[
 ];
 export const AGENT_TOOL_DEFINITIONS=Object.freeze(tools.map(([name,description,inputSchema])=>({
   name,title:name.replaceAll('_',' '),description,inputSchema,
-  annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false},
+  annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:['gh_aura_profile_resources_check','gh_aura_whole_profile_plan','gh_aura_project_improvements'].includes(name)},
 })));
+const APPROVED_EXECUTION_TOOL=Object.freeze({name:'gh_aura_apply_approved_profile',title:'Apply owner-approved profile plan',
+  description:'Execute only the exact plan pinned in owner/host configuration. Cannot choose a plan/path or create approval. May create the reviewed public profile repository, publish README/assets and update reviewed account fields.',
+  inputSchema:properties({}),annotations:{readOnlyHint:false,destructiveHint:true,openWorldHint:true}});
+const APPROVED_STATUS_TOOL=Object.freeze({name:'gh_aura_approved_profile_status',title:'Read approved plan status',
+  description:'Read local progress only for the plan pinned by the owner/host; does not authorize or execute it.',
+  inputSchema:properties({}),annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false}});
+export function getAgentToolDefinitions(env=process.env){
+  return env.GH_AURA_APPROVED_PLAN&&/^[a-f\d]{64}$/.test(env.GH_AURA_APPROVED_FINGERPRINT||'')
+    ?[...AGENT_TOOL_DEFINITIONS,APPROVED_EXECUTION_TOOL,APPROVED_STATUS_TOOL]:AGENT_TOOL_DEFINITIONS;
+}
 export function agentCapabilities(){
   return {format:AGENT_INTERFACE_VERSION,transport:['CLI','Agent Skills','MCP stdio 2026-07-28 and legacy 2025-11-25'],
-    tools:AGENT_TOOL_DEFINITIONS,resources:[
+    tools:getAgentToolDefinitions(),resources:[
       'gh-aura://sources/catalog','gh-aura://techniques/catalog','gh-aura://profiles/selected',
       'gh-aura://guide/profile','gh-aura://guide/biography',
       'gh-aura://capabilities'],
     prompts:['create_professional_profile','refine_existing_profile',
       'compare_profile_directions','write_original_biography'],
-    writesExposed:false,aiProviderRequired:false,runtimeDependencies:0,
-    publication:'No publishing tool is exposed to the AI. A human must inspect a real draft file, run gh-aura preview --file draft.md --save review.json, and independently execute gh-aura apply --review review.json --pr.',
+    writesExposed:getAgentToolDefinitions().some(x=>x.annotations.readOnlyHint===false),aiProviderRequired:false,runtimeDependencies:0,
+    publication:'Read-only by default. The owner/host can pin one reviewed plan and fingerprint to expose only its execution. Agent tools cannot mint approval. Legacy independent preview/apply remains supported.',
     caveat:'Agent tools expose public data and explicit private workspace status only. No GitHub achievement awards are guaranteed.'};
 }
 function actualUser(value){
@@ -126,14 +170,50 @@ function runCliJson(tokens,{text=false}={}){
   catch{throw Error('GH Aura did not produce a valid bounded JSON response.');}
 }
 export async function runAgentTool(name,args={}){
-  if(!AGENT_TOOL_DEFINITIONS.some(x=>x.name===name))
+  const definitions=getAgentToolDefinitions();
+  if(!definitions.some(x=>x.name===name))
     throw Error('Unknown or unauthorized GH Aura agent tool.');
   if(!args||typeof args!=='object'||Array.isArray(args))throw Error('Tool arguments must be an object.');
   // Validate argument names, not just the JSON Schema presented to the model.
-  const schema=AGENT_TOOL_DEFINITIONS.find(x=>x.name===name).inputSchema;
+  const schema=definitions.find(x=>x.name===name).inputSchema;
   if(Object.keys(args).some(key=>!Object.hasOwn(schema.properties,key))||
       (schema.required||[]).some(key=>args[key]===undefined))
     throw Error('Unexpected or missing GH Aura agent tool arguments.');
+  if(name==='gh_aura_apply_approved_profile'){
+    const plan=approvedPlanFromHost();
+    const {journal,...result}=await executeProfilePlan(plan,process.env.GH_AURA_APPROVED_FINGERPRINT);
+    return result;
+  }
+  if(name==='gh_aura_approved_profile_status')return profileExecutionStatus(approvedPlanFromHost());
+  if(name==='gh_aura_whole_profile_spec')return args.changes?refineWholeProfileSpec(args.spec,args.changes):makeWholeProfileSpec(args.spec||{},loadConfig());
+  if(name==='gh_aura_profile_native_draft')return nativeProfileDraft(actualUser(args.user),args.spec,{config:loadConfig()});
+  if(name==='gh_aura_activity_preview')return previewCalendar(args.plan,{year:args.year,svg:args.svg===true});
+  if(name==='gh_aura_profile_resources_check'){
+    const spec=makeWholeProfileSpec(args.spec||{readme:false});
+    return checkProfileResources(args.markdown,{baseUrl:args.baseUrl,assets:spec.assets});
+  }
+  if(name==='gh_aura_whole_profile_context')return wholeProfileContext(actualUser(args.user),args.spec,{config:loadConfig()});
+  if(name==='gh_aura_whole_profile_inspect'){
+    if(args.readmeLimit!==undefined&&(!Number.isInteger(args.readmeLimit)||args.readmeLimit<200||args.readmeLimit>12000))throw Error('README excerpt limit must be 200–12000 characters.');
+    const snapshot=await inspectWholeProfile(actualUser(args.user));
+    // Reference reading follows GitHub's README detection (including readme.md),
+    // without changing the exact README.md path used by owner write plans.
+    if(args.readmeLimit!==undefined&&snapshot.readme.state==='absent'&&snapshot.repository.head){
+      const login=encodeURIComponent(snapshot.username),ref=encodeURIComponent(snapshot.repository.head);
+      const source=await getJSON('/repos/'+login+'/'+login+'/readme?ref='+ref,{token:''});
+      if(source){
+        if(source.type!=='file'||!/^readme(?:\.[a-z\d]+)?$/i.test(source.path||'')||!/^[a-f\d]{40}$/i.test(source.sha||''))throw Error('Invalid public reference README.');
+        snapshot.readme={state:'observed',path:source.path,sha:source.sha,content:decodeReadme(source,256*1024)};
+      }
+    }
+    if(args.readmeLimit!==undefined){const content=snapshot.readme.content;snapshot.readme={...snapshot.readme,content:content.slice(0,args.readmeLimit),truncated:content.length>args.readmeLimit,fullLength:content.length};}
+    return snapshot;
+  }
+  if(name==='gh_aura_whole_profile_plan')return prepareProfilePlan(actualUser(args.user),args.spec,args.markdown,{delivery:args.delivery,resources:args.resources});
+  if(name==='gh_aura_whole_profile_preview')return previewWholeProfilePlan(args.plan);
+  if(name==='gh_aura_projects_scan')return scanPublicProjects(actualUser(args.user),args);
+  if(name==='gh_aura_project_evidence')return inspectPublicProject(args.repository);
+  if(name==='gh_aura_pins_current')return inspectCurrentPins(actualUser(args.user));
   if(name==='gh_aura_sources_search')
     return findProfileSources(args);
   if(name==='gh_aura_sources_get')
@@ -149,8 +229,7 @@ export async function runAgentTool(name,args={}){
         limitations:x.limitations}));
     return {...options,sources};
   }
-  if(name==='gh_aura_profile_categories')return {styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,
-    purposes:PROFILE_PURPOSES,qualityGate:'No best-of-category until avatar, README, pins, sidebar, contribution graph and achievements reviewed.'};
+  if(name==='gh_aura_profile_categories')return profileCategories();
   if(name==='gh_aura_profiles_list')
     return listCuratedProfiles(args);
   if(name==='gh_aura_patterns_recommend')
@@ -166,7 +245,7 @@ export async function runAgentTool(name,args={}){
   if(name==='gh_aura_profile_refine')
     return refineProfileSpec(args.spec,args.changes);
   if(name==='gh_aura_profile_validate')
-    return validateProfileDraft(args.markdown,args.spec);
+    return validateProfileDraft(args.markdown,args.spec,{username:args.user?actualUser(args.user):undefined});
   if(name==='gh_aura_profile_diff')
     return previewProfileDiff(args.before,args.after);
   if(name==='gh_aura_profile_preview'){
@@ -175,6 +254,8 @@ export async function runAgentTool(name,args={}){
       repository:target.repo,branch:target.branch,readOnly:true,
       next:'Ask the user to inspect the draft, save it locally, then separately run gh-aura preview --file draft.md --save review.json and gh-aura apply --review review.json --pr.'};
   }
+  if(name==='gh_aura_project_improvements')return projectImprovements(args.repo,args.changes);
+  if(name==='gh_aura_badges_collaboration_campaign')return planCollaborationCampaign(args);
   if(name==='gh_aura_badges_catalog')
     return {entries:ACHIEVEMENT_MATRIX,
       notice:'Eligibility and tier estimates are informational. GitHub awards are never guaranteed.'};

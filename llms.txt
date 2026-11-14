@@ -1,6 +1,6 @@
 # GH Aura
 
-> AI-first, model-agnostic GitHub profile design. Build original professional READMEs using evidence, biographies and composable sources. No templates, paid AI API or hosted service required.
+> AI-first, model-agnostic improvement of complete GitHub profiles: original README, sidebar identity, relevant projects/pins, viable achievements and contribution plans. Shared CLI/MCP intent, owner-authorized execution and result verification. No paid AI API or hosted service required.
 
 ## For any agent
 - [Portable Agent Skill](skills/gh-aura-profile/SKILL.md)
@@ -18,6 +18,6 @@
 - `GH_AURA_SOURCES_FILE`: optional trusted local catalog; sources remain opt-in.
 
 ## Publication boundary
-AI-facing tools cannot publish. Only the human independently runs `gh-aura preview --file draft.md --save review.json` and `gh-aura apply --review review.json --pr`.
+AI-facing tools are read-only by default. Only the owner/host can authorize the exact whole-profile plan. A configured execution tool may apply that existing grant; it cannot mint approval or choose arbitrary files. Legacy independently reviewed preview/apply remains available.
 
 [Scope](docs/PRODUCT_PLAN.md) · [Research](research/README.md)

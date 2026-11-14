@@ -2,29 +2,30 @@ const COMMON = ['config', 'user'];
 const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
-  sources: { usage: 'sources list | show ID | recommend | design | categories | profiles | profile ID | patterns --query TEXT [--direction minimal]', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
-  agent: { usage: 'agent capabilities | agent spec [--direction technical] [--visual-brief TEXT] | agent bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
-  mcp: { usage: 'mcp (local stdio, read-only tools only)', flags:[], max:0 },
+  improve: { usage: 'improve spec | draft [USER] --spec profile.json | check [USER] --spec profile.json --file draft.md [--resources] | context [USER] --spec profile.json | inspect [USER] | projects [USER] [--goal TEXT] [--cursor PAGE] | project --repo OWNER/REPO | project-proposal --repo OWNER/REPO [--spec changes.json] | pins [USER] | plan [USER] --spec profile.json [--file draft.md] [--resources] [--delivery pr|commit] | preview --review plan.json | authorize --review plan.json --confirm FINGERPRINT | apply --review plan.json --confirm FINGERPRINT | status --review plan.json', flags: ['resources','config','user','spec','file','review','confirm','delivery','format','output','force','goal','cursor','pages','inspect','repo'], max: 2 },
+  sources: { usage: 'sources categories | profiles --category STYLE [--limit 6] | profile ID | design --query TEXT [--category STYLE] | list | show ID | recommend | patterns --query TEXT', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
+  agent: { usage: 'agent install --client codex|claude|generic [--directory PATH] | doctor | capabilities | spec [--direction technical] [--visual-brief TEXT] | bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['client','directory','config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
+  mcp: { usage: 'mcp (local stdio; read-only by default, execution only for an owner/host-pinned plan)', flags:[], max:0 },
   'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
-  calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
+  calendar: { usage: 'activity plan [YEAR] [--from YYYY --to YYYY] [--density 0..100] [--growth 0..100] [--weekends 0..100] [--intensity 1..6] [--existing actual.json] [--output plan.json] | activity preview --review plan.json [--year YYYY] [--svg --output preview.svg] | activity apply --review plan.json [--repo OWNER/PRIVATE_WORKSPACE] --author-name NAME --author-email VERIFIED_EMAIL --confirm FINGERPRINT', flags: ['svg','year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','daily-targets','output','force','review','repo','confirm','author-name','author-email'], max: 2 },
   story: { usage: 'story list | story set OWNER/REPO --contribution TEXT [--proof URL] | story remove OWNER/REPO', flags: ['config', 'dry-run', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof'], max: 2 },
   work: { usage: 'work preview --repo OWNER/REPO --path README.md --file draft.md [--save review.json] | work apply --review review.json', flags: ['repo', 'path', 'file', 'save', 'review', 'private', 'force', 'format'], max: 1 },
   references: { usage: 'references [--company NAME] [--json]', flags: ['company', 'format', 'output', 'force'], max: 0 },
   init: { usage: 'init [USER] [--config FILE]', flags: ['config', 'output', 'force'], max: 1 },
   config: { usage: 'config show|get|set|reset [KEY] [VALUE] [--dry-run]', flags: ['config', 'dry-run'], max: 3 },
   audit: { usage: 'audit [USER] [--goal "backend engineer"] [--job vacancy.txt] [--inspect 3] [--deep 2] [--json]', flags: [...DATA, 'goal', 'job', 'checks'], max: 1 },
-  profile: { usage: 'profile [USER] [--style minimal|regular|flashy | --visual 0..100] [--language en|es] [--keep] [-o draft.md]', flags: [...READ, 'style', 'visual', 'language', 'inspect', 'output', 'force', 'keep'], max: 1 },
+  profile: { usage: 'profile [USER] [--spec profile.json | --style minimal|regular|flashy | --visual 0..100] [--language en|es] [--keep] [-o draft.md]', flags: [...READ, 'spec','style', 'visual', 'language', 'inspect', 'output', 'force', 'keep'], max: 1 },
   preview: { usage: 'preview [USER] --file draft.md [--save review.json]', flags: [...COMMON, 'file', 'save', 'force'], max: 1 },
   apply: { usage: 'apply --review review.json [--pr] | apply [USER] --file draft.md --approve CODE [--pr]', flags: [...COMMON, 'file', 'approve', 'review', 'format', 'pr'], max: 1 },
   showcase: { usage: 'showcase [USER] [--goal TEXT] [--limit 6] [--inspect 3] [--deep 2]', flags: [...DATA, 'goal', 'limit', 'checks'], max: 1 },
   achievements: { usage: 'achievements [USER] [--scope all|free|attainable] [--plan] [--badge ID] [--private] [--prepare ID --repo OWNER/NAME]', flags: [...READ, 'format', 'output', 'force', 'scope', 'plan', 'badge', 'private', 'prepare', 'repo'], max: 1 },
   contributions: { usage: 'contributions [USER] [--year YYYY | --all | --from YYYY-MM-DD --to YYYY-MM-DD] [--local PATH --emails-file FILE] [--days] [--recover] [--plan]', flags: [...READ, 'year', 'all', 'from', 'to', 'days', 'private', 'recover', 'plan', 'local', 'emails-file', 'format', 'output', 'force', 'details'], max: 1 },
-  brief: { usage: 'brief [USER] [--prompt] [--direction barebones|minimal|technical|expressive] [--external] [-o prompt.md]', flags: [...DATA, 'style', 'visual', 'direction', 'language', 'prompt', 'checks', 'external'], max: 1 },
-  check: { usage: 'check --file draft.md [--professional --goal general|hiring|research|open-source|creative] [--json] [--strict]', flags: ['config', 'file', 'brief', 'format', 'output', 'force', 'strict', 'professional', 'goal'], max: 0 },
-  diff: { usage: 'diff [USER] [--style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'style', 'visual', 'output', 'force'], max: 1 },
+  brief: { usage: 'brief [USER] [--spec profile.json] [--prompt] [--direction barebones|minimal|technical|expressive] [--external] [-o prompt.md]', flags: [...DATA, 'spec','style', 'visual', 'direction', 'language', 'prompt', 'checks', 'external'], max: 1 },
+  check: { usage: 'check --file draft.md [--spec profile.json] [--professional --goal general|hiring|research|open-source|creative] [--json] [--strict]', flags: ['config','user','spec', 'file', 'brief', 'format', 'output', 'force', 'strict', 'professional', 'goal'], max: 0 },
+  diff: { usage: 'diff [USER] [--spec profile.json | --style minimal|regular|flashy | --visual 0..100]', flags: [...READ, 'spec','style', 'visual', 'output', 'force'], max: 1 },
 };
-const VALUES = new Set(['catalog','visual-brief','voice','perspective','focus','bio-words','notes','category','query','max-words','max-projects','direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
-const FLAGS = new Set(['professional','external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
+const VALUES = new Set(['client','directory','daily-targets','cursor','pages','spec','delivery','catalog','visual-brief','voice','perspective','focus','bio-words','notes','category','query','max-words','max-projects','direction', 'config', 'user', 'format', 'output', 'style', 'visual', 'inspect', 'file', 'save', 'approve', 'review', 'goal', 'limit', 'year', 'from', 'to', 'budget', 'brief', 'company', 'scope', 'badge', 'deep', 'prepare', 'repo', 'language', 'job', 'local', 'emails-file', 'path', 'problem', 'contribution', 'tradeoffs', 'outcome', 'proof', 'density', 'growth', 'weekends', 'intensity', 'seed', 'mode', 'role', 'existing', 'confirm', 'author-name', 'author-email', 'pulls', 'start', 'tier', 'strategy']);
+const FLAGS = new Set(['svg','resources','professional','external','help', 'version', 'json', 'force', 'dry-run', 'all', 'fresh', 'keep', 'pr', 'details', 'stats', 'prompt', 'strict', 'days', 'private', 'recover', 'plan', 'checks', 'no-quickdraw']);
 export const HELP = [
   'GH Aura — simple GitHub profile CLI. You choose every change.', '',
   'One-time setup:',
@@ -42,6 +43,7 @@ export const HELP = [
   '  gh-aura readme minimal --output draft.md',
   '  gh-aura preview --file draft.md --save review.json',
   '  gh-aura apply --review review.json --pr', '',
+  'Complete profile: gh-aura improve spec | inspect | plan | preview | apply', '',
   'Optional AI: gh-aura mcp | agent capabilities | sources recommend --query TEXT',
   'Curated design: gh-aura sources profiles | sources patterns --direction technical',
   'More: audit, work, story, check, brief, config, references.',
@@ -75,6 +77,22 @@ export function parseArgs(tokens) {
 
 export function validateOptions(command, options) {
   const spec = SPECS[command];
+  if(options.spec&&['profile','brief','diff'].includes(command)&&['style','visual','language','direction','external'].some(k=>options[k]!==undefined))
+    throw Error('With --spec, edit presentation/language/source preferences in the spec instead of supplying conflicting flags.');
+  if(command==='improve'){
+    const action=options.positional[0]||'spec';
+    if(!['spec','draft','check','context','inspect','projects','project','project-proposal','pins','plan','preview','authorize','apply','status'].includes(action))throw Error('Unknown improve action.');
+    if(options.delivery&&!['pr','commit'].includes(options.delivery))throw Error('--delivery must be pr or commit.');
+    if(['preview','authorize','apply','status'].includes(action)&&!options.review)throw Error('--review is required.');
+    if(['authorize','apply'].includes(action)&&!options.confirm)throw Error('--confirm is required.');
+    const specific={spec:['spec'],draft:['spec'],check:['spec','file','resources'],context:['spec'],inspect:[],projects:['goal','cursor','pages','inspect'],project:['repo'],'project-proposal':['repo','spec'],pins:[],
+      plan:['spec','file','delivery','resources'],preview:['review'],authorize:['review','confirm'],apply:['review','confirm'],status:['review']};
+    const scoped=['resources','spec','file','review','confirm','delivery','goal','cursor','pages','inspect','repo'];
+    if(scoped.some(k=>options[k]!==undefined&&!specific[action].includes(k)))throw Error('An option is not applicable to improve '+action+'.');
+    if(['project','project-proposal'].includes(action)&&!options.repo)throw Error('improve '+action+' requires --repo OWNER/REPO.');
+    if(action==='check'&&!options.file)throw Error('improve check requires --file draft.md.');
+    if(options.positional.length>1&&!['draft','check','context','inspect','projects','pins','plan'].includes(action))throw Error('This improve action takes no positional username.');
+  }
   if (command === 'apply' && options['dry-run']) throw new Error('apply --dry-run never publishes. Use preview instead.');
   if (options.json) {
     if (options.format) throw new Error('Choose --json or --format, not both.');
@@ -83,7 +101,7 @@ export function validateOptions(command, options) {
   for (const key of Object.keys(options)) if (key !== 'positional' && !spec.flags.includes(key)) throw new Error('--' + key + ' is not supported by ' + command + '.');
   if (options.positional.length > spec.max) throw new Error('Too many arguments. Usage: gh-aura ' + spec.usage);
   if (options.format && !['json', 'markdown'].includes(options.format)) throw new Error('--format must be json or markdown.');
-  if (options.force && !options.output && !options.save && command !== 'init') throw new Error('--force requires a local output file; it never overrides GitHub revisions.');
+  if (options.force && !options.output && !options.save && command !== 'init' && !(command==='agent'&&options.positional[0]==='install'&&options.directory)) throw new Error('--force requires a local output file; it never overrides GitHub revisions.');
   if (options.language && !['en', 'es'].includes(options.language)) throw new Error('--language must be en or es.');
   if (options.direction && !['barebones','minimal','technical','expressive'].includes(options.direction)) throw new Error('--direction must be barebones, minimal, technical or expressive.');
   if (options.visual !== undefined && options.style) throw new Error('Choose --visual or --style, not both.');
@@ -150,7 +168,13 @@ export function validateOptions(command, options) {
     const [action, shorthand] = options.positional;
     const planning = ['year','from','to','density','growth','weekends','intensity','seed','mode','role','existing','output','force'];
     const applying = ['review','repo','confirm','author-name','author-email'];
-    if (!['plan','apply'].includes(action)) throw Error('Use activity plan [YEAR] or activity apply --review FILE.');
+    if (!['plan','preview','apply'].includes(action)) throw Error('Use activity plan [YEAR], preview --review FILE or apply --review FILE.');
+    if(action==='preview'){
+      if(options.positional.length!==1||!options.review||Object.keys(options).some(k=>!['positional','review','year','svg','output','force'].includes(k)))throw Error('activity preview accepts only --review, --year, --svg and local output flags.');
+      if(options.year&&!/^\d{4}$/.test(String(options.year)))throw Error('--year must be YYYY.');
+      return;
+    }
+    if(options.svg)throw Error('--svg is only valid for activity preview.');
     if (action === 'plan') {
       if (shorthand && (!/^\d{4}$/.test(shorthand) || options.year || options.from || options.to)) {
         throw Error('Use one year (activity plan 2022), or --from/--to, not both.');
@@ -210,21 +234,24 @@ export function validateOptions(command, options) {
     if (!['list','show','recommend','design','categories','profiles','profile','patterns'].includes(action) ||
         (detail&&!id)||(!detail&&id)||
         (!search&&['query','category','direction','limit','external'].some(k=>options[k]!==undefined))||
-        (['design','profiles','patterns','profile'].includes(action)&&options.category!==undefined)||
-        (['profiles','patterns','profile'].includes(action)&&(options.catalog!==undefined||options.external!==undefined))||
-        (action==='profiles'&&options.limit!==undefined))
-      throw Error('Use sources list, show ID, recommend, design, categories, profiles, profile ID or patterns --query TEXT.');
+        (!search&&options.category!==undefined)||
+        (['profiles','patterns','profile','categories'].includes(action)&&options.catalog!==undefined)||
+        (!['recommend','design'].includes(action)&&options.external!==undefined))
+      throw Error('Use sources categories, profiles --category STYLE, profile ID, design, list, show ID, recommend or patterns --query TEXT.');
     if (options.direction&&!['barebones','minimal','technical','expressive'].includes(options.direction))
       throw Error('Invalid source art direction.');
     const max=action==='patterns'?2:action==='design'?25:50;
-    if (options.limit!==undefined&&(!/^\\d+$/.test(options.limit)||
+    if (options.limit!==undefined&&(!/^\d+$/.test(options.limit)||
         Number(options.limit)<1||Number(options.limit)>max))
       throw Error('--limit exceeds the allowed source, design or pattern bound.');
   }
   if (command === 'agent') {
     const [action]=options.positional;
-    if(!['capabilities','spec','bio'].includes(action))
+    if(!['install','doctor','capabilities','spec','bio'].includes(action))
       throw Error('Use agent capabilities, spec or bio.');
+    if(action!=='install'&&['client','directory'].some(k=>options[k]!==undefined))throw Error('--client and --directory apply only to agent install.');
+    if(['install','doctor'].includes(action)&&['direction','goal','language','max-words','max-projects','notes','external','visual-brief','voice','perspective','focus','bio-words'].some(k=>options[k]!==undefined))
+      throw Error('Installation/diagnostics do not take profile design options.');
     if(action==='capabilities'&&
       ['direction','goal','language','max-words','max-projects','notes','external',
         'visual-brief','voice','perspective','focus','bio-words']

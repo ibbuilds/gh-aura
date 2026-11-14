@@ -102,9 +102,9 @@ export const ORDINARY_REFERENCE = Object.freeze({
     "Mozilla": 5,
     "Cloudflare": 5
   },
-  "source": "https://github.com/ibbuilds/gh-aura/blob/main/research/ordinary-engineers-200.json",
+  "source": "https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/ordinary-engineers-200.json",
   "sourceBlob": "6bd0775f29d05b7c57515b147cd64bd80e046cc1",
-  "method": "https://github.com/ibbuilds/gh-aura/blob/main/research/ORDINARY_STUDY.md",
+  "method": "https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/ORDINARY_STUDY.md",
   "limitations": "A purposive sample, not an employment-verification or hiring-outcome study. Public company-org memberships may include external collaborators; employer and role are self-listed and potentially stale. Followers <=2000 is an arbitrary visibility filter, not an engineering ranking. Only root HEAD:README.md was inspected. No biographies copied."
 });
 
@@ -136,13 +136,13 @@ export const PROFILE_REFERENCE = Object.freeze({
       readmesWithoutImages: 2, readmesWithLinks: 5, readmesWithStatCards: 2,
     },
     criteria: 'Employer-owned engineering author/staff pages; GitHub login linked or corroborated, with source and observation date. Employer assertion may go stale.',
-    source: 'https://github.com/ibbuilds/gh-aura/blob/main/research/employer-observations.json',
-    roster: 'https://github.com/ibbuilds/gh-aura/blob/main/research/employer-sourced.json',
+    source: 'https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/employer-observations.json',
+    roster: 'https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/employer-sourced.json',
     sourceBlob: '7273b8c61bb331e9c6bd0aa52db56c42d75181f6',
   },
-  source: 'https://github.com/ibbuilds/gh-aura/blob/main/research/company-profiles.json',
+  source: 'https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/company-profiles.json',
   sourceBlob: 'adfc2182373987db1a63a18f0ab50f9c772810ff',
-  method: 'https://github.com/ibbuilds/gh-aura/blob/main/research/INDUSTRY_STUDY.md',
+  method: 'https://github.com/ibbuilds/gh-aura/blob/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research/INDUSTRY_STUDY.md',
   limitations: 'Not a hiring-outcome study, employer-verification service or representative survey. Company and role are self-reported in the 100-person cohort; public organization members may be external collaborators. Employer pages can be stale. Root README.md only. No biographies copied.',
 });
 

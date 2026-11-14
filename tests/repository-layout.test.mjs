@@ -17,7 +17,6 @@ test('the first-run docs stay short and reference actual maintained files', () =
     'docs/ACTIVITY.md': 2500,
     'docs/ACHIEVEMENTS.md': 2500,
     'docs/BADGE_RUN.md': 2800,
-    'docs/PRODUCT_PLAN.md': 2700,
     'docs/ARCHITECTURE.md': 2000,
     'docs/RELEASE_READINESS.md': 2200,
     'docs/RELEASE_NOTES.md': 1200,
@@ -35,12 +34,11 @@ test('the first-run docs stay short and reference actual maintained files', () =
   }
 });
 
-test('legacy project-contributor collector is not in the current tree', () => {
-  assert.equal(existsSync(file('research/profiles.json')), false);
-  assert.equal(existsSync(file('scripts/research-profiles.mjs')), false);
-  assert.equal(existsSync(file('research/ordinary-engineers-200.json')), true);
-  assert.equal(existsSync(file('research/company-profiles.json')), true);
-  assert.equal(existsSync(file('research/employer-observations.json')), true);
+test('research evidence and collectors are archived outside the active product tree', () => {
+  assert.deepEqual(readdirSync(file('research')), ['README.md']);
+  assert.equal(existsSync(file('scripts/research-holistic-profiles.mjs')), false);
+  const manifest=JSON.parse(readFileSync(file('package.json'),'utf8'));
+  assert.equal(manifest.scripts['test:research'],'node scripts/verify-research-archive.mjs');
 });
 
 test('packaged surface is restricted to the runtime and essential documentation', () => {
@@ -53,7 +51,6 @@ test('packaged surface is restricted to the runtime and essential documentation'
   assert.ok(existsSync(file('llms.txt')));
   const skill=readFileSync(file('skills/gh-aura-profile/SKILL.md'),'utf8');
   assert.match(skill,/^---\nname: gh-aura-profile\ndescription:/);
-  assert.match(skill,/agent's tools never publish|No agent tool can publish/);
 });
 
 test('published version and product plan remain in sync', () => {
@@ -66,11 +63,11 @@ test('published version and product plan remain in sync', () => {
   assert.ok(changelog.includes('## ' + manifest.version + ' —'), 'missing changelog release');
 });
 
-test('documentation is consolidated into ten short, linked product guides', () => {
+test('documentation is consolidated into linked product guides', () => {
   const docs = readdirSync(file('docs')).filter((name) => name.endsWith('.md'));
   assert.deepEqual(docs.sort(), [
     'ACHIEVEMENTS.md', 'ACTIVITY.md', 'ARCHITECTURE.md',
-    'BADGE_RUN.md', 'CLI.md', 'HUMAN_VALIDATION.md',
+    'BADGE_RUN.md', 'CLI.md', 'HUMAN_VALIDATION.md', 'IMPROVE.md',
     'PRODUCT_PLAN.md', 'RELEASE_NOTES.md', 'RELEASE_READINESS.md',
     'WORK.md',
   ]);

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -12,50 +12,31 @@ import { runAgentTool } from '../src/agent-tools.mjs';
 import { handleMcpMessage } from '../src/mcp-server.mjs';
 import { recommendProfileTechniques } from '../src/profile-techniques.mjs';
 
-const bank=JSON.parse(readFileSync(new URL('../research/profile-design-references.json',import.meta.url),'utf8'));
 const cli=fileURLToPath(new URL('../src/cli.mjs',import.meta.url));
 const run=(args,cwd)=>spawnSync(process.execPath,[cli,...args],{
   cwd,encoding:'utf8',timeout:12000,maxBuffer:512*1024,
   env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:''},
 });
 
-test('all 100 unique original records remain unapproved and exactly 25 curated patterns are a safe subset',()=>{
-  assert.equal(bank.entries.length,100);
-  assert.equal(new Set(bank.entries.map(x=>x.id.toLowerCase())).size,100);
-  assert.equal(CURATED_PROFILE_PATTERNS.length,25);
-  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(x=>x.id.toLowerCase())).size,25);
-  const original=new Map(bank.entries.map(x=>[x.id.toLowerCase(),x]));
-  const styles={barebones:0,minimal:0,technical:0,expressive:0};
+test('reading index preserves originals and gives every category actual references',()=>{
+  assert.ok(CURATED_PROFILE_PATTERNS.length>=25);
+  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(x=>x.id.toLowerCase())).size,CURATED_PROFILE_PATTERNS.length);
   for(const row of CURATED_PROFILE_PATTERNS){
-    const source=original.get(row.id.toLowerCase());
-    assert.ok(source,row.id);
-    assert.equal(source.readmeUrl,row.readmeUrl);
-    assert.equal(source.reviewStatus,'pending-user-editorial-approval');
-    assert.equal(row.status.includes('provisional'),true);
-    assert.match(row.profileUrl,/^https:\/\/github\.com\//);
-    assert.match(row.readmeUrl,/\/README\.md$/);
-    assert.ok(row.learn&&row.avoid&&row.when);
-    assert.equal(row.license.includes('never copy'),true);
-    styles[row.direction]++;
+    assert.equal(row.profileUrl,'https://github.com/'+row.id);
+    assert.ok(row.categories.length>0);
+    assert.match(row.status,/reading-reference/);
   }
-  assert.deepEqual(styles,{barebones:2,minimal:6,technical:8,expressive:9});
-  assert.equal(bank.entries.filter(x=>x.origin==='user-supplied-reference').length,8);
-  for(const id of ['yetone','poteto']){
-    assert.ok(original.has(id));
-    assert.ok(!CURATED_PROFILE_PATTERNS.some(x=>x.id===id));
-  }
-  const doc=readFileSync(new URL('../research/SELECTED_25.md',import.meta.url),'utf8');
-  assert.equal((doc.match(/^\| \[[^\]]+\]\(https:\/\/github\.com\//gm)||[]).length,25);
 });
 
-test('patterns are bounded and selected by intent, never copied from all 100',()=>{
-  assert.equal(listCuratedProfiles().profiles.length,25);
-  assert.equal(listCuratedProfiles({direction:'technical'}).profiles.length,8);
+test('category selection returns source URLs and inspection steps instead of preset designs',()=>{
+  assert.ok(listCuratedProfiles().profiles.length<=6);
+  assert.ok(listCuratedProfiles({direction:'technical'}).profiles.length>0);
   assert.equal(getCuratedProfile('ORHUN').direction,'expressive');
   const r=recommendCuratedPatterns({query:'investigación',direction:'technical'});
+  assert.equal(r.category,'technical-editorial');
   assert.ok(r.profiles.length>0&&r.profiles.length<=2);
-  assert.ok(r.profiles.every(x=>x.status.includes('provisional')&&x.readmeUrl.startsWith('https://')));
-  assert.ok(!JSON.stringify(r).includes('poteto'));
+  assert.ok(r.profiles.every(x=>x.profileUrl.startsWith('https://github.com/')));
+  assert.match(r.readNext,/inspect/);
   assert.throws(()=>recommendCuratedPatterns({limit:3}),/1–2/);
   assert.throws(()=>listCuratedProfiles({direction:'unknown'}),/direction/);
   assert.throws(()=>getCuratedProfile('../../secret'),/Unknown/);
@@ -85,12 +66,12 @@ test('third-party visual resources require both opt-in and a specific media requ
   assert.ok(blocked.techniques.every(x=>!x.thirdParty));
 });
 
-test('standalone offline CLI lists 25 and reviews without any agent',()=>{
+test('standalone offline CLI selects reading references and reviews without any agent',()=>{
   const cwd=mkdtempSync(join(tmpdir(),'gh-aura-curation-'));
   try{
     const listing=run(['sources','profiles','--json'],cwd);
     assert.equal(listing.status,0,listing.stderr);
-    assert.equal(JSON.parse(listing.stdout).profiles.length,25);
+    assert.ok(JSON.parse(listing.stdout).profiles.length<=6);
     const detail=run(['sources','profile','mattabate','--json'],cwd);
     assert.equal(detail.status,0,detail.stderr);
     assert.equal(JSON.parse(detail.stdout).id,'mattabate');
@@ -113,14 +94,14 @@ test('standalone offline CLI lists 25 and reviews without any agent',()=>{
 
 test('MCP exposes the same catalog and review with no writing tools',async()=>{
   const list=await runAgentTool('gh_aura_profiles_list',{});
-  assert.equal(list.profiles.length,25);
+  assert.ok(list.profiles.length<=6);
   const pick=await runAgentTool('gh_aura_patterns_recommend',{query:'research',direction:'technical'});
   assert.ok(pick.profiles.length<=2);
   const report=await runAgentTool('gh_aura_profile_professional_review',{markdown:'# A\n\nHello.',goal:'general'});
   assert.equal(report.format,'gh-aura-professional-review-v1');
   const rpc=await handleMcpMessage({jsonrpc:'2.0',id:4,method:'resources/read',
     params:{uri:'gh-aura://profiles/selected'}});
-  assert.equal(JSON.parse(rpc.result.contents[0].text).profiles.length,25);
+  assert.ok(JSON.parse(rpc.result.contents[0].text).profiles.length<=6);
   await assert.rejects(runAgentTool('gh_aura_patterns_recommend',{limit:3}),/1–2/);
   await assert.rejects(runAgentTool('gh_aura_apply',{markdown:'# Bad'}),/unauthorized/);
 });

@@ -27,15 +27,15 @@ const collectible = [
     nextAction: 'Collaborate with a real person on a substantive change, record correct co-authorship with their permission, and have the reviewed change merged.',
     whoControlsResult: 'real-collaborators-maintainers-and-github', privateEligibility: 'possible-unverified-per-award',
     tierThresholdsCommunityReported: [1,10,24,48], source: COMMUNITY,
-    automation: 'prepare-only',
+    automation: 'conditional-two-account',
   },
   {
     id: 'galaxy-brain', name: 'Galaxy Brain',
     how: 'Give helpful answers in GitHub Discussions that are accepted.',
     nextAction: 'Answer real questions you can resolve; maintainers/question authors choose which answers to accept.',
-    whoControlsResult: 'discussion-maintainers-and-github', privateEligibility: 'requires-public-discussions-or-unknown',
+    whoControlsResult: 'discussion-maintainers-and-github', privateEligibility: 'possible-unverified-per-award',
     tierThresholdsCommunityReported: [2,8,16,32], source: INTRO,
-    automation: 'external-party',
+    automation: 'conditional-two-account',
   },
   {
     id: 'starstruck', name: 'Starstruck',
@@ -154,6 +154,7 @@ export const ACHIEVEMENTS = Object.freeze([...collectible.map((x) => ({
   sourceUrls: matrix.sourceUrls,
   criteriaConfidence: matrix.criteriaConfidence,
   automatableInPrivateWorkspace: matrix.automatable,
+  conditionalAutomation: matrix.conditionalAutomation || null,
   tierThresholds: matrix.tierThresholds,
   category: x.kind === 'achievement' ? x.requiresPayment ? 'paid' : 'activity' : x.kind,
   sourceReviewedAt: REVIEW_DATE, sourcesReviewedAt: REVIEW_DATE,
@@ -241,6 +242,7 @@ export async function achievementReport(snapshot, config, options = {}) {
       canGrantAutomatically: false,
       canAttemptInOnePrivateWorkspace: x.automatableInPrivateWorkspace,
       executionRoute: x.matrixRoute,
+      conditionalAutomation: x.conditionalAutomation,
       exclusionReason: x.automatableInPrivateWorkspace ? null : x.matrixReason,
       ruleConfidence: x.criteriaConfidence,
       tierThresholds: x.tierThresholds,
@@ -265,6 +267,7 @@ export function renderAchievementsMarkdown(report) {
       md(item.how), '', '**Next:** ' + md(item.nextAction), '',
       'Source: ' + item.source + ' (reviewed ' + item.sourceReviewedAt + ')', '');
     if (item.evidence) lines.push('Observed evidence: ' + md(JSON.stringify(item.evidence)), '');
+    if(item.conditionalAutomation)lines.push('Conditional two-account execution: `'+item.conditionalAutomation.mode+'` / `'+item.conditionalAutomation.kind+'` through improve plans. '+md(item.conditionalAutomation.requires),'');
     if (report.plan) lines.push('Awarding: GitHub only; no guaranteed trigger.', '');
   }
   lines.push('## Important', '', report.guidance, '', 'Automated private sandbox events may not earn awards; do not create fake accounts, impersonate other developers or spam public projects.', '',

@@ -53,7 +53,8 @@ export function planCalendar(options={},history=null) {
   const now=options.now||new Date();
   const today=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate());
   const from=dateUTC(options.from||options.year||String(now.getUTCFullYear()),'from');
-  const requestedTo=dateUTC(options.to||options.year||String(now.getUTCFullYear()),'to');
+  const endInput=options.to||options.year||String(now.getUTCFullYear());
+  const requestedTo=String(endInput)===String(now.getUTCFullYear())?today:dateUTC(endInput,'to');
   if(from>requestedTo)throw Error('Calendar start must not exceed end.');
   if(new Date(from).getUTCFullYear()<MIN_YEAR||requestedTo>today)throw Error('Dates must be between 2008 and today (UTC).');
   const span=Math.floor((requestedTo-from)/DAY)+1;
@@ -77,7 +78,7 @@ export function planCalendar(options={},history=null) {
       const date=new Date(ms).toISOString().slice(0,10);
       if(!history.has(date))throw Error('Existing history is incomplete for '+date+'; cannot infer zero days.');
       const count=history.get(date);
-      if(!Number.isInteger(count)||count<0)throw Error('Invalid existing contribution count for '+date);
+      if(!Number.isSafeInteger(count)||count<0)throw Error('Invalid existing contribution count for '+date);
       expected.set(date,count);
     }
   }
@@ -113,12 +114,31 @@ export function planCalendar(options={},history=null) {
       group.selectedDays++;group.newCommits+=item.count;
     }
   }
+  if(options.dailyTargets!==undefined){
+    const targets=options.dailyTargets;
+    if(!targets||typeof targets!=='object'||Array.isArray(targets)||Object.keys(targets).length>MAX_DAYS)
+      throw Error('dailyTargets must be a bounded date/count object.');
+    days.length=0;
+    for(const group of Object.values(perYear)){group.selectedDays=0;group.newCommits=0;}
+    for(const [date,target] of Object.entries(targets).sort(([a],[b])=>a.localeCompare(b))){
+      const ms=dateUTC(date,'from');
+      if(date.length!==10||ms<from||ms>requestedTo)throw Error('Daily target is outside the approved range.');
+      if(typeof target!=='number')throw Error('Daily targets must contain numeric counts.');
+      integer(target,'daily target',0,6);
+      const existing=expected.get(date)||0;
+      if(target<existing)throw Error('A target cannot remove existing contributions.');
+      const count=target-existing;
+      if(count){days.push({date,count,kind:'synthetic-practice'});perYear[date.slice(0,4)].selectedDays++;perYear[date.slice(0,4)].newCommits+=count;}
+    }
+  }
   days.sort((a,b)=>a.date.localeCompare(b.date));
   const commits=days.reduce((n,d)=>n+d.count,0);
   if(commits>MAX_COMMITS)throw Error('The plan exceeds 2500 commits. Narrow the range or lower density/intensity.');
   const settings={from:new Date(from).toISOString().slice(0,10),to:new Date(requestedTo).toISOString().slice(0,10),
     density,growth,weekends,intensity,seed,mode,role,
-    existingHistory:history?'supplied-verified-counts':'none-provided'};
+    existingHistory:history?'supplied-verified-counts':'none-provided',
+    ...(options.dailyTargets!==undefined?{dailyTargets:{...options.dailyTargets}}:{}),
+    ...(history?{initialCounts:Object.fromEntries(expected),expectedCounts:Object.fromEntries(days.map(d=>[d.date,(expected.get(d.date)||0)+d.count]))}:{})};
   const plan={format:'gh-aura-synthetic-calendar-v1',settings,days,
     summary:{selectedDays:days.length,syntheticCommits:commits,perYear},
     limitations:[
@@ -135,15 +155,38 @@ export function loadCalendarPlan(path) {
   const stat=statSync(path);
   if(!stat.isFile()||stat.size>maxFile)throw Error('Calendar review file must be a regular JSON file under 2 MiB.');
   let doc;try{doc=JSON.parse(readFileSync(path,'utf8'));}catch{throw Error('Invalid calendar plan JSON.');}
+  return validateCalendarPlan(doc);
+}
+export function validateCalendarPlan(doc){
   if(doc?.format!=='gh-aura-synthetic-calendar-v1'||!Array.isArray(doc.days)||!doc.settings||
       !/^[a-f0-9]{64}$/.test(doc.fingerprint||'')||calendarDigest(doc)!==doc.fingerprint)
     throw Error('Calendar review fingerprint or format mismatch; regenerate the plan.');
   if(doc.days.length>MAX_DAYS)throw Error('Calendar plan has too many dates.');
+  // Validate settings independently of a self-consistent digest.
+  planCalendar({...doc.settings,density:0,dailyTargets:{}});
+  if(doc.settings.dailyTargets!==undefined){
+    if(!doc.settings.dailyTargets||typeof doc.settings.dailyTargets!=='object'||Array.isArray(doc.settings.dailyTargets)||Object.keys(doc.settings.dailyTargets).length>MAX_DAYS)throw Error('Invalid daily targets.');
+    for(const [date,count] of Object.entries(doc.settings.dailyTargets)){
+      if(date.length!==10||dateUTC(date,'from')<dateUTC(doc.settings.from,'from')||dateUTC(date,'from')>dateUTC(doc.settings.to,'to'))throw Error('Daily target outside range.');
+      if(typeof count!=='number')throw Error('Daily targets must contain numeric counts.');
+      integer(count,'daily target',0,6);
+    }
+  }
+  if(doc.settings.expectedCounts!==undefined&&(!doc.settings.expectedCounts||typeof doc.settings.expectedCounts!=='object'||Array.isArray(doc.settings.expectedCounts)||
+    Object.keys(doc.settings.expectedCounts).length!==doc.days.length||doc.days.some(d=>!Number.isInteger(doc.settings.expectedCounts[d.date])||doc.settings.expectedCounts[d.date]<d.count)))
+    throw Error('Expected graph counts are incomplete or invalid.');
+  if(doc.settings.initialCounts!==undefined){
+    const initial=doc.settings.initialCounts,start=dateUTC(doc.settings.from,'from'),end=dateUTC(doc.settings.to,'to');
+    if(!initial||typeof initial!=='object'||Array.isArray(initial)||Object.keys(initial).length!==(end-start)/DAY+1)throw Error('Calendar baseline coverage is invalid.');
+    for(let ms=start;ms<=end;ms+=DAY){const date=new Date(ms).toISOString().slice(0,10);if(!Object.hasOwn(initial,date)||!Number.isSafeInteger(initial[date])||initial[date]<0)throw Error('Calendar baseline has unknown or invalid dates.');}
+    for(const day of doc.days)if(doc.settings.expectedCounts?.[day.date]!==initial[day.date]+day.count)throw Error('Calendar projection differs from the reviewed baseline.');
+  }
   let prev='',commits=0;
   for(const item of doc.days){
     if(typeof item.date!=='string'||!/^\d{4}-\d\d-\d\d$/.test(item.date)||item.date<=prev||
        !Number.isInteger(item.count)||item.count<1||item.count>6||item.kind!=='synthetic-practice')
       throw Error('Invalid, duplicate or unordered calendar entries.');
+    if(item.startIndex!==undefined&&(!Number.isInteger(item.startIndex)||item.startIndex<1||item.startIndex+item.count-1>MAX_COMMITS))throw Error('Invalid calendar file indices.');
     if(dateUTC(item.date,'from')<dateUTC(doc.settings.from,'from')||
        dateUTC(item.date,'from')>dateUTC(doc.settings.to,'to'))
       throw Error('Entry outside approved calendar range.');
@@ -155,7 +198,13 @@ export function loadCalendarPlan(path) {
 }
 export function runCalendarPlan(options) {
   const h=historyFile(options.existing);
-  const plan=planCalendar(options,h);
+  let dailyTargets;
+  if(options['daily-targets']){
+    const file=options['daily-targets'];
+    if(!statSync(file).isFile()||statSync(file).size>maxFile)throw Error('Daily targets must be a bounded regular JSON file.');
+    dailyTargets=JSON.parse(readFileSync(file,'utf8'));
+  }
+  const plan=planCalendar({...options,...(dailyTargets?{dailyTargets}:{})},h);
   if(options.output)writeFileSync(options.output,JSON.stringify(plan,null,2)+'\n',
     {flag:options.force?'w':'wx',mode:0o600});
   else process.stdout.write(JSON.stringify(plan,null,2)+'\n');

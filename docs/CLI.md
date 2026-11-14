@@ -1,18 +1,22 @@
 # GH Aura: standalone CLI and optional AI tools
 
-`gh-aura COMMAND --help` gives full options. AI tools can read, guide, validate and preview but **never publish**.
+`gh-aura COMMAND --help` gives full options. AI tools read by default; an independently configured host grant enables only its exact reviewed plan.
+
+The [whole-profile guide](IMPROVE.md) covers account fields, README/assets, projects and workspace actions. Use `agent install --client codex|claude` or `--client generic --directory PATH`; `agent doctor --json` checks setup. Real client activation remains separate acceptance.
+
+`improve draft USER --spec profile.json` and `readme USER --spec profile.json` share intent. Validate with `check --spec profile.json --file draft.md`; `improve check ... --resources` also checks public HTTP metadata anonymously.
 
 ## Works without AI
 
 ```bash
 gh-aura sources categories --json
-gh-aura sources profiles --json
+gh-aura sources profiles --category minimal-text --json
 gh-aura sources profile SamuelSchlesinger --json
 gh-aura sources patterns --query "terminal retro" --direction expressive --json
 gh-aura check --file draft.md --professional --goal research --json
 ```
 
-The 25 editorial references are selected from a retained 100-profile research bank; they contain patterns and links, not templates, copied art or verified personal credentials. Professional review is an offline heuristic, never a recruiter score.
+Choose a category, inspect its actual profile references, then compose for the user. The index preserves the eight original references; it contains URLs, not copied designs. Professional review is an offline heuristic, never a recruiter score.
 
 ## Optional AI agent connection
 

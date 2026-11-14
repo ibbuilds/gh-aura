@@ -16,7 +16,7 @@ gh-aura badges auto apply --review next.json --confirm NEXT_FINGERPRINT
 
 `--goal max` stages the reported Pull Shark milestones **2 → 16 → 128 → 1,024**, in batches of up to **16 PRs**. Each new plan requires separate SHA-256 approval. The default workspace is `USERNAME/gh-aura-workspace`; configure once with `gh-aura config set workspace.repo OWNER/NAME` if needed.
 
-## Optional second account (read-only check)
+## Optional second account
 
 ```bash
 # Set two separate credentials in your trusted local terminal:
@@ -25,12 +25,14 @@ export GH_AURA_COLLAB_TOKEN=SECONDARY_TOKEN
 gh-aura badges auto accounts
 ```
 
-This verifies that the authenticated accounts are distinct and **both can read the same private, marked workspace**. The collaborator must already have repository access. Tokens stay in environment variables; none are stored in GH Aura configuration or printed. This command **does not** check write rights, perform coauthored commits, accept Discussions answers or guarantee Pair Extraordinaire / Galaxy Brain.
+This verifies distinct accounts that **both read the same marked private workspace**. The collaborator needs existing access. Tokens remain local and are never printed or saved in configuration. This command **does not** check write rights, perform coauthored commits, accept Discussion answers or guarantee awards.
+
+The [whole-profile workflow](IMPROVE.md) adds reviewed coauthor/Q&A exercises and tier-gated campaigns with one approval. It checks identities/access and lists token scopes. Actual private award eligibility remains unverified.
 
 ## Execution strategies
 
 - `rest` (default): GitHub REST branch creation, file commit, PR creation and merge.
-- `git-batch` (opt-in, needs local Git): prepare up to 16 branches locally, then one **atomic create-only Git push**, followed by individual GitHub PR openings and SHA-checked merges. Uses a distinct v3 plan; old v1/v2 REST plans remain valid.
+- `git-batch` (needs Git): up to 16 local branches, one **atomic create-only push**, then PRs and SHA-checked merges. Its v3 plans preserve v1/v2 REST compatibility.
 - Both reject public, foreign, unmarked, archived or forked workspaces. No force-update, branch overwrite, hidden retry, automatic deletion or account spoofing.
 - Every mutation batch is bounded and paced; a local per-account budget reserves up to **480 writes/hour**. GitHub may impose tighter limits or count Git transport differently.
 - `status` reports only observed events, review-free self-merge candidates and issues closed within five minutes; it **cannot certify an achievement**.
