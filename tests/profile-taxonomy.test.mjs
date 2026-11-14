@@ -1,22 +1,46 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PROFILE_FACETS,HOLISTIC_STYLES} from '../src/holistic-profile-taxonomy.mjs';
-import {ORIGINAL_PROFILE_REFERENCES,getCuratedProfile,profileCategories,recommendProfileExamples,listCuratedProfiles} from '../src/profile-patterns.mjs';
+import {CURATED_PROFILE_PATTERNS,ORIGINAL_PROFILE_REFERENCES,getCuratedProfile,profileCategories,recommendProfileExamples,listCuratedProfiles} from '../src/profile-patterns.mjs';
 import {editorialBrief} from '../src/brief.mjs';
 import {configForTest,snapshotForTest} from './fixtures.mjs';
 import {runAgentTool} from '../src/agent-tools.mjs';
 import {makeProfileSpec} from '../src/agent-profile.mjs';
 
-test('all eight categories have several reading references and preserve the original eight',()=>{
+test('100 unique references are balanced by primary style and retain original-reference provenance',()=>{
   assert.equal(HOLISTIC_STYLES.length,8);assert.equal(PROFILE_FACETS.length,9);
+  assert.equal(CURATED_PROFILE_PATTERNS.length,100);
+  assert.equal(profileCategories().totalProfiles,100);
+  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(p=>p.id.toLowerCase())).size,100);
+  const selected=new Set(),counts=[];
   for(const category of profileCategories().styles){
-    assert.ok(category.exampleCount>=3,category.id);
+    assert.ok([12,13].includes(category.exampleCount),category.id);counts.push(category.exampleCount);
     const result=listCuratedProfiles({category:category.id,limit:50});
     assert.equal(result.total,category.exampleCount);
-    assert.ok(result.profiles.every(p=>p.categories.includes(category.id)));
+    for(const p of result.profiles){
+      assert.equal(p.primaryCategory,category.id);
+      assert.equal(p.categories[0],category.id);
+      assert.equal(selected.has(p.id.toLowerCase()),false);selected.add(p.id.toLowerCase());
+      assert.ok(p.pattern.length>=50&&p.pattern.length<220);
+      assert.equal(new URL(p.workUrl).protocol,'https:');
+      assert.match(p.checkedAt,/^\d{4}-\d{2}-\d{2}$/);
+    }
   }
+  assert.equal(selected.size,100);assert.equal(Math.max(...counts)-Math.min(...counts),1);
   assert.equal(ORIGINAL_PROFILE_REFERENCES.length,8);
-  for(const login of ORIGINAL_PROFILE_REFERENCES)assert.equal(getCuratedProfile(login).origin,'user-supplied-reference');
+  assert.deepEqual(profileCategories().originalReferences.map(p=>p.id),ORIGINAL_PROFILE_REFERENCES);
+  for(const original of profileCategories().originalReferences){
+    assert.equal(original.profileUrl,'https://github.com/'+original.id);
+    if(original.selected)assert.equal(getCuratedProfile(original.id).origin,'user-supplied-reference');
+  }
+});
+
+test('secondary styles describe hybrids without duplicating the balanced category lists',()=>{
+  const profile=getCuratedProfile('orhun');
+  assert.equal(profile.primaryCategory,'data-dashboard');assert.ok(profile.categories.includes('terminal-code'));
+  assert.ok(listCuratedProfiles({category:'data-dashboard',limit:50}).profiles.some(p=>p.id==='orhun'));
+  assert.ok(!listCuratedProfiles({category:'terminal-code',limit:50}).profiles.some(p=>p.id==='orhun'));
+  assert.ok(profileCategories().styles.find(c=>c.id==='terminal-code').relatedExampleCount>0);
 });
 
 test('user intent selects a category and explicit categories support hybrid directions',()=>{

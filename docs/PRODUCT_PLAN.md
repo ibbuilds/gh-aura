@@ -16,7 +16,7 @@ Improve the complete GitHub profile through the user's preferred AI or direct co
 5. Compose an original proposal and refine the same ProfileSpec.
 6. Preview changes, execute only the authorized plan and verify each operation.
 
-The index contains eight categories and profile links, including the eight original references. It does not load a corpus or impose predefined composition principles. Sources are consulted when designing; if a reference is unavailable, choose another. Markdown, media and designs beyond the index remain supported.
+The index contains 100 unique profiles, with 12 or 13 primary references in each of eight categories. Secondary styles describe hybrids without duplicating category counts. Each reference includes an observed presentation pattern, a linked public work example and a check date. Selection considers readable presentation and inspectable work; titles and popularity do not determine inclusion. The original eight links remain recorded as provenance, including those outside the active selection. Sources are consulted when designing; if a reference is unavailable, choose another. Markdown, media and designs beyond the index remain supported.
 
 ## Features
 
