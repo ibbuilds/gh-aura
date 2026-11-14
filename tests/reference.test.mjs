@@ -35,11 +35,10 @@ test('editorial brief uses professional structure without claiming current emplo
   validateConfig(config);
   const brief = editorialBrief(snapshotForTest(), config);
   assert.equal(brief.editorial.targetCompany, 'Microsoft');
-  assert.equal(brief.reference.sampleSize, 200);
-  assert.equal(brief.reference.employerSourced.sampleSize, 16);
-  assert.equal(brief.reference.officialExamples.length, 2);
+  assert.ok(brief.profileExamples.profiles.length>0);
+  assert.equal(Object.hasOwn(brief,'reference'),false);
   assert.ok(Buffer.byteLength(JSON.stringify(brief)) <= 12000);
-  assert.match(writingPrompt(brief), /200 employer-verified employees/);
+  assert.match(writingPrompt(brief), /Inspect those current profiles/);
   assert.match(writingPrompt(brief), /target company is a hiring goal/);
   assert.match(writingPrompt(brief), /Never copy/);
   assert.doesNotMatch(JSON.stringify(brief), /@microsoft\.com|Co-authored-by:/);

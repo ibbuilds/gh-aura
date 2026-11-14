@@ -4,8 +4,6 @@ import { mkdtempSync,writeFileSync,readFileSync,rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { installAgentSkill,agentDoctor } from '../src/agent-install.mjs';
-import { HOLISTIC_STYLES,PROFILE_FACETS,holisticReadiness } from '../src/holistic-profile-taxonomy.mjs';
-import { compilePatternLibrary,readPatternLibrary,recommendApprovedPatterns,ORIGINAL_PROFILE_REFERENCES } from '../src/pattern-library.mjs';
 import { scanPublicProjects,inspectPublicProject,inspectCurrentPins } from '../src/profile-projects.mjs';
 import { planCalendar,validateCalendarPlan } from '../src/calendar.mjs';
 import { fastImportCalendar } from '../src/calendar-apply.mjs';
@@ -15,34 +13,6 @@ import { getAgentToolDefinitions,runAgentTool } from '../src/agent-tools.mjs';
 import { makeWholeProfileSpec } from '../src/profile-plan.mjs';
 
 const temporary=async fn=>{const root=mkdtempSync(join(tmpdir(),'aura-product-'));try{await fn(root);}finally{rmSync(root,{recursive:true,force:true});}};
-const review=(i)=>({login:'fixture-builder-'+i,primaryStyle:HOLISTIC_STYLES[i%8].id,secondaryStyles:[],purposes:['career'],decision:'approved',editorialRank:1,
-  reviewer:'Synthetic test reviewer',reviewedAt:'2026-11-12',evidenceNotes:'Synthetic fixture: no real profile review is asserted.',
-  evidenceUrls:['https://github.com/fixture-builder-'+i],facetStates:Object.fromEntries(PROFILE_FACETS.map(f=>[f,'observed'])),
-  visualChecks:{desktopLight:true,desktopDark:true,mobileLight:true,mobileDark:true},editorialChecks:{accessibility:true,assetRights:true,projectAttribution:true}});
-const study=()=>({reviews:Array.from({length:500},(_,i)=>review(i)),patterns:[{id:'native-links',styles:['native-no-readme'],title:'Intentional links',
-  when:'Quiet profiles with existing project evidence',principle:'Let clear links and selected public work carry the identity.',avoid:'Do not remove context needed by an unfamiliar reader.',
-  techniques:['link-hub'],reviewLogins:['fixture-builder-0','fixture-builder-8','fixture-builder-16']}]});
-
-test('malformed editorial claims and missing rights/accessibility do not become complete reviews',()=>{
-  assert.equal(holisticReadiness(review(0)).complete,true);
-  for(const delta of [{reviewedAt:'not-a-date'},{reviewedAt:'2026-02-30'},{reviewer:{}},{evidenceNotes:[]},{evidenceNotes:' '},{editorialChecks:{accessibility:true}}])
-    assert.equal(holisticReadiness({...review(0),...delta}).complete,false);
-});
-test('the compiler requires complete category coverage and source-linked approvals, without changing original references',()=>{
-  const input=study(),compiled=compilePatternLibrary(input);
-  assert.equal(compiled.reviewedProfiles,500);assert.equal(compiled.patterns.length,1);assert.equal(ORIGINAL_PROFILE_REFERENCES.length,8);
-  assert.equal(recommendApprovedPatterns({direction:'barebones',library:compiled}).patterns.length,1);
-  assert.equal(recommendApprovedPatterns({direction:'technical',library:compiled}).patterns.length,0);
-  const missing=study();missing.reviews[0].editorialChecks.assetRights=false;assert.throws(()=>compilePatternLibrary(missing),/500/);
-  const fake=study();fake.patterns[0].reviewLogins[0]='unknown';assert.throws(()=>compilePatternLibrary(fake),/reference/);
-  const duplicate=study();duplicate.reviews[499]=duplicate.reviews[0];assert.throws(()=>compilePatternLibrary(duplicate),/Duplicate/);
-});
-test('owner-configured compiled patterns remain separate from an unreviewed default',()=>temporary(async root=>{
-  assert.deepEqual(readPatternLibrary('').patterns,[]);
-  const path=join(root,'patterns.json'),compiled=compilePatternLibrary(study());writeFileSync(path,JSON.stringify(compiled));
-  assert.equal(readPatternLibrary(path).patterns[0].status,'approved-editorial-pattern');
-  compiled.patterns[0].status='pending';writeFileSync(path,JSON.stringify(compiled));assert.throws(()=>readPatternLibrary(path),/provenance/);
-}));
 test('skills install into a discovered directory, preserve edits and are idempotent',()=>temporary(async root=>{
   const result=installAgentSkill({client:'codex',home:root});
   assert.equal(result.directory,join(root,'.agents','skills','gh-aura-profile'));assert.equal(result.hostConfigurationChanged,false);

@@ -1,5 +1,5 @@
 import { intentWords, intentMatchScore } from './profile-query.mjs';
-import { recommendSourcePrinciples } from './profile-research.mjs';
+import { recommendProfileExamples } from './profile-patterns.mjs';
 
 export const PROFILE_TECHNIQUES_VERSION='2026-11-12.v1';
 const t=(id,title,medium,tags,opts={})=>Object.freeze({
@@ -119,7 +119,7 @@ export const PROFILE_TECHNIQUES=Object.freeze([
      sourceIds:['capsule-render']}),
 ]);
 const directions=['barebones','minimal','technical','expressive'];
-export function recommendProfileTechniques({query='',direction='minimal',includeExternal=false,
+export function recommendProfileTechniques({query='',direction='minimal',category='',includeExternal=false,
   limit=10}={}){
   if(!directions.includes(direction))throw Error('Invalid design direction.');
   if(!Number.isInteger(limit)||limit<1||limit>25)
@@ -141,7 +141,7 @@ export function recommendProfileTechniques({query='',direction='minimal',include
   const selected=ranked.length?ranked:
     PROFILE_TECHNIQUES.filter(x=>!x.thirdParty).slice(0,6).map(item=>({item}));
   return {version:PROFILE_TECHNIQUES_VERSION,query,direction,includeExternal,
-    researchGuidance:recommendSourcePrinciples({query,direction}),
+    examples:recommendProfileExamples({query,direction,category}),
     total:ranked.length,techniques:selected.slice(0,limit).map(x=>x.item),
     note:'Techniques are composable possibilities, not fixed READMEs, and do not authorize copying text, images or unverified claims.'};
 }

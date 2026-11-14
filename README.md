@@ -4,7 +4,7 @@
 
 GH Aura combines original READMEs, biography, relevant public projects, achievements and contribution-calendar tools to communicate your actual work in your chosen style.
 
-Design tools use eight flexible principles from a 500-candidate AI source study: `gh-aura sources study --json`.
+Your request selects a style category and real profile examples. Your AI inspects those profiles, then creates an original design for you.
 
 **Node.js 22+ · Free · Zero runtime dependencies · Local-first**
 
@@ -49,7 +49,7 @@ The owner edits the spec and reviews the fingerprint before `improve apply` or a
 
 ## Product direction and evidence
 
-The [plan](https://github.com/ibbuilds/gh-aura/blob/main/docs/PRODUCT_PLAN.md) tracks delivery and acceptance. [Original examples](https://github.com/ibbuilds/gh-aura/tree/main/examples) demonstrate composition. Historical research is [preserved](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research); pending reviews never become approved patterns automatically.
+Use `gh-aura sources categories`, then `sources profiles --category STYLE` to browse references. [Workflow](https://github.com/ibbuilds/gh-aura/blob/main/docs/PRODUCT_PLAN.md) · [Original demos](https://github.com/ibbuilds/gh-aura/tree/main/examples) · [Historical research](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research).
 
 [CLI and MCP setup](https://github.com/ibbuilds/gh-aura/blob/main/docs/CLI.md) · [Security](SECURITY.md) · [Release gates](https://github.com/ibbuilds/gh-aura/blob/main/docs/RELEASE_READINESS.md)
 

@@ -6,7 +6,7 @@ The candidate implements the [whole-profile workflow](IMPROVE.md): sidebar field
 
 ## Candidate checks
 
-- [x] Analyze 500 candidates with AI; integrate eight source-informed principles and preserve original references. [Scope](PROFILE_SOURCE_STUDY.md), without full-profile certification.
+- [x] Route design requests to eight categories and actual profile references, preserving the original eight; no corpus or approval compiler in the agent flow.
 - [x] P2 intent, plans, authorization and recovery covered by regression tests.
 - [ ] Verify P3 README/assets and actual account bio updates for new/existing profiles.
 - [ ] Verify P4 project selection, coverage and actual pin status.

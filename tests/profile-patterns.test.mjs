@@ -18,26 +18,25 @@ const run=(args,cwd)=>spawnSync(process.execPath,[cli,...args],{
   env:{...process.env,GH_TOKEN:'',GITHUB_TOKEN:''},
 });
 
-test('runtime references remain bounded, distinct, provisional and attributed',()=>{
-  assert.equal(CURATED_PROFILE_PATTERNS.length,25);
-  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(x=>x.id.toLowerCase())).size,25);
+test('reading index preserves originals and gives every category actual references',()=>{
+  assert.ok(CURATED_PROFILE_PATTERNS.length>=25);
+  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(x=>x.id.toLowerCase())).size,CURATED_PROFILE_PATTERNS.length);
   for(const row of CURATED_PROFILE_PATTERNS){
-    assert.ok(row.status.includes('provisional'));
     assert.equal(row.profileUrl,'https://github.com/'+row.id);
-    assert.ok(row.readmeUrl.toLowerCase().startsWith((row.profileUrl+'/'+row.id+'/blob/').toLowerCase()));
-    assert.ok(row.learn&&row.avoid&&row.when);
-    assert.ok(row.license.includes('never copy'));
+    assert.ok(row.categories.length>0);
+    assert.match(row.status,/reading-reference/);
   }
 });
 
-test('patterns are bounded and selected by intent, never copied from all 100',()=>{
-  assert.equal(listCuratedProfiles().profiles.length,25);
-  assert.equal(listCuratedProfiles({direction:'technical'}).profiles.length,8);
+test('category selection returns source URLs and inspection steps instead of preset designs',()=>{
+  assert.ok(listCuratedProfiles().profiles.length<=6);
+  assert.ok(listCuratedProfiles({direction:'technical'}).profiles.length>0);
   assert.equal(getCuratedProfile('ORHUN').direction,'expressive');
   const r=recommendCuratedPatterns({query:'investigación',direction:'technical'});
+  assert.equal(r.category,'technical-editorial');
   assert.ok(r.profiles.length>0&&r.profiles.length<=2);
-  assert.ok(r.profiles.every(x=>x.status.includes('provisional')&&x.readmeUrl.startsWith('https://')));
-  assert.ok(!JSON.stringify(r).includes('poteto'));
+  assert.ok(r.profiles.every(x=>x.profileUrl.startsWith('https://github.com/')));
+  assert.match(r.readNext,/inspect/);
   assert.throws(()=>recommendCuratedPatterns({limit:3}),/1–2/);
   assert.throws(()=>listCuratedProfiles({direction:'unknown'}),/direction/);
   assert.throws(()=>getCuratedProfile('../../secret'),/Unknown/);
@@ -67,12 +66,12 @@ test('third-party visual resources require both opt-in and a specific media requ
   assert.ok(blocked.techniques.every(x=>!x.thirdParty));
 });
 
-test('standalone offline CLI lists 25 and reviews without any agent',()=>{
+test('standalone offline CLI selects reading references and reviews without any agent',()=>{
   const cwd=mkdtempSync(join(tmpdir(),'gh-aura-curation-'));
   try{
     const listing=run(['sources','profiles','--json'],cwd);
     assert.equal(listing.status,0,listing.stderr);
-    assert.equal(JSON.parse(listing.stdout).profiles.length,25);
+    assert.ok(JSON.parse(listing.stdout).profiles.length<=6);
     const detail=run(['sources','profile','mattabate','--json'],cwd);
     assert.equal(detail.status,0,detail.stderr);
     assert.equal(JSON.parse(detail.stdout).id,'mattabate');
@@ -95,14 +94,14 @@ test('standalone offline CLI lists 25 and reviews without any agent',()=>{
 
 test('MCP exposes the same catalog and review with no writing tools',async()=>{
   const list=await runAgentTool('gh_aura_profiles_list',{});
-  assert.equal(list.profiles.length,25);
+  assert.ok(list.profiles.length<=6);
   const pick=await runAgentTool('gh_aura_patterns_recommend',{query:'research',direction:'technical'});
   assert.ok(pick.profiles.length<=2);
   const report=await runAgentTool('gh_aura_profile_professional_review',{markdown:'# A\n\nHello.',goal:'general'});
   assert.equal(report.format,'gh-aura-professional-review-v1');
   const rpc=await handleMcpMessage({jsonrpc:'2.0',id:4,method:'resources/read',
     params:{uri:'gh-aura://profiles/selected'}});
-  assert.equal(JSON.parse(rpc.result.contents[0].text).profiles.length,25);
+  assert.ok(JSON.parse(rpc.result.contents[0].text).profiles.length<=6);
   await assert.rejects(runAgentTool('gh_aura_patterns_recommend',{limit:3}),/1–2/);
   await assert.rejects(runAgentTool('gh_aura_apply',{markdown:'# Bad'}),/unauthorized/);
 });

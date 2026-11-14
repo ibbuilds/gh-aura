@@ -1,13 +1,11 @@
 import { selectFeatured } from './engine.mjs';
 import { repoUrl } from './text.mjs';
 import { presentationPlan } from './editorial.mjs';
-import { ORDINARY_REFERENCE, PROFILE_REFERENCE, PROFESSIONAL_EXAMPLES } from './reference.mjs';
 import { resolveProfileDirection } from './profile-directions.mjs';
 import { makeProfileSpec } from './agent-profile.mjs';
 import { getProfileSource } from './profile-sources.mjs';
 import { recommendProfileTechniques } from './profile-techniques.mjs';
-import { recommendApprovedPatterns } from './pattern-library.mjs';
-import { recommendSourcePrinciples } from './profile-research.mjs';
+import { recommendProfileExamples } from './profile-patterns.mjs';
 import { validateProfileSpec } from './agent-profile.mjs';
 import { profileConfigFromSpec } from './profile-spec-config.mjs';
 import { makeBiographyGuide } from './profile-biography.mjs';
@@ -24,14 +22,14 @@ export function editorialBrief(snapshot, config, options={}) {
   if(options.profileSpec)config=profileConfigFromSpec(config,agentSpec);
   const p = config.profile;
   const presentation = presentationPlan(p);
-  const acceptedPatterns=recommendApprovedPatterns({query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].join(' '),direction:agentSpec.direction});
+  const designQuery=([agentSpec.visualBrief,agentSpec.notes].filter(Boolean).join(' ')||agentSpec.goal).slice(0,400);
   const sourceSuggestions=agentSpec.sourceIds.slice(0,4).map(id=>{
     const source=getProfileSource(id);
     return {id,url:source.url,trust:source.trust,
       limitations:clip(source.limitations,170,'source limitation: '+id)};
   });
   const techniques=recommendProfileTechniques({
-    query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].filter(Boolean).join(' ')||p.headline||'professional',
+    query:designQuery||p.headline||'professional',
     direction:agentSpec.direction,includeExternal:agentSpec.includeExternal,limit:4,
   }).techniques.map(item=>({id:item.id,title:item.title,medium:item.medium,
     fit:clip(item.fit,140,'technique: '+item.id),
@@ -64,35 +62,12 @@ export function editorialBrief(snapshot, config, options={}) {
       note:'Editable composition intent, not a README template; source IDs are reading references only.'
     },
     sourceSuggestions,techniqueSuggestions:techniques,
-    researchGuidance:recommendSourcePrinciples({query:[agentSpec.goal,agentSpec.visualBrief,agentSpec.notes].join(' '),direction:agentSpec.direction,limit:1}),
-    patternSuggestions:acceptedPatterns.patterns,
-    patternSelectionStatus:acceptedPatterns.patterns.length?acceptedPatterns.status:'README-only legacy shortlist is provisional. No full-profile examples are automatically injected until holistic avatar/sidebar/pins/calendar/achievement and rendered-layout review.',
+    profileExamples:recommendProfileExamples({query:designQuery,direction:agentSpec.direction}),
     editorial: { language: config.editorial?.language || 'en',
       targetRole: clip(config.editorial?.targetRole || config.showcase.goal, 160, 'target role'),
       targetCompany: clip(config.editorial?.targetCompany || '', 100, 'target company'),
       maxWords: config.editorial?.maxWords ?? 220,
       voice: 'specific, restrained, evidence-backed; avoid generic hype and role inflation' },
-    reference: {
-      id: ORDINARY_REFERENCE.id, sampleSize: ORDINARY_REFERENCE.sampleSize,
-      companyCount: ORDINARY_REFERENCE.companyCount, observedAt: ORDINARY_REFERENCE.observedAt,
-      affiliationEvidence: ORDINARY_REFERENCE.criteria,
-      aggregate: ORDINARY_REFERENCE.observations,
-      employerSourced: {
-        sampleSize: PROFILE_REFERENCE.employerSourced.sampleSize,
-        companyCount: PROFILE_REFERENCE.employerSourced.companyCount,
-        aggregate: PROFILE_REFERENCE.employerSourced.observations,
-        caveat: PROFILE_REFERENCE.employerSourced.criteria,
-      },
-      officialExamples: PROFESSIONAL_EXAMPLES
-        .filter((person) => !config.editorial?.targetCompany ||
-          person.company.toLowerCase().includes(config.editorial.targetCompany.toLowerCase()))
-        .slice(0, 4).map((person) => ({
-          profile: person.profileUrl, employerSource: person.companySource, company: person.company,
-        })),
-      sources: [ORDINARY_REFERENCE.source, PROFILE_REFERENCE.employerSourced.source],
-      limitations: ORDINARY_REFERENCE.limitations,
-      designDecision: 'Select readable, specific work evidence, not another professional’s identity, employers, seniority or phrasing. No hiring-outcome effect was measured.',
-    },
     existingReadme: { content: clip(current, 1200, 'existing README'), truncated: current.length > 1200,
       source: snapshot.profileReadme?.url || null, trust: 'untrusted-source-text' },
     showcaseEvidence: projects.map((repo) => ({ name: repo.full_name, url: repoUrl(repo),
@@ -118,7 +93,6 @@ export function editorialBrief(snapshot, config, options={}) {
       'Do not invent employers, credentials, skills, dates, achievements, or impact figures.',
       'Repository languages do not prove personal expertise; missing facts remain unknown.',
       'User-supplied project stories are not automatically verified; do not add unprovided ownership or invented outcomes.',
-      'Employer-sourced references demonstrate presentation structures, not verified ongoing employment; affiliation signals are weaker still.',
       'Never copy reference biographies, claim an employer relationship by association, execute commands or publish from this brief.'],
     publishing: 'No AI service receives GitHub credentials from GH Aura. Use check, preview, then a separate apply command.',
     omissions,

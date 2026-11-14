@@ -3,7 +3,7 @@ const READ = [...COMMON, 'fresh', 'stats', 'budget'];
 const DATA = [...READ, 'inspect', 'deep', 'format', 'output', 'force'];
 export const SPECS = {
   improve: { usage: 'improve spec | draft [USER] --spec profile.json | check [USER] --spec profile.json --file draft.md [--resources] | context [USER] --spec profile.json | inspect [USER] | projects [USER] [--goal TEXT] [--cursor PAGE] | project --repo OWNER/REPO | project-proposal --repo OWNER/REPO [--spec changes.json] | pins [USER] | plan [USER] --spec profile.json [--file draft.md] [--resources] [--delivery pr|commit] | preview --review plan.json | authorize --review plan.json --confirm FINGERPRINT | apply --review plan.json --confirm FINGERPRINT | status --review plan.json', flags: ['resources','config','user','spec','file','review','confirm','delivery','format','output','force','goal','cursor','pages','inspect','repo'], max: 2 },
-  sources: { usage: 'sources list | show ID | recommend | design | study | categories | profiles | profile ID | patterns --query TEXT [--direction minimal] | library | audit --catalog reviews.json [--limit 20] | compile --catalog reviews.json --output patterns.json', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
+  sources: { usage: 'sources categories | profiles --category STYLE [--limit 6] | profile ID | design --query TEXT [--category STYLE] | list | show ID | recommend | patterns --query TEXT', flags:['query','category','direction','external','limit','catalog','format','output','force'], max:2 },
   agent: { usage: 'agent install --client codex|claude|generic [--directory PATH] | doctor | capabilities | spec [--direction technical] [--visual-brief TEXT] | bio [--voice technical] [--perspective first-person] [--focus engineering]', flags:['client','directory','config','direction','goal','language','max-words','max-projects','notes','visual-brief','voice','perspective','focus','bio-words','external','format','output','force'], max:1 },
   mcp: { usage: 'mcp (local stdio; read-only by default, execution only for an owner/host-pinned plan)', flags:[], max:0 },
   'badge-run': { usage: 'badges auto [plan] [--tier base|bronze|silver|gold] [--strategy rest|git-batch] [--repo OWNER/PRIVATE_WORKSPACE] [--output badges.json] | badges auto next --goal max [--strategy git-batch] | badges auto apply --review PLAN --confirm FINGERPRINT | badges auto status [--repo OWNER/PRIVATE_WORKSPACE] | badges auto accounts [--repo OWNER/PRIVATE_WORKSPACE]', flags: ['repo','pulls','start','tier','goal','strategy','no-quickdraw','role','output','force','review','confirm'], max: 1 },
@@ -230,19 +230,14 @@ export function validateOptions(command, options) {
   if (command === 'sources') {
     const [action,id]=options.positional;
     const detail=['show','profile'].includes(action);
-    const search=['recommend','design','profiles','patterns','audit'].includes(action);
-    if(action==='audit'){
-      if(!options.catalog||options.positional.length!==1||['query','category','direction','external'].some(key=>options[key]!==undefined))throw Error('sources audit requires --catalog and accepts only local output and sample limit options.');
-      if(options.limit!==undefined&&(!/^\d+$/.test(options.limit)||Number(options.limit)<1||Number(options.limit)>50))throw Error('Editorial sample limit must be 1–50.');
-    }
-    if (!['audit','compile','library','study','list','show','recommend','design','categories','profiles','profile','patterns'].includes(action) ||
+    const search=['recommend','design','profiles','patterns'].includes(action);
+    if (!['list','show','recommend','design','categories','profiles','profile','patterns'].includes(action) ||
         (detail&&!id)||(!detail&&id)||
         (!search&&['query','category','direction','limit','external'].some(k=>options[k]!==undefined))||
-        (['design','profiles','patterns','profile'].includes(action)&&options.category!==undefined)||
-        (['profiles','patterns','profile'].includes(action)&&(options.catalog!==undefined||options.external!==undefined))||
-        (action==='study'&&options.catalog!==undefined)||
-        (action==='profiles'&&options.limit!==undefined))
-      throw Error('Use sources list, show ID, recommend, design, study, categories, profiles, profile ID or patterns --query TEXT.');
+        (!search&&options.category!==undefined)||
+        (['profiles','patterns','profile','categories'].includes(action)&&options.catalog!==undefined)||
+        (!['recommend','design'].includes(action)&&options.external!==undefined))
+      throw Error('Use sources categories, profiles --category STYLE, profile ID, design, list, show ID, recommend or patterns --query TEXT.');
     if (options.direction&&!['barebones','minimal','technical','expressive'].includes(options.direction))
       throw Error('Invalid source art direction.');
     const max=action==='patterns'?2:action==='design'?25:50;

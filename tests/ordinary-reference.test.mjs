@@ -5,7 +5,7 @@ import {editorialBrief} from '../src/brief.mjs';
 import {DEFAULT_CONFIG} from '../src/config.mjs';
 import {snapshotForTest} from './fixtures.mjs';
 
-test('ordinary-visibility reference flows to the CLI report and vendor-neutral brief', () => {
+test('historical cohort stays in its explicit report while briefs use live profile examples', () => {
   const report = referenceReport();
   assert.equal(report.cohort.sampleSize, 200);
   assert.equal(report.cohort.companyCount, 35);
@@ -15,8 +15,7 @@ test('ordinary-visibility reference flows to the CLI report and vendor-neutral b
   assert.equal(microsoft.cohort.affiliated[0].count, 7);
   assert.equal(microsoft.employerSourced.examples.length, 2);
   const brief = editorialBrief(snapshotForTest(), structuredClone(DEFAULT_CONFIG));
-  assert.equal(brief.reference.sampleSize, 200);
-  assert.equal(brief.reference.companyCount, 35);
-  assert.equal(brief.reference.sources[0], ORDINARY_REFERENCE.source);
+  assert.equal(Object.hasOwn(brief,'reference'),false);
+  assert.equal(brief.profileExamples.profiles.length,3);
   assert.ok(Buffer.byteLength(JSON.stringify(brief)) <= 12000);
 });

@@ -1,19 +1,15 @@
-# Research archive
+# Referencias de diseño
 
-The original datasets, observations, eight user references, collectors and study tests are preserved at immutable commit [d978bbae0234b30390885fc17bb7f2b6d52bc21b](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research).
+La investigación sirve para encontrar ejemplos, no para añadir un corpus al producto.
 
-The active product keeps compact runtime references in src/. The archive records 600 candidates, 562 four-view renders and **zero final editorial approvals**. A subsequent [500-profile AI source study](../docs/PROFILE_SOURCE_STUDY.md) now supplies eight abstract composition principles; its individual corpus remains outside the product. Source-informed guidance is distinct from full-profile certification.
+1. `gh-aura sources categories --json` muestra las ocho categorías.
+2. `gh-aura sources profiles --category terminal-code --json` devuelve perfiles concretos.
+3. La IA consulta esos perfiles y compone un diseño original para el usuario. `sources design --query "terminal sobrio" --json` selecciona categoría, ejemplos y técnicas compatibles en una llamada.
 
-Run **npm run test:research** to export the local checkpoint temporarily, execute its study checks and verify current runtime citations. It needs Git and tar, performs no network calls and removes its export. A shallow clone missing the checkpoint must explicitly run:
+El índice compacto vive en [profile-patterns.mjs](../src/profile-patterns.mjs). Conserva las ocho referencias originales y admite categorías secundarias. Los enlaces son referencias de lectura; no otorgan derechos sobre textos, imágenes o credenciales. El estado actual se comprueba al utilizarlos.
+
+Los datasets, recolectores y reportes históricos permanecen recuperables en el commit [d978bbae0234b30390885fc17bb7f2b6d52bc21b](https://github.com/ibbuilds/gh-aura/tree/d978bbae0234b30390885fc17bb7f2b6d52bc21b/research). `npm run test:research` verifica ese archivo temporalmente, sin red, sin añadirlo al paquete y retirando su exportación. En un clon que no tenga el checkpoint:
 
     git fetch origin d978bbae0234b30390885fc17bb7f2b6d52bc21b
 
-Research continuation, pattern extraction and acceptance are defined in the [product plan](../docs/PRODUCT_PLAN.md).
-
-`npm run research:prepare` exports research inputs/code to a new OS temporary directory **outside the checkout**, omitting agent instructions, Skills and CI. It applies a recorded viewport-height correction, keeps the browser sandbox enabled, and installs the current strict editorial validator. `RESEARCH_CORRECTIONS.json` records each source/destination hash. This does not rewrite the checkpoint or preapprove reviews. Keep needed observations outside the product tree; retire the temporary copy after preserving useful evidence.
-
-`npm run test:research:viewport` checks the original and repaired collectors against a local 390 × 844 browser fixture. Set `GH_AURA_CHROME` to an existing Chrome/Edge/Chromium executable; nothing is downloaded. It makes no GitHub requests and stores no screenshots. The original filter misses a broken image at y=600; the correction detects it.
-
-`gh-aura sources audit --catalog PATH/reviews.json --limit 20` summarizes incomplete facets, editorial checks, category coverage and missing approved pattern references. It does not conduct reviews. An agent can read the same compact report only when the owner selects `GH_AURA_EDITORIAL_FILE` locally, through `gh_aura_editorial_progress`; raw notes and arbitrary model-selected file paths are not exposed.
-
-The corrected 2026-11-13 re-observation attempted all 600 candidates: 562 complete four-view captures, 38 unavailable and 100 profiles with visible broken-image warnings. All 562 confirmed viewport widths and light/dark background changes. Results, hashes, the editorial queue and source-study corpus remain outside the product; [issue #69](https://github.com/ibbuilds/gh-aura/issues/69) tracks evidence. Historical categories are provisional. Neither automated captures nor AI source analyses assert completed full-profile certifications.
+El corpus de análisis por IA se conserva localmente por decisión del dueño y no interviene en la generación de perfiles.

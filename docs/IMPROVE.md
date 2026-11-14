@@ -103,7 +103,7 @@ Badge exercises and workspace creation affect today's graph. Initialize the work
 
 ## Research and distribution
 
-Historical corpus and original eight references remain at the [immutable archive](../research/README.md). `sources compile --catalog reviews.json --output patterns.json` accepts at least 500 complete, source-linked editorial reviews with coverage of all eight styles. `GH_AURA_PATTERNS_FILE` selects the compiled library locally. The default has no fabricated approvals. `sources library` shows its state.
+Use `sources categories`, then `sources profiles --category STYLE` to find actual profile examples. `sources design --query "terminal sobrio"` selects a category and three references with inspection steps. The agent reads those current profiles before composing an original design. The [historical study](../research/README.md) stays out of the runtime; no corpus or approval compiler is required.
 
 Skill installation supports Codex (`~/.agents/skills`), Claude (`~/.claude/skills`) and explicit generic destinations. Local edits are preserved; replacing them requires `--force --directory PATH`. MCP and a portable writing prompt serve other clients. Publishing a GitHub repository alone does not guarantee discovery by every AI.
 

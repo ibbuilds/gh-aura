@@ -5,8 +5,7 @@ import { getAgentToolDefinitions, agentCapabilities, runAgentTool } from './agen
 import { agentError } from './agent-errors.mjs';
 import { listProfileSources } from './profile-sources.mjs';
 import { PROFILE_TECHNIQUES,PROFILE_TECHNIQUES_VERSION } from './profile-techniques.mjs';
-import { listCuratedProfiles } from './profile-patterns.mjs';
-import { HOLISTIC_STYLES,PROFILE_FACETS,PROFILE_PURPOSES } from './holistic-profile-taxonomy.mjs';
+import { listCuratedProfiles,profileCategories } from './profile-patterns.mjs';
 
 const CURRENT='2026-07-28';
 const LEGACY='2025-11-25';
@@ -23,8 +22,8 @@ const RESOURCES=[
   description:'25 GitHub-compatible layout techniques, source IDs, access and professional fit.'},
  {uri:'gh-aura://profiles/categories',name:'Whole GitHub profile categories',mimeType:'application/json',
   description:'Avatar, sidebar, bio, links, README, pinned projects, visible contribution graph and achievements.'},
- {uri:'gh-aura://profiles/selected',name:'25 provisional README composition references',mimeType:'application/json',
-  description:'Offline editorial selection from 100 public README observations; patterns only, no copied text or assets.'},
+ {uri:'gh-aura://profiles/selected',name:'Profile references by style',mimeType:'application/json',
+  description:'A compact index of current profile links. Choose a category and inspect its examples before designing.'},
  {uri:'gh-aura://guide/profile',name:'Professional profile workflow',mimeType:'text/markdown',
   description:'Model-neutral professional README authoring and review procedure.'},
  {uri:'gh-aura://guide/biography',name:'Original biography writing guide',mimeType:'text/markdown',
@@ -47,7 +46,7 @@ const GUIDE=`# GH Aura AI-first profile workflow
 1. Get the user's goal, desired density, personal design direction, language and project preferences.
 2. Use gh_aura_profile_plan and refine the spec instead of filling a rigid README template.
 3. Inspect public profile context through gh_aura_profile_context and rank existing real projects through gh_aura_pins_rank.
-4. Use gh_aura_design_recommend plus gh_aura_sources_search to select GitHub-native techniques. The 25 previous README-only examples are provisional; consult them only as explicitly requested reading references, never as certified full-profile winners. Never copy their prose, claims or assets.
+4. Use gh_aura_design_recommend to match the request to a style category. Read examples.readNext and inspect those actual profiles before designing. gh_aura_profiles_list selects more examples by category; gh_aura_sources_search finds supporting Markdown/media documentation. Compare structures, never copy prose, credentials or assets.
 5. Use gh_aura_biography_guide for voice, narrative focus and factual questions. Hiring is optional; a target employer is not an employment claim.
 6. Prefer native GitHub Markdown. Only offer third-party images with user opt-in, maintained sources, license review and a text fallback.
 7. Draft ORIGINAL Markdown using the chosen model. Honor the user's freeform visualBrief, biography voice, approved media and project choices. Never invent employers, authorship, badges, results or tech expertise.
@@ -132,7 +131,7 @@ export async function handleMcpMessage(msg){
         uri==='gh-aura://sources/catalog'?JSON.stringify(listProfileSources()):
         uri==='gh-aura://techniques/catalog'?JSON.stringify({
           version:PROFILE_TECHNIQUES_VERSION,techniques:PROFILE_TECHNIQUES}):
-        uri==='gh-aura://profiles/categories'?JSON.stringify({styles:HOLISTIC_STYLES,facets:PROFILE_FACETS,purposes:PROFILE_PURPOSES}):
+        uri==='gh-aura://profiles/categories'?JSON.stringify(profileCategories()):
         uri==='gh-aura://profiles/selected'?JSON.stringify(listCuratedProfiles()):
         uri==='gh-aura://guide/profile'?GUIDE:
         uri==='gh-aura://guide/biography'?

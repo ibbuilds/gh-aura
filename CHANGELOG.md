@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Added eight AI source-informed design principles from 500 candidates to CLI/MCP and writing briefs.
+- Simplified design to categories and live examples; removed research approval layers.
 - Added whole-profile plans, sidebar fields, README/assets, profile setup and project proposals.
 - Added owner-pinned MCP execution, skill installation and recovery/status diagnostics.
 - Added tier-gated one/two-account campaigns and daily calendar targets, visual preview/readback.

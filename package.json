@@ -14,8 +14,6 @@
     "test": "node --test",
     "test:package": "node scripts/package-smoke.mjs",
     "test:research": "node scripts/verify-research-archive.mjs",
-    "research:prepare": "node scripts/prepare-research-workspace.mjs",
-    "test:research:viewport": "node scripts/check-research-viewport.mjs",
     "test:live": "node scripts/live-smoke.mjs",
     "benchmark": "node scripts/benchmark.mjs",
     "start": "node src/cli.mjs"

@@ -4,8 +4,8 @@ Research composition demo around [GH Aura](https://github.com/ibbuilds/gh-aura).
 
 **Question.** Which presentation choices help a visitor identify relevant work, the owner's contribution and a next step?
 
-**Evidence available.** An archived discovery corpus, public metadata observations and technical render checks. They establish what was observed, not a causal hiring outcome or completed editorial review.
+**Evidence available.** Historical observations and a compact index of profile references in eight categories. Their current content is inspected when a design is requested; no hiring outcome is implied.
 
-**Method.** Review the complete profile, compare within its style and preserve unknowns. The [pattern compiler](../src/pattern-library.mjs) requires complete dated reviews and linked sources before activating approved patterns.
+**Method.** Choose a [style category](../src/profile-patterns.mjs), read its actual profiles, compare biography, hierarchy, work and presentation, then compose an original design for the user.
 
-**Open work.** Finish individual editorial acceptance and consent-based user evaluation. See the [research archive](../research/README.md) and its immutable provenance.
+**Open work.** Evaluate real user results without inferring employment outcomes. See the [research archive](../research/README.md) for historical provenance.
