@@ -4,7 +4,7 @@
 
 GH Aura combines original READMEs, biography, relevant public projects, achievements and contribution-calendar tools to communicate your actual work in your chosen style.
 
-Your request selects a style category and real profile examples. Your AI inspects those profiles, then creates an original design for you.
+Your request selects from 64 unique profile references: eight examples per style. Your AI inspects the selected profiles, then creates an original design for you.
 
 **Node.js 22+ · Free · Zero runtime dependencies · Local-first**
 
