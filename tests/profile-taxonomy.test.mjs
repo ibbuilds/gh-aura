@@ -7,14 +7,14 @@ import {configForTest,snapshotForTest} from './fixtures.mjs';
 import {runAgentTool} from '../src/agent-tools.mjs';
 import {makeProfileSpec} from '../src/agent-profile.mjs';
 
-test('100 unique references are balanced by primary style and retain original-reference provenance',()=>{
+test('64 unique references provide exactly eight examples per primary style and retain original-reference provenance',()=>{
   assert.equal(HOLISTIC_STYLES.length,8);assert.equal(PROFILE_FACETS.length,9);
-  assert.equal(CURATED_PROFILE_PATTERNS.length,100);
-  assert.equal(profileCategories().totalProfiles,100);
-  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(p=>p.id.toLowerCase())).size,100);
-  const selected=new Set(),counts=[];
+  assert.equal(CURATED_PROFILE_PATTERNS.length,64);
+  assert.equal(profileCategories().totalProfiles,64);
+  assert.equal(new Set(CURATED_PROFILE_PATTERNS.map(p=>p.id.toLowerCase())).size,64);
+  const selected=new Set();
   for(const category of profileCategories().styles){
-    assert.ok([12,13].includes(category.exampleCount),category.id);counts.push(category.exampleCount);
+    assert.equal(category.exampleCount,8,category.id);
     const result=listCuratedProfiles({category:category.id,limit:50});
     assert.equal(result.total,category.exampleCount);
     for(const p of result.profiles){
@@ -26,7 +26,7 @@ test('100 unique references are balanced by primary style and retain original-re
       assert.match(p.checkedAt,/^\d{4}-\d{2}-\d{2}$/);
     }
   }
-  assert.equal(selected.size,100);assert.equal(Math.max(...counts)-Math.min(...counts),1);
+  assert.equal(selected.size,64);
   assert.equal(ORIGINAL_PROFILE_REFERENCES.length,8);
   assert.deepEqual(profileCategories().originalReferences.map(p=>p.id),ORIGINAL_PROFILE_REFERENCES);
   for(const original of profileCategories().originalReferences){
